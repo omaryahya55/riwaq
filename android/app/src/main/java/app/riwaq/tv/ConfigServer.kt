@@ -103,6 +103,28 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                     if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
                     return send(out, 200, "application/json; charset=utf-8", Apps.listJson(ctx).toByteArray())
                 }
+                // صوت أذان من عند المستخدم (مثل أذان الحرم): يرفعه من جواله. رواق نفسه ما يوزّع تسجيل له حقوق
+                if (path == "/api/adhan" || path == "/api/adhan/test") {
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    if (path == "/api/adhan/test") {
+                        if (method != "POST") return send(out, 405, "text/plain", "method".toByteArray())
+                        AdhanService.test(ctx)
+                        return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
+                    }
+                    when (method) {
+                        "GET" -> return send(out, 200, "application/json", "{\"custom\":${AdhanAudio.hasCustom(ctx)}}".toByteArray())
+                        "DELETE" -> { AdhanAudio.clear(ctx); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                        "POST" -> {
+                            val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
+                            if (len <= 0 || len > AdhanAudio.MAX_BYTES) return send(out, 413, "text/plain", "too large".toByteArray())
+                            sock.soTimeout = 60000 // ملف كبير على واي فاي البيت
+                            val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
+                            if (!AdhanAudio.save(ctx, body)) return send(out, 415, "text/plain", "not audio".toByteArray())
+                            return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
+                        }
+                        else -> return send(out, 405, "text/plain", "method".toByteArray())
+                    }
+                }
                 if (path == "/api/config") {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
                     when (method) {
@@ -162,7 +184,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
 
     private fun send(out: OutputStream, code: Int, type: String, body: ByteArray) {
         val reason = mapOf(200 to "OK", 302 to "Found", 400 to "Bad Request", 403 to "Forbidden", 404 to "Not Found",
-            405 to "Method Not Allowed", 411 to "Length Required", 413 to "Payload Too Large")[code] ?: "Error"
+            405 to "Method Not Allowed", 411 to "Length Required", 413 to "Payload Too Large", 415 to "Unsupported Media Type")[code] ?: "Error"
         val h = "HTTP/1.1 $code $reason\r\nContent-Type: $type\r\nContent-Length: ${body.size}\r\n" +
             "Cache-Control: no-store\r\nX-Content-Type-Options: nosniff\r\nReferrer-Policy: no-referrer\r\nConnection: close\r\n\r\n"
         out.write(h.toByteArray(Charsets.ISO_8859_1))

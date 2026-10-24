@@ -76,6 +76,35 @@ object AdhanScheduler {
     }
 }
 
+/**
+ * صوت الأذان: الافتراضي (تسجيل برخصة حرة داخل التطبيق)، أو صوت يرفعه المستخدم من جواله (صفحة الإعدادات).
+ * نقبل ملفات صوت حقيقية بس (نشيك أول البايتات)، ولين ١٠ ميجا، وينحفظ داخل التطبيق بس.
+ */
+object AdhanAudio {
+    const val MAX_BYTES = 10 * 1024 * 1024
+    private fun file(ctx: Context) = java.io.File(ctx.filesDir, "adhan_custom")
+
+    fun hasCustom(ctx: Context) = file(ctx).let { it.exists() && it.length() > 0 }
+    fun customPath(ctx: Context): String? = file(ctx).takeIf { it.exists() && it.length() > 0 }?.absolutePath
+
+    fun save(ctx: Context, bytes: ByteArray): Boolean {
+        if (bytes.size < 1024 || !isAudio(bytes)) return false
+        val tmp = java.io.File(ctx.filesDir, "adhan_custom.tmp")
+        tmp.writeBytes(bytes)
+        return tmp.renameTo(file(ctx)) || run { file(ctx).writeBytes(bytes); tmp.delete(); true }
+    }
+
+    fun clear(ctx: Context) { file(ctx).delete() }
+
+    // MP3 (ID3 أو بداية إطار)، OGG، M4A/AAC (ftyp)، WAV، FLAC، AAC ADTS
+    private fun isAudio(b: ByteArray): Boolean {
+        fun at(i: Int, s: String) = s.indices.all { b.size > i + it && b[i + it] == s[it].code.toByte() }
+        val u = { i: Int -> b[i].toInt() and 0xFF }
+        return at(0, "ID3") || (u(0) == 0xFF && (u(1) and 0xE0) == 0xE0) || at(0, "OggS") || at(4, "ftyp") ||
+            (at(0, "RIFF") && at(8, "WAVE")) || at(0, "fLaC")
+    }
+}
+
 class AdhanReceiver : BroadcastReceiver() {
     override fun onReceive(ctx: Context, intent: Intent) {
         if (intent.action == AdhanScheduler.ACTION_ADHAN) {
@@ -120,7 +149,12 @@ class AdhanService : Service() {
         } else {
             @Suppress("DEPRECATION") am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
         }
-        player = MediaPlayer.create(this, R.raw.adhan, attrs, am.generateAudioSessionId())?.apply {
+        // صوت المستخدم لو رفع واحد (وإلا أو لو خرب: الافتراضي)
+        player = (AdhanAudio.customPath(this)?.let { path ->
+            try {
+                MediaPlayer().apply { setAudioAttributes(attrs); setDataSource(path); prepare() }
+            } catch (e: Exception) { null }
+        } ?: MediaPlayer.create(this, R.raw.adhan, attrs, am.generateAudioSessionId()))?.apply {
             setOnCompletionListener { stopAdhan() }
             start()
         }
@@ -168,6 +202,12 @@ class AdhanService : Service() {
         private const val CHANNEL = "adhan"
         private const val NOTIFY_ID = 21
         @Volatile var playing = false
+
+        /** تجربة الصوت من صفحة الإعدادات (التطبيق ظاهر وقتها) */
+        fun test(ctx: Context) {
+            val s = Intent(ctx, AdhanService::class.java).putExtra("name", "")
+            try { if (Build.VERSION.SDK_INT >= 26) ctx.startForegroundService(s) else ctx.startService(s) } catch (e: Exception) { }
+        }
 
         fun stop(ctx: Context) {
             if (playing) ctx.startService(Intent(ctx, AdhanService::class.java).setAction(ACTION_STOP))

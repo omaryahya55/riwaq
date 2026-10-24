@@ -53,6 +53,18 @@
       </label>
       <label class="switch"><input type="checkbox" id="adhanOn"><span>صوت الأذان وقت الصلاة (والتلفزيون شغال، حتى لو أنت في تطبيق ثاني: البرنامج يوقف وقت الأذان، وزر الرجوع يوقف الأذان)</span></label>
       <div class="chips" id="adhanPrayers"></div>
+      <div id="adhanVoice">
+        <p class="tiny" id="adhanVoiceNow">الصوت: الافتراضي</p>
+        <div class="search">
+          <input id="adhanFile" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav,.aac,.flac" aria-label="ملف صوت الأذان">
+          <button class="btn" id="adhanUpload" type="button">رفع</button>
+        </div>
+        <div class="search" style="margin-top:8px">
+          <button class="btn ghost" id="adhanTest" type="button">جرّب الصوت على التلفزيون</button>
+          <button class="btn ghost" id="adhanReset" type="button">رجوع للصوت الافتراضي</button>
+        </div>
+        <p class="tiny">تقدر ترفع صوت الأذان اللي تحبه (مثل أذان الحرم) من جوالك: mp3 أو m4a أو غيرها، لين ١٠ ميجا. الصوت لتلفزيونك بس.</p>
+      </div>
       <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض)</span></label>
       <label class="switch"><input type="checkbox" id="nightClock"><span>ساعة الليل: من ١:٣٠ بالليل لين قبل الفجر، شاشة الانتظار تصير ساعة بسيطة خافتة</span></label>
       <label class="switch" id="salaryRow"><input type="checkbox" id="showSalary"><span>عدّاد الراتب وحساب المواطن</span></label>

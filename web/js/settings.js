@@ -126,6 +126,38 @@
       b.setAttribute("aria-pressed", String(cfg.adhan[b.dataset.p]));
     }));
     $("adhanPrayers").style.display = a.on ? "" : "none";
+    paintAdhanVoice();
+  }
+
+  // صوت الأذان من الجوال (يشتغل بس مع التلفزيون: الرابط من الباركود)
+  async function paintAdhanVoice() {
+    if (!remote) { $("adhanVoice").innerHTML = `<p class="tiny">رفع صوت أذان من عندك يكون من الجوال مع التلفزيون (صوّر الباركود).</p>`; return; }
+    try {
+      const j = await (await fetch("/api/adhan?token=" + encodeURIComponent(token))).json();
+      $("adhanVoiceNow").textContent = j.custom ? "الصوت: صوت رفعته أنت ✓" : "الصوت: الافتراضي";
+      $("adhanReset").style.display = j.custom ? "" : "none";
+    } catch (e) { /* التلفزيون ما رد: نخلي النص زي ما هو */ }
+  }
+  async function uploadAdhan() {
+    const f = $("adhanFile").files[0];
+    if (!f) { status("اختر ملف صوت من جوالك أول", true); return; }
+    if (f.size > 10 * 1024 * 1024) { status("الملف أكبر من ١٠ ميجا", true); return; }
+    status("نرفع الصوت…");
+    try {
+      const r = await fetch("/api/adhan?token=" + encodeURIComponent(token), { method: "POST", body: f });
+      if (r.status === 415) throw new Error("هذا مو ملف صوت. اختر mp3 أو m4a");
+      if (!r.ok) throw new Error("ما انرفع. جرّب مرة ثانية");
+      status("انرفع الصوت ✓ اضغط (جرّب الصوت) تسمعه");
+      $("adhanFile").value = "";
+      paintAdhanVoice();
+    } catch (e) { status(e.message, true); }
+  }
+  async function adhanCall(path, method, done) {
+    try {
+      const r = await fetch(path + "?token=" + encodeURIComponent(token), { method });
+      if (!r.ok) throw new Error();
+      status(done); paintAdhanVoice();
+    } catch (e) { status("ما قدرنا نوصل للتلفزيون", true); }
   }
 
   // ===== القرآن: راجع محفوظك =====
@@ -273,6 +305,9 @@
   $("addFeed").addEventListener("click", addCustomFeed);
   $("feedUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addCustomFeed(); } });
   $("save").addEventListener("click", save);
+  if ($("adhanUpload")) $("adhanUpload").addEventListener("click", uploadAdhan);
+  if ($("adhanTest")) $("adhanTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل الأذان على التلفزيون الحين (رجوع يوقفه)"));
+  if ($("adhanReset")) $("adhanReset").addEventListener("click", () => adhanCall("/api/adhan", "DELETE", "رجع الصوت الافتراضي ✓"));
   $("adhanOn").addEventListener("change", () => { cfg.adhan.on = $("adhanOn").checked; $("adhanPrayers").style.display = cfg.adhan.on ? "" : "none"; });
 
   (remote ? loadRemote() : Promise.resolve()).then(fill).catch((e) => { fill(); status(e.message, true); }).then(loadVerify);
