@@ -7,3 +7,18 @@ reference/
 
 # ملفات محلية
 .claude/settings.local.json
+
+# بناء أندرويد
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.jks
+*.keystore
+
+# نسخ احتياطية من التلفزيون (فيها إعدادات جهازك)
+tools/backup-*.json
+
+# السيرفر الوسيط
+worker/node_modules/
+worker/.wrangler/

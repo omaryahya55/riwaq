@@ -1,0 +1,62 @@
+# يبني تطبيق رواق مع كل تعديل، ويرفع ملف APK مع كل إصدار (tag يبدأ بـ v).
+# التحديثات تجي من مستودعنا بس (البريف قسم ٢ قرار ٩).
+# التوقيع: الأسرار من إعدادات المستودع (Settings → Secrets)، ما تنحفظ في الكود أبداً:
+#   RIWAQ_KEYSTORE_B64, RIWAQ_KEYSTORE_PASSWORD, RIWAQ_KEY_ALIAS, RIWAQ_KEY_PASSWORD
+name: android
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: فحص سريع لملفات الشاشة
+        run: |
+          for f in web/js/*.js; do node --check "$f"; done
+
+      - name: مفتاح التوقيع (للإصدارات بس)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          RIWAQ_KEYSTORE_B64: ${{ secrets.RIWAQ_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$RIWAQ_KEYSTORE_B64" ]; then
+            echo "$RIWAQ_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/riwaq.jks"
+            echo "RIWAQ_KEYSTORE=$RUNNER_TEMP/riwaq.jks" >> "$GITHUB_ENV"
+          fi
+
+      - name: البناء
+        working-directory: android
+        env:
+          RIWAQ_KEYSTORE_PASSWORD: ${{ secrets.RIWAQ_KEYSTORE_PASSWORD }}
+          RIWAQ_KEY_ALIAS: ${{ secrets.RIWAQ_KEY_ALIAS }}
+          RIWAQ_KEY_PASSWORD: ${{ secrets.RIWAQ_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug assembleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: riwaq-apk
+          path: android/app/build/outputs/apk/**/*.apk
+
+      - name: إصدار على GitHub
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            android/app/build/outputs/apk/release/*.apk
+          body_path: CHANGELOG.md

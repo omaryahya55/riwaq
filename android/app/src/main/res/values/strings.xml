@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">رِواق</string>
+    <string name="settings_title">إعدادات رِواق</string>
+    <string name="settings_scan">صوّر الباركود بكاميرا جوالك</string>
+    <string name="settings_hint">لازم الجوال يكون على نفس شبكة الواي فاي. الرابط يشتغل بس وهذي الشاشة مفتوحة.</string>
+    <string name="settings_no_network">التلفزيون مو متصل بشبكة واي فاي أو سلك. وصّله وارجع لهذي الشاشة.</string>
+    <string name="settings_back">اضغط رجوع لما تخلص</string>
+    <string name="settings_saved">انحفظت الإعدادات ✓</string>
+</resources>

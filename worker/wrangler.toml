@@ -1,0 +1,5 @@
+# السيرفر الوسيط لرواق. النشر يحتاج حساب Cloudflare (مجاني لين ١٠٠ ألف طلب باليوم).
+# المفتاح المدفوع لـ TheSportsDB يتحط كسر: npx wrangler secret put SPORTS_KEY  (ما ينكتب هنا أبداً)
+name = "riwaq-proxy"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
