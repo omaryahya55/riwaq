@@ -24,7 +24,7 @@
 ## المحتوى الديني
 
 نص القرآن (إذا انضاف) من [Tanzil](https://tanzil.net) حرفياً مع إشعار الحقوق (CC BY 3.0، ممنوع التعديل).
-الأحاديث والأذكار وقصص الصحابة من كتبها الأصلية مع المرجع، وبعد مراجعة شخص مؤهل. شوف [docs/CONTENT.md](docs/CONTENT.md).
+الأحاديث والأذكار وفضائل الصحابة تنقل حرفياً من مصادر معتمدة مع المرجع ورابط التحقق: [sunnah.com](https://sunnah.com) (بعد الإذن) أو [موسوعة الأحاديث النبوية HadeethEnc.com](https://hadeethenc.com) حسب [سياسة استخدامها](https://github.com/IslamHouse-API/multilingual-quran-hadith-islamic-content-database-api-hub) (بدون تعديل، مع ذكر المصدر). شوف [docs/CONTENT.md](docs/CONTENT.md).
 
 ## الإلهام
 

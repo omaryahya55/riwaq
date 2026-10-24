@@ -14,10 +14,16 @@
   الاستخدام:
     powershell -ExecutionPolicy Bypass -File tools\setup-tv.ps1 -Ip 192.168.1.50
     (اختياري) -Apk path\to\riwaq.apk   -SkipHome (شاشة التوقف بس، بدون تبديل الواجهة)
+
+  أجهزة Google TV الجديدة (التصحيح اللاسلكي): في التلفزيون افتح "التصحيح اللاسلكي" ثم "إقران جهاز برمز"،
+  وبيطلع لك رقم منفذ ورمز من ٦ أرقام. وفي صفحة التصحيح اللاسلكي نفسها فيه منفذ ثاني للاتصال:
+    ... -Ip 192.168.1.50 -Port <منفذ الاتصال> -PairPort <منفذ الإقران> -PairCode <الرمز>
 #>
 param(
   [Parameter(Mandatory = $true)][string]$Ip,
   [int]$Port = 5555,
+  [int]$PairPort = 0,
+  [string]$PairCode = "",
   [string]$Apk = "",
   [switch]$SkipHome
 )
@@ -49,6 +55,11 @@ if (-not $adb) {
 function Adb { & $adb -s "$Ip`:$Port" @args }
 
 # ===== ١. الاتصال =====
+if ($PairPort -gt 0 -and $PairCode) {
+  Say "نقرن الكمبيوتر بالتلفزيون (التصحيح اللاسلكي) ..."
+  $pair = (& $adb pair "$Ip`:$PairPort" $PairCode 2>&1 | Out-String)
+  if ($pair -notmatch "Successfully paired") { Fail "الإقران ما نجح: $pair (تأكد من الرمز والمنفذ، والرمز يتغير كل مرة)" }
+}
 Say "نتصل بالتلفزيون $Ip ..."
 & $adb connect "$Ip`:$Port" | Out-Host
 Say "إذا طلع على التلفزيون سؤال (السماح بتصحيح USB؟): اختر دائماً من هذا الكمبيوتر، واضغط سماح."
