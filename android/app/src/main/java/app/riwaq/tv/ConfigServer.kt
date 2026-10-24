@@ -37,6 +37,8 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         "/js/teams-ar.js" to "application/javascript; charset=utf-8",
         "/js/settings.js" to "application/javascript; charset=utf-8",
         "/css/fonts.css" to "text/css; charset=utf-8",
+        "/content/approved.json" to "application/json; charset=utf-8",
+        "/content/candidates/hadeethenc.json" to "application/json; charset=utf-8",
         "/fonts/amiri/Amiri-Regular.ttf" to "font/ttf",
         "/fonts/amiri/Amiri-Bold.ttf" to "font/ttf",
         "/fonts/plex/IBMPlexSansArabic-Regular.ttf" to "font/ttf",
@@ -109,8 +111,9 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                 }
                 val type = files[path]
                 if (method == "GET" && type != null) {
-                    val bytes = ctx.assets.open("web$path").use { it.readBytes() }
-                    return send(out, 200, type, bytes)
+                    // الملف ممكن ما يكون موجود (مثل ملف المحتوى المرشح): نرد 404 بدل ما ينقطع الاتصال
+                    val bytes = try { ctx.assets.open("web$path").use { it.readBytes() } } catch (e: java.io.IOException) { null }
+                    return if (bytes != null) send(out, 200, type, bytes) else send(out, 404, "text/plain", "not found".toByteArray())
                 }
                 send(out, 404, "text/plain", "not found".toByteArray())
             } catch (e: Exception) { /* اتصال انقطع: نتجاهله */ }

@@ -121,11 +121,29 @@
     } catch (e) { status(e.message, true); }
   }
 
+  // محتوى اليوم مع روابط التحقق (نفس طريقة اختيار الشاشة: عنصر لكل يوم)
+  async function loadVerify() {
+    const file = new URLSearchParams(location.search).get("content") === "hadeethenc" ? "content/candidates/hadeethenc.json" : (cfg.contentFile || "content/approved.json");
+    try {
+      const j = await (await fetch(file)).json();
+      const items = (j.items || []).filter((x) => x.approved === true && x.text && x.source);
+      if (!items.length) return;
+      const day = Math.floor(Date.now() / 86400000);
+      const pickOf = (type) => { const l = items.filter((x) => x.type === type); return l.length ? l[day % l.length] : null; };
+      const list = [["حديث اليوم", pickOf("hadith")], ["في فضل الصحابة", pickOf("sahabi")]]
+        .concat(items.filter((x) => x.type === "adhkar").map((x) => ["من أذكار الصباح والمساء", x]))
+        .filter((x) => x[1]);
+      $("verifyList").innerHTML = list.map(([title, x]) => `<li><div class="vs"><b>${esc(title)}</b></div><div class="vt">${esc(String(x.text).replace(/<[^>]+>/g, ""))}</div>
+        <div class="vs"><span>${esc(x.source)}${x.edition ? " · " + esc(x.edition) : ""}</span>${/^https:\/\//.test(x.verifyUrl || "") ? `<a href="${esc(x.verifyUrl)}" target="_blank" rel="noopener">تحقق من المصدر ↗</a>` : ""}</div></li>`).join("");
+      $("contentCard").hidden = false;
+    } catch (e) { /* ما فيه محتوى: القسم يبقى مخفي */ }
+  }
+
   $("citySearch").addEventListener("click", searchCity);
   $("cityQ").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); searchCity(); } });
   $("teamLeague").addEventListener("change", paintTeams);
   $("addFeed").addEventListener("click", () => { readFeeds(); cfg.newsFeeds.push(""); paintFeeds(); cfg.newsFeeds = cfg.newsFeeds.filter(Boolean); });
   $("save").addEventListener("click", save);
 
-  (remote ? loadRemote() : Promise.resolve()).then(fill).catch((e) => { fill(); status(e.message, true); });
+  (remote ? loadRemote() : Promise.resolve()).then(fill).catch((e) => { fill(); status(e.message, true); }).then(loadVerify);
 })();

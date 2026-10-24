@@ -39,6 +39,7 @@ def arabic_body(data):
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")  # طرفية ويندوز ما تطبع ✓ بدونها
     key = os.environ.get("SUNNAH_API_KEY")
     if not key:
         sys.exit("حط المفتاح في SUNNAH_API_KEY أول")

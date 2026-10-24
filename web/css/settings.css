@@ -49,3 +49,9 @@ input:focus-visible, select:focus-visible, .btn:focus-visible { outline: 2px sol
 /* حقول الإدخال داخل صف: بدون هذا الحقل يرفض يصغر ويطلع برا الشاشة */
 .search input, .feed input { min-width: 0; flex: 1; }
 body { overflow-x: hidden; }
+
+.verify { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.verify li { background: #0E1017; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.verify .vt { font-size: 15px; line-height: 1.8; }
+.verify .vs { font-size: 13px; color: var(--ink-3); margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+.verify a { color: var(--gold); }

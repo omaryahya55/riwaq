@@ -190,12 +190,18 @@
     setTimeout(paint, 500);
   }
 
-  function renderHadith(root) {
-    // حديث اليوم يطلع بس من الملف المراجَع شرعياً (المرحلة ٤). لين ذاك الحين: مخفي
+  function renderHadith(root, now) {
+    // المحتوى الديني يطلع بس من ملف منقول حرفياً من مصدر معتمد (js/content.js). ما فيه ملف = الخانة مخفية
     const el = $(root, "hadith");
-    const item = window.Content && Content.hadithOfDay(new Date());
-    if (item) el.innerHTML = `<div class="s-card-title">حديث اليوم</div><p class="s-hadith-text">${esc(item.text)}</p><small>${esc(item.source)}</small>`;
-    show(el, !!item);
+    const c = window.Content && Content.current(now);
+    if (c) {
+      // نشيل وسوم HTML لو المصدر يرسلها (شكل بس، ما نغيّر ولا كلمة)
+      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
+      const credit = c.item.edition ? ` · المصدر: ${esc(c.item.edition)}` : "";
+      el.classList.toggle("long", text.length > 220);
+      el.innerHTML = `<div class="s-card-title">${esc(c.title)}</div><p class="s-hadith-text">${esc(text)}</p><small>${esc(c.item.source)}${credit}</small>`;
+    }
+    show(el, !!c);
   }
 
   function renderPrayers(root, now) {
@@ -301,7 +307,10 @@
         root.querySelector(".saver-content").style.transform = `translate(${SHIFTS[shiftIdx][0]}px, ${SHIFTS[shiftIdx][1]}px)`;
       }, 4 * 60 * 1000);
       DATA.onChange(() => this.tick(true));
+      this.ready = true;
       this.tick(true);
+      // خانة المحتوى تتبدل كل ٤٠ ثانية تقريباً (أذكار، حديث، صحابة)، فنحدّثها بدون انتظار الدقيقة
+      setInterval(() => renderHadith(root, new Date()), 20000);
     },
     tick(force) {
       const now = new Date();
@@ -313,7 +322,7 @@
       renderChips(root, now);
       renderPrices(root);
       renderLeague(root, false);
-      renderHadith(root);
+      renderHadith(root, now);
       const np = renderPrayers(root, now);
       renderBottom(root, now, np);
       renderNews(root);
@@ -323,6 +332,8 @@
       document.getElementById("stage").classList.toggle("alert", !!alertOn && App.current === "saver");
       if (np) $(root, "alertText").textContent = `باقي ${F.duration(forceAlert ? limit || 10 : np.mins)} على أذان ${np.p.name}`;
     },
-    setForceAlert(v) { forceAlert = v; this.tick(true); }
+    setForceAlert(v) { forceAlert = v; this.tick(true); },
+    // للاختبارات الآلية (tests/)
+    _test: { nextMonthly, daysToHijri, readable }
   };
 })();
