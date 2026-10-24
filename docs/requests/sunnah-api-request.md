@@ -1,4 +1,6 @@
-# طلب مفتاح sunnah.com (مسودة، ما انرسلت)
+# طلب مفتاح sunnah.com: ✅ انرسل 2026-10-24
+
+الرابط: https://github.com/sunnah-com/api/issues/4195 (إيميل المشروع: riwaq.app1@gmail.com)
 
 يرسل على: https://github.com/sunnah-com/api/issues/new (قالب "Request for API access")
 ⚠️ القالب يطلب إيميل **يظهر للعامة**. يحطه صاحب المشروع (أو إيميل خاص بالمشروع) قبل الإرسال.
