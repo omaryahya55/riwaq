@@ -365,7 +365,7 @@
   }
 
   function renderCredit(root) {
-    const parts = ["الخلفية: رسم رواق"];
+    const parts = [Scene.credit ? "الصورة: " + Scene.credit + " · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
     if (DATA.weather()) parts.push("الطقس: Open-Meteo.com");
     if (DATA.metals()) parts.push("الأسعار: gold-api.com");
     if (DATA.fx()) parts.push("العملات: Frankfurter");

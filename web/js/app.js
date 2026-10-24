@@ -130,7 +130,8 @@
     if (a === "hide") bar.classList.add("hidden");
     b.blur(); resetIdle(); syncDevbar();
   });
-  if (params.has("kiosk") || window.Riwaq) bar.classList.add("hidden");
+  // الشريط مخفي من البداية (عشان ما يطلع على التلفزيون وقت التحميل)، ويطلع في المتصفح بس
+  if (!params.has("kiosk") && !window.Riwaq) bar.classList.remove("hidden");
 
   window.App = { current: "home", toast, show };
 

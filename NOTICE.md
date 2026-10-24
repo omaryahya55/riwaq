@@ -37,6 +37,15 @@
 ### حكاية مكان
 تعريف كل مكان: أول جملة من مقالته في [ويكيبيديا العربية](https://ar.wikipedia.org) حرفياً، برخصة [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (النص المنقول يبقى بنفس الرخصة). الصور من [ويكيميديا كومنز](https://commons.wikimedia.org) بس اللي رخصتها حرة (CC BY أو CC BY-SA أو CC0 أو ملك عام)، واسم المصوّر والرخصة مكتوبين تحت كل صورة على الشاشة وفي `web/content/approved.json`. السكربت: `tools/import-places.py`.
 
+### صور الخلفية
+صورة لكل فترة من اليوم من [ويكيميديا كومنز](https://commons.wikimedia.org)، برخص حرة، واسم المصوّر مكتوب تحت الشاشة:
+- الفجر والنهار: Krzysztof Ziarnek, Kenraiz، الربع الخالي (عُمان)، CC BY-SA 4.0
+- العصر: Jc8136، صحراء ليوا، CC BY-SA 3.0
+- المغرب: traveljunction، غروب على كثبان دبي، CC BY-SA 2.0
+- الليل: Bureau of Land Management، ملك عام (والقمر مرسوم فوقها)
+
+الصور مقصوصة لنسبة الشاشة ومصغّرة، والقص والتصغير بنفس الرخصة. السكربت: `tools/import-backgrounds.py`.
+
 ### Todoist و Telegram
 "Todoist" و "Telegram" علامات تجارية لأصحابها. رواق مو تابع لهم ولا مدعوم منهم، ويستخدم واجهاتهم بمفاتيح المستخدم نفسه بس (اختياري).
 

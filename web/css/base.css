@@ -125,6 +125,11 @@ html, body {
 .pm-hint { font-size: 20px; color: var(--ink-3); margin-top: 22px; }
 
 /* الخلفية تتحرك بهدوء (CONFIG.motion): غيوم تمشي ونجوم تلمع. transform و opacity بس عشان تكون خفيفة على التلفزيون */
+/* صور الخلفية الحقيقية: الصورة تغطي الشاشة، وفوقها تظليل حسب الفترة عشان الكلام ينقرا */
+.scene .bg-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scene .bg-tint { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,8,14,.55) 0%, rgba(6,8,14,.25) 38%, rgba(6,8,14,.45) 70%, rgba(6,8,14,.7) 100%); }
+.scene .bg-day, .scene .bg-asr, .scene .bg-fajr { background: linear-gradient(180deg, rgba(6,8,14,.45) 0%, rgba(6,8,14,.12) 38%, rgba(6,8,14,.3) 70%, rgba(6,8,14,.62) 100%); }
+
 /* الغيوم طبقة لحالها، وتتحرك خطوة بالثانية (مو ٦٠ مرة): نفس الشكل للعين، وأخف بكثير على معالج التلفزيون */
 .cloud-layer { position: absolute; top: 0; left: 0; width: 1920px; height: 440px; overflow: hidden; pointer-events: none; }
 .cloud { position: absolute; top: 0; left: 0; width: 3840px; height: 440px; }

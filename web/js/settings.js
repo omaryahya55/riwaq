@@ -104,6 +104,7 @@
     cfg.sunnahDaily = $("sunnahDaily").checked;
     cfg.placeDaily = $("placeDaily").checked;
     cfg.motion = $("motion").checked;
+    cfg.bgStyle = $("bgStyle").value === "drawn" ? "drawn" : "photo";
   }
 
   // ===== رسالة من الجوال (تيليقرام) =====
@@ -139,6 +140,7 @@
     $("sunnahDaily").checked = cfg.sunnahDaily !== false;
     $("placeDaily").checked = cfg.placeDaily !== false;
     $("motion").checked = cfg.motion !== false;
+    $("bgStyle").value = cfg.bgStyle === "drawn" ? "drawn" : "photo";
     $("nightClock").checked = cfg.nightClock !== false;
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
     loadLockApps();

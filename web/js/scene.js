@@ -1,6 +1,7 @@
 /*
- * خلفية مرسومة (SVG): سماء وكثبان تتغير ألوانها حسب وقت اليوم (فجر، نهار، عصر، مغرب، ليل).
- * خلفية النموذج. الصور الحقيقية (قسم ٤: صور الخلفيات) تجي فوقها لاحقاً، وهذي تبقى بديل بدون نت.
+ * الخلفية حسب وقت اليوم (فجر، نهار، عصر، مغرب، ليل):
+ * - صور حقيقية (الافتراضي، من web/js/backgrounds.js)، وبالليل نرسم القمر فوقها
+ * - أو رسمة (SVG): سماء وكثبان تتغير ألوانها، فيها شمس بالنهار وقمر بالليل (CONFIG.bgStyle = "drawn")
  * ما فيها صور ناس (البريف: الهدف).
  */
 (function () {
@@ -50,7 +51,21 @@
     return `<div class="cloud-layer" style="opacity:${opacity}">${row(190, 1.1, "c1")}${row(330, 0.8, "c2")}</div>`;
   }
 
+  // صورة حقيقية للفترة (web/js/backgrounds.js)، وفوقها تظليل عشان الكلام ينقرا، والقمر بالليل
+  function photo(el, period) {
+    const b = window.BACKGROUNDS && BACKGROUNDS[period];
+    if (!b || !/^img\/bg\/[a-z]+\.jpg$/.test(b.src)) return false;
+    const p = P[period] || P.night;
+    const moon = period === "night" && p.moon
+      ? `<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".22"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient></defs><circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".92"/></svg>` : "";
+    el.innerHTML = `<img class="bg-photo" src="${b.src}" alt=""><div class="bg-tint bg-${period}"></div>${moon}`;
+    Scene.credit = b.credit;
+    return true;
+  }
+
   function render(el, period) {
+    if (window.CONFIG && CONFIG.bgStyle !== "drawn" && photo(el, period)) return;
+    Scene.credit = "";
     const p = P[period] || P.night;
     const sun = p.sun ? `<circle cx="${p.sun[0]}" cy="${p.sun[1]}" r="300" fill="url(#sunGlow)"/><circle cx="${p.sun[0]}" cy="${p.sun[1]}" r="46" fill="#FFF4DC" opacity=".95"/>` : "";
     const moon = p.moon ? `<circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".9"/>` : "";
@@ -84,5 +99,5 @@
     return "night";
   }
 
-  window.Scene = { render, periodAt, periods: Object.keys(P) };
+  window.Scene = { render, periodAt, periods: Object.keys(P), credit: "" };
 })();

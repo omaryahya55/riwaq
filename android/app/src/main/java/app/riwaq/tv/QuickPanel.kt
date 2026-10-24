@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import java.util.Date
 
@@ -40,10 +41,9 @@ class QuickPanel(private val svc: AccessibilityService) {
     private val rows = mutableListOf<TextView>()
     private val actions = mutableListOf<() -> Unit>()
     private var sel = 0
+    private var scroll: ScrollView? = null
 
     val isShowing get() = root != null
-
-    private fun dp(v: Int) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v.toFloat(), svc.resources.displayMetrics).toInt()
 
     // نفس خطوط الشاشة (داخل التطبيق)، ولو ما انقرت نرجع لخط النظام
     private fun font(path: String): Typeface = try { Typeface.createFromAsset(svc.assets, path) } catch (e: Exception) { Typeface.DEFAULT }
@@ -82,23 +82,29 @@ class QuickPanel(private val svc: AccessibilityService) {
     fun show() {
         if (root != null) return
         val gold = Color.parseColor("#E8C27A")
+        // المقاسات من حجم الشاشة نفسه (مو من تكبير الخط في النظام): كل الخيارات تدخل في الطول
+        val dm = svc.resources.displayMetrics
+        val h = minOf(dm.heightPixels, dm.widthPixels).toFloat()
+        val px = { f: Float -> (h * f).toInt() }
+        val size = { v: TextView, f: Float -> v.setTextSize(TypedValue.COMPLEX_UNIT_PX, h * f) }
+        val width = (maxOf(dm.widthPixels, dm.heightPixels) * 0.25f).toInt()
         val panel = LinearLayout(svc).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
-            setPadding(dp(28), dp(36), dp(28), dp(28))
+            setPadding(px(0.03f), px(0.04f), px(0.03f), px(0.03f))
             background = GradientDrawable().apply { setColor(Color.parseColor("#F2121419")) }
         }
 
         panel.addView(TextView(svc).apply {
-            text = "رِواق"; setTextColor(gold); textSize = 34f; typeface = font("web/fonts/reemkufi/ReemKufi-Variable.ttf")
+            text = "رِواق"; setTextColor(gold); size(this, 0.05f); typeface = font("web/fonts/reemkufi/ReemKufi-Variable.ttf")
         })
         val plex = font("web/fonts/plex/IBMPlexSansArabic-Medium.ttf")
         val now = Date()
         val time = SimpleDateFormat("h:mm a", ULocale("ar_SA")).format(now)
         val hijri = SimpleDateFormat("EEEE، d MMMM y", ULocale("ar_SA@calendar=islamic-umalqura")).format(now)
         panel.addView(TextView(svc).apply {
-            text = "$time\n$hijri"; setTextColor(Color.parseColor("#C9CAD3")); textSize = 15f; typeface = plex
-            setPadding(0, dp(4), 0, dp(18))
+            text = "$time\n$hijri"; setTextColor(Color.parseColor("#C9CAD3")); size(this, 0.022f); typeface = plex
+            setPadding(0, px(0.004f), 0, px(0.018f))
         })
 
         val textColors = ColorStateList(
@@ -106,26 +112,31 @@ class QuickPanel(private val svc: AccessibilityService) {
             intArrayOf(Color.parseColor("#1E1608"), Color.parseColor("#F1F1F4"))
         )
         rows.clear(); actions.clear(); sel = 0
+        // القائمة داخل تمرير: لو طوّلت عن الشاشة، تمشي مع التحديد
+        val list = LinearLayout(svc).apply { orientation = LinearLayout.VERTICAL; layoutDirection = View.LAYOUT_DIRECTION_RTL }
         for (it in items()) {
             val tv = TextView(svc).apply {
-                text = it.label; textSize = 19f; typeface = plex; setTextColor(textColors)
+                text = it.label; size(this, 0.027f); typeface = plex; setTextColor(textColors)
                 gravity = Gravity.CENTER_VERTICAL or Gravity.START
-                setPadding(dp(18), dp(12), dp(18), dp(14))
+                setPadding(px(0.016f), px(0.011f), px(0.016f), px(0.013f))
                 background = StateListDrawable().apply {
-                    addState(intArrayOf(android.R.attr.state_selected), GradientDrawable().apply { setColor(gold); cornerRadius = dp(14).toFloat() })
+                    addState(intArrayOf(android.R.attr.state_selected), GradientDrawable().apply { setColor(gold); cornerRadius = h * 0.014f })
                     addState(intArrayOf(), GradientDrawable().apply { setColor(Color.TRANSPARENT) })
                 }
             }
             rows += tv; actions += it.action
-            panel.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { topMargin = dp(4) })
+            list.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { topMargin = px(0.004f) })
         }
+        val sv = ScrollView(svc).apply { isVerticalScrollBarEnabled = false; isFocusable = false; addView(list) }
+        scroll = sv
+        panel.addView(sv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
         panel.addView(TextView(svc).apply {
-            text = "رجوع: إغلاق"; setTextColor(Color.parseColor("#8A8C98")); textSize = 13f; typeface = plex
-            setPadding(dp(4), dp(18), 0, 0)
+            text = "الأسهم: تنقّل · OK: فتح · رجوع: إغلاق"; setTextColor(Color.parseColor("#8A8C98")); size(this, 0.018f); typeface = plex
+            setPadding(px(0.004f), px(0.016f), 0, 0)
         })
 
         val lp = WindowManager.LayoutParams(
-            dp(340), ViewGroup.LayoutParams.MATCH_PARENT,
+            width, ViewGroup.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
             // ما تاخذ التركيز: التطبيق يبقى زي ما هو، والأزرار تجينا من الخدمة
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_DIM_BEHIND or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
@@ -139,7 +150,7 @@ class QuickPanel(private val svc: AccessibilityService) {
             return
         }
         root = panel
-        panel.translationX = dp(340).toFloat()
+        panel.translationX = width.toFloat()
         panel.animate().translationX(0f).setDuration(220).start()
         select(0)
         handler.postDelayed(autoClose, AUTO_CLOSE_MS)
@@ -149,6 +160,9 @@ class QuickPanel(private val svc: AccessibilityService) {
         if (rows.isEmpty()) return
         sel = i.coerceIn(0, rows.size - 1)
         rows.forEachIndexed { k, v -> v.isSelected = k == sel }
+        // الخيار المحدد يبان دايماً (القائمة تمشي معه)
+        val row = rows[sel]
+        scroll?.post { scroll?.smoothScrollTo(0, maxOf(0, row.top - (scroll?.height ?: 0) / 3)) }
     }
 
     /** أزرار الريموت وهي مفتوحة (من HomeKeyService). true = استخدمناه وما يوصل للتطبيق */
