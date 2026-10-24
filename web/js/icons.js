@@ -19,6 +19,7 @@
     ball: `<circle cx="12" cy="12" r="8.5" ${S}/><path ${S} d="M12 7.2l3.6 2.6-1.4 4.2H9.8L8.4 9.8z"/><path ${S} d="M12 3.5v3.7M15.6 9.8l3.9-1.1M14.2 14l2.4 3.4M9.8 14l-2.4 3.4M8.4 9.8L4.5 8.7"/>`,
     crescent: `<path ${S} d="M15.8 4.2a8.2 8.2 0 1 0 4 11.3 6.6 6.6 0 1 1-4-11.3z"/>`,
     wallet: `<rect x="3.5" y="6" width="17" height="13" rx="2.4" ${S}/><path ${S} d="M16 12.5h4.5M6.5 6l8.5-3 1.4 3"/>`,
+    calendar: `<rect x="3.5" y="5" width="17" height="15.5" rx="2.4" ${S}/><path ${S} d="M3.5 10h17M8 3v4M16 3v4"/>`,
     bell: `<path ${S} d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path ${S} d="M10 20.5a2 2 0 0 0 4 0"/>`
   };
   window.icon = function (name, cls) {

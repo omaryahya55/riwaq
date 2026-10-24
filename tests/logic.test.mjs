@@ -95,3 +95,30 @@ test("لون الفريق الغامق يتفتّح لين ينقرا", () => {
   assert.ok(r + g + b > 300, out);
   assert.equal(w.Saver._test.readable("#fedc00"), "rgb(254,220,0)");
 });
+
+test("التقويم: موعد عادي، ويوم كامل، ومتكرر أسبوعي، ومنطقة زمنية", () => {
+  const w = load(["js/config.js", "js/format.js", "js/calendar.js"], { city: RIYADH });
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "BEGIN:VEVENT", "SUMMARY:اجتماع العائلة", "DTSTART:20261025T170000Z", "END:VEVENT",
+    "BEGIN:VEVENT", "SUMMARY:يوم كامل", "DTSTART;VALUE=DATE:20261026", "END:VEVENT",
+    "BEGIN:VEVENT", "SUMMARY:درس الأحد والثلاثاء", "DTSTART;TZID=Asia/Riyadh:20261025T200000", "RRULE:FREQ=WEEKLY;BYDAY=SU,TU;COUNT=4", "END:VEVENT",
+    "BEGIN:VEVENT", "SUMMARY:ملغي", "DTSTART:20261025T100000Z", "STATUS:CANCELLED", "END:VEVENT",
+    "BEGIN:VEVENT", "SUMMARY:نص\, فيه فاصلة", "DTSTART:20261027T060000Z", "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+  const now = new Date("2026-10-25T09:00:00+03:00");
+  const list = w.ICal.upcoming(ics, "Asia/Riyadh", now, 14, 20);
+  const titles = list.map((e) => e.title);
+  assert.ok(!titles.includes("ملغي"));
+  assert.ok(titles.includes("نص, فيه فاصلة"));
+  const lessons = list.filter((e) => e.title.startsWith("درس"));
+  assert.equal(lessons.length, 4, "COUNT=4");
+  // أول درس: الأحد ٨ مساءً بتوقيت الرياض = ١٧:٠٠ UTC
+  assert.equal(new Date(lessons[0].at).toISOString(), "2026-10-25T17:00:00.000Z");
+  assert.equal(new Date(lessons[1].at).getUTCDay(), 2, "الثلاثاء");
+  const allDay = list.find((e) => e.title === "يوم كامل");
+  assert.ok(allDay.allDay);
+  // مرتبة بالوقت
+  for (let i = 1; i < list.length; i++) assert.ok(list[i].at >= list[i - 1].at);
+});

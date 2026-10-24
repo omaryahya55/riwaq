@@ -94,6 +94,7 @@
     $("alertMinutes").value = String(cfg.alertMinutes);
     $("reminders").checked = cfg.reminders !== false;
     $("showSalary").checked = cfg.showSalary !== false;
+    $("icalUrl").value = cfg.icalUrl || "";
     $("teamLeague").innerHTML = LEAGUES.map((l) => `<option value="${l.id}">${l.name}</option>`).join("");
     $("leagues").innerHTML = LEAGUES.map((l) => `<label><input type="checkbox" value="${l.id}" ${cfg.leagues.includes(l.id) ? "checked" : ""}>${l.name.replace(" السعودي", "")}</label>`).join("");
     paintCity(); paintTeams(); paintFeeds();
@@ -103,6 +104,9 @@
     readFeeds();
     const bad = cfg.newsFeeds.find((u) => !/^https?:\/\/[^\s]+$/i.test(u));
     if (bad) { status("رابط الأخبار لازم يبدأ بـ https://", true); return; }
+    const ical = $("icalUrl").value.trim();
+    if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
+    cfg.icalUrl = ical;
     cfg.method = $("method").value;
     cfg.hijriOffset = +$("hijriOffset").value;
     cfg.alertMinutes = +$("alertMinutes").value;

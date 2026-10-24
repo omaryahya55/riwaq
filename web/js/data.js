@@ -18,7 +18,8 @@
     table: { every: 6 * HOUR, maxAge: 3 * 24 * HOUR },
     team: { every: 60 * MIN, maxAge: 12 * HOUR },
     news: { every: 20 * MIN, maxAge: 6 * HOUR },
-    color: { every: 30 * 24 * HOUR, maxAge: 120 * 24 * HOUR }
+    color: { every: 30 * 24 * HOUR, maxAge: 120 * 24 * HOUR },
+    calendar: { every: 15 * MIN, maxAge: 6 * HOUR }
   };
 
   const listeners = [];
@@ -180,6 +181,18 @@
     return { source: source.trim().slice(0, 40), items: items.slice(0, 12) };
   }
 
+  // التقويم: الرابط سرّي، فما نستخدم السيرفر الوسيط. على التلفزيون يمر عن طريق أندرويد (Riwaq.fetchText)
+  async function loadCalendar() {
+    const url = CONFIG.icalUrl;
+    if (!url || !/^https:\/\//.test(url) || !due("cal", "calendar")) return;
+    let text;
+    if (window.Riwaq && Riwaq.fetchText) text = await fetchText(url);
+    else text = await get(url, "ical", true); // في المتصفح: يشتغل بس إذا التقويم يسمح (CORS)
+    if (!text || text.indexOf("BEGIN:VCALENDAR") < 0) return;
+    // نحفظ المواعيد الجاية بس (العنوان والوقت)، مو الملف كامل
+    write("cal", ICal.upcoming(text, F.TZ, new Date(), 14, 8));
+  }
+
   async function loadNews() {
     if (!CONFIG.newsFeeds.length || !due("news", "news")) return;
     const all = [];
@@ -198,7 +211,7 @@
     if (running) return; // تحديث واحد بس في نفس الوقت، عشان ما نطلب نفس المصدر مرتين
     running = true;
     try {
-      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadTables, loadTeams, loadTeamColors];
+      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTables, loadTeams, loadTeamColors];
       for (const job of jobs) {
         try { await job(); } catch (e) { /* نجرب المرة الجاية. البيانات القديمة تنحكم بحدها */ }
         listeners.forEach((cb) => cb());
@@ -230,6 +243,13 @@
     table(id) { return fresh("table." + id, "table"); },
     team(id) { return fresh("team." + id, "team"); },
     news() { return fresh("news", "news"); },
+    calendar() {
+      const v = CONFIG.icalUrl && fresh("cal", "calendar");
+      if (!v) return null;
+      const now = Date.now();
+      const list = v.data.filter((e) => (e.allDay ? e.at + 86400000 : e.at) > now).slice(0, 5);
+      return list.length ? list : null;
+    },
     teamColor(id) { const v = fresh("color." + id, "color"); return v && v.data.color ? v.data.color : null; },
     season,
     RULES

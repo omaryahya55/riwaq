@@ -26,8 +26,18 @@
     }
     apps.forEach((a, i) => { if (!a.tint) a.tint = TINTS[i % TINTS.length]; });
     appById = Object.fromEntries(apps.map((a) => [a.id, a]));
-    const saved = Array.isArray(CONFIG.pinned) ? CONFIG.pinned : (window.DEMO && !native() ? DEMO.pinned : apps.slice(0, 6).map((a) => a.id));
+    const saved = Array.isArray(CONFIG.pinned) ? CONFIG.pinned : (window.DEMO && !native() ? DEMO.pinned : defaultPinned());
     pinned = saved.filter((id) => appById[id]);
+  }
+
+  // أول مرة (قبل ما يختار المستخدم): التطبيقات المشهورة أول، وتطبيقات النظام (الإعدادات والمتجر) آخر شي
+  const POPULAR = ["com.google.android.youtube.tv", "net.mbc.shahid", "net.mbc.shahidTV", "com.netflix.ninja",
+    "com.amazon.amazonvideo.livingroom", "com.disney.disneyplus", "com.google.android.youtube.tvkids", "com.spotify.tv.android"];
+  const SYSTEM = ["com.android.tv.settings", "com.android.settings", "com.android.vending", "com.google.android.play.games",
+    "com.google.android.tv", "com.google.android.youtube.tvmusic"];
+  function defaultPinned() {
+    const rank = (id) => { const p = POPULAR.indexOf(id); return p >= 0 ? p : SYSTEM.includes(id) ? 1000 : 100; };
+    return apps.map((a) => a.id).sort((x, y) => rank(x) - rank(y)).slice(0, 6);
   }
   function save() { Config.save({ pinned: pinned.slice() }); }
 

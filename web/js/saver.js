@@ -74,7 +74,7 @@
         </div>
         <div class="s-side card" data-k="side">
           <div class="s-side-head">
-            <div class="s-side-title">${icon("ball")}<span data-k="league"></span></div>
+            <div class="s-side-title"><span data-k="sideIcon">${icon("ball")}</span><span data-k="league"></span></div>
             <div class="s-dots" data-k="dots"></div>
           </div>
           <div class="s-table" data-k="table"></div>
@@ -167,20 +167,55 @@
   const LEAGUE_AR = { 4668: "دوري روشن", 4328: "الدوري الإنقليزي", 4335: "الدوري الإسباني", 4332: "الدوري الإيطالي", 4331: "الدوري الألماني", 4334: "الدوري الفرنسي" };
   function availableLeagues() { return CONFIG.leagues.filter((id) => DATA.table(id)); }
 
+  // البطاقة اللي جنب الساعة: صفحات تتبدل كل ٨ ثواني (مواعيدك أول لو فيه، وبعدها جداول الدوريات)
+  function sidePages() {
+    const pages = [];
+    if (DATA.calendar()) pages.push("cal");
+    if (CONFIG.sideCard === "leagues") pages.push(...availableLeagues());
+    return pages;
+  }
+
+  function calWhen(e) {
+    const now = new Date(), at = new Date(e.at);
+    const dayKey = (d) => F.parts(d, { year: "numeric", month: "numeric", day: "numeric" });
+    const same = (a, b) => a.year === b.year && a.month === b.month && a.day === b.day;
+    const d = dayKey(at);
+    const label = same(d, dayKey(now)) ? "اليوم" : same(d, dayKey(new Date(now.getTime() + DAY))) ? "بكرة"
+      : new Intl.DateTimeFormat("ar-SA", { timeZone: F.TZ, weekday: "long" }).format(at);
+    if (e.allDay) return label;
+    const c = F.clock(at);
+    return `${label} ${c.h}:${c.m} ${c.ampm}`;
+  }
+
+  function renderCalendar(root) {
+    const list = DATA.calendar() || [];
+    $(root, "league").textContent = "مواعيدك";
+    $(root, "sideIcon").innerHTML = icon("calendar");
+    $(root, "table").innerHTML = list.map((e) => `<div class="s-row s-cal"><span class="clip">${esc(e.title)}</span><span class="when">${esc(calWhen(e))}</span></div>`).join("");
+    $(root, "sideSrc").textContent = "من تقويمك";
+  }
+
   function renderLeague(root, animate) {
     const side = $(root, "side");
-    const ids = CONFIG.sideCard === "leagues" ? availableLeagues() : [];
-    show(side, ids.length > 0);
-    if (!ids.length) return;
-    leagueIdx %= ids.length;
-    const id = ids[leagueIdx], t = DATA.table(id);
-    const mine = new Set(CONFIG.teams.map((x) => String(x.id)));
+    const pages = sidePages();
+    show(side, pages.length > 0);
+    if (!pages.length) return;
+    leagueIdx %= pages.length;
     const table = $(root, "table");
+    const dots = () => { $(root, "dots").innerHTML = pages.map((x, i) => `<i class="${i === leagueIdx ? "on" : ""}"></i>`).join(""); };
+    if (pages[leagueIdx] === "cal") {
+      const paintCal = () => { renderCalendar(root); dots(); table.classList.remove("fade"); };
+      if (!animate) return paintCal();
+      table.classList.add("fade"); setTimeout(paintCal, 500); return;
+    }
+    const id = pages[leagueIdx], t = DATA.table(id);
+    const mine = new Set(CONFIG.teams.map((x) => String(x.id)));
     const paint = () => {
+      $(root, "sideIcon").innerHTML = icon("ball");
       $(root, "league").textContent = LEAGUE_AR[id] || "الدوري";
       table.innerHTML = `<div class="s-row s-row-head"><span></span><span>الفريق</span><span class="pl">لعب</span><span class="pt">نقاط</span></div>` +
         t.data.map((r, i) => `<div class="s-row ${mine.has(String(r.id)) ? "mine" : ""}"${mine.has(String(r.id)) ? ` style="color:${teamColor(r.id)}"` : ""}><span class="rk">${F.digits(i + 1)}</span><span class="clip"><bdi>${esc(teamName(r.id, r.name))}</bdi></span><span class="pl">${F.digits(r.played)}</span><span class="pt">${F.digits(r.pts)}</span></div>`).join("");
-      $(root, "dots").innerHTML = ids.map((x, i) => `<i class="${i === leagueIdx ? "on" : ""}"></i>`).join("");
+      dots();
       const at = new Date(t.at);
       $(root, "sideSrc").textContent = `البيانات: TheSportsDB · ${F.clock(at).h}:${F.clock(at).m} ${F.clock(at).ampm}`;
       table.classList.remove("fade");

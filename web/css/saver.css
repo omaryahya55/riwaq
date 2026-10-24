@@ -122,3 +122,8 @@
 #stage.alert .adhan-glow { opacity: 1; }
 
 .credit { position: absolute; bottom: 20px; left: 92px; font-size: 15px; color: var(--ink-4); }
+
+/* صفحة المواعيد في البطاقة الجانبية */
+.s-row.s-cal { grid-template-columns: 1fr auto; gap: 14px; font-size: 24px; }
+.s-row.s-cal .when { color: var(--gold); font-size: 20px; white-space: nowrap; }
+.s-side-title [data-k="sideIcon"] { display: inline-flex; }
