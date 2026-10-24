@@ -15,6 +15,8 @@ import android.view.accessibility.AccessibilityEvent
  *  - ضغطة مطوّلة: تفتح لوحة "التلفزيون" السريعة في رواق
  * ما نقرا ولا نحفظ أي شي ثاني: كل الأزرار غير البيت تمر بدون ما نلمسها، وما نستقبل أحداث الشاشة.
  * تنشغل من سكربت التركيب (tools/setup-tv.ps1) وتنطفي من سكربت الرجوع.
+ * ملاحظة للاختبار: أوامر "adb shell input keyevent" ما تمر على هذي الخدمة، لازم الريموت الحقيقي
+ * (تأكدنا على Xiaomi TV Box S: أزرار الريموت كلها توصل، ومنها البيت).
  */
 class HomeKeyService : AccessibilityService() {
 
@@ -38,6 +40,10 @@ class HomeKeyService : AccessibilityService() {
                 down = true
                 longFired = false
                 handler.postDelayed(longPress, LONG_PRESS_MS)
+            } else if (event.isLongPress && down && !longFired) {
+                // أندرويد نفسه علّم الضغطة إنها مطوّلة (الزر مضغوط ويتكرر): نفتح اللوحة على طول
+                handler.removeCallbacks(longPress)
+                longPress.run()
             }
             KeyEvent.ACTION_UP -> {
                 handler.removeCallbacks(longPress)
