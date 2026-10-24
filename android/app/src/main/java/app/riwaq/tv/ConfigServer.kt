@@ -36,6 +36,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         "/js/config.js" to "application/javascript; charset=utf-8",
         "/js/teams-ar.js" to "application/javascript; charset=utf-8",
         "/js/settings.js" to "application/javascript; charset=utf-8",
+        "/js/demo-data.js" to "application/javascript; charset=utf-8",
         "/css/fonts.css" to "text/css; charset=utf-8",
         "/content/approved.json" to "application/json; charset=utf-8",
         "/content/candidates/hadeethenc.json" to "application/json; charset=utf-8",
@@ -94,6 +95,12 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                 }.toMap()
 
                 if (path == "/" ) return redirect(out, "/settings.html")
+                if (path == "/api/apps") {
+                    // أسماء التطبيقات المركّبة (لاختيار التطبيقات المقفلة من الجوال). بالرمز بس
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
+                    return send(out, 200, "application/json; charset=utf-8", Apps.listJson(ctx).toByteArray())
+                }
                 if (path == "/api/config") {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
                     when (method) {

@@ -95,6 +95,9 @@
     $("reminders").checked = cfg.reminders !== false;
     $("showSalary").checked = cfg.showSalary !== false;
     $("icalUrl").value = cfg.icalUrl || "";
+    $("nightClock").checked = cfg.nightClock !== false;
+    $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
+    loadLockApps();
     $("teamLeague").innerHTML = LEAGUES.map((l) => `<option value="${l.id}">${l.name}</option>`).join("");
     $("leagues").innerHTML = LEAGUES.map((l) => `<label><input type="checkbox" value="${l.id}" ${cfg.leagues.includes(l.id) ? "checked" : ""}>${l.name.replace(" السعودي", "")}</label>`).join("");
     paintCity(); paintTeams(); paintFeeds();
@@ -104,6 +107,10 @@
     readFeeds();
     const bad = cfg.newsFeeds.find((u) => !/^https?:\/\/[^\s]+$/i.test(u));
     if (bad) { status("رابط الأخبار لازم يبدأ بـ https://", true); return; }
+    const pin = $("lockPin").value.trim();
+    if (pin && !/^[0-9]{4}$/.test(pin)) { status("رمز القفل لازم يكون ٤ أرقام", true); return; }
+    cfg.lock = { pin, apps: [...$("lockApps").querySelectorAll("input:checked")].map((x) => x.value) };
+    cfg.nightClock = $("nightClock").checked;
     const ical = $("icalUrl").value.trim();
     if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
     cfg.icalUrl = ical;
@@ -123,6 +130,18 @@
       }
       status("انحفظ ✓");
     } catch (e) { status(e.message, true); }
+  }
+
+  // التطبيقات المركّبة على التلفزيون (لاختيار المقفلة). في المتصفح: القائمة التجريبية
+  async function loadLockApps() {
+    let list = [];
+    try {
+      if (remote) list = await (await fetch("/api/apps?token=" + encodeURIComponent(token))).json();
+      else list = (window.DEMO && DEMO.apps) || [];
+    } catch (e) { list = []; }
+    const chosen = new Set((cfg.lock && cfg.lock.apps) || []);
+    $("lockApps").innerHTML = list.map((a) => `<label><input type="checkbox" value="${esc(a.id)}" ${chosen.has(a.id) ? "checked" : ""}><bdi>${esc(a.name)}</bdi></label>`).join("")
+      || `<p class="tiny">ما قدرنا نجيب قائمة التطبيقات.</p>`;
   }
 
   // محتوى اليوم مع روابط التحقق (نفس طريقة اختيار الشاشة: عنصر لكل يوم)

@@ -23,6 +23,7 @@
     wifi: `<path ${S} d="M3 9.5a13 13 0 0 1 18 0M6 13a8.5 8.5 0 0 1 12 0M9 16.5a4 4 0 0 1 6 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/>`,
     bt: `<path ${S} d="M7 7l10 10-5 4V3l5 4L7 17"/>`,
     sound: `<path ${S} d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>`,
+    lock: `<rect x="5" y="10.5" width="14" height="10" rx="2.2" ${S}/><path ${S} d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>`,
     calendar: `<rect x="3.5" y="5" width="17" height="15.5" rx="2.4" ${S}/><path ${S} d="M3.5 10h17M8 3v4M16 3v4"/>`,
     bell: `<path ${S} d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path ${S} d="M10 20.5a2 2 0 0 0 4 0"/>`
   };

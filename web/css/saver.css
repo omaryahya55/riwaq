@@ -129,3 +129,14 @@
 .s-row.s-cal { grid-template-columns: 1fr auto; gap: 14px; font-size: 24px; }
 .s-row.s-cal .when { color: var(--gold); font-size: 20px; white-space: nowrap; }
 .s-side-title [data-k="sideIcon"] { display: inline-flex; }
+
+/* ===== ساعة الليل: الوقت والتاريخ والصلاة الجاية بس، في النص ===== */
+#stage.nightclock .s-prices, #stage.nightclock .s-side, #stage.nightclock .s-col, #stage.nightclock .s-ticker,
+#stage.nightclock .s-chips, #stage.nightclock .s-now, #stage.nightclock .credit, #stage.nightclock .s-clock-city { display: none !important; }
+#stage.nightclock .s-date { right: 0; left: 0; top: 150px; text-align: center; }
+#stage.nightclock .s-clock-wrap { right: 0; left: 0; width: auto; top: 330px; }
+#stage.nightclock .s-clock { justify-content: center; }
+#stage.nightclock .s-bottom { grid-template-columns: 1fr !important; text-align: center; top: 760px; }
+#stage.nightclock .s-bottom .s-cell { border: 0; padding: 0; }
+#stage.nightclock .s-bottom .s-cell:not(:first-child) { display: none; }
+#stage.nightclock .s-bottom .label { justify-content: center; }

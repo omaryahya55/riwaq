@@ -154,3 +154,18 @@
 .qk .ic { font-size: 30px; color: var(--gold); }
 .qk.focus { background: var(--gold); color: #1E1608; }
 .qk.focus .ic { color: #1E1608; }
+
+/* ===== قفل التطبيقات ===== */
+.lock-badge { position: absolute; top: 12px; left: 12px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(0,0,0,.6); color: var(--gold); font-size: 24px; }
+.pin { position: absolute; inset: 0; z-index: 37; background: rgba(5,5,10,.85); display: grid; place-items: center; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility 0s .3s; }
+.pin.on { opacity: 1; visibility: visible; transition: opacity .3s var(--ease); }
+.pin-box { text-align: center; background: var(--card-strong); border: 1px solid var(--line); border-radius: 34px; padding: 50px 80px 40px; }
+.pin-title { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 36px; font-weight: 600; }
+.pin-title .ic { color: var(--gold); font-size: 40px; }
+.pin-sub { font-size: 24px; color: var(--ink-2); margin-top: 12px; }
+.pin-digits { display: flex; gap: 18px; justify-content: center; margin: 30px 0 20px; direction: ltr; }
+.pd { width: 96px; height: 120px; border-radius: 22px; display: grid; place-items: center; font-size: 60px; font-weight: 600; background: rgba(255,255,255,.06); border: 2px solid var(--line); }
+.pd.on { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 0 6px rgba(232,194,122,.15); }
+.pin-hint { font-size: 18px; color: var(--ink-4); }
+.pin.shake .pin-box { animation: shake .4s; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-14px); } 75% { transform: translateX(14px); } }

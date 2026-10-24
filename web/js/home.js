@@ -13,8 +13,9 @@
   let apps = [], appById = {}, inputs = [];
   let pinned = [];
   let row = 1, col = 0;      // الصف ٠ = شريط التنقل، ١ = التطبيقات، ٢ = المداخل
-  let mode = "nav";          // nav | menu | move | picker | reader | quick
+  let mode = "nav";          // nav | menu | move | picker | reader | quick | pin
   let menuIdx = 0, pickIdx = 0, readIdx = 0, readList = [], quickIdx = 0;
+  let pinDigits = [0, 0, 0, 0], pinPos = 0, pinThen = null, pinTries = 0;
   let root;
 
   const TINTS = ["#C8463D", "#2F9C7A", "#1F5FA8", "#5B3FA6", "#9E6B2B", "#2E6F5E", "#6A2C91", "#1E6F9F", "#8A3B5C", "#3F5A2E"];
@@ -78,10 +79,11 @@
     if (item.type === "app") {
       const a = appById[item.id];
       // البانر فيه اسم التطبيق أصلاً: اسمنا يطلع بس لما يتحدد
-      if (a.banner) return `<div class="tile has-img" data-r="${r}" data-c="${c}"><img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
-      if (a.icon) return `<div class="tile has-icon" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.04)};--c2:${shade(a.tint, -0.55)}"><div class="bg"></div><img class="app-ic" src="${a.icon}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
+      const lockBadge = isLocked(a.id) ? `<span class="lock-badge">${icon("lock")}</span>` : "";
+      if (a.banner) return `<div class="tile has-img" data-r="${r}" data-c="${c}">${lockBadge}<img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
+      if (a.icon) return `<div class="tile has-icon" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.04)};--c2:${shade(a.tint, -0.55)}">${lockBadge}<div class="bg"></div><img class="app-ic" src="${a.icon}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
       const mono = /^[A-Za-z]/.test(a.name) ? a.name[0] : a.name.replace(/^ال/, "")[0];
-      return `<div class="tile" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.08)};--c2:${shade(a.tint, -0.45)}"><div class="bg"></div><div class="mono">${esc(mono)}</div><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
+      return `<div class="tile" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.08)};--c2:${shade(a.tint, -0.45)}">${lockBadge}<div class="bg"></div><div class="mono">${esc(mono)}</div><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
     }
     return `<div class="tile small" data-r="${r}" data-c="${c}">${icon(item.ic)}<div class="name clip"><bdi>${esc(item.name)}</bdi></div></div>`;
   }
@@ -128,6 +130,14 @@
         <h2>${icon("tv")}التلفزيون</h2>
         <div class="quick-list" data-k="qlist"></div>
       </div>
+      <div class="pin" data-k="pin">
+        <div class="pin-box">
+          <div class="pin-title">${icon("lock")}<span>التطبيق مقفل</span></div>
+          <p class="pin-sub" data-k="pinSub">اكتب الرمز</p>
+          <div class="pin-digits" data-k="pinDigits"></div>
+          <div class="pin-hint">فوق وتحت: الرقم · يمين ويسار: الخانة · OK: فتح · رجوع: إلغاء</div>
+        </div>
+      </div>
       <div class="reader" data-k="reader">
         <div class="reader-box">
           <div class="reader-head"><span data-k="rTitle"></span><span class="reader-count" data-k="rCount"></span></div>
@@ -156,7 +166,7 @@
   function paintFocus() {
     root.querySelectorAll(".tile, .nav-pill").forEach((t) => t.classList.remove("focus", "moving"));
     const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
-    if (t && mode !== "picker" && mode !== "reader" && mode !== "quick") t.classList.add(mode === "move" ? "moving" : "focus");
+    if (t && !["picker", "reader", "quick", "pin"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
       const strip = $("r" + row), pitch = row === 1 ? 328 : 248, w = row === 1 ? 300 : 220;
@@ -282,7 +292,37 @@
     App.toast(`يفتح ${q.name} (في المتصفح ما يفتح شي)`);
   }
 
+  // ===== قفل التطبيقات (للأطفال) =====
+  // حماية عائلية بسيطة: تمنع فتح التطبيق من رواق بدون الرمز. ما تمنع طرق ثانية (مثل المساعد الصوتي)
+  const isLocked = (id) => !!(CONFIG.lock && /^[0-9]{4}$/.test(CONFIG.lock.pin || "") && (CONFIG.lock.apps || []).includes(id));
+  function renderPin() {
+    $("pinDigits").innerHTML = pinDigits.map((d, i) => `<span class="pd ${i === pinPos ? "on" : ""}">${F.digits(d)}</span>`).join("");
+  }
+  function askPin(then, name) {
+    mode = "pin"; pinDigits = [0, 0, 0, 0]; pinPos = 0; pinThen = then;
+    $("pinSub").textContent = `اكتب رمز القفل عشان تفتح ${name}`;
+    $("pin").classList.add("on"); renderPin(); paintFocus();
+  }
+  function closePin() { mode = "nav"; $("pin").classList.remove("on"); pinThen = null; paintFocus(); }
+  function checkPin() {
+    if (pinDigits.join("") === String(CONFIG.lock.pin)) { const fn = pinThen; pinTries = 0; closePin(); if (fn) fn(); return; }
+    pinTries++;
+    $("pin").classList.remove("shake"); void $("pin").offsetWidth; $("pin").classList.add("shake");
+    $("pinSub").textContent = pinTries >= 3 ? "الرمز غلط. اسأل أهلك عن الرمز" : "الرمز غلط، جرّب مرة ثانية";
+    pinDigits = [0, 0, 0, 0]; pinPos = 0; renderPin();
+  }
+
+  function launchItem(item) {
+    if (native()) {
+      if (item.type === "app") Riwaq.launch(item.id);
+      if (item.type === "input") Riwaq.openInput(item.id);
+      return;
+    }
+    App.toast({ app: `يفتح ${item.name} (في المتصفح ما يفتح شي)`, input: `يحوّل إلى ${item.name}` }[item.type]);
+  }
+
   function open(item) {
+    if (item.type === "app" && isLocked(item.id)) { askPin(() => launchItem(item), item.name); return; }
     if (item.type === "nav") {
       if (item.id === "quick") { openQuick(); return; }
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
@@ -297,12 +337,7 @@
         return;
       }
     }
-    if (native()) {
-      if (item.type === "app") Riwaq.launch(item.id);
-      if (item.type === "input") Riwaq.openInput(item.id);
-      return;
-    }
-    App.toast({ app: `يفتح ${item.name} (في المتصفح ما يفتح شي)`, input: `يحوّل إلى ${item.name}` }[item.type]);
+    launchItem(item);
   }
 
   window.Home = {
@@ -319,6 +354,19 @@
     tick() { renderStatus(); },
     key(k) {
       const R = rows();
+      if (mode === "pin") {
+        if (/^d[0-9]$/.test(k)) {
+          pinDigits[pinPos] = +k[1];
+          if (pinPos < 3) pinPos++; else { checkPin(); return true; }
+        }
+        if (k === "up") pinDigits[pinPos] = (pinDigits[pinPos] + 1) % 10;
+        if (k === "down") pinDigits[pinPos] = (pinDigits[pinPos] + 9) % 10;
+        if (k === "left") pinPos = Math.min(3, pinPos + 1);   // من اليمين لليسار: اليسار = الخانة اللي بعدها
+        if (k === "right") pinPos = Math.max(0, pinPos - 1);
+        if (k === "ok") { checkPin(); return true; }
+        if (k === "back") { closePin(); return true; }
+        renderPin(); return true;
+      }
       if (mode === "quick") {
         if (k === "up") quickIdx = Math.max(0, quickIdx - 1);
         if (k === "down") quickIdx = Math.min(QUICK.length - 1, quickIdx + 1);

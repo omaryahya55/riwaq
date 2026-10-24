@@ -42,6 +42,8 @@
     const isha = pm.isha + 90, fajr = pm.fajr - 30;
     const night = forcedNight !== null ? forcedNight : (min >= isha || min < fajr);
     stage.classList.toggle("night", night && App.current === "saver");
+    // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
+    stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
 
   function show(name) {
@@ -62,6 +64,9 @@
   const MAP = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", Enter: "ok", " ": "ok",
                 Escape: "back", Backspace: "back", GoBack: "back", BrowserBack: "back", ContextMenu: "menu", m: "menu", M: "menu" };
   let okDown = 0, okLong = false, okTimer;
+
+  // أزرار الأرقام (لو الريموت فيها): d0 إلى d9
+  for (let n = 0; n <= 9; n++) MAP[String(n)] = "d" + n;
 
   function dispatch(k) {
     resetIdle();

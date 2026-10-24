@@ -51,6 +51,7 @@
         </select>
       </label>
       <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض)</span></label>
+      <label class="switch"><input type="checkbox" id="nightClock"><span>ساعة الليل: بعد العشاء بساعة ونص، شاشة الانتظار تصير ساعة بسيطة خافتة</span></label>
       <label class="switch" id="salaryRow"><input type="checkbox" id="showSalary"><span>عدّاد الراتب وحساب المواطن</span></label>
     </section>
 
@@ -73,6 +74,16 @@
       <button class="btn ghost" id="addFeed" type="button">+ رابط</button>
     </section>
     <section class="card">
+      <h2>قفل التطبيقات (للأطفال)</h2>
+      <p class="muted">التطبيق المقفل يطلب الرمز قبل ما ينفتح من رواق. حماية عائلية بسيطة: ما تمنع المساعد الصوتي مثلاً.</p>
+      <label class="field">الرمز (٤ أرقام)
+        <input id="lockPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••" style="direction:ltr;text-align:center;letter-spacing:.5em">
+        <small>خلّه فاضي عشان تلغي القفل.</small>
+      </label>
+      <div class="checks" id="lockApps"></div>
+    </section>
+
+    <section class="card">
       <h2>مواعيدك (اختياري)</h2>
       <p class="muted">تطلع مواعيد تقويم قوقل حقك جنب الساعة. بدون تسجيل دخول: تحتاج بس "العنوان السري".</p>
       <input id="icalUrl" type="url" inputmode="url" placeholder="https://calendar.google.com/calendar/ical/.../basic.ics" aria-label="العنوان السري للتقويم" style="direction:ltr;text-align:left">
@@ -92,6 +103,7 @@
   </footer>
 
   <script src="js/config.js"></script>
+  <script src="js/demo-data.js"></script>
   <script src="js/teams-ar.js"></script>
   <script src="js/settings.js"></script>
 </body>
