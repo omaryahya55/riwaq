@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="h-hero soft-shadow" data-k="hero">
-        <div class="label">الصلاة القادمة</div>
+        <div class="label" data-k="plabel">الصلاة القادمة</div>
         <div class="h-hero-name" data-k="pname"></div>
         <div class="h-hero-sub" data-k="psub"></div>
       </div>
@@ -144,9 +144,11 @@
     const np = Prayer.next(now);
     if (np) {
       const t = F.clock(np.p.at);
+      $("plabel").style.display = "";
       $("pname").textContent = np.p.name;
       $("psub").innerHTML = `${t.h}:${t.m} ${t.ampm} · <b>بعد ${F.duration(np.mins)}</b>`;
     } else {
+      $("plabel").style.display = "none"; // ما فيه مدينة: ما فيه صلاة قادمة
       $("pname").textContent = "أهلاً";
       $("psub").textContent = "اختر مدينتك من الإعدادات عشان تطلع أوقات الصلاة";
     }

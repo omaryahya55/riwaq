@@ -49,7 +49,12 @@
     const ctl = window.AbortController ? new AbortController() : null;
     const timer = ctl && setTimeout(() => ctl.abort(), 12000);
     try {
-      const r = await fetch(url, ctl ? { signal: ctl.signal } : {});
+      let r;
+      try { r = await fetch(url, ctl ? { signal: ctl.signal } : {}); } catch (e) {
+        // المصدر رفض أو النت مقطوع (رد الحجب 429 أحياناً يطلع كخطأ CORS): نرتاح منه ١٠ دقايق
+        cooldown[host] = Date.now() + 10 * MIN;
+        throw e;
+      }
       if (r.status === 429) { cooldown[host] = Date.now() + 30 * MIN; throw new Error("429"); }
       if (!r.ok) throw new Error("HTTP " + r.status);
       return asText ? await r.text() : await r.json();

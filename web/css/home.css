@@ -18,7 +18,8 @@
 /* ===== الواجهة الكبيرة ===== */
 .h-hero { position: absolute; top: 186px; right: 92px; }
 .h-hero .label { font-size: 26px; }
-.h-hero-name { font-family: var(--font-display); font-size: 132px; line-height: 1.15; margin-top: 2px; }
+/* خط أميري حروفه طويلة (الهمزة فوق): مسافة كافية عشان ما تدخل في السطر اللي فوقه */
+.h-hero-name { font-family: var(--font-display); font-size: 132px; line-height: 1.4; margin-top: 4px; }
 .h-hero-sub { font-size: 32px; color: var(--ink-2); margin-top: 2px; }
 .h-hero-sub b { color: var(--gold); font-weight: 600; }
 

@@ -70,7 +70,8 @@ if (-not $Apk) {
 }
 if (-not (Test-Path $Apk)) { Fail "ما لقينا ملف التطبيق (APK). حمّله من صفحة الإصدارات وحط مساره بعد -Apk" }
 Say "نركّب التطبيق ..."
-$out = Adb install -r "$Apk" 2>&1
+# adb يطلع أكثر من سطر: نحوله لنص واحد قبل الفحص
+$out = (Adb install -r "$Apk" 2>&1 | Out-String)
 if ($out -notmatch "Success") { Fail "التركيب ما نجح: $out" }
 
 # ===== ٣. نسخة احتياطية =====
@@ -99,12 +100,12 @@ if ($check -ne $Dream) { Write-Host "! ما قدرنا نغير شاشة الت�
 if ($SkipHome) { Say "خلصنا (شاشة التوقف بس). الرجوع: tools\restore-tv.ps1 -Ip $Ip"; exit 0 }
 
 # ===== ٥. الواجهة الرئيسية =====
-$installed = (Adb shell pm list packages) -replace "package:", "" | ForEach-Object { $_.Trim() }
+$installed = @(Adb shell pm list packages) -replace "package:", "" | ForEach-Object { $_.Trim() }
 $toDisable = $StockHomes | Where-Object { $installed -contains $_ }
 $disabledNow = @()
 foreach ($p in $toDisable) {
   Say "نطفي الواجهة الأصلية: $p"
-  $r = Adb shell pm disable-user --user 0 $p 2>&1
+  $r = (Adb shell pm disable-user --user 0 $p 2>&1 | Out-String)
   if ($r -match "disabled") { $disabledNow += $p } else { Write-Host "! ما انطفى $p : $r" -ForegroundColor Yellow }
 }
 $backup.disabled = @($backup.disabled) + $disabledNow | Select-Object -Unique
