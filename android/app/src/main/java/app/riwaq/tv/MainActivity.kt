@@ -107,6 +107,7 @@ class MainActivity : Activity() {
 
     @Deprecated("زر الرجوع في أندرويد التلفزيون")
     override fun onBackPressed() {
+        if (AdhanService.playing) { AdhanService.stop(this); return } // الأذان شغال: الرجوع يوقفه
         web.evaluateJavascript("window.RiwaqBack&&window.RiwaqBack()", null)
         // ما ننادي super: الواجهة الرئيسية ما تتسكر بزر الرجوع
     }

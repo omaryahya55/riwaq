@@ -46,6 +46,9 @@
 
 الصور مقصوصة لنسبة الشاشة ومصغّرة، والقص والتصغير بنفس الرخصة. السكربت: `tools/import-backgrounds.py`.
 
+### صوت الأذان
+تسجيل "Beautiful adhan" من [ويكيميديا كومنز](https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg) (Adam-synagda)، رخصة CC0 (ملك عام). عدّلنا مستوى الصوت بس (توحيد الارتفاع) وحوّلناه لصيغة أخف: `android/app/src/main/res/raw/adhan.ogg`.
+
 ### Todoist و Telegram
 "Todoist" و "Telegram" علامات تجارية لأصحابها. رواق مو تابع لهم ولا مدعوم منهم، ويستخدم واجهاتهم بمفاتيح المستخدم نفسه بس (اختياري).
 

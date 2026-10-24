@@ -227,3 +227,18 @@ test("فحص الإعدادات: القيم الغلط ترجع للافتراض
   const good = w.Config.sanitize({ city: { name: "الرياض", lat: 24.7, lon: 46.7, tz: "Asia/Riyadh", country: "SA" } });
   assert.equal(good.city.tz, "Asia/Riyadh");
 });
+
+test("صوت الأذان: أوقات ٣ أيام بدون الفجر افتراضياً، وما يرسل شي لو انطفى", () => {
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/adhan.js"]);
+  Object.assign(w.CONFIG, { city: RIYADH });
+  const now = new Date("2026-10-26T12:00:00+03:00"); // بعد الظهر
+  const list = w.AdhanSchedule._test.upcoming(now);
+  assert.ok(list.length >= 10 && list.length <= 12, "٤ صلوات × ٣ أيام (ناقص اللي فاتت اليوم)");
+  assert.ok(!list.some((x) => x.name === "الفجر"), "الفجر مطفي افتراضياً");
+  assert.equal(list[0].name, "العصر");
+  assert.ok(list.every((x) => x.at > now.getTime()));
+  w.CONFIG.adhan = Object.assign({}, w.CONFIG.adhan, { fajr: true });
+  assert.ok(w.AdhanSchedule._test.upcoming(now).some((x) => x.name === "الفجر"));
+  w.CONFIG.adhan.on = false;
+  assert.equal(w.AdhanSchedule._test.upcoming(now).length, 0);
+});

@@ -11,6 +11,7 @@
     method: "auto",          // auto = حسب الدولة. أو اسم طريقة من adhan
     hijriOffset: 0,          // تعديل ±١ يوم لأن الرؤية ممكن تختلف عن تقويم أم القرى
     alertMinutes: 10,        // التنبيه قبل الأذان (٠ = مطفي)
+    adhan: { on: true, fajr: false, dhuhr: true, asr: true, maghrib: true, isha: true }, // صوت الأذان: كل الصلوات إلا الفجر
     teams: [],               // [{ id, name }] من TheSportsDB
     leagues: ["4668", "4328", "4335", "4332", "4331", "4334"], // روشن، الإنقليزي، الإسباني، الإيطالي، الألماني، الفرنسي
     sideCard: "leagues",     // البطاقة اللي جنب الساعة: leagues | none
@@ -55,6 +56,9 @@
     o.method = METHODS.includes(c.method) ? c.method : d.method;
     o.hijriOffset = int(c.hijriOffset, -2, 2, d.hijriOffset);
     o.alertMinutes = int(c.alertMinutes, 0, 60, d.alertMinutes);
+    const ad = c.adhan && typeof c.adhan === "object" ? c.adhan : {};
+    o.adhan = { on: bool(ad.on, d.adhan.on) };
+    for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) o.adhan[k] = bool(ad[k], d.adhan[k]);
     o.teams = (Array.isArray(c.teams) ? c.teams : []).filter((t) => t && ID.test(String(t.id))).slice(0, 12).map((t) => ({ id: String(t.id), name: str(t.name, 60) }));
     o.leagues = Array.isArray(c.leagues) ? c.leagues.map(String).filter((x) => ID.test(x)).slice(0, 10) : d.leagues.slice();
     o.sideCard = c.sideCard === "none" ? "none" : "leagues";

@@ -115,6 +115,19 @@
     $("feedUrl").value = ""; status(""); paintFeeds();
   }
 
+  // ===== صوت الأذان: تشغيل عام، وكل صلاة لحالها =====
+  const ADHAN_PRAYERS = [["fajr", "الفجر"], ["dhuhr", "الظهر"], ["asr", "العصر"], ["maghrib", "المغرب"], ["isha", "العشاء"]];
+  function paintAdhan() {
+    const a = cfg.adhan = Object.assign({ on: true, fajr: false, dhuhr: true, asr: true, maghrib: true, isha: true }, cfg.adhan);
+    $("adhanOn").checked = !!a.on;
+    $("adhanPrayers").innerHTML = ADHAN_PRAYERS.map(([k, n]) => `<button type="button" data-p="${k}" aria-pressed="${!!a[k]}">${n}</button>`).join("");
+    $("adhanPrayers").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+      cfg.adhan[b.dataset.p] = !cfg.adhan[b.dataset.p];
+      b.setAttribute("aria-pressed", String(cfg.adhan[b.dataset.p]));
+    }));
+    $("adhanPrayers").style.display = a.on ? "" : "none";
+  }
+
   // ===== القرآن: راجع محفوظك =====
   function paintQuran() {
     const M = window.QURAN_META;
@@ -160,6 +173,7 @@
     $("method").value = cfg.method || "auto";
     $("hijriOffset").value = String(cfg.hijriOffset || 0);
     $("alertMinutes").value = String(cfg.alertMinutes);
+    paintAdhan();
     $("reminders").checked = cfg.reminders !== false;
     $("showSalary").checked = cfg.showSalary !== false;
     $("icalUrl").value = cfg.icalUrl || "";
@@ -199,6 +213,7 @@
     cfg.method = $("method").value;
     cfg.hijriOffset = +$("hijriOffset").value;
     cfg.alertMinutes = +$("alertMinutes").value;
+    cfg.adhan = Object.assign({}, cfg.adhan, { on: $("adhanOn").checked });
     cfg.reminders = $("reminders").checked;
     cfg.showSalary = $("showSalary").checked;
     cfg.leagues = [...$("leagues").querySelectorAll("input:checked")].map((x) => x.value);
@@ -258,6 +273,7 @@
   $("addFeed").addEventListener("click", addCustomFeed);
   $("feedUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addCustomFeed(); } });
   $("save").addEventListener("click", save);
+  $("adhanOn").addEventListener("change", () => { cfg.adhan.on = $("adhanOn").checked; $("adhanPrayers").style.display = cfg.adhan.on ? "" : "none"; });
 
   (remote ? loadRemote() : Promise.resolve()).then(fill).catch((e) => { fill(); status(e.message, true); }).then(loadVerify);
 })();

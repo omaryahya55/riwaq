@@ -54,6 +54,9 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
         }
     }
 
+    /** أوقات الأذان للأيام الجاية (الصفحة تحسبها). أندرويد يحط منبّه لأقربها */
+    @JavascriptInterface fun scheduleAdhan(json: String) { AdhanScheduler.save(ctx, json) }
+
     /** صفحة "الرجوع للواجهة الأصلية" (الصفحة تطلب رمز القفل قبلها لو فيه) */
     @JavascriptInterface fun openRestore() {
         main.post {

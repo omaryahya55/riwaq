@@ -140,6 +140,7 @@
   Saver.init(document.getElementById("saver"));
   DATA.start();
   if (window.PhoneMsg) PhoneMsg.start();
+  if (window.AdhanSchedule) AdhanSchedule.start();
   fit();
   window.addEventListener("resize", fit);
   window.addEventListener("load", fit);

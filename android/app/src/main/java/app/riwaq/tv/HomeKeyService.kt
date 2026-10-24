@@ -32,6 +32,11 @@ class HomeKeyService : AccessibilityService() {
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
+        // الأذان شغال: زر الرجوع يوقفه (من أي تطبيق)
+        if (AdhanService.playing && event.keyCode == KeyEvent.KEYCODE_BACK) {
+            if (event.action == KeyEvent.ACTION_UP) AdhanService.stop(this)
+            return true
+        }
         // اللوحة مفتوحة: الأسهم و OK ورجوع تتحكم فيها (ما توصل للتطبيق اللي تحتها)
         if (event.keyCode != KeyEvent.KEYCODE_HOME) return panel.handleKey(event)
         when (event.action) {
