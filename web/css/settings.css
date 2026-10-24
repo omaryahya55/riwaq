@@ -19,7 +19,7 @@ main { max-width: 640px; margin: 0 auto; padding: 8px 16px; display: grid; gap: 
 .tiny { color: var(--ink-3); font-size: 13px; margin: 10px 0 0; }
 .current { font-size: 17px; font-weight: 600; color: var(--gold); margin-bottom: 10px; }
 .search { display: flex; gap: 8px; }
-input[type=search], input[type=url], select {
+input[type=search], input[type=url], input[type=password], input[type=text], input[type=tel], select {
   width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #0E1017;
   border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; min-height: 46px;
 }
@@ -52,6 +52,12 @@ body { overflow-x: hidden; }
 
 .verify { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .verify li { background: #0E1017; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
-.verify .vt { font-size: 15px; line-height: 1.8; }
+.verify .vt { font-size: 15px; line-height: 1.8; white-space: pre-line; }
 .verify .vs { font-size: 13px; color: var(--ink-3); margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+.steps { padding-inline-start: 20px; line-height: 1.9; }
+#tgAllowed { margin-top: 10px; }
+#tgAllowed .btn { margin-inline-start: 8px; padding: 4px 10px; font-size: 12px; }
+.verify .vr { font-size: 12px; line-height: 1.6; color: var(--ink-3); margin-top: 4px; }
 .verify a { color: var(--gold); }
+
+.waqf { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--gold-ink); background: var(--gold); border-radius: 999px; padding: 2px 12px 4px; }

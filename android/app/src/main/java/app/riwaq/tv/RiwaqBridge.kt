@@ -66,7 +66,20 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
      * قراءة خلاصة RSS (الصفحة ما تقدر بسبب CORS). HTTPS بس، وأقصى حجم ١ ميجا.
      * النتيجة ترجع للصفحة عن طريق window.__riwaqCb[id](ok, text).
      */
-    @JavascriptInterface fun fetchText(url: String, cbId: String) {
+    @JavascriptInterface fun fetchText(url: String, cbId: String) = fetch(url, null, cbId)
+
+    /**
+     * مهامك من Todoist (اختياري): نفس fetchText بس مع مفتاح المستخدم في الترويسة.
+     * المفتاح يروح لـ api.todoist.com بس، وأي عنوان ثاني مرفوض.
+     */
+    @JavascriptInterface fun fetchTodoist(url: String, token: String, cbId: String) {
+        if (!CB.matches(cbId) || !TODOIST_TOKEN.matches(token)) return
+        val host = try { URL(url).host } catch (e: Exception) { return }
+        if (host != "api.todoist.com") return
+        fetch(url, "Bearer $token", cbId)
+    }
+
+    private fun fetch(url: String, auth: String?, cbId: String) {
         if (!CB.matches(cbId)) return
         io.execute {
             var ok = false
@@ -77,8 +90,10 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
                 val c = u.openConnection() as HttpURLConnection
                 c.connectTimeout = 10000
                 c.readTimeout = 10000
-                c.instanceFollowRedirects = true
+                // المفتاح ما يتبع أي تحويل لموقع ثاني
+                c.instanceFollowRedirects = auth == null
                 c.setRequestProperty("User-Agent", "Riwaq/1.0 (Android TV)")
+                if (auth != null) c.setRequestProperty("Authorization", auth)
                 c.inputStream.use { s ->
                     val buf = s.readNBytesCompat(MAX_FEED)
                     text = String(buf, Charsets.UTF_8)
@@ -109,6 +124,7 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
     companion object {
         private val PKG = Regex("^[A-Za-z0-9_.]{1,200}$")
         private val CB = Regex("^cb[a-z0-9]{1,20}$")
+        private val TODOIST_TOKEN = Regex("^[A-Za-z0-9]{20,80}$")
         private const val MAX_FEED = 1024 * 1024
     }
 }

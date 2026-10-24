@@ -66,11 +66,12 @@
 
 .s-hadith { padding: 26px 30px 24px; min-height: 176px; }
 .s-card-title { font-size: 22px; color: var(--gold); font-weight: 600; }
-.s-hadith p { font-size: 25px; line-height: 1.8; color: var(--ink); margin-top: 8px; }
+.s-hadith p { font-size: 25px; line-height: 1.8; color: var(--ink); margin-top: 8px; white-space: pre-line; }
 .s-hadith.long p { font-size: 21px; line-height: 1.75; }
 .s-hadith.xlong p { font-size: 18px; line-height: 1.7; }
 .s-hadith, .s-prayers, .s-week { flex: none; }
 .s-hadith small { display: block; font-size: 18px; color: var(--ink-4); margin-top: 6px; }
+.s-hadith small.s-ref { font-size: 16px; line-height: 1.5; margin-top: 2px; }
 
 .s-prayers { display: grid; grid-template-columns: repeat(6, 1fr); padding: 14px; gap: 6px; }
 .s-pr { text-align: center; padding: 12px 4px 14px; border-radius: 18px; transition: background .5s; }
@@ -100,7 +101,9 @@
 
 /* ===== تحت: ٤ خانات ===== */
 .s-bottom { position: absolute; top: 904px; right: 92px; left: 92px; display: grid; grid-template-columns: repeat(4, 1fr); }
-.s-cell { padding: 0 30px; border-inline-start: 1px solid var(--line); }
+.s-cell { padding: 0 30px; border-inline-start: 1px solid var(--line); min-width: 0; }
+/* سطر واحد دايماً: لو الاسم طويل (مثل مانشستر سيتي) الخط يصغر لين يدخل (saver.js)، وما ينزل على اللي تحته */
+.s-cell .label, .s-cell-main, .s-cell-sub { white-space: nowrap; overflow: hidden; }
 .s-cell:first-child { border-inline-start: 0; padding-right: 0; }
 .s-cell .label { display: flex; align-items: center; gap: 10px; font-size: 20px; }
 .s-cell .label .ic { color: var(--gold); font-size: 22px; }
@@ -140,3 +143,20 @@
 #stage.nightclock .s-bottom .s-cell { border: 0; padding: 0; }
 #stage.nightclock .s-bottom .s-cell:not(:first-child) { display: none; }
 #stage.nightclock .s-bottom .label { justify-content: center; }
+
+/* ===== صمت له معنى: من الأذان لين بعد الصلاة، الوقت والصلاة بس ===== */
+.s-calm { display: none; }
+#stage.prayercalm .s-prices, #stage.prayercalm .s-side, #stage.prayercalm .s-col, #stage.prayercalm .s-ticker, #stage.prayercalm .s-bottom,
+#stage.prayercalm .s-chips, #stage.prayercalm .s-now, #stage.prayercalm .credit, #stage.prayercalm .s-clock-city { display: none !important; }
+#stage.prayercalm .s-date { right: 0; left: 0; top: 150px; text-align: center; }
+#stage.prayercalm .s-clock-wrap { right: 0; left: 0; width: auto; top: 300px; }
+#stage.prayercalm .s-clock { justify-content: center; }
+#stage.prayercalm .s-calm { display: block; position: absolute; right: 0; left: 0; top: 700px; text-align: center; text-shadow: 0 3px 18px rgba(0,0,0,.6); }
+#stage.prayercalm .adhan-glow, #stage.prayercalm .adhan-alert { display: none; }
+.s-calm .c-main { font-family: var(--font-display); font-size: 64px; color: var(--gold); }
+.s-calm .c-sub { font-size: 28px; color: var(--ink-2); margin-top: 10px; }
+
+/* حكاية مكان: صورة المكان فوق النبذة */
+.s-place-img { display: block; width: 100%; height: 210px; object-fit: cover; border-radius: 18px; margin-top: 12px; }
+.s-hadith.long .s-place-img { height: 170px; }
+.s-hadith.xlong .s-place-img { height: 130px; }

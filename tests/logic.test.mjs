@@ -7,7 +7,7 @@ import vm from "node:vm";
 
 const ROOT = new URL("../web/", import.meta.url);
 
-function load(files, config) {
+function load(files, config, extra) {
   const ctx = {
     console, Intl, Date, Math, JSON, URLSearchParams, setTimeout, setInterval, clearTimeout,
     location: { search: "", hash: "" },
@@ -15,6 +15,7 @@ function load(files, config) {
     document: { getElementById: () => null, querySelector: () => null },
     fetch: () => Promise.reject(new Error("no network in tests"))
   };
+  Object.assign(ctx, extra || {});
   ctx.window = ctx;
   vm.createContext(ctx);
   for (const f of files) vm.runInContext(readFileSync(new URL(f, ROOT), "utf8"), ctx, { filename: f });
@@ -121,4 +122,74 @@ test("التقويم: موعد عادي، ويوم كامل، ومتكرر أس�
   assert.ok(allDay.allDay);
   // مرتبة بالوقت
   for (let i = 1; i < list.length; i++) assert.ok(list[i].at >= list[i - 1].at);
+});
+
+test("توزيع الأذكار والأحاديث على أوقاتها (حصن المسلم + الموسوعة)", async () => {
+  const json = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8"));
+  const fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(json) });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/content.js"], null, { fetch });
+  Object.assign(w.CONFIG, { city: RIYADH });
+  await new Promise((r) => setTimeout(r, 20));
+  const at = (s) => new Date(s + "+03:00");
+  const ctx = (s) => w.Content.current(at(s)).item.context;
+  const wins = (s) => w.Content._test.windows(at(s)).flatMap((x) => x.ctx);
+  // الإثنين ٢٦ أكتوبر ٢٠٢٦ في الرياض: الظهر ١١:٣٨ تقريباً، المغرب ١٧:١٨
+  assert.equal(ctx("2026-10-26T11:40:00"), "adhan");
+  assert.ok(["mosque", "prayer"].includes(ctx("2026-10-26T11:50:00")));
+  assert.equal(ctx("2026-10-26T12:15:00"), "afterPrayer");
+  assert.ok(wins("2026-10-26T13:30:00").includes("meal"), "الغدا");
+  assert.ok(wins("2026-10-26T20:30:00").includes("meal"), "العشا");
+  assert.ok(w.Content._test.fastingDay(at("2026-10-26T10:00:00")), "الإثنين يوم صيام");
+  assert.ok(["iftar", "fasting"].includes(ctx("2026-10-26T17:10:00")), "قبل المغرب في يوم صيام");
+  assert.ok(wins("2026-10-26T23:30:00").includes("sleep"));
+  // بدون وقت خاص: حديث اليوم أو فضل الصحابة أو دعاء اليوم، وكلها عليها مرجع
+  const c = w.Content.current(at("2026-10-27T10:00:00"));
+  assert.ok(c && c.title && c.item.source);
+  // حصن المسلم: العنوان عنوان الباب، وتحته التخريج
+  const hisn = json.items.find((x) => x.sourceId === "hisn-1");
+  assert.equal(w.Content.credit(hisn, true).reference, hisn.reference);
+  assert.ok(hisn.title.length > 3);
+  // من القرآن الكريم: مقاطع كاملة من Tanzil، ومعها اسم السورة ورابط التحقق
+  const q = json.items.filter((x) => x.type === "quran");
+  assert.ok(q.length >= 20 && q.every((x) => x.source.startsWith("سورة") && x.verifyUrl.startsWith("https://tanzil.net/")));
+  assert.ok(w.Content.today(at("2026-10-27T10:00:00")).some((x) => x.type === "quran"));
+});
+
+test("رسالة الجوال: مفتاح البوت لازم يكون بالشكل الصحيح", () => {
+  const w = load(["js/config.js", "js/messages.js"]);
+  assert.ok(w.PhoneMsg._test.tokenOk("123456789:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsawQ"));
+  assert.ok(!w.PhoneMsg._test.tokenOk("123:abc"));
+  assert.ok(!w.PhoneMsg._test.tokenOk("123456789:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsawQ/../x"));
+});
+
+test("ختمتك وراجع محفوظك: الورد بالأرباع، والمقاطع آيات كاملة بالترتيب", async () => {
+  const quran = JSON.parse(readFileSync(new URL("content/quran.json", ROOT), "utf8"));
+  const fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(quran) });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/quran-meta.js", "js/quran.js"], null, { fetch });
+  Object.assign(w.CONFIG, { city: RIYADH, hifz: [67, 112], khatma: { on: true, perDay: 8, startQ: 0, start: "2026-10-24" } });
+  w.QuranTools._test.setData(quran);
+  const at = (s) => new Date(s + "+03:00");
+  // اليوم الأول: الجزء الأول (الفاتحة ١ إلى البقرة ١٤١)، واليوم الثالث: الجزء الثالث
+  const d1 = w.QuranTools.wird(at("2026-10-24T10:00:00"));
+  assert.equal(JSON.stringify([d1.juz, d1.from, d1.to, d1.daysLeft]), "[1,[1,1],[2,141],30]");
+  const d3 = w.QuranTools.wird(at("2026-10-26T10:00:00"));
+  assert.equal(JSON.stringify([d3.juz, d3.from]), "[3,[2,253]]");
+  assert.ok(w.QuranTools.wird(at("2026-12-01T10:00:00")).done, "بعد ٣٠ يوم: ختم");
+  // المقاطع: من الملك والإخلاص بس، وكل مقطع يغطي آيات متتالية بدون فراغ
+  const ch = w.QuranTools._test.chunks();
+  assert.ok(ch.every(([s]) => s === 67 || s === 112));
+  const mulk = ch.filter(([s]) => s === 67);
+  assert.equal(mulk[0][1], 1); assert.equal(mulk[mulk.length - 1][2], 30);
+  for (let i = 1; i < mulk.length; i++) assert.equal(mulk[i][1], mulk[i - 1][2] + 1);
+  const r = w.QuranTools.review(at("2026-10-24T10:00:00"), 0);
+  assert.equal(r.title, "راجع محفوظك"); assert.ok(r.verifyUrl.startsWith("https://tanzil.net/"));
+});
+
+test("صمت له معنى: من دقيقة قبل الأذان لين ربع ساعة بعد الإقامة", async () => {
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/content.js"]);
+  Object.assign(w.CONFIG, { city: RIYADH });
+  const at = (s) => new Date(s + "+03:00");
+  assert.equal(w.Content.prayerPhase(at("2026-10-26T11:45:00")).before, true);   // الظهر ١١:٣٨، الإقامة ١١:٥٨
+  assert.equal(w.Content.prayerPhase(at("2026-10-26T12:05:00")).before, false);
+  assert.equal(w.Content.prayerPhase(at("2026-10-26T12:20:00")), null);
 });

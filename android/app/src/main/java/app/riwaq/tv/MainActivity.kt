@@ -19,6 +19,7 @@ class MainActivity : Activity() {
 
     private lateinit var web: WebView
     private var loadedVersion = -1L
+    private var pendingQuick = false
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
@@ -35,6 +36,10 @@ class MainActivity : Activity() {
         web.addJavascriptInterface(RiwaqBridge(this, web), "Riwaq")
         setContentView(web)
         load()
+        if (intent?.action == ACTION_QUICK || intent?.action == Intent.ACTION_ALL_APPS) {
+            // أول تشغيل: ننتظر الصفحة تحمّل، وبعدها نفتح اللوحة (إذا ما انفتحت)
+            web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
+        }
 
         val f = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
@@ -56,7 +61,9 @@ class MainActivity : Activity() {
         super.onResume()
         // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
         if (ConfigStore.version != loadedVersion) load()
+        else if (pendingQuick) web.evaluateJavascript(QUICK_JS, null)
         else web.evaluateJavascript("window.App&&App.show('home')", null)
+        pendingQuick = false
         web.onResume()
     }
 
@@ -67,9 +74,11 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (intent.action == Intent.ACTION_ALL_APPS) {
-            // بعض أجهزة أندرويد ترسل ضغطة البيت المطوّلة كطلب "كل التطبيقات": نفتح اللوحة السريعة
-            web.evaluateJavascript("window.App&&App.show('home');window.Home&&Home.openQuick()", null)
+        if (intent.action == Intent.ACTION_ALL_APPS || intent.action == ACTION_QUICK) {
+            // ضغطة البيت المطوّلة (من HomeKeyService، أو بعض الأجهزة ترسلها كطلب "كل التطبيقات")
+            // أندرويد يوقف الواجهة قبل ما يوصلها الطلب، فنفتح اللوحة في onResume (بعد ما ترجع)
+            pendingQuick = true
+            web.evaluateJavascript(QUICK_JS, null)
             return
         }
         // ضغط زر البيت وهو مفتوح: نرجع للواجهة ونقفل أي قائمة
@@ -94,5 +103,11 @@ class MainActivity : Activity() {
         try { unregisterReceiver(pkgReceiver) } catch (e: Exception) { }
         web.destroy()
         super.onDestroy()
+    }
+
+    companion object {
+        /** ضغطة البيت المطوّلة (HomeKeyService) */
+        const val ACTION_QUICK = "app.riwaq.tv.QUICK"
+        private const val QUICK_JS = "window.App&&App.show('home'),window.Home&&Home.openQuick()"
     }
 }

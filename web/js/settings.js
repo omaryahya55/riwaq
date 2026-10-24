@@ -18,7 +18,7 @@
     ["Egyptian", "الهيئة المصرية"], ["Karachi", "كراتشي"], ["Dubai", "دبي"], ["Kuwait", "الكويت"], ["Qatar", "قطر"],
     ["Turkey", "تركيا"], ["Singapore", "سنغافورة"], ["NorthAmerica", "أمريكا الشمالية"], ["MoonsightingCommittee", "لجنة رؤية الهلال"]
   ];
-  const MAX_TEAMS = 3;
+  const MAX_TEAMS = 12; // أكثر من فريق في كل دوري. كل فريق طلبين بالساعة، فما نضغط على المصدر
 
   let cfg = Object.assign({}, CONFIG);
 
@@ -86,6 +86,66 @@
     cfg.newsFeeds = [...$("feeds").querySelectorAll("input")].map((x) => x.value.trim()).filter(Boolean);
   }
 
+  // ===== القرآن: ختمتك وراجع محفوظك =====
+  // تاريخ اليوم بتوقيت الجوال (مو UTC)، بنفس شكل التلفزيون
+  const localDay = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+  function paintQuran() {
+    const M = window.QURAN_META;
+    if (!M) return;
+    const k = cfg.khatma = Object.assign({ on: false, perDay: 8, startQ: 0, start: "" }, cfg.khatma);
+    $("khOn").checked = !!k.on;
+    $("khPer").value = String([4, 8, 16, 24].includes(+k.perDay) ? k.perDay : 8);
+    // المكان الحالي (حسب الأيام اللي مرت) يكون هو الاختيار
+    const today = localDay();
+    const days = k.start ? Math.max(0, Math.floor((Date.parse(today) - Date.parse(k.start)) / 86400000)) : 0;
+    const cur = Math.min(239, (+k.startQ || 0) + days * (+k.perDay || 8));
+    $("khFrom").innerHTML = M.quarters.map((q, i) => i % 4 === 0
+      ? `<option value="${i}">الجزء ${ar(Math.floor(i / 8) + 1)}${i % 8 ? " (نصه الثاني)" : ""}: ${esc(M.suras[q[0] - 1].name)} ${ar(q[1])}</option>` : "").join("");
+    $("khFrom").value = String(cur - (cur % 4));
+    $("khNow").textContent = k.on && k.start ? `الحين في الجزء ${ar(Math.floor(cur / 8) + 1)}` : "";
+    const chosen = new Set((cfg.hifz || []).map(Number));
+    $("hifzList").innerHTML = M.suras.map((s, i) => `<button type="button" data-s="${i + 1}" aria-pressed="${chosen.has(i + 1)}">${esc(s.name)}</button>`).join("");
+    $("hifzList").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+      const n = +b.dataset.s, set = new Set((cfg.hifz || []).map(Number));
+      set.has(n) ? set.delete(n) : set.add(n);
+      cfg.hifz = [...set].sort((a, b2) => a - b2);
+      b.setAttribute("aria-pressed", String(set.has(n)));
+    }));
+  }
+  function readQuran() {
+    if (!window.QURAN_META) return;
+    const on = $("khOn").checked, per = +$("khPer").value, from = +$("khFrom").value;
+    const k = cfg.khatma;
+    const today = localDay();
+    const days = k.start ? Math.max(0, Math.floor((Date.parse(today) - Date.parse(k.start)) / 86400000)) : 0;
+    const cur = Math.min(239, (+k.startQ || 0) + days * (+k.perDay || 8));
+    // تغيّر الورد أو المكان أو انشغلت الختمة: نبدأ من المكان المختار اليوم. غير كذا تبقى زي ما هي
+    if (on && (!k.on || !k.start || per !== +k.perDay || from !== cur - (cur % 4))) cfg.khatma = { on, perDay: per, startQ: from, start: today };
+    else cfg.khatma = Object.assign({}, k, { on });
+    cfg.sunnahDaily = $("sunnahDaily").checked;
+    cfg.placeDaily = $("placeDaily").checked;
+    cfg.prayerCalm = $("prayerCalm").checked;
+    cfg.motion = $("motion").checked;
+  }
+
+  // ===== رسالة من الجوال (تيليقرام) =====
+  let tgCleared = false;
+  function paintTelegram() {
+    const t = cfg.telegram = Object.assign({ token: "", code: "", allowed: [], fails: 0 }, cfg.telegram);
+    // رمز ربط جديد لو ما فيه، أو لو انقفل بسبب محاولات غلط كثيرة
+    if (!/^[0-9]{6}$/.test(t.code) || t.fails >= 10) {
+      const n = new Uint32Array(1); crypto.getRandomValues(n);
+      t.code = String(100000 + (n[0] % 900000)); t.fails = 0;
+    }
+    $("tgToken").value = t.token || "";
+    $("tgCode").textContent = t.code;
+    $("tgAllowed").innerHTML = t.allowed.length
+      ? `المربوطة: ${t.allowed.map((a) => `<bdi>${esc(a.name)}</bdi>`).join("، ")} <button class="btn" type="button" id="tgUnlink">فك ربط الكل</button>`
+      : "ما فيه جوال مربوط للحين.";
+    const u = $("tgUnlink");
+    if (u) u.addEventListener("click", () => { cfg.telegram.allowed = []; tgCleared = true; paintTelegram(); status("اضغط حفظ عشان يتطبق"); });
+  }
+
   function fill() {
     $("where").textContent = remote ? "تعدّل إعدادات التلفزيون من جوالك." : "التغييرات تنحفظ على هذا الجهاز بس.";
     $("method").innerHTML = METHODS.map(([v, n]) => `<option value="${v}">${n}</option>`).join("");
@@ -95,6 +155,13 @@
     $("reminders").checked = cfg.reminders !== false;
     $("showSalary").checked = cfg.showSalary !== false;
     $("icalUrl").value = cfg.icalUrl || "";
+    $("todoistToken").value = cfg.todoistToken || "";
+    paintTelegram();
+    paintQuran();
+    $("sunnahDaily").checked = cfg.sunnahDaily !== false;
+    $("placeDaily").checked = cfg.placeDaily !== false;
+    $("prayerCalm").checked = cfg.prayerCalm !== false;
+    $("motion").checked = cfg.motion !== false;
     $("nightClock").checked = cfg.nightClock !== false;
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
     loadLockApps();
@@ -114,6 +181,13 @@
     const ical = $("icalUrl").value.trim();
     if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
     cfg.icalUrl = ical;
+    const todo = $("todoistToken").value.trim();
+    if (todo && !/^[A-Za-z0-9]{20,80}$/.test(todo)) { status("مفتاح Todoist غلط. انسخه كامل من الإعدادات ← التكاملات", true); return; }
+    cfg.todoistToken = todo;
+    const tgt = $("tgToken").value.trim();
+    if (tgt && !/^[0-9]{5,15}:[A-Za-z0-9_-]{30,60}$/.test(tgt)) { status("مفتاح البوت غلط. انسخه كامل من BotFather", true); return; }
+    cfg.telegram.token = tgt;
+    readQuran();
     cfg.method = $("method").value;
     cfg.hijriOffset = +$("hijriOffset").value;
     cfg.alertMinutes = +$("alertMinutes").value;
@@ -123,6 +197,11 @@
     cfg.sideCard = cfg.leagues.length ? "leagues" : "none";
     try {
       if (remote) {
+        // الجوالات اللي انربطت والصفحة مفتوحة: نآخذها من التلفزيون عشان ما تضيع (إلا لو ضغطت فك الربط)
+        try {
+          const now = await (await fetch("/api/config?token=" + encodeURIComponent(token))).json();
+          if (!tgCleared && now.telegram && Array.isArray(now.telegram.allowed)) cfg.telegram.allowed = now.telegram.allowed;
+        } catch (e) { /* نحفظ اللي عندنا */ }
         const r = await fetch("/api/config?token=" + encodeURIComponent(token), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cfg) });
         if (!r.ok) throw new Error(r.status === 403 ? "الرابط انتهى. صوّر الباركود مرة ثانية." : "ما انحفظ. جرّب مرة ثانية.");
       } else {
@@ -152,12 +231,15 @@
       const items = (j.items || []).filter((x) => x.approved === true && x.text && x.source);
       if (!items.length) return;
       const day = Math.floor(Date.now() / 86400000);
-      const pickOf = (type) => { const l = items.filter((x) => x.type === type); return l.length ? l[day % l.length] : null; };
-      const list = [["حديث اليوم", pickOf("hadith")], ["في فضل الصحابة", pickOf("sahabi")]]
-        .concat(items.filter((x) => x.type === "adhkar").map((x) => ["من أذكار الصباح والمساء", x]))
+      const general = (x) => (x.context || "general") === "general";
+      const pickOf = (type) => { const l = items.filter((x) => x.type === type && (type === "sahabi" || type === "quran" || general(x))); return l.length ? l[day % l.length] : null; };
+      // محتوى اليوم، وبعده أذكار الصباح والمساء من حصن المسلم كاملة (عنوان الباب والنص وتحته التخريج)
+      const list = [["من القرآن الكريم", pickOf("quran")], ["حديث اليوم", pickOf("hadith")], ["في فضل الصحابة", pickOf("sahabi")], ["دعاء اليوم", pickOf("dua")]]
+        .concat(items.filter((x) => x.type === "adhkar").map((x) => [x.title || "من أذكار الصباح والمساء", x]))
         .filter((x) => x[1]);
-      $("verifyList").innerHTML = list.map(([title, x]) => `<li><div class="vs"><b>${esc(title)}</b></div><div class="vt">${esc(String(x.text).replace(/<[^>]+>/g, ""))}</div>
-        <div class="vs"><span>${esc(x.source)}${x.edition ? " · " + esc(x.edition) : ""}</span>${/^https:\/\//.test(x.verifyUrl || "") ? `<a href="${esc(x.verifyUrl)}" target="_blank" rel="noopener">تحقق من المصدر ↗</a>` : ""}</div></li>`).join("");
+      $("verifyList").innerHTML = list.map(([title, x]) => `<li><div class="vs"><b>${esc(x.type === "dua" && x.title ? title + ": " + x.title : title)}</b></div><div class="vt">${esc(String(x.text).replace(/<[^>]+>/g, ""))}</div>
+        <div class="vs"><span>${esc(x.source)}${x.edition ? " · " + esc(x.edition) : ""}</span>${/^https:\/\//.test(x.verifyUrl || "") ? `<a href="${esc(x.verifyUrl)}" target="_blank" rel="noopener">تحقق من المصدر ↗</a>` : ""}</div>
+        ${String(x.sourceId).startsWith("hisn-") && x.reference ? `<div class="vr">${esc(x.reference)}</div>` : ""}</li>`).join("");
       $("contentCard").hidden = false;
     } catch (e) { /* ما فيه محتوى: القسم يبقى مخفي */ }
   }

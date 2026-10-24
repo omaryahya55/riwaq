@@ -19,7 +19,8 @@
     team: { every: 60 * MIN, maxAge: 12 * HOUR },
     news: { every: 20 * MIN, maxAge: 6 * HOUR },
     color: { every: 30 * 24 * HOUR, maxAge: 120 * 24 * HOUR },
-    calendar: { every: 15 * MIN, maxAge: 6 * HOUR }
+    calendar: { every: 15 * MIN, maxAge: 6 * HOUR },
+    tasks: { every: 15 * MIN, maxAge: 6 * HOUR }
   };
 
   const listeners = [];
@@ -193,6 +194,33 @@
     write("cal", ICal.upcoming(text, F.TZ, new Date(), 14, 8));
   }
 
+  // مهامك من Todoist (اختياري): مهام اليوم والمتأخرة. المفتاح سرّي: على التلفزيون بس، ويروح لـ api.todoist.com بس
+  async function loadTasks() {
+    const token = CONFIG.todoistToken;
+    if (!token || !/^[A-Za-z0-9]{20,80}$/.test(token) || !due("tasks", "tasks")) return;
+    const url = "https://api.todoist.com/api/v1/tasks/filter?" + new URLSearchParams({ query: "today | overdue", limit: "20" });
+    let text;
+    if (window.Riwaq && Riwaq.fetchTodoist) {
+      text = await new Promise((resolve, reject) => {
+        const id = "cb" + Math.random().toString(36).slice(2, 12);
+        window.__riwaqCb = window.__riwaqCb || {};
+        window.__riwaqCb[id] = (ok, body) => { delete window.__riwaqCb[id]; ok ? resolve(body) : reject(new Error("todoist")); };
+        Riwaq.fetchTodoist(url, token, id);
+      });
+    } else {
+      const r = await fetch(url, { headers: { Authorization: "Bearer " + token } });
+      if (!r.ok) throw new Error("todoist " + r.status);
+      text = await r.text();
+    }
+    const j = JSON.parse(text);
+    const list = (Array.isArray(j) ? j : j.results || []).map((x) => {
+      const d = x.due || {};
+      const at = d.datetime ? Date.parse(d.datetime) : d.date ? Date.parse(d.date + "T00:00:00") : null;
+      return { title: String(x.content || "").replace(/\s+/g, " ").trim().slice(0, 80), at, allDay: !d.datetime };
+    }).filter((x) => x.title).sort((a, b) => (a.at || 0) - (b.at || 0));
+    write("tasks", list.slice(0, 8));
+  }
+
   async function loadNews() {
     if (!CONFIG.newsFeeds.length || !due("news", "news")) return;
     const all = [];
@@ -211,7 +239,7 @@
     if (running) return; // تحديث واحد بس في نفس الوقت، عشان ما نطلب نفس المصدر مرتين
     running = true;
     try {
-      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTables, loadTeams, loadTeamColors];
+      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTasks, loadTables, loadTeams, loadTeamColors];
       for (const job of jobs) {
         try { await job(); } catch (e) { /* نجرب المرة الجاية. البيانات القديمة تنحكم بحدها */ }
         listeners.forEach((cb) => cb());
@@ -243,12 +271,30 @@
     table(id) { return fresh("table." + id, "table"); },
     team(id) { return fresh("team." + id, "team"); },
     news() { return fresh("news", "news"); },
+    // أهم مباراة من كل أندية المستخدم: نتيجة انتهت خلال ٢٤ ساعة (الأحدث)، وإلا أقرب مباراة جاية
+    featuredMatch(now) {
+      now = now || new Date();
+      let last = null, next = null;
+      for (const t of CONFIG.teams) {
+        const v = this.team(t.id); if (!v) continue;
+        const L = v.data.last, N = v.data.next;
+        const lAt = L && L.at && new Date(L.at);
+        if (L && lAt && now - lAt < 86400000 && L.hs !== null && L.hs !== undefined && L.hs !== "" && (!last || lAt > last.at)) last = { team: t, ev: L, at: lAt };
+        const nAt = N && N.at && new Date(N.at);
+        if (N && nAt && nAt > now - 3 * 3600000 && (!next || nAt < next.at)) next = { team: t, ev: N, at: nAt };
+      }
+      return last ? Object.assign({ kind: "last" }, last) : next ? Object.assign({ kind: "next" }, next) : null;
+    },
     calendar() {
       const v = CONFIG.icalUrl && fresh("cal", "calendar");
       if (!v) return null;
       const now = Date.now();
       const list = v.data.filter((e) => (e.allDay ? e.at + 86400000 : e.at) > now).slice(0, 5);
       return list.length ? list : null;
+    },
+    tasks() {
+      const v = CONFIG.todoistToken && fresh("tasks", "tasks");
+      return v && v.data.length ? v.data.slice(0, 5) : null;
     },
     teamColor(id) { const v = fresh("color." + id, "color"); return v && v.data.color ? v.data.color : null; },
     season,

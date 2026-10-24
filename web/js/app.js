@@ -42,6 +42,7 @@
     const isha = pm.isha + 90, fajr = pm.fajr - 30;
     const night = forcedNight !== null ? forcedNight : (min >= isha || min < fajr);
     stage.classList.toggle("night", night && App.current === "saver");
+    stage.classList.toggle("motion", CONFIG.motion !== false);
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
@@ -50,7 +51,7 @@
     App.current = name;
     document.getElementById("home").classList.toggle("on", name === "home");
     document.getElementById("saver").classList.toggle("on", name === "saver");
-    if (name === "saver") Saver.tick(true); else stage.classList.remove("alert");
+    if (name === "saver") Saver.tick(true); else stage.classList.remove("alert", "prayercalm");
     updateScene();
     syncDevbar();
   }
@@ -70,6 +71,7 @@
 
   function dispatch(k) {
     resetIdle();
+    if (window.PhoneMsg && PhoneMsg.key(k)) return true; // رسالة الجوال ظاهرة: الزر يقفلها
     if (App.current === "saver") { if (!MODE_SAVER_ONLY) show("home"); return; } // أي زر يرجّع للواجهة
     return Home.key(k);
   }
@@ -136,6 +138,7 @@
   Home.init(document.getElementById("home"));
   Saver.init(document.getElementById("saver"));
   DATA.start();
+  if (window.PhoneMsg) PhoneMsg.start();
   fit();
   window.addEventListener("resize", fit);
   window.addEventListener("load", fit);

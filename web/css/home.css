@@ -5,7 +5,11 @@
 }
 
 /* ===== فوق: التاريخ | شريط التنقل | الوقت ===== */
-.h-top { position: absolute; top: 42px; right: 92px; left: 92px; height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.h-top { position: absolute; top: 6px; right: 92px; left: 92px; height: 152px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.h-top > .h-status { min-height: 58px; }
+/* اسم المشروع فوق الشريط بخط ريم كوفي (اختيار صاحب المشروع) */
+.h-center { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.h-brand { font-family: "Reem Kufi", var(--font-display); font-weight: 700; font-size: 54px; line-height: normal; color: var(--gold); text-shadow: 0 4px 18px rgba(0,0,0,.45); }
 .h-date { font-size: 30px; font-weight: 600; line-height: 1.3; white-space: nowrap; }
 .h-date small { font-size: 22px; color: var(--ink-2); font-weight: 400; margin-right: 10px; }
 .h-date .h-greg { display: block; margin-right: 0; font-size: 19px; color: var(--ink-3); }
@@ -24,7 +28,7 @@
 .nav-pill.focus .ic { color: #1E1608; }
 
 /* ===== الوسط: ٣ بطاقات ===== */
-.h-dash { position: absolute; top: 152px; right: 92px; left: 92px; height: 326px; display: grid; grid-template-columns: 620px 1fr 430px; gap: 24px; }
+.h-dash { position: absolute; top: 174px; right: 92px; left: 92px; height: 326px; display: grid; grid-template-columns: 620px 1fr 430px; gap: 24px; }
 .h-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px 22px; overflow: hidden; position: relative; }
 #stage[data-period="day"] .h-card { background: var(--card-strong); }
 .h-card .label { display: flex; align-items: center; gap: 10px; font-size: 21px; color: var(--gold); font-weight: 600; }
@@ -47,11 +51,12 @@
 .hp-cell.next { background: rgba(232,194,122,.14); box-shadow: inset 0 0 0 1px rgba(232,194,122,.45); }
 .hp-cell.next .n, .hp-cell.next .t { color: var(--gold); }
 
-.hc-text { font-size: 25px; line-height: 1.8; margin-top: 12px; }
+.hc-text { font-size: 25px; line-height: 1.8; margin-top: 12px; white-space: pre-line; }
 .h-content.long .hc-text { font-size: 21px; line-height: 1.75; }
 .h-content.xlong .hc-text { font-size: 18px; line-height: 1.7; }
 /* المصدر جزء من التدفق (مو مثبت) عشان القياس يعرف إذا النص دخل كامل */
 .hc-src { font-size: 17px; color: var(--ink-4); margin-top: 8px; }
+.hc-ref { font-size: 15px; line-height: 1.5; margin-top: 2px; }
 
 .h-today { display: flex; flex-direction: column; gap: 14px; }
 .ht-wx { display: flex; align-items: center; gap: 14px; font-size: 24px; margin-top: 4px; }
@@ -67,8 +72,10 @@
 .reader-box { width: 1280px; max-height: 860px; background: var(--card-strong); border: 1px solid var(--line); border-radius: 34px; padding: 50px 64px 40px; }
 .reader-head { display: flex; justify-content: space-between; font-size: 26px; color: var(--gold); font-weight: 600; }
 .reader-count { color: var(--ink-3); font-weight: 400; }
-.reader-text { font-family: var(--font-display); font-size: 40px; line-height: 1.9; margin-top: 24px; max-height: 600px; overflow: hidden; }
+.reader-text { font-family: var(--font-display); font-size: 40px; line-height: 1.9; margin-top: 24px; max-height: 500px; overflow: hidden; scroll-behavior: smooth; white-space: pre-line; }
 .reader-src { font-size: 22px; color: var(--ink-2); margin-top: 22px; }
+.reader-ref { font-size: 19px; line-height: 1.5; color: var(--ink-3); margin-top: 6px; }
+.reader-ref:empty { display: none; }
 .reader-hint { font-size: 19px; color: var(--ink-4); margin-top: 18px; }
 
 /* ===== الصفوف ===== */
@@ -169,3 +176,8 @@
 .pin-hint { font-size: 18px; color: var(--ink-4); }
 .pin.shake .pin-box { animation: shake .4s; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-14px); } 75% { transform: translateX(14px); } }
+
+/* حكاية مكان */
+.hc-place-img { float: left; width: 190px; height: 130px; object-fit: cover; border-radius: 16px; margin: 12px 18px 6px 0; }
+.reader-img { display: block; width: 100%; height: 300px; object-fit: cover; border-radius: 22px; margin-top: 20px; }
+.reader-img[hidden] { display: none; }

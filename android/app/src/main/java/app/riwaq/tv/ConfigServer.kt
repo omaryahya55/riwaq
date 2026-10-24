@@ -36,6 +36,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         "/js/config.js" to "application/javascript; charset=utf-8",
         "/js/teams-ar.js" to "application/javascript; charset=utf-8",
         "/js/settings.js" to "application/javascript; charset=utf-8",
+        "/js/quran-meta.js" to "application/javascript; charset=utf-8",
         "/js/demo-data.js" to "application/javascript; charset=utf-8",
         "/css/fonts.css" to "text/css; charset=utf-8",
         "/content/approved.json" to "application/json; charset=utf-8",

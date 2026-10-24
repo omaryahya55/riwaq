@@ -44,6 +44,15 @@ if ($backup -and $backup.screensaver_components -and $backup.screensaver_compone
 }
 Say "رجعت شاشة التوقف الأصلية"
 
+# نطفي خدمة ضغطة البيت المطوّلة، ونخلي أي خدمة ثانية كانت شغالة زي ما هي
+$a11y = "$Pkg/$Pkg.HomeKeyService"
+$cur = (Adb shell settings get secure enabled_accessibility_services | Out-String).Trim()
+if ($cur -match [regex]::Escape($a11y)) {
+  $rest = ($cur -split ":" | Where-Object { $_ -and $_ -ne $a11y }) -join ":"
+  if ($rest) { Adb shell settings put secure enabled_accessibility_services "$rest" | Out-Null } else { Adb shell settings delete secure enabled_accessibility_services | Out-Null }
+  Say "طفّينا ضغطة البيت المطوّلة"
+}
+
 if ($Uninstall) { Adb uninstall $Pkg | Out-Host; Say "انحذف تطبيق رواق" }
 Adb shell input keyevent KEYCODE_HOME | Out-Null
 Say "تم ✓ التلفزيون رجع مثل ما كان."

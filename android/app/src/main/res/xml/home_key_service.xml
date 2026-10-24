@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ضغطة البيت المطوّلة (HomeKeyService): نستقبل الأزرار بس، وما نشوف محتوى أي شاشة -->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAnnouncement"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagRequestFilterKeyEvents"
+    android:canRequestFilterKeyEvents="true"
+    android:canRetrieveWindowContent="false"
+    android:packageNames="app.riwaq.tv"
+    android:notificationTimeout="1000"
+    android:description="@string/home_key_desc" />

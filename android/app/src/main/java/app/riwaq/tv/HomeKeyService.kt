@@ -1,0 +1,61 @@
+package app.riwaq.tv
+
+import android.accessibilityservice.AccessibilityService
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.view.KeyEvent
+import android.view.accessibility.AccessibilityEvent
+
+/**
+ * ضغطة البيت المطوّلة: في Google TV كانت تفتح القائمة الجانبية حقت واجهة الشركة (اللي طفّيناها).
+ * زر البيت محجوز لأندرويد وما يوصل للتطبيقات، فنستقبله بخدمة "إمكانية الوصول" (نفس طريقة تطبيقات
+ * تخصيص أزرار الريموت):
+ *  - ضغطة عادية: نرجعها لأندرويد كما هي (زر البيت يشتغل عادي)
+ *  - ضغطة مطوّلة: تفتح لوحة "التلفزيون" السريعة في رواق
+ * ما نقرا ولا نحفظ أي شي ثاني: كل الأزرار غير البيت تمر بدون ما نلمسها، وما نستقبل أحداث الشاشة.
+ * تنشغل من سكربت التركيب (tools/setup-tv.ps1) وتنطفي من سكربت الرجوع.
+ */
+class HomeKeyService : AccessibilityService() {
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var longFired = false
+    private var down = false
+
+    private val longPress = Runnable {
+        longFired = true
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setAction(MainActivity.ACTION_QUICK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        )
+    }
+
+    override fun onKeyEvent(event: KeyEvent): Boolean {
+        if (event.keyCode != KeyEvent.KEYCODE_HOME) return false
+        when (event.action) {
+            KeyEvent.ACTION_DOWN -> if (event.repeatCount == 0) {
+                down = true
+                longFired = false
+                handler.postDelayed(longPress, LONG_PRESS_MS)
+            }
+            KeyEvent.ACTION_UP -> {
+                handler.removeCallbacks(longPress)
+                if (down && !longFired && !event.isCanceled) performGlobalAction(GLOBAL_ACTION_HOME)
+                down = false
+            }
+        }
+        return true
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
+
+    override fun onInterrupt() {
+        handler.removeCallbacks(longPress)
+        down = false
+    }
+
+    companion object {
+        private const val LONG_PRESS_MS = 600L
+    }
+}

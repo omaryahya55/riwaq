@@ -93,7 +93,10 @@
       <div class="shade home-shade"></div>
       <div class="h-top soft-shadow">
         <div class="h-date" data-k="date"></div>
-        <nav class="h-nav">${NAV.map((n, c) => `<div class="nav-pill" data-r="0" data-c="${c}">${icon(n.ic)}<span>${n.name}</span></div>`).join("")}</nav>
+        <div class="h-center">
+          <div class="h-brand" aria-label="رِواق">رِواق</div>
+          <nav class="h-nav">${NAV.map((n, c) => `<div class="nav-pill" data-r="0" data-c="${c}">${icon(n.ic)}<span>${n.name}</span></div>`).join("")}</nav>
+        </div>
         <div class="h-status">
           <span class="chip" data-k="wx"></span>
           <span class="h-time" data-k="time"></span>
@@ -141,9 +144,11 @@
       <div class="reader" data-k="reader">
         <div class="reader-box">
           <div class="reader-head"><span data-k="rTitle"></span><span class="reader-count" data-k="rCount"></span></div>
+          <img class="reader-img" data-k="rImg" alt="" hidden>
           <p class="reader-text" data-k="rText"></p>
           <div class="reader-src" data-k="rSrc"></div>
-          <div class="reader-hint">الأسهم: التالي والسابق · رجوع: إغلاق</div>
+          <div class="reader-ref" data-k="rRef"></div>
+          <div class="reader-hint" data-k="rHint"></div>
         </div>
       </div>`;
     return el;
@@ -216,11 +221,16 @@
       const c = window.Content && Content.current(now, offset);
       if (!c) break;
       const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
-      el.innerHTML = `<div class="label">${icon("book")}${esc(c.title)}</div><p class="hc-text">${esc(text)}</p>
-        <div class="hc-src">${esc(c.item.source)}${c.item.edition ? " · " + esc(c.item.edition) : ""}</div>`;
-      for (const size of ["", "long", "xlong"]) {
-        el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
-        if (el.scrollHeight <= el.clientHeight + 1) return;
+      const hasRef = !!Content.credit(c.item, true).reference;
+      for (const full of hasRef ? [true, false] : [false]) {
+        const cr = Content.credit(c.item, full);
+        const img = /^img\/places\/[a-z0-9-]+\.jpg$/.test(c.item.image || "") ? `<img class="hc-place-img" src="${c.item.image}" alt="">` : "";
+        el.innerHTML = `<div class="label">${icon("book")}${esc(c.title)}</div>${img}<p class="hc-text ${Content.fontClass(c.item)}">${esc(text)}</p>
+          <div class="hc-src">${esc(cr.source)}</div>${cr.reference ? `<div class="hc-src hc-ref">${esc(cr.reference)}</div>` : ""}`;
+        for (const size of ["", "long", "xlong"]) {
+          el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
+          if (el.scrollHeight <= el.clientHeight + 1) return;
+        }
       }
     }
     el.classList.remove("long", "xlong");
@@ -237,12 +247,18 @@
     }
     const H = window.Saver && Saver.helpers;
     // مباراة الفريق
-    const team = CONFIG.teams[0], td = team && DATA.team(team.id);
-    if (td && td.data.next && td.data.next.at) {
-      const N = td.data.next, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
-      const when = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(new Date(N.at));
-      lines.push(`<div class="ht-line">${icon("ball")}<span><bdi>${nm(N.homeId, N.home)}</bdi> × <bdi>${nm(N.awayId, N.away)}</bdi><small>${when}</small></span></div>`);
+    const fm = DATA.featuredMatch(now);
+    if (fm) {
+      const E = fm.ev, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
+      const mid = fm.kind === "last" ? `<small style="display:inline">${F.digits(E.hs)} - ${F.digits(E.as)}</small>` : "×";
+      const sub = fm.kind === "last" ? "النتيجة" : new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(fm.at);
+      lines.push(`<div class="ht-line">${icon("ball")}<span><bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi><small>${sub}</small></span></div>`);
     }
+    // ختمتك: ورد اليوم
+    const wd = window.QuranTools && QuranTools.wird(now);
+    if (wd) lines.push(wd.done
+      ? `<div class="ht-line">${icon("book")}<span>ختمت القرآن، تقبّل الله <small>ابدأ ختمة جديدة من الإعدادات</small></span></div>`
+      : `<div class="ht-line">${icon("book")}<span>وردك اليوم: الجزء ${F.digits(wd.juz)}<small>${esc(wd.label)} · باقي ${F.digits(wd.daysLeft)} ${wd.daysLeft >= 3 && wd.daysLeft <= 10 ? "أيام" : "يوم"} على الختمة</small></span></div>`);
     if (H) {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, H.daysToHijri(now, m, d) || { days: 9999 })).sort((a, b) => a.days - b.days)[0];
@@ -252,7 +268,10 @@
         lines.push(`<div class="ht-line">${icon("wallet")}<span>الراتب: ${s.days === 0 ? "اليوم" : `باقي ${F.digits(s.days)} ${s.days >= 3 && s.days <= 10 ? "أيام" : "يوم"}`} <small>متوقع</small></span></div>`);
       }
     }
-    el.innerHTML = `<div class="label">${icon("calendar")}اليوم</div>` + (lines.length ? lines.join("") : `<p class="hc-empty">حدد مدينتك وفريقك من الإعدادات.</p>`);
+    // البطاقة ما تكبر: لو ما دخل كل شي نشيل من آخر القائمة (الأقل أهمية) بدل ما ينقص سطر من نصه
+    const paint = () => { el.innerHTML = `<div class="label">${icon("calendar")}اليوم</div>` + (lines.length ? lines.join("") : `<p class="hc-empty">حدد مدينتك وفريقك من الإعدادات.</p>`); };
+    paint();
+    while (lines.length > 1 && el.scrollHeight > el.clientHeight + 1) { lines.pop(); paint(); }
   }
 
   function renderStatus() {
@@ -275,9 +294,20 @@
     if (!it) return;
     $("rTitle").textContent = it.title;
     $("rCount").textContent = `${F.digits(readIdx + 1)} / ${F.digits(readList.length)}`;
-    $("rText").textContent = String(it.item.text).replace(/<[^>]+>/g, "").trim();
+    const tx = $("rText");
+    tx.textContent = String(it.item.text).replace(/<[^>]+>/g, "").trim();
+    tx.className = "reader-text " + Content.fontClass(it.item);
+    const im = $("rImg"), okImg = /^img\/places\/[a-z0-9-]+\.jpg$/.test(it.item.image || "");
+    im.hidden = !okImg; if (okImg) im.src = it.item.image; else im.removeAttribute("src");
     $("rSrc").textContent = it.item.source + (it.item.edition ? " · المصدر: " + it.item.edition : "");
+    $("rRef").textContent = Content.credit(it.item, true).reference;
+    // النص كامل دايماً: نصغّر الخط، وإذا للحين أطول من المساحة ينقرا بالسهم تحت
+    tx.scrollTop = 0;
+    for (const px of [40, 34, 29, 25]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; }
+    readScroll = tx.scrollHeight > tx.clientHeight + 1;
+    $("rHint").textContent = readScroll ? "تحت وفوق: باقي النص · يمين ويسار: التالي والسابق · رجوع: إغلاق" : "الأسهم: التالي والسابق · رجوع: إغلاق";
   }
+  let readScroll = false;
 
   function renderQuick() {
     $("qlist").innerHTML = QUICK.map((q, i) => `<div class="qk ${i === quickIdx ? "focus" : ""}">${icon(q.ic)}<span>${q.name}</span></div>`).join("");
@@ -346,6 +376,7 @@
       DATA.onChange(renderStatus);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
       setInterval(() => renderContentCard(new Date()), 20000);
+      window.addEventListener("riwaq-content", () => renderContentCard(new Date())); // أول ما يوصل ملف المحتوى
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
     openQuick() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); mode = "nav"; } openQuick(); },
@@ -375,6 +406,10 @@
         renderQuick(); return true;
       }
       if (mode === "reader") {
+        // النص الطويل: تحت وفوق يمشون فيه، ولين يوصل آخره السهم تحت ينقل للتالي
+        const tx = $("rText");
+        if (readScroll && k === "down" && tx.scrollTop + tx.clientHeight < tx.scrollHeight - 1) { tx.scrollTop += tx.clientHeight * 0.8; return true; }
+        if (readScroll && k === "up" && tx.scrollTop > 0) { tx.scrollTop -= tx.clientHeight * 0.8; return true; }
         // من اليمين لليسار: السهم اليسار = التالي
         if (k === "left" || k === "down") readIdx = Math.min(readList.length - 1, readIdx + 1);
         if (k === "right" || k === "up") readIdx = Math.max(0, readIdx - 1);

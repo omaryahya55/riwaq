@@ -7,4 +7,6 @@
     <string name="settings_no_network">التلفزيون مو متصل بشبكة واي فاي أو سلك. وصّله وارجع لهذي الشاشة.</string>
     <string name="settings_back">اضغط رجوع لما تخلص</string>
     <string name="settings_saved">انحفظت الإعدادات ✓</string>
+    <string name="home_key_label">رِواق: ضغطة البيت المطوّلة</string>
+    <string name="home_key_desc">ضغطة مطوّلة على زر البيت في الريموت تفتح لوحة التلفزيون السريعة في رواق (الإعدادات، والواي فاي، والبلوتوث، والصوت). الضغطة العادية تشتغل مثل ما هي. ما تقرا ولا تحفظ أي شي ثاني.</string>
 </resources>

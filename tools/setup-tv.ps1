@@ -76,8 +76,12 @@ Say "متصل: $model (أندرويد API $sdk)"
 
 # ===== ٢. التركيب =====
 if (-not $Apk) {
-  $Apk = Join-Path $PSScriptRoot "..\dist\riwaq-0.1.0.apk"
-  if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\release\app-release.apk" }
+  # أحدث نسخة موقعة في dist (riwaq-<الإصدار>.apk)
+  $latest = Get-ChildItem (Join-Path $PSScriptRoot "..\dist") -Filter "riwaq-*.apk" -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -match '^riwaq-(\d+)\.(\d+)\.(\d+)\.apk$' } |
+    Sort-Object { [version]($_.BaseName -replace '^riwaq-', '') } -Descending | Select-Object -First 1
+  $Apk = if ($latest) { $latest.FullName } else { "" }
+  if (-not $Apk -or -not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\release\app-release.apk" }
   if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\debug\app-debug.apk" }
 }
 if (-not (Test-Path $Apk)) { Fail "ما لقينا ملف التطبيق (APK). حمّله من صفحة الإصدارات وحط مساره بعد -Apk" }
@@ -130,6 +134,19 @@ $backup.disabled = @($backup.disabled) + $disabledNow | Select-Object -Unique
 $backup | ConvertTo-Json | Out-File -Encoding utf8 $backupFile
 if ($sdk -ge 29) { Adb shell cmd package set-home-activity --user 0 $HomeActivity 2>&1 | Out-Null }
 
+# ===== ٥ب. ضغطة البيت المطوّلة =====
+# خدمة "إمكانية الوصول" في رواق: تستقبل زر البيت بس. الضغطة العادية ترجع لأندرويد، والمطوّلة تفتح لوحة التلفزيون
+$a11y = "$Pkg/$Pkg.HomeKeyService"
+$cur = (Adb shell settings get secure enabled_accessibility_services | Out-String).Trim()
+if ($cur -notmatch [regex]::Escape($a11y)) {
+  $new = if (-not $cur -or $cur -eq "null") { $a11y } else { "$cur`:$a11y" }
+  Adb shell settings put secure enabled_accessibility_services "$new" | Out-Null
+  Adb shell settings put secure accessibility_enabled 1 | Out-Null
+}
+$cur = (Adb shell settings get secure enabled_accessibility_services | Out-String).Trim()
+if ($cur -match [regex]::Escape($a11y)) { Say "ضغطة البيت المطوّلة تفتح لوحة التلفزيون في رواق" }
+else { Write-Host "! ما قدرنا نشغّل ضغطة البيت المطوّلة على هذا الجهاز. تقدر تفتح اللوحة من (التلفزيون) فوق في الواجهة" -ForegroundColor Yellow }
+
 # ===== ٦. نتأكد =====
 Adb shell input keyevent KEYCODE_HOME | Out-Null
 Start-Sleep -Seconds 3
@@ -137,6 +154,9 @@ $top = (Adb shell dumpsys activity activities) | Select-String -Pattern "mResume
 if ("$top" -notmatch [regex]::Escape($Pkg)) {
   Write-Host "✗ زر البيت ما فتح رواق. نرجّع الواجهة الأصلية الحين ..." -ForegroundColor Red
   foreach ($p in $disabledNow) { Adb shell pm enable --user 0 $p | Out-Null }
+  $cur = (Adb shell settings get secure enabled_accessibility_services | Out-String).Trim()
+  $rest = ($cur -split ":" | Where-Object { $_ -and $_ -ne $a11y }) -join ":"
+  if ($rest) { Adb shell settings put secure enabled_accessibility_services "$rest" | Out-Null } else { Adb shell settings delete secure enabled_accessibility_services | Out-Null }
   Fail "رجعنا كل شي. ($top) أرسل هذا السطر لنا عشان نضيف جهازك."
 }
 Say "تم ✓ رواق الحين الواجهة الرئيسية وشاشة التوقف."

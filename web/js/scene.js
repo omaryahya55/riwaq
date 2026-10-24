@@ -6,15 +6,15 @@
 (function () {
   const P = {
     night:  { sky: ["#05070F", "#0B1226", "#1A2140"], glow: "#3A4A7A", glowA: 0.35, sun: null, moon: [1160, 150],
-              dunes: ["#1B2340", "#141B33", "#0E1427", "#090E1C"], stars: 1 },
+              dunes: ["#1B2340", "#141B33", "#0E1427", "#090E1C"], stars: 1, clouds: 0.06 },
     fajr:   { sky: ["#141836", "#3D3560", "#B87566"], glow: "#F0A07A", glowA: 0.55, sun: null, moon: null,
-              dunes: ["#5A4560", "#3F3150", "#2A2140", "#1A1530"], stars: 0.35 },
+              dunes: ["#5A4560", "#3F3150", "#2A2140", "#1A1530"], stars: 0.35, clouds: 0.3 },
     day:    { sky: ["#3F6F99", "#8FB3C9", "#E6D3AE"], glow: "#FFF1D0", glowA: 0.6, sun: [1160, 170], moon: null,
-              dunes: ["#D7B98A", "#C59E6B", "#A97F50", "#80603B"], stars: 0 },
+              dunes: ["#D7B98A", "#C59E6B", "#A97F50", "#80603B"], stars: 0, clouds: 0.5 },
     asr:    { sky: ["#2A2140", "#8A4A48", "#EAA35A"], glow: "#FFC77A", glowA: 0.75, sun: [700, 610], moon: null,
-              dunes: ["#B2714E", "#8E5440", "#663B33", "#3F2528"], stars: 0 },
+              dunes: ["#B2714E", "#8E5440", "#663B33", "#3F2528"], stars: 0, clouds: 0.32 },
     dusk:   { sky: ["#0F1430", "#33284A", "#8C5762"], glow: "#D98B6E", glowA: 0.5, sun: null, moon: [1160, 160],
-              dunes: ["#3A2E4A", "#2A2240", "#1C1832", "#121024"], stars: 0.6 }
+              dunes: ["#3A2E4A", "#2A2240", "#1C1832", "#121024"], stars: 0.6, clouds: 0.14 }
   };
 
   // كثبان بمنحنيات ناعمة. كل طبقة أقرب = أغمق وأوطى
@@ -32,9 +32,20 @@
     const n = Math.round(140 * density);
     for (let i = 0; i < n; i++) {
       const x = rnd() * 1920, y = rnd() * 620, r = rnd() < 0.08 ? 1.6 : 0.6 + rnd() * 0.7;
-      out += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.25 + rnd() * 0.6).toFixed(2)}"/>`;
+      // كل نجمة خامسة تلمع (لو الحركة شغالة)، وكل وحدة بتوقيت مختلف
+      const tw = i % 5 === 0 ? ` class="tw" style="animation-delay:-${(rnd() * 6).toFixed(1)}s"` : "";
+      out += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.25 + rnd() * 0.6).toFixed(2)}"${tw}/>`;
     }
     return out;
+  }
+
+  // غيوم ناعمة: شريط بعرض الشاشة مكرر مرتين، يمشي ببطء ويرجع لنفس المكان بدون قفزة
+  function clouds(opacity) {
+    if (!opacity) return "";
+    const band = (y, s) => [[120, 0], [620, 40], [1100, -20], [1560, 30]]
+      .map(([x, dy]) => `<g transform="translate(${x} ${y + dy}) scale(${s})"><ellipse cx="0" cy="0" rx="190" ry="34" fill="url(#cloudG)"/><ellipse cx="70" cy="-22" rx="120" ry="38" fill="url(#cloudG)"/><ellipse cx="-80" cy="-12" rx="100" ry="28" fill="url(#cloudG)"/></g>`).join("");
+    const row = (y, s, cls) => `<g class="${cls}"><g>${band(y, s)}</g><g transform="translate(1920 0)">${band(y, s)}</g></g>`;
+    return `<g opacity="${opacity}">${row(190, 1.1, "cloud c1")}${row(330, 0.8, "cloud c2")}</g>`;
   }
 
   function render(el, period) {
@@ -51,6 +62,7 @@
       <stop offset="0" stop-color="${p.glow}" stop-opacity="${p.glowA}"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="sunGlow"><stop offset="0" stop-color="#FFE7B0" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7B0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="cloudG"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
     <radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".18"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient>
     ${p.dunes.map((c, i) => `<linearGradient id="d${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}"/><stop offset="1" stop-color="${p.dunes[Math.min(i + 1, 3)]}"/></linearGradient>`).join("")}
   </defs>
@@ -58,6 +70,7 @@
   <g>${stars(p.stars)}</g>
   <rect width="1920" height="1080" fill="url(#horizon)"/>
   ${sun}${moon}
+  ${clouds(p.clouds)}
   ${DUNES.map((d, i) => `<path d="${d}" fill="url(#d${i})"/>`).join("")}
 </svg>`;
   }

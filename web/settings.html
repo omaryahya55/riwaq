@@ -11,6 +11,7 @@
 <body>
   <header class="top">
     <div class="brand">رِواق</div>
+    <div class="waqf">وقف لله تعالى</div>
     <h1>الإعدادات</h1>
     <p class="muted" id="where">التغييرات تنحفظ على هذا الجهاز بس.</p>
   </header>
@@ -57,7 +58,7 @@
 
     <section class="card">
       <h2>الأندية</h2>
-      <p class="muted">اختر لين ٣ أندية. مباراة أول نادي تطلع تحت، وكلهم يتميزون في جدول الترتيب.</p>
+      <p class="muted">اختر الأندية اللي تتابعها من أي دوري (لين ١٢). تطلع أقرب مباراة لأي واحد منها، وكلهم يتميزون بلونهم في جدول الترتيب.</p>
       <label class="field">الدوري
         <select id="teamLeague"></select>
       </label>
@@ -84,10 +85,45 @@
     </section>
 
     <section class="card">
+      <h2>القرآن الكريم</h2>
+      <h3>ختمتك</h3>
+      <label class="switch"><input type="checkbox" id="khOn"><span>اعرض وردي اليومي على الشاشة</span></label>
+      <div class="field"><span>كم تقرا باليوم؟</span>
+        <select id="khPer"><option value="4">نص جزء (الختمة في ٦٠ يوم)</option><option value="8">جزء (الختمة في ٣٠ يوم)</option><option value="16">جزأين (١٥ يوم)</option><option value="24">٣ أجزاء (١٠ أيام)</option></select></div>
+      <div class="field"><span>وين وصلت؟ (تبدأ منه اليوم)</span><select id="khFrom"></select>
+        <small id="khNow"></small></div>
+      <h3>راجع محفوظك</h3>
+      <p class="muted">اختر السور اللي تحفظها، وكل يوم يطلع لك مقطع منها بالترتيب تراجعه.</p>
+      <div class="chips" id="hifzList"></div>
+      <h3>بين محتوى اليوم</h3>
+      <label class="switch"><input type="checkbox" id="sunnahDaily"><span>سنّة نعيشها: كل يوم سنّة من آداب اليوم (السلام، والأكل، والنوم…)</span></label>
+      <label class="switch"><input type="checkbox" id="placeDaily"><span>حكاية مكان: صورة مكان إسلامي أو تاريخي مع تعريفه (أول جملة من ويكيبيديا العربية)</span></label>
+      <label class="switch"><input type="checkbox" id="prayerCalm"><span>صمت له معنى: من الأذان لين بعد الصلاة شاشة الانتظار تهدأ (الوقت والصلاة بس)</span></label>
+      <label class="switch"><input type="checkbox" id="motion"><span>خلفية تتحرك بهدوء (غيوم ونجوم)</span></label>
+    </section>
+
+    <section class="card">
       <h2>مواعيدك (اختياري)</h2>
       <p class="muted">تطلع مواعيد تقويم قوقل حقك جنب الساعة. بدون تسجيل دخول: تحتاج بس "العنوان السري".</p>
       <input id="icalUrl" type="url" inputmode="url" placeholder="https://calendar.google.com/calendar/ical/.../basic.ics" aria-label="العنوان السري للتقويم" style="direction:ltr;text-align:left">
       <p class="tiny">من الكمبيوتر: تقويم قوقل ← الإعدادات ← اختر التقويم ← "العنوان السري بتنسيق iCal" ← انسخه. الرابط سرّي: ينحفظ على التلفزيون بس، ولا تشاركه مع أحد.</p>
+      <h3>مهامك من Todoist (اختياري)</h3>
+      <p class="muted">مهام اليوم والمتأخرة تطلع في البطاقة اللي جنب الساعة. تقدر تشارك قائمة مع العائلة في Todoist.</p>
+      <input id="todoistToken" type="password" autocomplete="off" placeholder="مفتاح Todoist" aria-label="مفتاح Todoist" style="direction:ltr;text-align:left">
+      <p class="tiny">من Todoist: الإعدادات ← التكاملات ← المطوّر ← انسخ "رمز API". سرّي: ينحفظ على التلفزيون بس. رواق مو تابع لـ Todoist.</p>
+    </section>
+
+    <section class="card">
+      <h2>رسالة من الجوال (اختياري)</h2>
+      <p class="muted">ترسل رسالة من تيليقرام وتطلع على التلفزيون في نص الشاشة. بدون أي سيرفر: التلفزيون يقرا رسايل البوت حقك بس.</p>
+      <ol class="steps tiny">
+        <li>في تيليقرام افتح <b>@BotFather</b> وأرسل <b>/newbot</b>، واختر اسم للبوت.</li>
+        <li>بيعطيك "مفتاح" طويل. انسخه وحطه هنا، واضغط حفظ.</li>
+        <li>افتح البوت حقك في تيليقرام وأرسل له رمز الربط: <b id="tgCode" style="direction:ltr;display:inline-block"></b></li>
+      </ol>
+      <input id="tgToken" type="password" autocomplete="off" placeholder="مفتاح البوت من BotFather" aria-label="مفتاح بوت تيليقرام" style="direction:ltr;text-align:left">
+      <div id="tgAllowed" class="tiny"></div>
+      <p class="tiny">الرسالة الأقدم من ١٠ دقايق ما تطلع، وتطلع بس رسايل الجوالات المربوطة (لين ٥). المفتاح سرّي: على التلفزيون بس.</p>
     </section>
 
     <section class="card" id="contentCard" hidden>
@@ -105,6 +141,7 @@
   <script src="js/config.js"></script>
   <script src="js/demo-data.js"></script>
   <script src="js/teams-ar.js"></script>
+  <script src="js/quran-meta.js"></script>
   <script src="js/settings.js"></script>
 </body>
 </html>

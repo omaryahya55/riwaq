@@ -90,6 +90,7 @@
           <div class="s-ticker-track"><div class="s-ticker-move" data-k="news"></div></div>
         </div>
         <div class="s-bottom" data-k="bottom"></div>
+        <div class="s-calm" data-k="calm"></div>
       </div>
       <div class="adhan-glow"></div>
       <div class="adhan-alert">${icon("bell")}<span data-k="alertText"></span></div>
@@ -137,12 +138,19 @@
     const dust = DATA.dust();
     // ٣٠٠ ميكروغرام/م³ وفوق = غبار عالي جداً (حد متحفظ، ما نخوّف الناس على الفاضي)
     if (dust !== null && dust >= 300) chips.push(`${icon("fog")}تنبيه غبار`);
+    const wird = window.QuranTools && QuranTools.wird(now);
+    if (wird && !wird.done) chips.push(`${icon("book")}وردك اليوم: الجزء ${F.digits(wird.juz)}`);
     if (CONFIG.reminders !== false) {
       const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(F.parts(now, { weekday: "short" }).weekday);
       const tomorrowH = F.hijriParts(new Date(now.getTime() + DAY));
       if (wd === 5) chips.push(`${icon("crescent")}يوم الجمعة · سورة الكهف`);
+      // ساعة الإجابة يوم الجمعة: آخر ساعة بعد العصر (حديث جابر عند أبي داود والنسائي)
+      const pt = window.Prayer && Prayer.timesFor(now, 0), pat = (id) => pt && (pt.find((p) => p.id === id) || {}).at;
+      if (wd === 5 && pat("asr") && now >= pat("asr") && now < pat("maghrib")) chips.push(`${icon("crescent")}ساعة الإجابة · آخر ساعة قبل المغرب`);
       if (wd === 0 || wd === 3) chips.push(`${icon("crescent")}بكرة ${wd === 0 ? "الاثنين" : "الخميس"} · صيام`);
       if ([13, 14, 15].includes(tomorrowH.d) && tomorrowH.m !== 9) chips.push(`${icon("crescent")}بكرة من الأيام البيض`);
+      if (tomorrowH.m === 12 && tomorrowH.d === 9) chips.push(`${icon("crescent")}بكرة يوم عرفة · صيام`);
+      if (tomorrowH.m === 1 && (tomorrowH.d === 9 || tomorrowH.d === 10)) chips.push(`${icon("crescent")}بكرة ${tomorrowH.d === 9 ? "تاسوعاء" : "عاشوراء"} · صيام`);
     }
     $(root, "chips").innerHTML = chips.map((c) => `<span class="s-chip">${c}</span>`).join("");
   }
@@ -171,6 +179,7 @@
   function sidePages() {
     const pages = [];
     if (DATA.calendar()) pages.push("cal");
+    if (DATA.tasks()) pages.push("tasks");
     if (CONFIG.sideCard === "leagues") pages.push(...availableLeagues());
     return pages;
   }
@@ -195,6 +204,14 @@
     $(root, "sideSrc").textContent = "من تقويمك";
   }
 
+  function renderTasks(root) {
+    const list = DATA.tasks() || [];
+    $(root, "league").textContent = "مهامك";
+    $(root, "sideIcon").innerHTML = icon("calendar");
+    $(root, "table").innerHTML = list.map((e) => `<div class="s-row s-cal"><span class="clip">${esc(e.title)}</span><span class="when">${e.at ? esc(calWhen(e)) : ""}</span></div>`).join("");
+    $(root, "sideSrc").textContent = "من Todoist";
+  }
+
   function renderLeague(root, animate) {
     const side = $(root, "side");
     const pages = sidePages();
@@ -203,8 +220,8 @@
     leagueIdx %= pages.length;
     const table = $(root, "table");
     const dots = () => { $(root, "dots").innerHTML = pages.map((x, i) => `<i class="${i === leagueIdx ? "on" : ""}"></i>`).join(""); };
-    if (pages[leagueIdx] === "cal") {
-      const paintCal = () => { renderCalendar(root); dots(); table.classList.remove("fade"); };
+    if (pages[leagueIdx] === "cal" || pages[leagueIdx] === "tasks") {
+      const paintCal = () => { (pages[leagueIdx] === "cal" ? renderCalendar : renderTasks)(root); dots(); table.classList.remove("fade"); };
       if (!animate) return paintCal();
       table.classList.add("fade"); setTimeout(paintCal, 500); return;
     }
@@ -239,21 +256,38 @@
       const c = window.Content && Content.current(now, offset);
       if (!c) break;
       const text = String(c.item.text).replace(/<[^>]+>/g, "").trim(); // وسوم HTML بس، ولا كلمة
-      const credit = c.item.edition ? ` · المصدر: ${esc(c.item.edition)}` : "";
-      el.innerHTML = `<div class="s-card-title">${esc(c.title)}</div><p class="s-hadith-text">${esc(text)}</p><small>${esc(c.item.source)}${credit}</small>`;
-      show(el, true);
-      for (const size of ["", "long", "xlong"]) {
-        for (const hideWeek of [false, true]) {
-          if (hideWeek && !weekHas) continue;
-          el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
-          show(week, weekHas && !hideWeek);
-          if (col.scrollHeight <= col.clientHeight + 1) return;
+      // أول محاولة: المصدر وتحته المرجع (تخريج الكتاب). لو ما دخل: المصدر بس
+      const hasRef = !!Content.credit(c.item, true).reference;
+      for (const full of hasRef ? [true, false] : [false]) {
+        const cr = Content.credit(c.item, full);
+        const img = /^img\/places\/[a-z0-9-]+\.jpg$/.test(c.item.image || "") ? `<img class="s-place-img" src="${c.item.image}" alt="">` : "";
+        el.innerHTML = `<div class="s-card-title">${esc(c.title)}</div>${img}<p class="s-hadith-text ${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(cr.source)}</small>`
+          + (cr.reference ? `<small class="s-ref">${esc(cr.reference)}</small>` : "");
+        show(el, true);
+        for (const size of ["", "long", "xlong"]) {
+          for (const hideWeek of [false, true]) {
+            if (hideWeek && !weekHas) continue;
+            el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
+            show(week, weekHas && !hideWeek);
+            if (col.scrollHeight <= col.clientHeight + 1) return;
+          }
         }
       }
     }
     // ما فيه شي يدخل كامل: نخفي الخانة ونرجّع الطقس
     show(el, false);
     show(week, weekHas);
+  }
+
+  // صمت له معنى: وقت الصلاة الشاشة تهدأ، وتقول بس وش الصلاة
+  function renderCalm(root, now) {
+    const ph = CONFIG.prayerCalm !== false && Content.prayerPhase && Content.prayerPhase(now);
+    document.getElementById("stage").classList.toggle("prayercalm", !!ph && App.current === "saver");
+    if (!ph) return;
+    const mins = Math.max(0, Math.ceil((ph.iqama - now) / 60000));
+    $(root, "calm").innerHTML = ph.before
+      ? `<div class="c-main">حان وقت صلاة ${ph.name}</div><div class="c-sub">الإقامة تقريباً بعد ${F.duration(mins)}</div>`
+      : `<div class="c-main">صلاة ${ph.name}</div><div class="c-sub">تقبّل الله</div>`;
   }
 
   function renderPrayers(root, now) {
@@ -303,10 +337,9 @@
       cells.push(cell("wallet", pick[0], pick[1].days === 0 ? "اليوم" : `باقي ${F.digits(pick[1].days)} <small>${daysWord(pick[1].days)}</small>`, fmtDate(pick[1].date) + " · متوقع"));
     }
     // مباراة الفريق: النتيجة تبقى ٢٤ ساعة بعد المباراة، وبعدها المباراة الجاية
-    const team = CONFIG.teams[0], td = team && DATA.team(team.id);
-    if (td) {
-      const L = td.data.last, N = td.data.next;
-      const lastAt = L && L.at && new Date(L.at);
+    const fm = DATA.featuredMatch(now);
+    if (fm) {
+      const team = fm.team;
       // <bdi> عشان اسم إنقليزي جنب اسم عربي ما يقلب الترتيب
       const mineIds = new Set(CONFIG.teams.map((x) => String(x.id)));
       const nm = (e, side) => {
@@ -314,10 +347,11 @@
         const style = mineIds.has(id) ? ` style="color:${teamColor(id)}"` : "";
         return `<bdi${style}>${esc(teamName(id, side === "h" ? e.home : e.away))}</bdi>`;
       };
-      if (L && lastAt && now - lastAt < DAY && L.hs !== null && L.hs !== undefined && L.hs !== "") {
+      if (fm.kind === "last") {
+        const L = fm.ev;
         cells.push(cell("ball", `نتيجة ${esc(teamName(team.id, team.name))}`, `${nm(L, "h")} <small>${F.digits(L.hs)} - ${F.digits(L.as)}</small> ${nm(L, "a")}`, L.status === "FT" ? "انتهت" : "جارية"));
-      } else if (N && N.at) {
-        const at = new Date(N.at);
+      } else {
+        const N = fm.ev, at = fm.at;
         const when = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(at);
         cells.push(cell("ball", `مباراة ${esc(teamName(team.id, team.name))} الجاية`, `${nm(N, "h")} <small>×</small> ${nm(N, "a")}`, when));
       }
@@ -325,6 +359,12 @@
     const el = $(root, "bottom");
     el.style.gridTemplateColumns = `repeat(${Math.max(cells.length, 1)}, 1fr)`;
     el.innerHTML = cells.join("");
+    // كل سطر يصغر خطه لين يدخل عرض خانته
+    el.querySelectorAll(".label, .s-cell-main, .s-cell-sub").forEach((x) => {
+      let size = parseFloat(getComputedStyle(x).fontSize);
+      const min = size * 0.55;
+      while (x.scrollWidth > x.clientWidth + 1 && size > min) { size -= 1; x.style.fontSize = size + "px"; }
+    });
   }
 
   function renderNews(root) {
@@ -379,6 +419,7 @@
       renderNews(root);
       renderHadith(root, now); // بعد الأخبار والطقس: يقيس المساحة الباقية
       renderCredit(root);
+      renderCalm(root, now);
       const limit = CONFIG.alertMinutes || 0;
       const alertOn = forceAlert || (np && limit > 0 && np.mins <= limit && np.mins > 0);
       document.getElementById("stage").classList.toggle("alert", !!alertOn && App.current === "saver");
