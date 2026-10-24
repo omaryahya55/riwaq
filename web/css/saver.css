@@ -56,7 +56,8 @@
 .s-row .pl { color: var(--ink-3); font-size: 21px; text-align: center; }
 .s-row .pt { text-align: left; font-weight: 600; }
 .s-row.mine { color: var(--gold); }
-.s-row.mine .rk, .s-row.mine .pl { color: var(--gold-deep); }
+.s-row.mine { font-weight: 600; }
+.s-row.mine .rk, .s-row.mine .pl { color: inherit; opacity: .75; }
 .s-row-head { height: 34px; font-size: 18px; color: var(--ink-4); border-top: 0; }
 .s-row-head .pt { font-weight: 400; }
 .s-side-src { position: absolute; bottom: 22px; right: 32px; font-size: 16px; color: var(--ink-4); }

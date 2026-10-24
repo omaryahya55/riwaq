@@ -17,7 +17,8 @@
     fx: { every: 6 * HOUR, maxAge: 4 * 24 * HOUR },     // البنوك المركزية ما تنشر في الإجازات
     table: { every: 6 * HOUR, maxAge: 3 * 24 * HOUR },
     team: { every: 60 * MIN, maxAge: 12 * HOUR },
-    news: { every: 20 * MIN, maxAge: 6 * HOUR }
+    news: { every: 20 * MIN, maxAge: 6 * HOUR },
+    color: { every: 30 * 24 * HOUR, maxAge: 120 * 24 * HOUR }
   };
 
   const listeners = [];
@@ -145,6 +146,19 @@
     }
   }
 
+  async function loadTeamColors() {
+    for (const t of CONFIG.teams) {
+      const key = "color." + t.id;
+      if (!due(key, "color")) continue;
+      const p = `/lookupteam.php?id=${t.id}`;
+      const j = await get(proxied("/sports" + p, sportsBase() + p), "thesportsdb");
+      const team = j && j.teams && j.teams[0];
+      const c = team && /^#[0-9a-f]{6}$/i.test(team.strColour1 || "") ? team.strColour1 : "";
+      write(key, { color: c });
+      await sleep(4000);
+    }
+  }
+
   // RSS: المتصفح يمنع قراءة مواقع ثانية (CORS)، فالتطبيق يقرأها عن طريق أندرويد، أو السيرفر الوسيط
   function fetchText(url) {
     if (window.Riwaq && Riwaq.fetchText) {
@@ -184,7 +198,7 @@
     if (running) return; // تحديث واحد بس في نفس الوقت، عشان ما نطلب نفس المصدر مرتين
     running = true;
     try {
-      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadTables, loadTeams];
+      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadTables, loadTeams, loadTeamColors];
       for (const job of jobs) {
         try { await job(); } catch (e) { /* نجرب المرة الجاية. البيانات القديمة تنحكم بحدها */ }
         listeners.forEach((cb) => cb());
@@ -216,6 +230,7 @@
     table(id) { return fresh("table." + id, "table"); },
     team(id) { return fresh("team." + id, "team"); },
     news() { return fresh("news", "news"); },
+    teamColor(id) { const v = fresh("color." + id, "color"); return v && v.data.color ? v.data.color : null; },
     season,
     RULES
   };

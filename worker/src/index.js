@@ -66,8 +66,8 @@ export default {
     if (price) return cached(req, ctx, "https://api.gold-api.com/price/" + price[1], TTL.price);
     if (path === "/fx") return cached(req, ctx, "https://api.frankfurter.dev/v2/rates?base=USD&quotes=SAR,EUR,GBP,AED,KWD", TTL.fx);
 
-    // TheSportsDB: ثلاث نقاط بس، والمفتاح من الأسرار
-    const sp = path.match(/^\/sports\/(lookuptable|eventsnext|eventslast)\.php$/);
+    // TheSportsDB: أربع نقاط بس، والمفتاح من الأسرار
+    const sp = path.match(/^\/sports\/(lookuptable|eventsnext|eventslast|lookupteam)\.php$/);
     if (sp) {
       const q = new URLSearchParams();
       for (const k of ["l", "s", "id"]) { const v = url.searchParams.get(k); if (v && /^[0-9-]{1,12}$/.test(v)) q.set(k, v); }

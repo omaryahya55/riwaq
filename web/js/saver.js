@@ -42,6 +42,20 @@
   // اسم الفريق بالعربي إذا موجود في الجدول، وإلا الاسم الإنقليزي
   const teamName = (id, en) => (window.TEAMS_AR && TEAMS_AR[id]) || en;
 
+  // لون فريق المستخدم: من TheSportsDB، وإلا من جدولنا، وإلا ذهبي.
+  // الألوان الغامقة تتفتّح لين تنقرا على الخلفية الغامقة (تباين كافي)
+  function readable(hex) {
+    let [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    const lum = () => [r, g, b].map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); })
+      .reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+    for (let k = 0; k < 12 && lum() < 0.3; k++) [r, g, b] = [r, g, b].map((v) => Math.round(v + (255 - v) * 0.15));
+    return `rgb(${r},${g},${b})`;
+  }
+  function teamColor(id) {
+    const c = DATA.teamColor(id) || (window.TEAM_COLORS && TEAM_COLORS[id]);
+    return c ? readable(c) : "var(--gold)";
+  }
+
   // ===== الهيكل =====
   function build(root) {
     root.innerHTML = `
@@ -165,7 +179,7 @@
     const paint = () => {
       $(root, "league").textContent = LEAGUE_AR[id] || "الدوري";
       table.innerHTML = `<div class="s-row s-row-head"><span></span><span>الفريق</span><span class="pl">لعب</span><span class="pt">نقاط</span></div>` +
-        t.data.map((r, i) => `<div class="s-row ${mine.has(String(r.id)) ? "mine" : ""}"><span class="rk">${F.digits(i + 1)}</span><span class="clip"><bdi>${esc(teamName(r.id, r.name))}</bdi></span><span class="pl">${F.digits(r.played)}</span><span class="pt">${F.digits(r.pts)}</span></div>`).join("");
+        t.data.map((r, i) => `<div class="s-row ${mine.has(String(r.id)) ? "mine" : ""}"${mine.has(String(r.id)) ? ` style="color:${teamColor(r.id)}"` : ""}><span class="rk">${F.digits(i + 1)}</span><span class="clip"><bdi>${esc(teamName(r.id, r.name))}</bdi></span><span class="pl">${F.digits(r.played)}</span><span class="pt">${F.digits(r.pts)}</span></div>`).join("");
       $(root, "dots").innerHTML = ids.map((x, i) => `<i class="${i === leagueIdx ? "on" : ""}"></i>`).join("");
       const at = new Date(t.at);
       $(root, "sideSrc").textContent = `البيانات: TheSportsDB · ${F.clock(at).h}:${F.clock(at).m} ${F.clock(at).ampm}`;
@@ -236,7 +250,12 @@
       const L = td.data.last, N = td.data.next;
       const lastAt = L && L.at && new Date(L.at);
       // <bdi> عشان اسم إنقليزي جنب اسم عربي ما يقلب الترتيب
-      const nm = (e, side) => `<bdi>${esc(teamName(side === "h" ? e.homeId : e.awayId, side === "h" ? e.home : e.away))}</bdi>`;
+      const mineIds = new Set(CONFIG.teams.map((x) => String(x.id)));
+      const nm = (e, side) => {
+        const id = String(side === "h" ? e.homeId : e.awayId);
+        const style = mineIds.has(id) ? ` style="color:${teamColor(id)}"` : "";
+        return `<bdi${style}>${esc(teamName(id, side === "h" ? e.home : e.away))}</bdi>`;
+      };
       if (L && lastAt && now - lastAt < DAY && L.hs !== null && L.hs !== undefined && L.hs !== "") {
         cells.push(cell("ball", `نتيجة ${esc(teamName(team.id, team.name))}`, `${nm(L, "h")} <small>${F.digits(L.hs)} - ${F.digits(L.as)}</small> ${nm(L, "a")}`, L.status === "FT" ? "انتهت" : "جارية"));
       } else if (N && N.at) {
