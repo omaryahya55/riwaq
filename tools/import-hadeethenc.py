@@ -31,6 +31,7 @@ OUT = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else
 
 # أحاديث مرتبطة بوقت: تطلع في وقتها (آداب الأكل وقت الغدا والعشا، فضل الصلاة قبل الإقامة...)
 CONTEXT_CATS = {
+    "313": "maathur",    # الأدعية المأثورة (ذكر الوقت: يوم الجمعة بعد العصر)
     "290": "meal",       # آداب الأكل والشرب
     "458": "adhan",      # الأذان والإقامة
     "457": "prayer",     # فضل الصلاة
@@ -97,8 +98,54 @@ def tag(items, sids):
             x["tags"] = [t for t in x["tags"] if t != "sunnah"]
 
 
+def fetch_one(hid, kind, ctx):
+    """حديث واحد حرفياً من المصدر، أو None لو ما يناسب (مو صحيح مرفوع، أو أطول من الشاشة)"""
+    time.sleep(1)
+    h = get(f"/hadeeths/one/?language=ar&id={hid}")
+    text = (h.get("hadeeth") or "").strip()
+    grade = (h.get("grade") or "").strip()
+    # التخريج: السطر الأول بس (بعضها فيه سطر زايد). هذا وصف جنب النص، مو النص نفسه
+    attribution = (h.get("attribution") or "").strip().splitlines()[0].strip().rstrip(".") if h.get("attribution") else ""
+    # الصحيح المرفوع بس: "موقوف" كلام صحابي، مو حديث نبوي
+    if not text or not grade.startswith("صحيح") or "موقوف" in grade:
+        return None
+    if len(text) > MAX_LEN[kind]:
+        return None
+    return {
+        "type": kind,
+        "context": ctx,
+        "text": text,                       # حرفياً من المصدر
+        "attribution": attribution,         # مثل: متفق عليه
+        "grade": grade,                     # مثل: صحيح
+        "reference": (h.get("reference") or "").strip(),
+        "source": f"{attribution} · {grade}",
+        "edition": "HadeethEnc.com",
+        "verifyUrl": f"https://hadeethenc.com/ar/browse/hadith/{hid}",
+        "sourceId": hid,
+        "approved": True,
+        "fetchedAt": date.today().isoformat()
+    }
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")  # طرفية ويندوز ما تطبع ✓ بدونها
+    if "--only" in sys.argv:
+        # باب واحد بس (مثل: --only 313)، يندمج مع الموجود بدون ما ننزل كل شي من جديد
+        cat = sys.argv[sys.argv.index("--only") + 1]
+        ctx = CONTEXT_CATS.get(cat, "general")
+        content = json.load(open(OUT, encoding="utf-8"))
+        by_id = {str(x.get("sourceId")): x for x in content["items"]}
+        added = 0
+        for hid in ids_in(cat):
+            if str(hid) in by_id:
+                by_id[str(hid)]["context"] = ctx
+            else:
+                it = fetch_one(hid, "hadith", ctx)
+                if it:
+                    content["items"].append(it); added += 1
+        json.dump(content, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        print(f"الباب {cat} ({ctx}):", sum(1 for x in content["items"] if x.get("context") == ctx), "· جديد:", added)
+        return
     if "--tags-only" in sys.argv:
         # نحدّث وسم "سنّة نعيشها" بس، بدون ما ننزل الأحاديث كلها من جديد
         content = json.load(open(OUT, encoding="utf-8"))
@@ -117,32 +164,10 @@ def main():
                 if hid in seen:
                     continue
                 seen.add(hid)
-                time.sleep(1)
-                h = get(f"/hadeeths/one/?language=ar&id={hid}")
-                text = (h.get("hadeeth") or "").strip()
-                grade = (h.get("grade") or "").strip()
-                # التخريج: السطر الأول بس (بعضها فيه سطر زايد). هذا وصف جنب النص، مو النص نفسه
-                attribution = (h.get("attribution") or "").strip().splitlines()[0].strip().rstrip(".") if h.get("attribution") else ""
-                # الصحيح المرفوع بس: "موقوف" كلام صحابي، مو حديث نبوي
-                if not text or not grade.startswith("صحيح") or "موقوف" in grade:
-                    continue
-                if len(text) > MAX_LEN[kind]:
-                    continue
-                items.append({
-                    "type": kind,
-                    "context": ctx,
-                    "text": text,                       # حرفياً من المصدر
-                    "attribution": attribution,         # مثل: متفق عليه
-                    "grade": grade,                     # مثل: صحيح
-                    "reference": (h.get("reference") or "").strip(),
-                    "source": f"{attribution} · {grade}",
-                    "edition": "HadeethEnc.com",
-                    "verifyUrl": f"https://hadeethenc.com/ar/browse/hadith/{hid}",
-                    "sourceId": hid,
-                    "approved": True,
-                    "fetchedAt": date.today().isoformat()
-                })
-                print(f"✓ {kind} {hid}", flush=True)
+                it = fetch_one(hid, kind, ctx)
+                if it:
+                    items.append(it)
+                    print(f"✓ {kind} {hid}", flush=True)
     tag(items, sunnah_ids())
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     # نستبدل عناصر الموسوعة بس (رقمها بدون بادئة)، وحصن المسلم (hisn-) والقرآن (quran-) يبقون زي ما هم

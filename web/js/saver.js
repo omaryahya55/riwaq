@@ -138,8 +138,8 @@
     const dust = DATA.dust();
     // ٣٠٠ ميكروغرام/م³ وفوق = غبار عالي جداً (حد متحفظ، ما نخوّف الناس على الفاضي)
     if (dust !== null && dust >= 300) chips.push(`${icon("fog")}تنبيه غبار`);
-    const wird = window.QuranTools && QuranTools.wird(now);
-    if (wird && !wird.done) chips.push(`${icon("book")}وردك اليوم: الجزء ${F.digits(wird.juz)}`);
+    // ذكر الوقت: تنبيه (والقراءة كاملة من الواجهة)
+    (Content.timed ? Content.timed(now) : []).slice(0, 2).forEach((s) => chips.push(`${icon("bell")}حان وقت ${s.title}`));
     if (CONFIG.reminders !== false) {
       const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(F.parts(now, { weekday: "short" }).weekday);
       const tomorrowH = F.hijriParts(new Date(now.getTime() + DAY));

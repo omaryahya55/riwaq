@@ -24,6 +24,7 @@
     { type: "nav", id: "settings", name: "الإعدادات", ic: "gear" },
     { type: "nav", id: "saver", name: "شاشة الانتظار", ic: "moon" },
     { type: "nav", id: "picker", name: "التطبيقات", ic: "grid" },
+    { type: "nav", id: "timed", name: "ذكر الوقت", ic: "bell" },
     { type: "nav", id: "reader", name: "الأذكار", ic: "book" }
   ];
   // اللوحة السريعة (بدل لوحة Google TV اللي كانت تطلع بضغطة البيت المطوّلة)
@@ -254,11 +255,9 @@
       const sub = fm.kind === "last" ? "النتيجة" : new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(fm.at);
       lines.push(`<div class="ht-line">${icon("ball")}<span><bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi><small>${sub}</small></span></div>`);
     }
-    // ختمتك: ورد اليوم
-    const wd = window.QuranTools && QuranTools.wird(now);
-    if (wd) lines.push(wd.done
-      ? `<div class="ht-line">${icon("book")}<span>ختمت القرآن، تقبّل الله <small>ابدأ ختمة جديدة من الإعدادات</small></span></div>`
-      : `<div class="ht-line">${icon("book")}<span>وردك اليوم: الجزء ${F.digits(wd.juz)}<small>${esc(wd.label)} · باقي ${F.digits(wd.daysLeft)} ${wd.daysLeft >= 3 && wd.daysLeft <= 10 ? "أيام" : "يوم"} على الختمة</small></span></div>`);
+    // ذكر الوقت: أول سطر (أهم شي الحين)
+    const tm = window.Content && Content.timed ? Content.timed(now) : [];
+    if (tm.length) lines.unshift(`<div class="ht-line ht-timed">${icon("bell")}<span>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}<small>افتحها كاملة من «ذكر الوقت» فوق</small></span></div>`);
     if (H) {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, H.daysToHijri(now, m, d) || { days: 9999 })).sort((a, b) => a.days - b.days)[0];
@@ -357,6 +356,15 @@
       if (item.id === "quick") { openQuick(); return; }
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
       if (item.id === "saver") { App.show("saver"); return; }
+      if (item.id === "timed") {
+        // ذكر الوقت: اللي وقته الحين كامل (أذكار الصباح، المساء، الملك، الكهف، أدعية الجمعة)
+        const secs = window.Content ? Content.timed(new Date()) : [];
+        readList = secs.flatMap((s) => s.items.map((x) => ({ title: s.title + (s.hint ? " · " + s.hint : ""), item: x })));
+        if (!readList.length) readList = [{ title: "ذكر الوقت", item: { type: "info", source: "", text:
+          ["ما فيه ذكر له وقت محدد الحين.", "", "أذكار الصباح: من الفجر لين الظهر", "أذكار المساء: من العصر لين العشاء",
+           "سورة الملك: من العشاء لين ١ بالليل", "يوم الجمعة: سورة الكهف من ١٠ الصبح لين العصر، وأدعية مأثورة من العصر لين المغرب"].join("\n") } }];
+        mode = "reader"; readIdx = 0; $("reader").classList.add("on"); renderReader(); paintFocus(); return;
+      }
       if (item.id === "reader") {
         readList = window.Content ? Content.readerItems(new Date()) : [];
         if (!readList.length) { App.toast("ما فيه محتوى للحين"); return; }

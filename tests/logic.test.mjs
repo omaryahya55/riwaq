@@ -162,27 +162,32 @@ test("رسالة الجوال: مفتاح البوت لازم يكون بالش�
   assert.ok(!w.PhoneMsg._test.tokenOk("123456789:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsawQ/../x"));
 });
 
-test("ختمتك وراجع محفوظك: الورد بالأرباع، والمقاطع آيات كاملة بالترتيب", async () => {
+test("راجع محفوظك وذكر الوقت: المقاطع آيات كاملة بالترتيب، والكهف والملك والأذكار في أوقاتها", async () => {
   const quran = JSON.parse(readFileSync(new URL("content/quran.json", ROOT), "utf8"));
-  const fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(quran) });
-  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/quran-meta.js", "js/quran.js"], null, { fetch });
-  Object.assign(w.CONFIG, { city: RIYADH, hifz: [67, 112], khatma: { on: true, perDay: 8, startQ: 0, start: "2026-10-24" } });
+  const json = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8"));
+  const fetch = (u) => Promise.resolve({ ok: true, json: () => Promise.resolve(String(u).includes("quran.json") ? quran : json) });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/content.js", "js/quran-meta.js", "js/quran.js"], null, { fetch });
+  Object.assign(w.CONFIG, { city: RIYADH, hifz: [67, 112] });
   w.QuranTools._test.setData(quran);
+  await new Promise((r) => setTimeout(r, 20));
   const at = (s) => new Date(s + "+03:00");
-  // اليوم الأول: الجزء الأول (الفاتحة ١ إلى البقرة ١٤١)، واليوم الثالث: الجزء الثالث
-  const d1 = w.QuranTools.wird(at("2026-10-24T10:00:00"));
-  assert.equal(JSON.stringify([d1.juz, d1.from, d1.to, d1.daysLeft]), "[1,[1,1],[2,141],30]");
-  const d3 = w.QuranTools.wird(at("2026-10-26T10:00:00"));
-  assert.equal(JSON.stringify([d3.juz, d3.from]), "[3,[2,253]]");
-  assert.ok(w.QuranTools.wird(at("2026-12-01T10:00:00")).done, "بعد ٣٠ يوم: ختم");
   // المقاطع: من الملك والإخلاص بس، وكل مقطع يغطي آيات متتالية بدون فراغ
   const ch = w.QuranTools._test.chunks();
   assert.ok(ch.every(([s]) => s === 67 || s === 112));
   const mulk = ch.filter(([s]) => s === 67);
   assert.equal(mulk[0][1], 1); assert.equal(mulk[mulk.length - 1][2], 30);
   for (let i = 1; i < mulk.length; i++) assert.equal(mulk[i][1], mulk[i - 1][2] + 1);
-  const r = w.QuranTools.review(at("2026-10-24T10:00:00"), 0);
-  assert.equal(r.title, "راجع محفوظك"); assert.ok(r.verifyUrl.startsWith("https://tanzil.net/"));
+  assert.equal(w.QuranTools.review(at("2026-10-24T10:00:00"), 0).title, "راجع محفوظك");
+  const ids = (s) => w.Content.timed(at(s)).map((x) => x.id).join(",");
+  // الجمعة ٣٠ أكتوبر ٢٠٢٦ في الرياض: العصر ٢:٥٢ تقريباً، المغرب ٥:١٦
+  assert.equal(ids("2026-10-30T09:00:00"), "morning");          // بعد الفجر لين الظهر
+  assert.equal(ids("2026-10-30T13:00:00"), "kahf");             // الكهف ١٠ الصبح ← العصر
+  assert.equal(ids("2026-10-30T15:30:00"), "maathur,evening");  // بعد العصر: أدعية مأثورة وأذكار المساء
+  assert.equal(ids("2026-10-27T23:30:00"), "mulk");             // الملك بعد العشاء
+  assert.equal(ids("2026-10-28T00:30:00"), "mulk");             // لين ١ بالليل
+  assert.equal(ids("2026-10-28T01:30:00"), "");
+  const k = w.Content.timed(at("2026-10-30T13:00:00"))[0].items[0];
+  assert.ok(k.source === "سورة الكهف" && k.text.includes("﴿١١٠﴾"), "الكهف كاملة");
 });
 
 test("صمت له معنى: من دقيقة قبل الأذان لين ربع ساعة بعد الإقامة", async () => {

@@ -86,23 +86,10 @@
     cfg.newsFeeds = [...$("feeds").querySelectorAll("input")].map((x) => x.value.trim()).filter(Boolean);
   }
 
-  // ===== القرآن: ختمتك وراجع محفوظك =====
-  // تاريخ اليوم بتوقيت الجوال (مو UTC)، بنفس شكل التلفزيون
-  const localDay = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+  // ===== القرآن: راجع محفوظك =====
   function paintQuran() {
     const M = window.QURAN_META;
     if (!M) return;
-    const k = cfg.khatma = Object.assign({ on: false, perDay: 8, startQ: 0, start: "" }, cfg.khatma);
-    $("khOn").checked = !!k.on;
-    $("khPer").value = String([4, 8, 16, 24].includes(+k.perDay) ? k.perDay : 8);
-    // المكان الحالي (حسب الأيام اللي مرت) يكون هو الاختيار
-    const today = localDay();
-    const days = k.start ? Math.max(0, Math.floor((Date.parse(today) - Date.parse(k.start)) / 86400000)) : 0;
-    const cur = Math.min(239, (+k.startQ || 0) + days * (+k.perDay || 8));
-    $("khFrom").innerHTML = M.quarters.map((q, i) => i % 4 === 0
-      ? `<option value="${i}">الجزء ${ar(Math.floor(i / 8) + 1)}${i % 8 ? " (نصه الثاني)" : ""}: ${esc(M.suras[q[0] - 1].name)} ${ar(q[1])}</option>` : "").join("");
-    $("khFrom").value = String(cur - (cur % 4));
-    $("khNow").textContent = k.on && k.start ? `الحين في الجزء ${ar(Math.floor(cur / 8) + 1)}` : "";
     const chosen = new Set((cfg.hifz || []).map(Number));
     $("hifzList").innerHTML = M.suras.map((s, i) => `<button type="button" data-s="${i + 1}" aria-pressed="${chosen.has(i + 1)}">${esc(s.name)}</button>`).join("");
     $("hifzList").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
@@ -113,15 +100,7 @@
     }));
   }
   function readQuran() {
-    if (!window.QURAN_META) return;
-    const on = $("khOn").checked, per = +$("khPer").value, from = +$("khFrom").value;
-    const k = cfg.khatma;
-    const today = localDay();
-    const days = k.start ? Math.max(0, Math.floor((Date.parse(today) - Date.parse(k.start)) / 86400000)) : 0;
-    const cur = Math.min(239, (+k.startQ || 0) + days * (+k.perDay || 8));
-    // تغيّر الورد أو المكان أو انشغلت الختمة: نبدأ من المكان المختار اليوم. غير كذا تبقى زي ما هي
-    if (on && (!k.on || !k.start || per !== +k.perDay || from !== cur - (cur % 4))) cfg.khatma = { on, perDay: per, startQ: from, start: today };
-    else cfg.khatma = Object.assign({}, k, { on });
+    delete cfg.khatma; // ختمتك انشالت (2026-10-24): بدالها "ذكر الوقت"
     cfg.sunnahDaily = $("sunnahDaily").checked;
     cfg.placeDaily = $("placeDaily").checked;
     cfg.prayerCalm = $("prayerCalm").checked;

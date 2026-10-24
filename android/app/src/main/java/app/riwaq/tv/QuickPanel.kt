@@ -28,6 +28,8 @@ import java.util.Date
  * اللوحة السريعة الجانبية (مثل قائمة Google TV): تطلع فوق أي تطبيق مفتوح بدون ما تطلعك منه.
  * نافذة "إمكانية الوصول" (TYPE_ACCESSIBILITY_OVERLAY) من HomeKeyService، فما تحتاج أي صلاحية زيادة.
  * الأسهم تتنقل، OK يفتح، ورجوع (أو ضغطة البيت المطوّلة مرة ثانية) يقفلها وترجع لنفس التطبيق.
+ * أزرار الريموت ما توصل للوحة نفسها (التطبيق اللي تحتها ماسك التركيز)، فالخدمة تمررها لـ handleKey
+ * وهي اللي تحرك التحديد، وما يوصل للتطبيق شي وهي مفتوحة.
  */
 class QuickPanel(private val svc: AccessibilityService) {
 
@@ -35,6 +37,9 @@ class QuickPanel(private val svc: AccessibilityService) {
     private val handler = Handler(Looper.getMainLooper())
     private var root: View? = null
     private val autoClose = Runnable { hide() }
+    private val rows = mutableListOf<TextView>()
+    private val actions = mutableListOf<() -> Unit>()
+    private var sel = 0
 
     val isShowing get() = root != null
 
@@ -77,16 +82,7 @@ class QuickPanel(private val svc: AccessibilityService) {
     fun show() {
         if (root != null) return
         val gold = Color.parseColor("#E8C27A")
-        val panel = object : LinearLayout(svc) {
-            override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-                handler.removeCallbacks(autoClose); handler.postDelayed(autoClose, AUTO_CLOSE_MS)
-                if (event.keyCode == KeyEvent.KEYCODE_BACK || event.keyCode == KeyEvent.KEYCODE_MENU) {
-                    if (event.action == KeyEvent.ACTION_UP) hide()
-                    return true
-                }
-                return super.dispatchKeyEvent(event)
-            }
-        }.apply {
+        val panel = LinearLayout(svc).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
             setPadding(dp(28), dp(36), dp(28), dp(28))
@@ -106,25 +102,22 @@ class QuickPanel(private val svc: AccessibilityService) {
         })
 
         val textColors = ColorStateList(
-            arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf()),
+            arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf()),
             intArrayOf(Color.parseColor("#1E1608"), Color.parseColor("#F1F1F4"))
         )
-        var first: View? = null
+        rows.clear(); actions.clear(); sel = 0
         for (it in items()) {
             val tv = TextView(svc).apply {
                 text = it.label; textSize = 19f; typeface = plex; setTextColor(textColors)
                 gravity = Gravity.CENTER_VERTICAL or Gravity.START
                 setPadding(dp(18), dp(12), dp(18), dp(14))
-                isFocusable = true; isClickable = true
                 background = StateListDrawable().apply {
-                    addState(intArrayOf(android.R.attr.state_focused), GradientDrawable().apply { setColor(gold); cornerRadius = dp(14).toFloat() })
+                    addState(intArrayOf(android.R.attr.state_selected), GradientDrawable().apply { setColor(gold); cornerRadius = dp(14).toFloat() })
                     addState(intArrayOf(), GradientDrawable().apply { setColor(Color.TRANSPARENT) })
                 }
-                val act = it.action
-                setOnClickListener { hide(); act() }
             }
+            rows += tv; actions += it.action
             panel.addView(tv, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { topMargin = dp(4) })
-            if (first == null) first = tv
         }
         panel.addView(TextView(svc).apply {
             text = "رجوع: إغلاق"; setTextColor(Color.parseColor("#8A8C98")); textSize = 13f; typeface = plex
@@ -134,7 +127,8 @@ class QuickPanel(private val svc: AccessibilityService) {
         val lp = WindowManager.LayoutParams(
             dp(340), ViewGroup.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_DIM_BEHIND,
+            // ما تاخذ التركيز: التطبيق يبقى زي ما هو، والأزرار تجينا من الخدمة
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_DIM_BEHIND or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         ).apply { gravity = Gravity.RIGHT or Gravity.TOP; dimAmount = 0.35f }
         try {
@@ -147,8 +141,35 @@ class QuickPanel(private val svc: AccessibilityService) {
         root = panel
         panel.translationX = dp(340).toFloat()
         panel.animate().translationX(0f).setDuration(220).start()
-        first?.requestFocus()
+        select(0)
         handler.postDelayed(autoClose, AUTO_CLOSE_MS)
+    }
+
+    private fun select(i: Int) {
+        if (rows.isEmpty()) return
+        sel = i.coerceIn(0, rows.size - 1)
+        rows.forEachIndexed { k, v -> v.isSelected = k == sel }
+    }
+
+    /** أزرار الريموت وهي مفتوحة (من HomeKeyService). true = استخدمناه وما يوصل للتطبيق */
+    fun handleKey(e: KeyEvent): Boolean {
+        if (root == null) return false
+        when (e.keyCode) {
+            // الصوت يشتغل عادي واللوحة مفتوحة
+            KeyEvent.KEYCODE_VOLUME_UP, KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_MUTE -> return false
+        }
+        handler.removeCallbacks(autoClose); handler.postDelayed(autoClose, AUTO_CLOSE_MS)
+        val down = e.action == KeyEvent.ACTION_DOWN
+        when (e.keyCode) {
+            KeyEvent.KEYCODE_DPAD_DOWN -> if (down) select(if (sel >= rows.size - 1) 0 else sel + 1)
+            KeyEvent.KEYCODE_DPAD_UP -> if (down) select(if (sel <= 0) rows.size - 1 else sel - 1)
+            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_BUTTON_A ->
+                if (e.action == KeyEvent.ACTION_UP) { val act = actions.getOrNull(sel); hide(); act?.invoke() }
+            // رجوع، أو السهم اليمين (برا اللوحة): نقفل
+            KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_ESCAPE, KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_DPAD_RIGHT ->
+                if (e.action == KeyEvent.ACTION_UP) hide()
+        }
+        return true
     }
 
     fun hide() {

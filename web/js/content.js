@@ -78,9 +78,8 @@
       const hd = F.hijriParts(now).d;
       if ((hd >= 29 || hd === 1) && near(at("maghrib"), 0, 90)) out.push({ ctx: ["newMoon"], exclusive: true });
       if (near(at("fajr"), -40, -2)) out.push({ ctx: ["wake", "sleep"], w: 2 });
-      // أذكار الصباح (من الفجر لين ساعتين بعد الشروق) والمساء (من العصر لين العشاء)
-      const sunrise = at("sunrise");
-      if (at("fajr") && sunrise && now >= at("fajr") && now < new Date(sunrise.getTime() + 120 * MIN)) out.push({ ctx: ["adhkar"], w: 4, part: "morning" });
+      // أذكار الصباح (من الفجر لين الظهر) والمساء (من العصر لين العشاء). المواعيد حسب صاحب المشروع
+      if (at("fajr") && at("dhuhr") && now >= at("fajr") && now < at("dhuhr")) out.push({ ctx: ["adhkar"], w: 4, part: "morning" });
       if (at("asr") && at("isha") && now >= at("asr") && now < at("isha")) out.push({ ctx: ["adhkar"], w: 4, part: "evening" });
       // قبل النوم: ساعة ونص بعد العشاء لين قبل الفجر بساعة
       const isha = at("isha"), fajr = at("fajr");
@@ -164,6 +163,40 @@
     return { source: x.source + (x.edition && !String(x.sourceId).startsWith("hisn-") ? " · المصدر: " + x.edition : "") + (x.imageCredit ? " · " + x.imageCredit : ""), reference: ref };
   }
 
+  /*
+   * ذكر الوقت: اللي له وقت محدد، كامل (قائمة "ذكر الوقت" فوق، وتنبيه في الواجهة وشاشة الانتظار):
+   * - كل يوم: أذكار الصباح (الفجر ← الظهر)، وأذكار المساء (العصر ← العشاء)، وسورة الملك (العشاء ← ١ بالليل)
+   * - الجمعة: سورة الكهف (١٠ الصبح ← العصر)، والأدعية المأثورة (العصر ← المغرب، ساعة الإجابة)
+   * المواعيد حسب صاحب المشروع (2026-10-24).
+   */
+  function timed(now) {
+    const t = window.Prayer && Prayer.timesFor(now, 0);
+    if (!t) return [];
+    const at = (id) => (t.find((p) => p.id === id) || {}).at;
+    const mod = F.minutesOfDay(now);
+    const wd = F.parts(now, { weekday: "short" }).weekday;
+    const Q = window.QuranTools;
+    const out = [];
+    const morning = items.filter((x) => x.type === "adhkar");
+    if (wd === "Fri" && mod >= 600 && at("asr") && now < at("asr")) {
+      const k = Q && Q.surahItem(18, "سورة الكهف");
+      if (k) out.push({ id: "kahf", title: "سورة الكهف", hint: "يوم الجمعة", items: [k] });
+    }
+    if (wd === "Fri" && at("asr") && at("maghrib") && now >= at("asr") && now < at("maghrib")) {
+      const d = byCtx("maathur");
+      if (d.length) out.push({ id: "maathur", title: "أدعية مأثورة", hint: "ساعة الإجابة يوم الجمعة", items: d });
+    }
+    if (at("fajr") && at("dhuhr") && now >= at("fajr") && now < at("dhuhr") && morning.length)
+      out.push({ id: "morning", title: "أذكار الصباح", hint: "", items: morning });
+    if (at("asr") && at("isha") && now >= at("asr") && now < at("isha") && morning.length)
+      out.push({ id: "evening", title: "أذكار المساء", hint: "", items: morning });
+    if ((at("isha") && now >= at("isha")) || mod < 60) {
+      const m = Q && Q.surahItem(67, "سورة الملك");
+      if (m) out.push({ id: "mulk", title: "سورة الملك", hint: "قبل النوم", items: [m] });
+    }
+    return out;
+  }
+
   window.Content = {
     load,
     current,
@@ -178,8 +211,7 @@
       const rotate = (list) => list.slice(day % (list.length || 1)).concat(list.slice(0, day % (list.length || 1)));
       const seen = new Set(), out = [];
       const add = (x, title) => { if (x && !seen.has(x)) { seen.add(x); out.push({ title, item: x }); } };
-      const wi = window.QuranTools && QuranTools.wirdItem(now);
-      if (wi) add(wi, "وردك اليوم");
+      timed(now).forEach((s) => s.items.forEach((x) => add(x, s.title)));
       windows(now).forEach((w) => w.ctx.forEach((c) => byCtx(c).forEach((x) => add(x, titleOf(x, "")))));
       const rv = window.QuranTools && QuranTools.review(now, 0);
       if (rv) add(rv, "راجع محفوظك");
@@ -196,6 +228,7 @@
     // لصفحة الإعدادات: عناصر اليوم مع روابط التحقق
     today(now) { return ["quran", "hadith", "sahabi", "dua"].map((t) => pick(t, now, 0, t === "hadith" || t === "dua" ? "general" : null)).filter(Boolean); },
     // "صمت له معنى": من دقيقة قبل الأذان لين ربع ساعة بعد الإقامة (التقريبية)
+    timed,
     prayerPhase(now) {
       const t = window.Prayer && Prayer.timesFor(now, 0);
       if (!t) return null;

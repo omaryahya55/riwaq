@@ -86,7 +86,7 @@ def main():
     missing = [s for s in range(78, 115) if sum(len(plain(t)) for t in Q[s].values()) <= MAX_PLAIN and s not in NAMES]
     assert not missing, f"سور قصيرة بدون اسم: {missing}"
 
-    # المصحف كامل لـ"راجع محفوظك" و"ختمتك" (نفس نص Tanzil حرفياً) + بيانات السور والأجزاء والأحزاب من Tanzil
+    # المصحف كامل لـ"راجع محفوظك" و"ذكر الوقت" (نفس نص Tanzil حرفياً) + بيانات السور والأجزاء والأحزاب من Tanzil
     req = urllib.request.Request(META_URL, headers={"User-Agent": UA})
     meta_js = urllib.request.urlopen(req, timeout=60).read().decode("utf-8")
     def block(name):

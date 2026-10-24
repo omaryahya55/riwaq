@@ -12,7 +12,8 @@ import android.view.accessibility.AccessibilityEvent
  * تخصيص أزرار الريموت):
  *  - ضغطة عادية: نرجعها لأندرويد كما هي (زر البيت يشتغل عادي)
  *  - ضغطة مطوّلة: تفتح اللوحة السريعة فوق التطبيق المفتوح (QuickPanel)، بدون ما تطلعك منه
- * ما نقرا ولا نحفظ أي شي ثاني: كل الأزرار غير البيت تمر بدون ما نلمسها، وما نستقبل أحداث الشاشة.
+ * ما نقرا ولا نحفظ أي شي ثاني: كل الأزرار غير البيت تمر بدون ما نلمسها (إلا واللوحة مفتوحة: نتحكم فيها
+ * بالأسهم)، وما نستقبل أحداث الشاشة.
  * تنشغل من سكربت التركيب (tools/setup-tv.ps1) وتنطفي من سكربت الرجوع.
  * ملاحظة للاختبار: أوامر "adb shell input keyevent" ما تمر على هذي الخدمة، لازم الريموت الحقيقي
  * (تأكدنا على Xiaomi TV Box S: أزرار الريموت كلها توصل، ومنها البيت).
@@ -31,7 +32,8 @@ class HomeKeyService : AccessibilityService() {
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        if (event.keyCode != KeyEvent.KEYCODE_HOME) return false
+        // اللوحة مفتوحة: الأسهم و OK ورجوع تتحكم فيها (ما توصل للتطبيق اللي تحتها)
+        if (event.keyCode != KeyEvent.KEYCODE_HOME) return panel.handleKey(event)
         when (event.action) {
             KeyEvent.ACTION_DOWN -> if (event.repeatCount == 0) {
                 down = true
