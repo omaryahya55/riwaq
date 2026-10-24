@@ -38,6 +38,25 @@ def get(url, binary=False):
     return data if binary else json.loads(data)
 
 
+def shade(im, period):
+    """تدرّج غامق من فوق ومن تحت (نفس التظليل اللي كان طبقة CSS)"""
+    from PIL import Image as I
+    light = period in ("day", "asr", "fajr")
+    stops = [(0, .45 if light else .55), (.38, .12 if light else .25), (.70, .30 if light else .45), (1, .62 if light else .70)]
+    h = im.height
+    col = []
+    for y in range(h):
+        f = y / (h - 1)
+        for (a, va), (b, vb) in zip(stops, stops[1:]):
+            if a <= f <= b:
+                col.append(va + (vb - va) * (f - a) / (b - a)); break
+    mask = I.new("L", (1, h))
+    mask.putdata([int(255 * v) for v in col])
+    mask = mask.resize(im.size)
+    dark = I.new("RGB", im.size, (6, 8, 14))
+    return I.composite(dark, im, mask)
+
+
 def clean(s):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s or ""))).strip()
 
@@ -63,6 +82,8 @@ def main():
         else:
             nh = int(w * 9 / 16); top = int((h - nh) * 0.3); im = im.crop((0, top, w, top + nh))  # نخلي من السما أكثر
         im = im.resize((1920, 1080), Image.LANCZOS)
+        # التظليل (عشان الكلام ينقرا) داخل الصورة نفسها، مو طبقة فوقها: التلفزيون يرسم طبقة وحدة بدل ثنتين (أسلس)
+        im = shade(im, period)
         path = os.path.join(OUT_DIR, f"{period}.jpg")
         im.save(path, "JPEG", quality=70, optimize=True, progressive=True)
         meta[period] = {"src": f"img/bg/{period}.jpg", "credit": f"{artist} ({lic})", "page": info.get("descriptionurl", "")}

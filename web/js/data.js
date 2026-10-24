@@ -266,9 +266,12 @@
       const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTasks, loadTables, loadTeams, loadTeamColors];
       for (const job of jobs) {
         try { await job(); } catch (e) { /* نجرب المرة الجاية. البيانات القديمة تنحكم بحدها */ }
-        listeners.forEach((cb) => cb());
       }
-    } finally { running = false; }
+    } finally {
+      running = false;
+      // الشاشة تعيد الرسم مرة وحدة بعد ما توصل كل البيانات (كان بعد كل مصدر: إعادة رسم كاملة ١٠ مرات ورا بعض)
+      listeners.forEach((cb) => cb());
+    }
   }
 
   window.DATA = {

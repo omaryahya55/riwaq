@@ -22,9 +22,9 @@
 .h-nav { display: flex; gap: 12px; }
 .nav-pill { display: inline-flex; align-items: center; gap: 10px; height: 58px; padding: 0 22px 4px; border-radius: 999px;
   font-size: 22px; color: var(--ink-2); background: var(--card); border: 1px solid var(--line);
-  transition: transform .25s var(--ease), background .25s, color .25s, box-shadow .25s; white-space: nowrap; }
+  transition: transform .12s ease-out, background .12s, color .12s; white-space: nowrap; }
 .nav-pill .ic { font-size: 24px; color: var(--gold); }
-.nav-pill.focus { background: var(--gold); color: #1E1608; transform: scale(1.06); box-shadow: 0 14px 34px rgba(0,0,0,.45); }
+.nav-pill.focus { background: var(--gold); color: #1E1608; transform: scale(1.06); }
 .nav-pill.focus .ic { color: #1E1608; }
 
 /* ===== الوسط: ٣ بطاقات ===== */
@@ -85,14 +85,16 @@
 .h-row-title { font-size: 28px; font-weight: 600; }
 .h-row-hint { font-size: 20px; color: var(--ink-3); }
 .h-track { position: relative; height: 196px; overflow: visible; }
-.h-strip { position: absolute; top: 12px; right: 92px; display: flex; gap: 28px; transition: transform .45s var(--ease); }
+/* صف التطبيقات طبقة لحالها: لما يتزحلق ما ينعاد رسم التطبيقات، وحركة أقصر (إطارات أقل على التلفزيون) */
+.h-strip { position: absolute; top: 12px; right: 92px; display: flex; gap: 28px; transition: transform .25s ease-out; will-change: transform; }
 .h-row.small .h-track { height: 140px; }
 
 .tile {
   position: relative; flex: none; width: 300px; height: 170px; border-radius: 24px;
   overflow: hidden; color: #fff;
-  transition: transform .28s var(--ease), box-shadow .28s var(--ease), opacity .3s;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  /* الحركة: التكبير بس (الظل الكبير المتحرك كان يتعاد رسمه مع كل إطار ويعلّق التلفزيون) */
+  transition: transform .12s ease-out, opacity .3s;
+  box-shadow: 0 6px 14px rgba(0,0,0,.3);
 }
 /* الألوان محسوبة في home.js (color-mix ما يشتغل على متصفحات التلفزيونات القديمة) */
 .tile .bg { position: absolute; inset: 0; background: linear-gradient(150deg, var(--c1), var(--c2)); }
@@ -103,8 +105,8 @@
 .tile.small .ic { position: absolute; top: 20px; right: 22px; font-size: 38px; color: var(--gold); }
 .tile.small .name { font-size: 23px; bottom: 14px; }
 
-.tile.focus { transform: scale(1.08); box-shadow: 0 0 0 4px var(--gold), 0 26px 60px rgba(0,0,0,.55); z-index: 2; }
-.tile.moving { transform: scale(1.08) translateY(-14px); box-shadow: 0 0 0 4px var(--gold), 0 36px 70px rgba(0,0,0,.6); }
+.tile.focus { transform: scale(1.08); box-shadow: 0 0 0 4px var(--gold); z-index: 2; }
+.tile.moving { transform: scale(1.08) translateY(-14px); box-shadow: 0 0 0 4px var(--gold); }
 .tile.moving::before { content: ""; position: absolute; inset: 8px; border: 2px dashed rgba(255,255,255,.7); border-radius: 18px; z-index: 3; }
 
 /* قائمة الخيارات تحت التطبيق */

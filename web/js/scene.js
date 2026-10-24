@@ -6,7 +6,7 @@
  */
 (function () {
   const P = {
-    night:  { sky: ["#05070F", "#0B1226", "#1A2140"], glow: "#3A4A7A", glowA: 0.35, sun: null, moon: [1160, 150],
+    night:  { sky: ["#05070F", "#0B1226", "#1A2140"], glow: "#3A4A7A", glowA: 0.35, sun: null, moon: [1180, 44],
               dunes: ["#1B2340", "#141B33", "#0E1427", "#090E1C"], stars: 1, clouds: 0.06 },
     fajr:   { sky: ["#141836", "#3D3560", "#B87566"], glow: "#F0A07A", glowA: 0.55, sun: null, moon: null,
               dunes: ["#5A4560", "#3F3150", "#2A2140", "#1A1530"], stars: 0.35, clouds: 0.3 },
@@ -14,7 +14,7 @@
               dunes: ["#D7B98A", "#C59E6B", "#A97F50", "#80603B"], stars: 0, clouds: 0.5 },
     asr:    { sky: ["#2A2140", "#8A4A48", "#EAA35A"], glow: "#FFC77A", glowA: 0.75, sun: [700, 610], moon: null,
               dunes: ["#B2714E", "#8E5440", "#663B33", "#3F2528"], stars: 0, clouds: 0.32 },
-    dusk:   { sky: ["#0F1430", "#33284A", "#8C5762"], glow: "#D98B6E", glowA: 0.5, sun: null, moon: [1160, 160],
+    dusk:   { sky: ["#0F1430", "#33284A", "#8C5762"], glow: "#D98B6E", glowA: 0.5, sun: null, moon: [1180, 44],
               dunes: ["#3A2E4A", "#2A2240", "#1C1832", "#121024"], stars: 0.6, clouds: 0.14 }
   };
 
@@ -58,7 +58,9 @@
     const p = P[period] || P.night;
     const moon = period === "night" && p.moon
       ? `<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".22"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient></defs><circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".92"/></svg>` : "";
-    el.innerHTML = `<img class="bg-photo" src="${b.src}" alt=""><div class="bg-tint bg-${period}"></div>${moon}`;
+    // التظليل داخل الصورة نفسها (tools/import-backgrounds.py): طبقة وحدة بس، أخف على التلفزيون
+    el.innerHTML = `<img class="bg-photo" src="${b.src}" alt="" decoding="async">${moon}`;
+    document.getElementById("stage").classList.add("bgphoto");
     Scene.credit = b.credit;
     return true;
   }
@@ -66,6 +68,7 @@
   function render(el, period) {
     if (window.CONFIG && CONFIG.bgStyle !== "drawn" && photo(el, period)) return;
     Scene.credit = "";
+    document.getElementById("stage").classList.remove("bgphoto");
     const p = P[period] || P.night;
     const sun = p.sun ? `<circle cx="${p.sun[0]}" cy="${p.sun[1]}" r="300" fill="url(#sunGlow)"/><circle cx="${p.sun[0]}" cy="${p.sun[1]}" r="46" fill="#FFF4DC" opacity=".95"/>` : "";
     const moon = p.moon ? `<circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".9"/>` : "";

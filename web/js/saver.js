@@ -388,18 +388,20 @@
   window.Saver = {
     init(el) {
       root = build(el);
-      setInterval(() => { leagueIdx++; renderLeague(root, true); }, 8000);
+      const visible = () => !window.App || App.current === "saver";
+      setInterval(() => { if (visible()) { leagueIdx++; renderLeague(root, true); } }, 8000);
       setInterval(() => {
         shiftIdx = (shiftIdx + 1) % SHIFTS.length;
         root.querySelector(".saver-content").style.transform = `translate(${SHIFTS[shiftIdx][0]}px, ${SHIFTS[shiftIdx][1]}px)`;
       }, 4 * 60 * 1000);
-      DATA.onChange(() => this.tick(true));
+      DATA.onChange(() => { if (visible()) this.tick(true); });
       this.ready = true;
       this.tick(true);
       // خانة المحتوى تتبدل كل ٤٠ ثانية تقريباً (أذكار، حديث، صحابة)، فنحدّثها بدون انتظار الدقيقة
-      setInterval(() => renderHadith(root, new Date()), 20000);
+      setInterval(() => { if (visible()) renderHadith(root, new Date()); }, 20000);
     },
     tick(force) {
+      if (window.App && App.current && App.current !== "saver") return; // مخفية: ترسم أول ما تطلع (App.show)
       const now = new Date();
       const min = F.minutesOfDay(now);
       if (!force && min === lastMinute) return;

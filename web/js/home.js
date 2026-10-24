@@ -158,6 +158,9 @@
 
   const $ = (k) => root.querySelector(`[data-k="${k}"]`);
 
+  // يكتب في العنصر بس لو المحتوى تغيّر (كل كتابة = إعادة تخطيط ورسم على التلفزيون)
+  const setHTML = (el, h) => { if (el && el.__h !== h) { el.innerHTML = h; el.__h = h; } };
+
   function renderRows() {
     const R = rows();
     $("r1").innerHTML = R[1].length ? R[1].map((it, c) => tileHTML(it, 1, c)).join("")
@@ -210,15 +213,21 @@
       const cls = p.id === np.p.id ? "next" : p.at <= now ? "past" : "";
       return `<div class="hp-cell ${cls}"><div class="n">${p.name}</div><div class="t">${c.h}:${c.m}</div></div>`;
     }).join("");
-    el.innerHTML = `<div class="label">${icon("bell")}الصلاة القادمة</div>
+    setHTML(el, `<div class="label">${icon("bell")}الصلاة القادمة</div>
       <div class="hp-row"><div class="hp-name">${np.p.name}</div><div class="hp-when"><span class="ltr">${t.h}:${t.m}</span> ${t.ampm}<b>بعد ${F.duration(np.mins)}</b></div></div>
-      <div class="hp-cells">${cells}</div>`;
+      <div class="hp-cells">${cells}</div>`);
   }
 
   // نفس قاعدة شاشة الانتظار: ممنوع نقص النص. نصغّر الخط، وإذا ما دخل ناخذ البديل اللي بعده
   // (والنص الطويل ينقرا كامل من "الأذكار" فوق)
+  let contentSig = "";
   function renderContentCard(now) {
     const el = $("contentCard");
+    // نفس المحتوى اللي معروض: ما نعيد القياس (القياس بكل الأحجام كان يتعاد كل ١٥ و٢٠ ثانية بدون داعي)
+    const first = window.Content && Content.current(now, 0);
+    const sig = first ? (first.item.sourceId || first.item.text.slice(0, 40)) + "|" + first.title : "";
+    if (sig && sig === contentSig) return;
+    contentSig = sig;
     for (let offset = 0; offset < 6; offset++) {
       const c = window.Content && Content.current(now, offset);
       if (!c) break;
@@ -269,19 +278,23 @@
       }
     }
     // البطاقة ما تكبر: لو ما دخل كل شي نشيل من آخر القائمة (الأقل أهمية) بدل ما ينقص سطر من نصه
+    const key = lines.join("");
+    if (el.__lines === key) return;
+    el.__lines = key;
     const paint = () => { el.innerHTML = `<div class="label">${icon("calendar")}اليوم</div>` + (lines.length ? lines.join("") : `<p class="hc-empty">حدد مدينتك وفريقك من الإعدادات.</p>`); };
     paint();
     while (lines.length > 1 && el.scrollHeight > el.clientHeight + 1) { lines.pop(); paint(); }
   }
 
   function renderStatus() {
+    if (window.App && App.current && App.current !== "home") return; // الواجهة مخفية (شاشة الانتظار ظاهرة)
     const now = new Date();
     const c = F.clock(now);
-    $("time").innerHTML = `<span class="ltr">${c.h}:${c.m}</span><small>${c.ampm}</small>`;
+    setHTML($("time"), `<span class="ltr">${c.h}:${c.m}</span><small>${c.ampm}</small>`);
     const parts = F.hijri(now).split("،");
-    $("date").innerHTML = `${esc(parts[0])}<small>${esc((parts[1] || "").trim())}</small><small class="h-greg">${esc(F.gregorian(now))} م</small>`;
+    setHTML($("date"), `${esc(parts[0])}<small>${esc((parts[1] || "").trim())}</small><small class="h-greg">${esc(F.gregorian(now))} م</small>`);
     const w = DATA.weather();
-    if (w) { const g = F.weather(w.data.now.code); $("wx").innerHTML = `${icon(g[1])}${F.num(w.data.now.temp)}°`; }
+    if (w) { const g = F.weather(w.data.now.code); setHTML($("wx"), `${icon(g[1])}${F.num(w.data.now.temp)}°`); }
     $("wx").style.display = w ? "" : "none";
     renderPrayerCard(now);
     renderContentCard(now);
@@ -403,8 +416,8 @@
       root = build(el); loadApps(); renderRows(); renderStatus();
       DATA.onChange(renderStatus);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
-      setInterval(() => renderContentCard(new Date()), 20000);
-      window.addEventListener("riwaq-content", () => renderContentCard(new Date())); // أول ما يوصل ملف المحتوى
+      setInterval(() => { if (!window.App || App.current === "home") renderContentCard(new Date()); }, 20000);
+      window.addEventListener("riwaq-content", () => { contentSig = ""; renderContentCard(new Date()); }); // أول ما يوصل ملف المحتوى
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
     openRestore() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openRestore(); },
