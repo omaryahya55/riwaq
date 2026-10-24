@@ -38,9 +38,9 @@
       stage.dataset.period = period;
       Scene.render(document.getElementById("scene"), period);
     }
-    // التعتيم الليلي: من بعد العشاء بساعة ونص لين قبل الفجر بنص ساعة
-    const isha = pm.isha + 90, fajr = pm.fajr - 30;
-    const night = forcedNight !== null ? forcedNight : (min >= isha || min < fajr);
+    // التعتيم الليلي وساعة الليل: من ١:٣٠ بالليل لين قبل الفجر بنص ساعة (اختيار صاحب المشروع)
+    const start = 90, fajr = pm.fajr - 30;
+    const night = forcedNight !== null ? forcedNight : (min >= start && min < fajr);
     stage.classList.toggle("night", night && App.current === "saver");
     stage.classList.toggle("motion", CONFIG.motion !== false);
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
