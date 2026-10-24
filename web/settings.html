@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>إعدادات رِواق</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">رِواق</div>
+    <h1>الإعدادات</h1>
+    <p class="muted" id="where">التغييرات تنحفظ على هذا الجهاز بس.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>المدينة</h2>
+      <p class="muted">أوقات الصلاة والطقس حسب مدينتك.</p>
+      <div class="current" id="cityNow">ما اخترت مدينة</div>
+      <div class="search">
+        <input id="cityQ" type="search" placeholder="اكتب اسم مدينتك" autocomplete="off" enterkeyhint="search">
+        <button class="btn" id="citySearch" type="button">بحث</button>
+      </div>
+      <ul class="results" id="cityResults"></ul>
+      <p class="tiny">البحث من Open-Meteo (بيانات GeoNames).</p>
+    </section>
+
+    <section class="card">
+      <h2>الصلاة والتاريخ</h2>
+      <label class="field">طريقة الحساب
+        <select id="method"></select>
+      </label>
+      <label class="field">تعديل التاريخ الهجري
+        <select id="hijriOffset">
+          <option value="-1">يوم ناقص</option>
+          <option value="0">بدون تعديل (أم القرى)</option>
+          <option value="1">يوم زايد</option>
+        </select>
+        <small>إذا الشهر بدأ بالرؤية قبل أو بعد التقويم بيوم.</small>
+      </label>
+      <label class="field">التنبيه قبل الأذان
+        <select id="alertMinutes">
+          <option value="0">مطفي</option>
+          <option value="5">٥ دقايق</option>
+          <option value="10">١٠ دقايق</option>
+          <option value="15">١٥ دقيقة</option>
+          <option value="20">٢٠ دقيقة</option>
+        </select>
+      </label>
+      <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض)</span></label>
+      <label class="switch" id="salaryRow"><input type="checkbox" id="showSalary"><span>عدّاد الراتب وحساب المواطن</span></label>
+    </section>
+
+    <section class="card">
+      <h2>الأندية</h2>
+      <p class="muted">اختر لين ٣ أندية. مباراة أول نادي تطلع تحت، وكلهم يتميزون في جدول الترتيب.</p>
+      <label class="field">الدوري
+        <select id="teamLeague"></select>
+      </label>
+      <div class="chips" id="teamList"></div>
+      <h3>جدول الترتيب جنب الساعة</h3>
+      <div class="checks" id="leagues"></div>
+      <p class="tiny">البيانات: TheSportsDB. أسماء الأندية بس، بدون شعارات.</p>
+    </section>
+
+    <section class="card">
+      <h2>شريط الأخبار</h2>
+      <p class="muted">حط رابط RSS لمصدر أخبار تثق فيه (لين ٣ روابط). يطلع العنوان بس، بدون صور.</p>
+      <div id="feeds"></div>
+      <button class="btn ghost" id="addFeed" type="button">+ رابط</button>
+    </section>
+  </main>
+
+  <footer class="bar">
+    <button class="btn primary" id="save" type="button">حفظ</button>
+    <span class="status" id="status" role="status"></span>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/teams-ar.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

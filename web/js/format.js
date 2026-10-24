@@ -1,6 +1,9 @@
 /* تنسيق الأرقام والتواريخ بالعربي. كل شي يمر من هنا عشان الأرقام تطلع عربية (٠١٢٣) في كل الشاشة. */
 (function () {
-  const TZ = (window.DEMO && DEMO.city.tz) || "Asia/Riyadh";
+  // منطقة المدينة المختارة، وإذا ما فيه مدينة: منطقة الجهاز
+  const tz = () => (window.CONFIG && CONFIG.city && CONFIG.city.tz) || Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Riyadh";
+  // تعديل الهجري (±١ يوم) لأن بداية الشهر بالرؤية ممكن تختلف عن تقويم أم القرى
+  const hShift = (date) => new Date(date.getTime() + ((window.CONFIG && CONFIG.hijriOffset) || 0) * 86400000);
   const AR_DIGITS = "٠١٢٣٤٥٦٧٨٩";
 
   // أرقام عربية مع فاصلة عشرية عربية (٫) وفاصلة آلاف (٬)
@@ -21,7 +24,7 @@
 
   // أجزاء الوقت في منطقة المدينة (مو منطقة جهاز المستخدم)
   function parts(date, opts) {
-    const f = new Intl.DateTimeFormat("en-US", Object.assign({ timeZone: TZ }, opts));
+    const f = new Intl.DateTimeFormat("en-US", Object.assign({ timeZone: tz() }, opts));
     const out = {};
     f.formatToParts(date).forEach((p) => (out[p.type] = p.value));
     return out;
@@ -45,28 +48,30 @@
   }
 
   function hijri(date) {
-    return new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-arab", {
-      timeZone: TZ, weekday: "long", day: "numeric", month: "long", year: "numeric"
-    }).format(date);
+    const day = new Intl.DateTimeFormat("ar-SA", { timeZone: tz(), weekday: "long" }).format(date);
+    const rest = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-arab", {
+      timeZone: tz(), day: "numeric", month: "long", year: "numeric"
+    }).format(hShift(date));
+    return day + "، " + rest;
   }
 
   function hijriParts(date) {
     const f = new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura", {
-      timeZone: TZ, day: "numeric", month: "numeric", year: "numeric"
+      timeZone: tz(), day: "numeric", month: "numeric", year: "numeric"
     });
     const out = {};
-    f.formatToParts(date).forEach((p) => (out[p.type] = p.value));
+    f.formatToParts(hShift(date)).forEach((p) => (out[p.type] = p.value));
     return { d: parseInt(out.day, 10), m: parseInt(out.month, 10), y: parseInt(out.year, 10) };
   }
 
   function gregorian(date) {
     return new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", {
-      timeZone: TZ, day: "numeric", month: "long", year: "numeric"
+      timeZone: tz(), day: "numeric", month: "long", year: "numeric"
     }).format(date);
   }
 
   function weekday(dateStr) {
-    return new Intl.DateTimeFormat("ar-SA", { timeZone: TZ, weekday: "long" }).format(new Date(dateStr + "T12:00:00"));
+    return new Intl.DateTimeFormat("ar-SA", { timeZone: "UTC", weekday: "long" }).format(new Date(dateStr + "T12:00:00Z"));
   }
 
   // مدة بالدقايق → "٣ س ١٢ د" أو "٣٩ دقيقة"
@@ -89,5 +94,5 @@
   };
   function weather(code) { return WMO[code] || ["—", "cloud"]; }
 
-  window.F = { digits, num, clock, minutesOfDay, hhmm, hijri, hijriParts, gregorian, weekday, duration, weather, parts, TZ };
+  window.F = { digits, num, clock, minutesOfDay, hhmm, hijri, hijriParts, gregorian, weekday, duration, weather, parts, get TZ() { return tz(); } };
 })();

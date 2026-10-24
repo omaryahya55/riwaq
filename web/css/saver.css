@@ -8,6 +8,12 @@
 
 .saver-content { position: absolute; inset: 0; transition: transform 3s var(--ease); }
 
+/* ===== تذكيرات صغيرة تحت الطقس (الجمعة، الصيام، الغبار) ===== */
+.s-chips { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-start; flex-wrap: wrap; max-width: 640px; }
+.s-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 21px; color: var(--gold); background: rgba(232,194,122,.1); border: 1px solid rgba(232,194,122,.3); padding: 5px 16px 8px; border-radius: 999px; }
+.s-setup { grid-column: 1 / -1; font-size: 24px; color: var(--ink-2); padding: 26px 18px; text-align: center; }
+.s-src { font-style: normal; color: var(--ink-4); font-size: 20px; }
+
 /* ===== فوق ===== */
 .s-date { position: absolute; top: 70px; right: 92px; }
 .s-hijri { font-size: 46px; font-weight: 600; line-height: 1.25; }

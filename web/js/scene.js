@@ -62,14 +62,12 @@
 </svg>`;
   }
 
-  // وش الفترة الحين حسب أوقات الصلاة (بالدقايق من بداية اليوم)
-  function periodAt(minNow, pr) {
-    const m = (id) => { const [h, mm] = pr.find((x) => x.id === id).time.split(":").map(Number); return h * 60 + mm; };
-    const fajr = m("fajr"), sunrise = m("sunrise"), asr = m("asr"), maghrib = m("maghrib"), isha = m("isha");
-    if (minNow >= fajr - 20 && minNow < sunrise + 25) return "fajr";
-    if (minNow >= sunrise + 25 && minNow < asr + 60) return "day";
-    if (minNow >= asr + 60 && minNow < maghrib + 15) return "asr";
-    if (minNow >= maghrib + 15 && minNow < isha + 30) return "dusk";
+  // وش الفترة الحين حسب أوقات الصلاة. m = دقايق كل وقت من بداية اليوم
+  function periodAt(minNow, m) {
+    if (minNow >= m.fajr - 20 && minNow < m.sunrise + 25) return "fajr";
+    if (minNow >= m.sunrise + 25 && minNow < m.asr + 60) return "day";
+    if (minNow >= m.asr + 60 && minNow < m.maghrib + 15) return "asr";
+    if (minNow >= m.maghrib + 15 && minNow < m.isha + 30) return "dusk";
     return "night";
   }
 

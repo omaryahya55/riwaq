@@ -1,0 +1,1 @@
+adhan-js 4.4.6 (MIT) — https://github.com/batoulapps/adhan-js — lib/bundles/adhan.umd.min.js من حزمة npm بدون أي تعديل
