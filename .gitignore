@@ -23,3 +23,6 @@ tools/backup-*.json
 worker/node_modules/
 worker/.wrangler/
 android/.kotlin/
+
+# ملفات التطبيق الجاهزة (تنرفع في صفحة الإصدارات، مو في الكود)
+dist/
