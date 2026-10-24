@@ -62,12 +62,14 @@
 .s-row-head .pt { font-weight: 400; }
 .s-side-src { position: absolute; bottom: 22px; right: 32px; font-size: 16px; color: var(--ink-4); }
 
-.s-col { position: absolute; top: 290px; left: 92px; width: 580px; display: flex; flex-direction: column; gap: 18px; }
+.s-col { position: absolute; top: 290px; left: 92px; width: 580px; display: flex; flex-direction: column; gap: 18px; overflow: hidden; }
 
 .s-hadith { padding: 26px 30px 24px; min-height: 176px; }
 .s-card-title { font-size: 22px; color: var(--gold); font-weight: 600; }
 .s-hadith p { font-size: 25px; line-height: 1.8; color: var(--ink); margin-top: 8px; }
 .s-hadith.long p { font-size: 21px; line-height: 1.75; }
+.s-hadith.xlong p { font-size: 18px; line-height: 1.7; }
+.s-hadith, .s-prayers, .s-week { flex: none; }
 .s-hadith small { display: block; font-size: 18px; color: var(--ink-4); margin-top: 6px; }
 
 .s-prayers { display: grid; grid-template-columns: repeat(6, 1fr); padding: 14px; gap: 6px; }

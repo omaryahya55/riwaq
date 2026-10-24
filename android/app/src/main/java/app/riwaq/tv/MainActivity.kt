@@ -67,6 +67,11 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (intent.action == Intent.ACTION_ALL_APPS) {
+            // بعض أجهزة أندرويد ترسل ضغطة البيت المطوّلة كطلب "كل التطبيقات": نفتح اللوحة السريعة
+            web.evaluateJavascript("window.App&&App.show('home');window.Home&&Home.openQuick()", null)
+            return
+        }
         // ضغط زر البيت وهو مفتوح: نرجع للواجهة ونقفل أي قائمة
         web.evaluateJavascript("window.App&&App.show('home')", null)
     }

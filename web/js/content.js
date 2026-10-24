@@ -26,10 +26,10 @@
   };
 
   // نفس العنصر طول اليوم، ويتغير يومياً بالترتيب
-  function pick(type, date) {
+  function pick(type, date, offset) {
     const list = items.filter((x) => x.type === type);
     if (!list.length) return null;
-    return list[dayNumber(date) % list.length];
+    return list[(dayNumber(date) + (offset || 0)) % list.length];
   }
 
   /*
@@ -38,7 +38,9 @@
    *   الأذكار، وتتبدل كل ٤٠ ثانية
    * - غير كذا: حديث اليوم وصحابي اليوم بالتناوب كل ٤٥ ثانية
    */
-  function current(now) {
+  // offset: البديل رقم كذا (لو النص ما يدخل في المساحة، الشاشة تطلب اللي بعده بدل ما تقص النص)
+  function current(now, offset) {
+    offset = offset || 0;
     const t = window.Prayer && Prayer.timesFor(now, 0);
     const adhkar = items.filter((x) => x.type === "adhkar");
     if (t && adhkar.length) {
@@ -46,11 +48,11 @@
       const morning = now >= at("fajr") && now < new Date(at("sunrise").getTime() + 2 * 3600000);
       const evening = now >= at("asr") && now < at("isha");
       if (morning || evening) {
-        const i = Math.floor(now.getTime() / 40000) % adhkar.length;
+        const i = (Math.floor(now.getTime() / 40000) + offset) % adhkar.length;
         return { title: morning ? "من أذكار الصباح" : "من أذكار المساء", item: adhkar[i] };
       }
     }
-    const h = pick("hadith", now), s = pick("sahabi", now);
+    const h = pick("hadith", now, offset), s = pick("sahabi", now, offset);
     if (s && (!h || Math.floor(now.getTime() / 45000) % 2 === 1)) return { title: "في فضل الصحابة", item: s };
     if (h) return { title: "حديث اليوم", item: h };
     return null;
@@ -60,6 +62,15 @@
     load,
     current,
     get source() { return meta.source; },
+    // قارئ الواجهة الرئيسية: الأذكار كلها، وحديث اليوم وفضل الصحابة، وبعدها أحاديث الأيام الجاية
+    readerItems(now) {
+      const day = dayNumber(now);
+      const of = (type) => items.filter((x) => x.type === type);
+      const rotate = (list) => list.slice(day % (list.length || 1)).concat(list.slice(0, day % (list.length || 1)));
+      return of("adhkar").map((x) => ({ title: "من أذكار الصباح والمساء", item: x }))
+        .concat(rotate(of("hadith")).slice(0, 15).map((x, i) => ({ title: i === 0 ? "حديث اليوم" : "من الأحاديث", item: x })))
+        .concat(rotate(of("sahabi")).slice(0, 8).map((x) => ({ title: "في فضل الصحابة", item: x })));
+    },
     // لصفحة الإعدادات: عناصر اليوم مع روابط التحقق
     today(now) { return ["hadith", "sahabi"].map((t) => pick(t, now)).filter(Boolean); }
   };

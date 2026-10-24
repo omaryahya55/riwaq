@@ -225,18 +225,35 @@
     setTimeout(paint, 500);
   }
 
+  /*
+   * خانة المحتوى الديني. ممنوع نقص النص (ولا "..."): إذا ما دخل في المساحة
+   * ١) نصغّر الخط على مراحل ٢) نخفي بطاقة طقس الأيام مؤقتاً ٣) ناخذ البديل اللي بعده
+   * العمود اليسار لازم ما ينزل على شريط الأخبار والخانات اللي تحت.
+   */
   function renderHadith(root, now) {
-    // المحتوى الديني يطلع بس من ملف منقول حرفياً من مصدر معتمد (js/content.js). ما فيه ملف = الخانة مخفية
-    const el = $(root, "hadith");
-    const c = window.Content && Content.current(now);
-    if (c) {
-      // نشيل وسوم HTML لو المصدر يرسلها (شكل بس، ما نغيّر ولا كلمة)
-      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
+    const el = $(root, "hadith"), col = root.querySelector(".s-col"), week = $(root, "week");
+    const ticker = $(root, "ticker");
+    col.style.maxHeight = (ticker.style.display === "none" ? 590 : 512) + "px";
+    const weekHas = !!DATA.forecast();
+    for (let offset = 0; offset < 6; offset++) {
+      const c = window.Content && Content.current(now, offset);
+      if (!c) break;
+      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim(); // وسوم HTML بس، ولا كلمة
       const credit = c.item.edition ? ` · المصدر: ${esc(c.item.edition)}` : "";
-      el.classList.toggle("long", text.length > 220);
       el.innerHTML = `<div class="s-card-title">${esc(c.title)}</div><p class="s-hadith-text">${esc(text)}</p><small>${esc(c.item.source)}${credit}</small>`;
+      show(el, true);
+      for (const size of ["", "long", "xlong"]) {
+        for (const hideWeek of [false, true]) {
+          if (hideWeek && !weekHas) continue;
+          el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
+          show(week, weekHas && !hideWeek);
+          if (col.scrollHeight <= col.clientHeight + 1) return;
+        }
+      }
     }
-    show(el, !!c);
+    // ما فيه شي يدخل كامل: نخفي الخانة ونرجّع الطقس
+    show(el, false);
+    show(week, weekHas);
   }
 
   function renderPrayers(root, now) {
@@ -357,10 +374,10 @@
       renderChips(root, now);
       renderPrices(root);
       renderLeague(root, false);
-      renderHadith(root, now);
       const np = renderPrayers(root, now);
       renderBottom(root, now, np);
       renderNews(root);
+      renderHadith(root, now); // بعد الأخبار والطقس: يقيس المساحة الباقية
       renderCredit(root);
       const limit = CONFIG.alertMinutes || 0;
       const alertOn = forceAlert || (np && limit > 0 && np.mins <= limit && np.mins > 0);
@@ -369,6 +386,8 @@
     },
     setForceAlert(v) { forceAlert = v; this.tick(true); },
     // للاختبارات الآلية (tests/)
-    _test: { nextMonthly, daysToHijri, readable }
+    _test: { nextMonthly, daysToHijri, readable },
+    // للواجهة الرئيسية (نفس الحسابات بدون تكرار)
+    helpers: { nextMonthly, daysToHijri }
   };
 })();

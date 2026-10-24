@@ -36,6 +36,24 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
         main.post { Apps.openInput(ctx, id) }
     }
 
+    /** إعدادات التلفزيون نفسه (اللوحة السريعة). قائمة ثابتة بس، ولو الشاشة مو موجودة نفتح الإعدادات العامة */
+    @JavascriptInterface fun openSystem(which: String) {
+        val action = when (which) {
+            "wifi" -> android.provider.Settings.ACTION_WIFI_SETTINGS
+            "bluetooth" -> android.provider.Settings.ACTION_BLUETOOTH_SETTINGS
+            "sound" -> android.provider.Settings.ACTION_SOUND_SETTINGS
+            "display" -> android.provider.Settings.ACTION_DISPLAY_SETTINGS
+            "date" -> android.provider.Settings.ACTION_DATE_SETTINGS
+            else -> android.provider.Settings.ACTION_SETTINGS
+        }
+        main.post {
+            val i = Intent(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            try { ctx.startActivity(i) } catch (e: Exception) {
+                try { ctx.startActivity(Intent(android.provider.Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (e2: Exception) { }
+            }
+        }
+    }
+
     @JavascriptInterface fun openSettings() {
         main.post {
             val i = Intent(ctx, SettingsActivity::class.java)
