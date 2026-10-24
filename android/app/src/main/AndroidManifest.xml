@@ -19,6 +19,11 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent>
+        <!-- واجهات الشركة: نشوف هل هي شغالة (صفحة "الرجوع للواجهة الأصلية") -->
+        <package android:name="com.google.android.apps.tv.launcherx" />
+        <package android:name="com.google.android.tungsten.setupwraith" />
+        <package android:name="com.google.android.tvlauncher" />
+        <package android:name="com.mitv.tvhome" />
     </queries>
 
     <application
@@ -30,7 +35,7 @@
         android:theme="@style/Theme.Riwaq"
         android:networkSecurityConfig="@xml/network_security">
 
-        <!-- الواجهة الرئيسية: تطلع لما تضغط زر البيت (بعد ما تتطفى واجهة الشركة) -->
+        <!-- رواق نفسه (يفتح من قائمة التطبيقات). دور "الواجهة الرئيسية" في HomeAlias تحت، عشان ينطفي لحاله بدون ما ينحذف التطبيق -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -39,11 +44,6 @@
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|density|fontScale">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
             <!-- ضغطة البيت المطوّلة في بعض الأجهزة تنرسل كذا: نفتح اللوحة السريعة -->
             <intent-filter>
                 <action android:name="android.intent.action.ALL_APPS" />
@@ -55,6 +55,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- الواجهة الرئيسية: تطلع لما تضغط زر البيت. صفحة "الرجوع للواجهة الأصلية" تطفيها (والتطبيق يبقى) -->
+        <activity-alias
+            android:name=".HomeAlias"
+            android:targetActivity=".MainActivity"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- الرجوع للواجهة الأصلية من التلفزيون نفسه (بدون كمبيوتر) -->
+        <activity
+            android:name=".RestoreActivity"
+            android:exported="false" />
 
         <!-- الإعدادات: باركود تصوّره بجوالك -->
         <activity

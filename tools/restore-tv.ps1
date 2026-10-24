@@ -2,6 +2,7 @@
   رواق: يرجّع التلفزيون مثل ما كان (أمر واحد).
     - يشغّل الواجهات الأصلية اللي طفّيناها
     - يرجّع شاشة التوقف الأصلية
+    - يوقف رواق كواجهة رئيسية (التطبيق يبقى، وترجعه من صفحة "الرجوع للواجهة الأصلية" أو بسكربت التركيب)
     - (اختياري) -Uninstall يحذف تطبيق رواق
 
   الاستخدام:
@@ -52,6 +53,11 @@ if ($cur -match [regex]::Escape($a11y)) {
   if ($rest) { Adb shell settings put secure enabled_accessibility_services "$rest" | Out-Null } else { Adb shell settings delete secure enabled_accessibility_services | Out-Null }
   Say "طفّينا ضغطة البيت المطوّلة"
 }
+
+# رواق يوقف كواجهة رئيسية (التطبيق يبقى): بدون هذا زر البيت يرجع يفتح رواق حتى بعد ما تشتغل واجهة الشركة
+Adb shell pm disable "$Pkg/.HomeAlias" 2>&1 | Out-Null
+Adb shell cmd role remove-role-holder --user 0 android.app.role.HOME $Pkg 2>&1 | Out-Null
+Say "رواق ما عاد الواجهة الرئيسية"
 
 if ($Uninstall) { Adb uninstall $Pkg | Out-Host; Say "انحذف تطبيق رواق" }
 Adb shell input keyevent KEYCODE_HOME | Out-Null

@@ -59,7 +59,9 @@ class QuickPanel(private val svc: AccessibilityService) {
         Item("شاشة الانتظار الحين") { startSaver() },
         // تمر على الواجهة عشان رمز القفل (لو الأهل حاطين رمز)
         Item("إعدادات رواق (من الجوال)") { open(Intent(svc, MainActivity::class.java).setAction(MainActivity.ACTION_SETTINGS)) },
-        Item("كل إعدادات التلفزيون") { open(Intent(Settings.ACTION_SETTINGS)) }
+        Item("كل إعدادات التلفزيون") { open(Intent(Settings.ACTION_SETTINGS)) },
+        // تمر على الواجهة عشان رمز القفل
+        Item("الرجوع للواجهة الأصلية") { open(Intent(svc, MainActivity::class.java).setAction(MainActivity.ACTION_RESTORE)) }
     )
 
     private fun open(i: Intent) {

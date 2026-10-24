@@ -33,7 +33,8 @@ $ErrorActionPreference = "Continue"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $Pkg = "app.riwaq.tv"
 $Dream = "$Pkg/.RiwaqDream"
-$HomeActivity = "$Pkg/.MainActivity"
+# دور الواجهة الرئيسية في HomeAlias (صفحة "الرجوع للواجهة الأصلية" في التلفزيون تطفيه وتشغّله)
+$HomeActivity = "$Pkg/.HomeAlias"
 
 # الواجهات الأصلية اللي نعرفها. نطفي بس اللي موجود منها على الجهاز
 $StockHomes = @(
@@ -132,6 +133,7 @@ foreach ($p in $toDisable) {
 }
 $backup.disabled = @($backup.disabled) + $disabledNow | Select-Object -Unique
 $backup | ConvertTo-Json | Out-File -Encoding utf8 $backupFile
+Adb shell pm enable $HomeActivity 2>&1 | Out-Null   # لو كان مطفي من صفحة الرجوع
 if ($sdk -ge 29) { Adb shell cmd package set-home-activity --user 0 $HomeActivity 2>&1 | Out-Null }
 
 # ===== ٥ب. ضغطة البيت المطوّلة =====

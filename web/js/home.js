@@ -35,7 +35,8 @@
     { id: "sound", name: "الصوت", ic: "sound" },
     { id: "display", name: "الشاشة والصورة", ic: "tv" },
     { id: "riwaq", name: "إعدادات رواق (بالجوال)", ic: "grid" },
-    { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" }
+    { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" },
+    { id: "restore", name: "الرجوع للواجهة الأصلية", ic: "hide" }
   ];
 
   function loadApps() {
@@ -317,6 +318,7 @@
     closeQuick();
     if (q.id === "saver") return App.show("saver");
     if (q.id === "riwaq") return openSettings();
+    if (q.id === "restore") return openRestore();
     if (native() && Riwaq.openSystem) return Riwaq.openSystem(q.id);
     App.toast(`يفتح ${q.name} (في المتصفح ما يفتح شي)`);
   }
@@ -331,6 +333,12 @@
   function openSettings() {
     const go = () => { if (native()) Riwaq.openSettings(); else location.href = "settings.html"; };
     if (CONFIG.lock && CONFIG.lock.pin) askPin(go, "الإعدادات"); else go();
+  }
+
+  // الرجوع للواجهة الأصلية (صفحة أندرويد بخطوات آمنة). يطلب رمز القفل لو فيه
+  function openRestore() {
+    const go = () => { if (native() && Riwaq.openRestore) Riwaq.openRestore(); else App.toast("الرجوع يكون من التلفزيون نفسه"); };
+    if (CONFIG.lock && CONFIG.lock.pin) askPin(go, "الرجوع للواجهة الأصلية"); else go();
   }
 
   function askPin(then, name) {
@@ -399,6 +407,7 @@
       window.addEventListener("riwaq-content", () => renderContentCard(new Date())); // أول ما يوصل ملف المحتوى
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
+    openRestore() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openRestore(); },
     openSettings() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openSettings(); },
     openQuick() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); mode = "nav"; } openQuick(); },
     // أندرويد يناديها لما ينركّب أو ينحذف تطبيق

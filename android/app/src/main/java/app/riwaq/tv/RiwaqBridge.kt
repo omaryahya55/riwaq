@@ -54,6 +54,15 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
         }
     }
 
+    /** صفحة "الرجوع للواجهة الأصلية" (الصفحة تطلب رمز القفل قبلها لو فيه) */
+    @JavascriptInterface fun openRestore() {
+        main.post {
+            val i = Intent(ctx, RestoreActivity::class.java)
+            if (ctx !is Activity) i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            ctx.startActivity(i)
+        }
+    }
+
     @JavascriptInterface fun openSettings() {
         main.post {
             val i = Intent(ctx, SettingsActivity::class.java)

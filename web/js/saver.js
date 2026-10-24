@@ -361,7 +361,15 @@
     if (!n) return;
     const items = n.data.map((x) => `<span>${esc(x.title)}${x.source ? ` <em class="s-src">· ${esc(x.source)}</em>` : ""}</span>`).join("");
     const move = $(root, "news");
-    if (move.dataset.sig !== String(n.at)) { move.innerHTML = items + items; move.dataset.sig = String(n.at); }
+    if (move.dataset.sig !== String(n.at)) {
+      move.innerHTML = items + items; move.dataset.sig = String(n.at); move.dataset.dur = "";
+    }
+    // سرعة ثابتة هادية تنقرا (٦٠ بكسل بالثانية) مهما كان عدد الأخبار: المدة على قد طول الشريط.
+    // نحسبها لما يكون الشريط ظاهر (وهو مخفي عرضه صفر)
+    if (move.dataset.dur !== move.dataset.sig) {
+      const half = move.scrollWidth / 2;
+      if (half > 0) { move.style.animationDuration = Math.max(40, Math.round(half / 60)) + "s"; move.dataset.dur = move.dataset.sig; }
+    }
   }
 
   function renderCredit(root) {

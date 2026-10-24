@@ -22,6 +22,7 @@ class MainActivity : Activity() {
     private var pendingQuick = false
     private var pendingSaver = false
     private var pendingSettings = false
+    private var pendingRestore = false
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
@@ -43,6 +44,7 @@ class MainActivity : Activity() {
             web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
         }
         if (intent?.action == ACTION_SETTINGS) web.postDelayed({ web.evaluateJavascript(SETTINGS_JS, null) }, 2500)
+        if (intent?.action == ACTION_RESTORE) web.postDelayed({ web.evaluateJavascript(RESTORE_JS, null) }, 2500)
 
         val f = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
@@ -65,12 +67,14 @@ class MainActivity : Activity() {
         // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
         if (ConfigStore.version != loadedVersion) load()
         else if (pendingSettings) web.evaluateJavascript(SETTINGS_JS, null)
+        else if (pendingRestore) web.evaluateJavascript(RESTORE_JS, null)
         else if (pendingSaver) web.evaluateJavascript("window.App&&App.show('saver')", null)
         else if (pendingQuick) web.evaluateJavascript(QUICK_JS, null)
         else web.evaluateJavascript("window.App&&App.show('home')", null)
         pendingQuick = false
         pendingSaver = false
         pendingSettings = false
+        pendingRestore = false
         web.onResume()
     }
 
@@ -81,6 +85,7 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (intent.action == ACTION_RESTORE) { pendingRestore = true; return }
         if (intent.action == ACTION_SETTINGS) {
             pendingSettings = true // إعدادات رواق من اللوحة السريعة: تمر على رمز القفل (لو فيه)
             return
@@ -128,6 +133,9 @@ class MainActivity : Activity() {
         /** "إعدادات رواق" من اللوحة السريعة: الصفحة تطلب رمز القفل قبل ما تفتحها */
         const val ACTION_SETTINGS = "app.riwaq.tv.SETTINGS"
         private const val SETTINGS_JS = "window.App&&App.show('home'),window.Home&&Home.openSettings()"
+        /** "الرجوع للواجهة الأصلية" من اللوحة السريعة: تمر على رمز القفل */
+        const val ACTION_RESTORE = "app.riwaq.tv.RESTORE"
+        private const val RESTORE_JS = "window.App&&App.show('home'),window.Home&&Home.openRestore()"
         private const val QUICK_JS = "window.App&&App.show('home'),window.Home&&Home.openQuick()"
     }
 }

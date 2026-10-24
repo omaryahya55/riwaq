@@ -56,6 +56,8 @@ class HomeKeyService : AccessibilityService() {
         return true
     }
 
+    override fun onServiceConnected() { instance = this }
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
     override fun onInterrupt() {
@@ -65,10 +67,13 @@ class HomeKeyService : AccessibilityService() {
 
     override fun onDestroy() {
         panel.hide()
+        if (instance === this) instance = null
         super.onDestroy()
     }
 
     companion object {
         private const val LONG_PRESS_MS = 600L
+        /** الخدمة الشغالة (لو فيه): صفحة "الرجوع للواجهة الأصلية" تطفيها بـ disableSelf */
+        @Volatile var instance: HomeKeyService? = null
     }
 }
