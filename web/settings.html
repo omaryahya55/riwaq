@@ -70,9 +70,15 @@
 
     <section class="card">
       <h2>شريط الأخبار</h2>
-      <p class="muted">حط رابط RSS لمصدر أخبار تثق فيه (لين ٣ روابط). يطلع العنوان بس، بدون صور.</p>
-      <div id="feeds"></div>
-      <button class="btn ghost" id="addFeed" type="button">+ رابط</button>
+      <p class="muted">اختر المصادر اللي تبيها (لين ٦). يطلع عنوان الخبر بس، بدون صور، ومعه اسم المصدر.</p>
+      <div id="newsGroups"></div>
+      <h3>رابط من عندك</h3>
+      <div class="search">
+        <input id="feedUrl" type="url" inputmode="url" placeholder="الصق رابط RSS هنا" aria-label="رابط RSS" style="direction:ltr;text-align:left">
+        <button class="btn" id="addFeed" type="button">إضافة</button>
+      </div>
+      <div class="chips" id="customFeeds"></div>
+      <p class="tiny" id="feedCount"></p>
     </section>
     <section class="card">
       <h2>قفل التطبيقات (للأطفال)</h2>
@@ -137,6 +143,7 @@
   <script src="js/demo-data.js"></script>
   <script src="js/teams-ar.js"></script>
   <script src="js/quran-meta.js"></script>
+  <script src="js/news-sources.js"></script>
   <script src="js/settings.js"></script>
 </body>
 </html>

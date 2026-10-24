@@ -74,16 +74,45 @@
   }
 
   // ===== الأخبار =====
-  function paintFeeds() {
-    const list = cfg.newsFeeds.length ? cfg.newsFeeds : [""];
-    $("feeds").innerHTML = list.map((u, i) => `<div class="feed"><input type="url" inputmode="url" placeholder="https://..." value="${esc(u)}" data-i="${i}" aria-label="رابط RSS"><button class="btn" type="button" data-del="${i}" aria-label="حذف">✕</button></div>`).join("");
-    $("feeds").querySelectorAll("[data-del]").forEach((b) => b.addEventListener("click", () => {
-      readFeeds(); cfg.newsFeeds.splice(+b.dataset.del, 1); paintFeeds();
-    }));
-    $("addFeed").style.display = list.length >= 3 ? "none" : "";
+  // ===== الأخبار: مصادر جاهزة تختار منها، ورابط من عندك =====
+  const MAX_FEEDS = 6;
+  const presets = () => (window.NEWS_SOURCES || []).flatMap((g) => g.items.map(([name, url]) => ({ name, url })));
+  // الرابط اللي يلصقه المستخدم: نشيل المسافات والأقواس، ونضيف https:// لو ما فيه، ونحوّل http لـ https
+  function normalizeFeed(s) {
+    let u = String(s || "").trim().replace(/^[<"'«(\s]+|[>"'»)\s]+$/g, "");
+    if (!u) return "";
+    if (!/^[a-z]+:\/\//i.test(u)) u = "https://" + u;
+    u = u.replace(/^http:\/\//i, "https://");
+    try {
+      const x = new URL(u);
+      return x.protocol === "https:" && x.hostname.includes(".") ? x.href : "";
+    } catch (e) { return ""; }
   }
-  function readFeeds() {
-    cfg.newsFeeds = [...$("feeds").querySelectorAll("input")].map((x) => x.value.trim()).filter(Boolean);
+  function toggleFeed(url) {
+    const i = cfg.newsFeeds.indexOf(url);
+    if (i >= 0) cfg.newsFeeds.splice(i, 1);
+    else if (cfg.newsFeeds.length < MAX_FEEDS) cfg.newsFeeds.push(url);
+    else { status(`تقدر تختار لين ${ar(MAX_FEEDS)} مصادر`, true); return; }
+    status(""); paintFeeds();
+  }
+  function paintFeeds() {
+    const chosen = new Set(cfg.newsFeeds);
+    $("newsGroups").innerHTML = (window.NEWS_SOURCES || []).map((g) => `<h3>${esc(g.group)}</h3><div class="chips">` +
+      g.items.map(([name, url]) => `<button type="button" data-url="${esc(url)}" aria-pressed="${chosen.has(url)}">${esc(name)}</button>`).join("") + "</div>").join("");
+    const known = new Set(presets().map((p) => p.url));
+    const custom = cfg.newsFeeds.filter((u) => !known.has(u));
+    $("customFeeds").innerHTML = custom.map((u) => `<button type="button" data-url="${esc(u)}" aria-pressed="true" title="${esc(u)}"><bdi>${esc(new URL(u).hostname.replace(/^www\./, ""))}</bdi> ✕</button>`).join("");
+    document.querySelectorAll("#newsGroups [data-url], #customFeeds [data-url]").forEach((b) => b.addEventListener("click", () => toggleFeed(b.dataset.url)));
+    $("feedCount").textContent = cfg.newsFeeds.length ? `مختار ${ar(cfg.newsFeeds.length)} من ${ar(MAX_FEEDS)}` : "ما اخترت مصدر للحين: شريط الأخبار ما يطلع";
+  }
+  function addCustomFeed() {
+    const u = normalizeFeed($("feedUrl").value);
+    if (!u) { status("الرابط غلط. انسخ رابط RSS كامل من الموقع (مثل https://example.com/rss)", true); return; }
+    if (!cfg.newsFeeds.includes(u)) {
+      if (cfg.newsFeeds.length >= MAX_FEEDS) { status(`تقدر تختار لين ${ar(MAX_FEEDS)} مصادر`, true); return; }
+      cfg.newsFeeds.push(u);
+    }
+    $("feedUrl").value = ""; status(""); paintFeeds();
   }
 
   // ===== القرآن: راجع محفوظك =====
@@ -150,9 +179,9 @@
   }
 
   async function save() {
-    readFeeds();
-    const bad = cfg.newsFeeds.find((u) => !/^https:\/\/[^\s"'<>]+$/i.test(u));
-    if (bad) { status("رابط الأخبار لازم يبدأ بـ https://", true); return; }
+    // رابط مكتوب ولا انضاف (نسى يضغط إضافة): نضيفه قبل الحفظ
+    if ($("feedUrl").value.trim()) { addCustomFeed(); if ($("feedUrl").value.trim()) return; }
+    cfg.newsFeeds = cfg.newsFeeds.map(normalizeFeed).filter(Boolean).slice(0, MAX_FEEDS);
     const pin = $("lockPin").value.trim();
     if (pin && !/^[0-9]{4}$/.test(pin)) { status("رمز القفل لازم يكون ٤ أرقام", true); return; }
     cfg.lock = { pin, apps: [...$("lockApps").querySelectorAll("input:checked")].map((x) => x.value) };
@@ -226,7 +255,8 @@
   $("citySearch").addEventListener("click", searchCity);
   $("cityQ").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); searchCity(); } });
   $("teamLeague").addEventListener("change", paintTeams);
-  $("addFeed").addEventListener("click", () => { readFeeds(); cfg.newsFeeds.push(""); paintFeeds(); cfg.newsFeeds = cfg.newsFeeds.filter(Boolean); });
+  $("addFeed").addEventListener("click", addCustomFeed);
+  $("feedUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addCustomFeed(); } });
   $("save").addEventListener("click", save);
 
   (remote ? loadRemote() : Promise.resolve()).then(fill).catch((e) => { fill(); status(e.message, true); }).then(loadVerify);

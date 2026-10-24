@@ -14,7 +14,7 @@
     teams: [],               // [{ id, name }] من TheSportsDB
     leagues: ["4668", "4328", "4335", "4332", "4331", "4334"], // روشن، الإنقليزي، الإسباني، الإيطالي، الألماني، الفرنسي
     sideCard: "leagues",     // البطاقة اللي جنب الساعة: leagues | none
-    newsFeeds: [],           // روابط RSS يضيفها المستخدم (قرار ٩)
+    newsFeeds: [],           // روابط RSS يختارها المستخدم من القائمة الجاهزة أو يضيفها (قرار ٩)، لين ٦
     icalUrl: "",             // العنوان السري لتقويم قوقل (iCal). سرّي: على الجهاز بس، وما يمر على السيرفر الوسيط
     showSalary: true,        // الراتب وحساب المواطن (يطلعون للسعودية بس)
     pinned: null,            // ترتيب التطبيقات في الواجهة (null = الافتراضي)
@@ -58,7 +58,7 @@
     o.teams = (Array.isArray(c.teams) ? c.teams : []).filter((t) => t && ID.test(String(t.id))).slice(0, 12).map((t) => ({ id: String(t.id), name: str(t.name, 60) }));
     o.leagues = Array.isArray(c.leagues) ? c.leagues.map(String).filter((x) => ID.test(x)).slice(0, 10) : d.leagues.slice();
     o.sideCard = c.sideCard === "none" ? "none" : "leagues";
-    o.newsFeeds = (Array.isArray(c.newsFeeds) ? c.newsFeeds : []).map((u) => https(u)).filter(Boolean).slice(0, 3);
+    o.newsFeeds = (Array.isArray(c.newsFeeds) ? c.newsFeeds : []).map((u) => https(u)).filter(Boolean).slice(0, 6);
     o.icalUrl = https(c.icalUrl, 1000);
     o.showSalary = bool(c.showSalary, d.showSalary);
     o.reminders = bool(c.reminders, true);

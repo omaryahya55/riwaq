@@ -180,6 +180,14 @@
     return get(proxied("/rss?url=" + encodeURIComponent(url), url), "rss:" + url, true);
   }
 
+  /*
+   * شاشة عائلية: أي عنوان فيه كلمة غير لائقة ما يطلع (من أي مصدر). فلتر بسيط بالكلمات، يخفف كثير بس مو كامل
+   */
+  // كلمات كاملة بس: "جنسي" مو "الجنسية"، و"sex" مو "Essex"، و"التعري" مو "تعريفة"
+  const BLOCKED_AR = /إباحي|اباحي|جنسي(?!ة|ات)|الجنس(?!ي|ية|يات)|ممارسة الجنس|التعري(?!ف)|عارية|عاريات|عمليات? التجميل|عملية تجميل|تكبير (?:الأرداف|الصدر)|الأرداف|المثلي(?:ين|ة|ون)|الشذوذ|شواذ|دعارة|اغتصاب|تحرش|الخمور|خمر(?:ة)?\b|الكحول|كحولية|القمار|كازينو|المراهنات|بيكيني|ملابس داخلية|عروض الأزياء/;
+  const BLOCKED_EN = /\b(?:porn\w*|sex|sexual|nude|naked|gay|lgbt\w*|bikini|lingerie|casino|gambling|alcohol|beer|vodka|whisky)\b/i;
+  const clean = (t) => !BLOCKED_AR.test(t) && !BLOCKED_EN.test(t);
+
   function parseFeed(xml) {
     const doc = new DOMParser().parseFromString(xml, "text/xml");
     if (doc.querySelector("parsererror")) return null;
@@ -228,15 +236,25 @@
   }
 
   async function loadNews() {
-    if (!CONFIG.newsFeeds.length || !due("news", "news")) return;
-    const all = [];
-    for (const url of CONFIG.newsFeeds.slice(0, 3)) {
+    // المصادر تغيرت من الجوال: نجيب الأخبار على طول بدل ما ننتظر موعد التحديث
+    const sig = CONFIG.newsFeeds.join("|");
+    let changed = true;
+    try { changed = localStorage.getItem("riwaq.newsSig") !== sig; } catch (e) { /* بدون تخزين */ }
+    if (!CONFIG.newsFeeds.length || (!changed && !due("news", "news"))) return;
+    const lists = [];
+    for (const url of CONFIG.newsFeeds.slice(0, 6)) {
       try {
         const f = parseFeed(await fetchText(url));
-        if (f) f.items.forEach((t) => all.push({ title: t, source: f.source }));
+        // اسم المصدر من قائمتنا (أسماء بعض الخلاصات غلط أو بلغة ثانية)، وإلا اسم الموقع
+        const preset = (window.NEWS_SOURCES || []).flatMap((g) => g.items).find((x) => x[1] === url);
+        const source = preset ? preset[0] : (f && f.source && !/^https?:/i.test(f.source) ? f.source : new URL(url).hostname.replace(/^www\./, ""));
+        if (f && f.items.length) lists.push(f.items.filter(clean).map((t) => ({ title: t.slice(0, 160), source: source.slice(0, 30) })));
       } catch (e) { /* مصدر واحد خرب ما يوقف الباقي */ }
     }
-    if (all.length) write("news", all.slice(0, 20));
+    // بالتناوب: خبر من كل مصدر، عشان مصدر واحد ما ياخذ الشريط كله
+    const all = [];
+    for (let i = 0; all.length < 30 && lists.some((l) => l[i]); i++) lists.forEach((l) => { if (l[i] && all.length < 30) all.push(l[i]); });
+    if (all.length) { write("news", all); try { localStorage.setItem("riwaq.newsSig", sig); } catch (e) { /* بدون تخزين */ } }
   }
 
   // ===== الواجهة العامة =====
@@ -276,7 +294,11 @@
     fx() { return fresh("fx", "fx"); },
     table(id) { return fresh("table." + id, "table"); },
     team(id) { return fresh("team." + id, "team"); },
-    news() { return fresh("news", "news"); },
+    news() {
+      if (!CONFIG.newsFeeds.length) return null;
+      try { if (localStorage.getItem("riwaq.newsSig") !== CONFIG.newsFeeds.join("|")) return null; } catch (e) { /* بدون تخزين */ }
+      return fresh("news", "news");
+    },
     // أهم مباراة من كل أندية المستخدم: نتيجة انتهت خلال ٢٤ ساعة (الأحدث)، وإلا أقرب مباراة جاية
     featuredMatch(now) {
       now = now || new Date();
