@@ -51,7 +51,7 @@
     App.current = name;
     document.getElementById("home").classList.toggle("on", name === "home");
     document.getElementById("saver").classList.toggle("on", name === "saver");
-    if (name === "saver") Saver.tick(true); else stage.classList.remove("alert", "prayercalm");
+    if (name === "saver") Saver.tick(true); else stage.classList.remove("alert");
     updateScene();
     syncDevbar();
   }

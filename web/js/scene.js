@@ -32,20 +32,22 @@
     const n = Math.round(140 * density);
     for (let i = 0; i < n; i++) {
       const x = rnd() * 1920, y = rnd() * 620, r = rnd() < 0.08 ? 1.6 : 0.6 + rnd() * 0.7;
-      // كل نجمة خامسة تلمع (لو الحركة شغالة)، وكل وحدة بتوقيت مختلف
-      const tw = i % 5 === 0 ? ` class="tw" style="animation-delay:-${(rnd() * 6).toFixed(1)}s"` : "";
-      out += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.25 + rnd() * 0.6).toFixed(2)}"${tw}/>`;
+      out += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.25 + rnd() * 0.6).toFixed(2)}"/>`;
     }
     return out;
   }
 
-  // غيوم ناعمة: شريط بعرض الشاشة مكرر مرتين، يمشي ببطء ويرجع لنفس المكان بدون قفزة
+  /*
+   * غيوم ناعمة في طبقة لحالها فوق الرسمة (مو داخلها): الحركة تحرّك الطبقة بس، فما تنعاد رسمة الخلفية كاملة.
+   * كل صف بعرض شاشتين يمشي ببطء ويرجع لنفس المكان بدون قفزة، ويتحدث مرة بالثانية (base.css) عشان يخف على التلفزيون.
+   */
   function clouds(opacity) {
     if (!opacity) return "";
     const band = (y, s) => [[120, 0], [620, 40], [1100, -20], [1560, 30]]
       .map(([x, dy]) => `<g transform="translate(${x} ${y + dy}) scale(${s})"><ellipse cx="0" cy="0" rx="190" ry="34" fill="url(#cloudG)"/><ellipse cx="70" cy="-22" rx="120" ry="38" fill="url(#cloudG)"/><ellipse cx="-80" cy="-12" rx="100" ry="28" fill="url(#cloudG)"/></g>`).join("");
-    const row = (y, s, cls) => `<g class="${cls}"><g>${band(y, s)}</g><g transform="translate(1920 0)">${band(y, s)}</g></g>`;
-    return `<g opacity="${opacity}">${row(190, 1.1, "cloud c1")}${row(330, 0.8, "cloud c2")}</g>`;
+    const grad = `<defs><radialGradient id="cloudG"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
+    const row = (y, s, cls) => `<div class="cloud ${cls}"><svg viewBox="0 0 3840 440" width="3840" height="440" xmlns="http://www.w3.org/2000/svg">${grad}${band(y, s)}<g transform="translate(1920 0)">${band(y, s)}</g></svg></div>`;
+    return `<div class="cloud-layer" style="opacity:${opacity}">${row(190, 1.1, "c1")}${row(330, 0.8, "c2")}</div>`;
   }
 
   function render(el, period) {
@@ -62,7 +64,6 @@
       <stop offset="0" stop-color="${p.glow}" stop-opacity="${p.glowA}"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="sunGlow"><stop offset="0" stop-color="#FFE7B0" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7B0" stop-opacity="0"/></radialGradient>
-    <radialGradient id="cloudG"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
     <radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".18"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient>
     ${p.dunes.map((c, i) => `<linearGradient id="d${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}"/><stop offset="1" stop-color="${p.dunes[Math.min(i + 1, 3)]}"/></linearGradient>`).join("")}
   </defs>
@@ -70,9 +71,8 @@
   <g>${stars(p.stars)}</g>
   <rect width="1920" height="1080" fill="url(#horizon)"/>
   ${sun}${moon}
-  ${clouds(p.clouds)}
   ${DUNES.map((d, i) => `<path d="${d}" fill="url(#d${i})"/>`).join("")}
-</svg>`;
+</svg>${clouds(p.clouds)}`;
   }
 
   // وش الفترة الحين حسب أوقات الصلاة. m = دقايق كل وقت من بداية اليوم

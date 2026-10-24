@@ -103,7 +103,6 @@
     delete cfg.khatma; // ختمتك انشالت (2026-10-24): بدالها "ذكر الوقت"
     cfg.sunnahDaily = $("sunnahDaily").checked;
     cfg.placeDaily = $("placeDaily").checked;
-    cfg.prayerCalm = $("prayerCalm").checked;
     cfg.motion = $("motion").checked;
   }
 
@@ -139,7 +138,6 @@
     paintQuran();
     $("sunnahDaily").checked = cfg.sunnahDaily !== false;
     $("placeDaily").checked = cfg.placeDaily !== false;
-    $("prayerCalm").checked = cfg.prayerCalm !== false;
     $("motion").checked = cfg.motion !== false;
     $("nightClock").checked = cfg.nightClock !== false;
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";

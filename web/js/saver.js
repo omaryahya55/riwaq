@@ -90,9 +90,7 @@
           <div class="s-ticker-track"><div class="s-ticker-move" data-k="news"></div></div>
         </div>
         <div class="s-bottom" data-k="bottom"></div>
-        <div class="s-calm" data-k="calm"></div>
       </div>
-      <div class="adhan-glow"></div>
       <div class="adhan-alert">${icon("bell")}<span data-k="alertText"></span></div>
       <div class="credit" data-k="credit"></div>`;
     return root;
@@ -279,17 +277,6 @@
     show(week, weekHas);
   }
 
-  // صمت له معنى: وقت الصلاة الشاشة تهدأ، وتقول بس وش الصلاة
-  function renderCalm(root, now) {
-    const ph = CONFIG.prayerCalm !== false && Content.prayerPhase && Content.prayerPhase(now);
-    document.getElementById("stage").classList.toggle("prayercalm", !!ph && App.current === "saver");
-    if (!ph) return;
-    const mins = Math.max(0, Math.ceil((ph.iqama - now) / 60000));
-    $(root, "calm").innerHTML = ph.before
-      ? `<div class="c-main">حان وقت صلاة ${ph.name}</div><div class="c-sub">الإقامة تقريباً بعد ${F.duration(mins)}</div>`
-      : `<div class="c-main">صلاة ${ph.name}</div><div class="c-sub">تقبّل الله</div>`;
-  }
-
   function renderPrayers(root, now) {
     const el = $(root, "prayers");
     const np = Prayer.next(now);
@@ -419,11 +406,16 @@
       renderNews(root);
       renderHadith(root, now); // بعد الأخبار والطقس: يقيس المساحة الباقية
       renderCredit(root);
-      renderCalm(root, now);
+      // تنبيه الصلاة: ملاحظة صغيرة في الزاوية بس (ما تغطي شي): قبل الأذان بالمدة اللي يختارها المستخدم،
+      // ومن الأذان لين الإقامة (التقريبية)
       const limit = CONFIG.alertMinutes || 0;
-      const alertOn = forceAlert || (np && limit > 0 && np.mins <= limit && np.mins > 0);
-      document.getElementById("stage").classList.toggle("alert", !!alertOn && App.current === "saver");
-      if (np) $(root, "alertText").textContent = `باقي ${F.duration(forceAlert ? limit || 10 : np.mins)} على أذان ${np.p.name}`;
+      const ph = Content.prayerPhase ? Content.prayerPhase(now) : null;
+      let note = "";
+      if (forceAlert) note = `صلاة ${np ? np.p.name : "العصر"} بعد ${F.duration(limit || 10)}`;
+      else if (np && limit > 0 && np.mins <= limit && np.mins > 0) note = `صلاة ${np.p.name} بعد ${F.duration(np.mins)}`;
+      else if (limit > 0 && ph && ph.before) note = `حان الآن وقت صلاة ${ph.name}`;
+      document.getElementById("stage").classList.toggle("alert", !!note && App.current === "saver");
+      $(root, "alertText").textContent = note;
     },
     setForceAlert(v) { forceAlert = v; this.tick(true); },
     // للاختبارات الآلية (tests/)

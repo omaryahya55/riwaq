@@ -64,7 +64,8 @@
   }
 
   function review(now, offset) {
-    if (!Q || !hifz().length) return null;
+    if (!hifz().length) return null;
+    if (!Q) { load(); return null; }
     const list = chunks();
     if (!list.length) return null;
     const [s, a, b] = list[(dayNumber(now) + (offset || 0)) % list.length];
@@ -73,10 +74,16 @@
 
   // سورة كاملة للقارئ (ذكر الوقت): الكهف والملك
   function surahItem(s, title) {
-    if (!Q) return null;
+    if (!Q) { load(); return null; }
     return passage(s, 1, Q.suras[s - 1].length, title);
   }
 
-  window.QuranTools = { load, review, surahItem, get ready() { return !!Q; }, _test: { chunks, passage, setData(j) { Q = j; cacheKey = ""; } } };
-  load();
+  // المصحف كامل (١٫٣ ميجا) ما يبقى في الذاكرة إلا وقت ما نحتاجه: الجهاز ذاكرته محدودة
+  function release() {
+    if (!Q || hifz().length) return;
+    Q = null; cacheKey = ""; cacheList = [];
+  }
+
+  window.QuranTools = { load, review, surahItem, release, get ready() { return !!Q; }, _test: { chunks, passage, setData(j) { Q = j; cacheKey = ""; } } };
+  if (hifz().length) load();
 })();

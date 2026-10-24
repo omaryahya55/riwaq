@@ -111,20 +111,16 @@
 .s-cell-main small { font-size: 22px; font-weight: 400; color: var(--ink-2); }
 .s-cell-sub { font-size: 20px; color: var(--ink-3); margin-top: 4px; }
 
-/* ===== تنبيه قبل الأذان ===== */
+/* ===== تنبيه الصلاة: ملاحظة صغيرة في الزاوية فوق (ما تغطي المحتوى) ===== */
 .adhan-alert {
-  position: absolute; top: 0; left: 50%; transform: translate(-50%, -110%);
-  z-index: 50; display: flex; align-items: center; gap: 18px;
-  font-size: 30px; font-weight: 600; color: #1E1608;
-  background: linear-gradient(180deg, #F2D497, #DDB066);
-  padding: 22px 46px 26px; border-radius: 0 0 30px 30px;
-  box-shadow: 0 18px 50px rgba(0,0,0,.35);
-  transition: transform .8s var(--ease);
+  position: absolute; top: 14px; left: 92px; z-index: 50;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 22px; font-weight: 600; color: #1E1608;
+  background: #E8C27A; padding: 6px 18px 9px; border-radius: 999px;
+  opacity: 0; transform: translateY(-8px); transition: opacity .6s var(--ease), transform .6s var(--ease);
 }
-.adhan-alert .ic { font-size: 34px; }
-.adhan-glow { position: absolute; inset: 0; pointer-events: none; z-index: 45; opacity: 0; transition: opacity 1.2s var(--ease); box-shadow: inset 0 0 0 6px rgba(232,194,122,.55), inset 0 0 180px rgba(232,194,122,.28); }
-#stage.alert .adhan-alert { transform: translate(-50%, 0); }
-#stage.alert .adhan-glow { opacity: 1; }
+.adhan-alert .ic { font-size: 22px; }
+#stage.alert .adhan-alert { opacity: 1; transform: none; }
 
 .credit { position: absolute; bottom: 20px; left: 92px; font-size: 15px; color: var(--ink-4); }
 
@@ -143,20 +139,3 @@
 #stage.nightclock .s-bottom .s-cell { border: 0; padding: 0; }
 #stage.nightclock .s-bottom .s-cell:not(:first-child) { display: none; }
 #stage.nightclock .s-bottom .label { justify-content: center; }
-
-/* ===== صمت له معنى: من الأذان لين بعد الصلاة، الوقت والصلاة بس ===== */
-.s-calm { display: none; }
-#stage.prayercalm .s-prices, #stage.prayercalm .s-side, #stage.prayercalm .s-col, #stage.prayercalm .s-ticker, #stage.prayercalm .s-bottom,
-#stage.prayercalm .s-chips, #stage.prayercalm .s-now, #stage.prayercalm .credit, #stage.prayercalm .s-clock-city { display: none !important; }
-#stage.prayercalm .s-date { right: 0; left: 0; top: 150px; text-align: center; }
-#stage.prayercalm .s-clock-wrap { right: 0; left: 0; width: auto; top: 300px; }
-#stage.prayercalm .s-clock { justify-content: center; }
-#stage.prayercalm .s-calm { display: block; position: absolute; right: 0; left: 0; top: 700px; text-align: center; text-shadow: 0 3px 18px rgba(0,0,0,.6); }
-#stage.prayercalm .adhan-glow, #stage.prayercalm .adhan-alert { display: none; }
-.s-calm .c-main { font-family: var(--font-display); font-size: 64px; color: var(--gold); }
-.s-calm .c-sub { font-size: 28px; color: var(--ink-2); margin-top: 10px; }
-
-/* حكاية مكان: صورة المكان فوق النبذة */
-.s-place-img { display: block; width: 100%; height: 210px; object-fit: cover; border-radius: 18px; margin-top: 12px; }
-.s-hadith.long .s-place-img { height: 170px; }
-.s-hadith.xlong .s-place-img { height: 130px; }

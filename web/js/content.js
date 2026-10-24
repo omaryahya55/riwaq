@@ -190,10 +190,14 @@
       out.push({ id: "morning", title: "أذكار الصباح", hint: "", items: morning });
     if (at("asr") && at("isha") && now >= at("asr") && now < at("isha") && morning.length)
       out.push({ id: "evening", title: "أذكار المساء", hint: "", items: morning });
-    if ((at("isha") && now >= at("isha")) || mod < 60) {
+    const mulkTime = (at("isha") && now >= at("isha")) || mod < 60;
+    if (mulkTime) {
       const m = Q && Q.surahItem(67, "سورة الملك");
       if (m) out.push({ id: "mulk", title: "سورة الملك", hint: "قبل النوم", items: [m] });
     }
+    // برا وقت الكهف والملك: نفضّي المصحف من الذاكرة (يرجع يتحمل وقت ما نحتاجه)
+    const kahfTime = wd === "Fri" && mod >= 600 && at("asr") && now < at("asr");
+    if (!mulkTime && !kahfTime && Q && Q.release) Q.release();
     return out;
   }
 

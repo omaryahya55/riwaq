@@ -125,11 +125,13 @@ html, body {
 .pm-hint { font-size: 20px; color: var(--ink-3); margin-top: 22px; }
 
 /* الخلفية تتحرك بهدوء (CONFIG.motion): غيوم تمشي ونجوم تلمع. transform و opacity بس عشان تكون خفيفة على التلفزيون */
-#stage.motion .cloud { animation: cloud-drift 420s linear infinite; will-change: transform; }
-#stage.motion .cloud.c2 { animation-duration: 640s; }
-#stage.motion .tw { animation: twinkle 6s ease-in-out infinite; }
+/* الغيوم طبقة لحالها، وتتحرك خطوة بالثانية (مو ٦٠ مرة): نفس الشكل للعين، وأخف بكثير على معالج التلفزيون */
+.cloud-layer { position: absolute; top: 0; left: 0; width: 1920px; height: 440px; overflow: hidden; pointer-events: none; }
+.cloud { position: absolute; top: 0; left: 0; width: 3840px; height: 440px; }
+.scene .cloud svg { position: static; width: 3840px; height: 440px; }
+#stage.motion .cloud { animation: cloud-drift 420s steps(420) infinite; will-change: transform; }
+#stage.motion .cloud.c2 { animation-duration: 640s; animation-timing-function: steps(640); }
 @keyframes cloud-drift { from { transform: translateX(0); } to { transform: translateX(-1920px); } }
-@keyframes twinkle { 0%, 100% { opacity: .9; } 50% { opacity: .15; } }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
