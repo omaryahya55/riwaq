@@ -76,13 +76,20 @@ Say "متصل: $model (أندرويد API $sdk)"
 
 # ===== ٢. التركيب =====
 if (-not $Apk) {
-  $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\release\app-release.apk"
+  $Apk = Join-Path $PSScriptRoot "..\dist\riwaq-0.1.0.apk"
+  if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\release\app-release.apk" }
   if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\debug\app-debug.apk" }
 }
 if (-not (Test-Path $Apk)) { Fail "ما لقينا ملف التطبيق (APK). حمّله من صفحة الإصدارات وحط مساره بعد -Apk" }
 Say "نركّب التطبيق ..."
 # adb يطلع أكثر من سطر: نحوله لنص واحد قبل الفحص
 $out = (Adb install -r "$Apk" 2>&1 | Out-String)
+if ($out -match "INSTALL_FAILED_UPDATE_INCOMPATIBLE") {
+  # نسخة تجريبية قديمة بتوقيع مختلف: نشيلها ونركّب الجديدة (الإعدادات تنمسح، تختارها من الجوال مرة ثانية)
+  Say "فيه نسخة تجريبية قديمة من رواق بتوقيع مختلف. نشيلها ونركّب النسخة الجديدة (بتختار إعداداتك من الجوال مرة ثانية) ..."
+  Adb uninstall $Pkg | Out-Null
+  $out = (Adb install "$Apk" 2>&1 | Out-String)
+}
 if ($out -notmatch "Success") { Fail "التركيب ما نجح: $out" }
 
 # ===== ٣. نسخة احتياطية =====
