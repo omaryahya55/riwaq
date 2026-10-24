@@ -80,9 +80,24 @@ export default {
       try { target = new URL(url.searchParams.get("url") || ""); } catch (e) { return new Response("bad url", { status: 400 }); }
       if (target.protocol !== "https:") return new Response("https only", { status: 400 });
       const res = await cached(req, ctx, target.toString(), TTL.rss, { headers: { "User-Agent": "Riwaq/1.0" } });
+      if (!res.ok) return res;
       const len = Number(res.headers.get("Content-Length") || 0);
       if (len > MAX_RSS) return new Response("too large", { status: 413, headers: cors(req) });
-      return res;
+      // نقرا لين الحد بس (حتى لو المصدر ما قال حجمه)، ونرجّعه نص عادي: السيرفر ما يصير وسيط لصفحات أو ملفات ثانية
+      const reader = res.body.getReader();
+      const chunks = []; let size = 0;
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > MAX_RSS) { reader.cancel(); return new Response("too large", { status: 413, headers: cors(req) }); }
+        chunks.push(value);
+      }
+      const body = new Uint8Array(size); let off = 0;
+      for (const c of chunks) { body.set(c, off); off += c.byteLength; }
+      const text = new TextDecoder("utf-8").decode(body);
+      if (!/<(rss|feed|rdf:RDF)[\s>]/i.test(text.slice(0, 2000))) return new Response("not a feed", { status: 415, headers: cors(req) });
+      return new Response(text, { headers: Object.assign({ "Content-Type": "text/plain; charset=utf-8", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "default-src 'none'", "Cache-Control": "public, max-age=" + TTL.rss }, cors(req)) });
     }
     return new Response("not found", { status: 404 });
   }

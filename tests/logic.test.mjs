@@ -198,3 +198,32 @@ test("صمت له معنى: من دقيقة قبل الأذان لين ربع س
   assert.equal(w.Content.prayerPhase(at("2026-10-26T12:05:00")).before, false);
   assert.equal(w.Content.prayerPhase(at("2026-10-26T12:20:00")), null);
 });
+
+test("فحص الإعدادات: القيم الغلط ترجع للافتراضي وما تطيح الشاشة", () => {
+  const w = load(["js/config.js"]);
+  const s = w.Config.sanitize({
+    city: { name: "<img src=x>", lat: 24.7, lon: 46.7, tz: "Not/AZone", country: "SA" },
+    method: "evil", hijriOffset: 9, alertMinutes: -5,
+    teams: [{ id: "133604", name: "x" }, { id: "1;alert(1)", name: "y" }],
+    newsFeeds: ["http://a.com/rss", "https://b.com/rss", "javascript:alert(1)"],
+    icalUrl: "https://x.com/a.ics\"><script>",
+    lock: { pin: "12a4", apps: ["com.ok.app", "bad app"] },
+    hifz: [1, 200, "x", 67],
+    telegram: { token: "x", code: "123", allowed: [{ id: "12345", name: "أبو" }, { id: "abc" }] },
+    contentFile: "../../etc/passwd"
+  });
+  assert.equal(s.city, null, "منطقة زمنية مو موجودة = بدون مدينة");
+  assert.equal(s.method, "auto");
+  assert.equal(s.hijriOffset, 0);
+  assert.equal(s.alertMinutes, 10);
+  assert.equal(JSON.stringify(s.teams.map((t) => t.id)), '["133604"]');
+  assert.equal(JSON.stringify(s.newsFeeds), '["https://b.com/rss"]');
+  assert.equal(s.icalUrl, "");
+  assert.equal(s.lock.pin, "");
+  assert.equal(JSON.stringify(s.lock.apps), '["com.ok.app"]');
+  assert.equal(JSON.stringify(s.hifz), "[1,67]");
+  assert.equal(s.telegram.token, ""); assert.equal(s.telegram.allowed.length, 1);
+  assert.equal(s.contentFile, undefined);
+  const good = w.Config.sanitize({ city: { name: "الرياض", lat: 24.7, lon: 46.7, tz: "Asia/Riyadh", country: "SA" } });
+  assert.equal(good.city.tz, "Asia/Riyadh");
+});

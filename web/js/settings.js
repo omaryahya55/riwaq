@@ -27,7 +27,7 @@
   async function loadRemote() {
     const r = await fetch("/api/config?token=" + encodeURIComponent(token));
     if (!r.ok) throw new Error(r.status === 403 ? "الرابط انتهى. صوّر الباركود من التلفزيون مرة ثانية." : "ما قدرنا نوصل للتلفزيون");
-    cfg = Object.assign({}, Config.DEFAULTS, await r.json());
+    cfg = Config.sanitize(Object.assign({}, Config.DEFAULTS, await r.json())); // نفس فحص التلفزيون
   }
 
   // ===== المدينة =====
@@ -151,7 +151,7 @@
 
   async function save() {
     readFeeds();
-    const bad = cfg.newsFeeds.find((u) => !/^https?:\/\/[^\s]+$/i.test(u));
+    const bad = cfg.newsFeeds.find((u) => !/^https:\/\/[^\s"'<>]+$/i.test(u));
     if (bad) { status("رابط الأخبار لازم يبدأ بـ https://", true); return; }
     const pin = $("lockPin").value.trim();
     if (pin && !/^[0-9]{4}$/.test(pin)) { status("رمز القفل لازم يكون ٤ أرقام", true); return; }

@@ -8,7 +8,12 @@ globalThis.caches = { default: {
   async match(req) { const r = store.get(req.url); return r ? r.clone() : undefined; },
   async put(req, res) { store.set(req.url, res); }
 } };
-globalThis.fetch = async (url) => { calls.push(String(url)); return new Response('{"ok":true}', { status: 200, headers: { "Content-Type": "application/json" } }); };
+globalThis.fetch = async (url) => {
+  calls.push(String(url));
+  if (String(url).includes("/feed")) return new Response('<?xml version="1.0"?><rss version="2.0"><channel><title>t</title></channel></rss>', { status: 200, headers: { "Content-Type": "application/rss+xml" } });
+  if (String(url).includes("/page")) return new Response("<html><script>alert(1)</script></html>", { status: 200, headers: { "Content-Type": "text/html" } });
+  return new Response('{"ok":true}', { status: 200, headers: { "Content-Type": "application/json" } });
+};
 
 const worker = (await import("../worker/src/index.js")).default;
 const ctx = { waitUntil: (p) => p };
@@ -50,6 +55,10 @@ test("الأسعار: رموز معروفة بس", async () => {
 test("RSS: HTTPS بس", async () => {
   assert.equal((await worker.fetch(req("/rss?url=" + encodeURIComponent("http://example.com/feed")), env, ctx)).status, 400);
   assert.equal((await worker.fetch(req("/rss?url=" + encodeURIComponent("https://example.com/feed")), env, ctx)).status, 200);
+  // يرجع نص عادي بس، وأي شي مو خلاصة RSS ينرفض (ما يصير وسيط لصفحات)
+  const ok = await worker.fetch(req("/rss?url=" + encodeURIComponent("https://example.com/feed")), env, ctx);
+  assert.match(ok.headers.get("Content-Type"), /^text\/plain/);
+  assert.equal((await worker.fetch(req("/rss?url=" + encodeURIComponent("https://example.com/page")), env, ctx)).status, 415);
 });
 
 test("طلبات غير GET ممنوعة", async () => {

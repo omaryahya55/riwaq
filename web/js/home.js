@@ -251,7 +251,7 @@
     const fm = DATA.featuredMatch(now);
     if (fm) {
       const E = fm.ev, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
-      const mid = fm.kind === "last" ? `<small style="display:inline">${F.digits(E.hs)} - ${F.digits(E.as)}</small>` : "×";
+      const mid = fm.kind === "last" ? `<small style="display:inline">${F.num(E.hs)} - ${F.num(E.as)}</small>` : "×";
       const sub = fm.kind === "last" ? "النتيجة" : new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(fm.at);
       lines.push(`<div class="ht-line">${icon("ball")}<span><bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi><small>${sub}</small></span></div>`);
     }
@@ -316,7 +316,7 @@
   function runQuick(q) {
     closeQuick();
     if (q.id === "saver") return App.show("saver");
-    if (q.id === "riwaq") return native() ? Riwaq.openSettings() : (location.href = "settings.html");
+    if (q.id === "riwaq") return openSettings();
     if (native() && Riwaq.openSystem) return Riwaq.openSystem(q.id);
     App.toast(`يفتح ${q.name} (في المتصفح ما يفتح شي)`);
   }
@@ -327,17 +327,32 @@
   function renderPin() {
     $("pinDigits").innerHTML = pinDigits.map((d, i) => `<span class="pd ${i === pinPos ? "on" : ""}">${F.digits(d)}</span>`).join("");
   }
+  // إعدادات رواق (الباركود): لو فيه رمز قفل، تنطلب أول (غير كذا الطفل يقدر يشيل القفل من الجوال)
+  function openSettings() {
+    const go = () => { if (native()) Riwaq.openSettings(); else location.href = "settings.html"; };
+    if (CONFIG.lock && CONFIG.lock.pin) askPin(go, "الإعدادات"); else go();
+  }
+
   function askPin(then, name) {
     mode = "pin"; pinDigits = [0, 0, 0, 0]; pinPos = 0; pinThen = then;
     $("pinSub").textContent = `اكتب رمز القفل عشان تفتح ${name}`;
     $("pin").classList.add("on"); renderPin(); paintFocus();
   }
   function closePin() { mode = "nav"; $("pin").classList.remove("on"); pinThen = null; paintFocus(); }
+  // ٥ محاولات غلط = انتظار دقيقة (عشان ما تنجرب الأرقام كلها وحدة وحدة). ينحفظ لو انعادت الصفحة
+  const PIN_LOCK_KEY = "riwaq.pinLock";
+  const pinLockUntil = () => { try { return +localStorage.getItem(PIN_LOCK_KEY) || 0; } catch (e) { return 0; } };
   function checkPin() {
+    const wait = pinLockUntil() - Date.now();
+    if (wait > 0) { $("pinSub").textContent = `محاولات كثيرة. انتظر ${F.digits(Math.ceil(wait / 1000))} ثانية`; return; }
     if (pinDigits.join("") === String(CONFIG.lock.pin)) { const fn = pinThen; pinTries = 0; closePin(); if (fn) fn(); return; }
     pinTries++;
     $("pin").classList.remove("shake"); void $("pin").offsetWidth; $("pin").classList.add("shake");
-    $("pinSub").textContent = pinTries >= 3 ? "الرمز غلط. اسأل أهلك عن الرمز" : "الرمز غلط، جرّب مرة ثانية";
+    if (pinTries >= 5) {
+      pinTries = 0;
+      try { localStorage.setItem(PIN_LOCK_KEY, String(Date.now() + 60000)); } catch (e) { /* بدون تخزين: الانتظار لين تنعاد الصفحة */ }
+      $("pinSub").textContent = "محاولات كثيرة. انتظر دقيقة واسأل أهلك عن الرمز";
+    } else $("pinSub").textContent = pinTries >= 3 ? "الرمز غلط. اسأل أهلك عن الرمز" : "الرمز غلط، جرّب مرة ثانية";
     pinDigits = [0, 0, 0, 0]; pinPos = 0; renderPin();
   }
 
@@ -370,10 +385,7 @@
         if (!readList.length) { App.toast("ما فيه محتوى للحين"); return; }
         mode = "reader"; readIdx = 0; $("reader").classList.add("on"); renderReader(); paintFocus(); return;
       }
-      if (item.id === "settings") {
-        if (native()) Riwaq.openSettings(); else location.href = "settings.html";
-        return;
-      }
+      if (item.id === "settings") { openSettings(); return; }
     }
     launchItem(item);
   }
@@ -387,6 +399,7 @@
       window.addEventListener("riwaq-content", () => renderContentCard(new Date())); // أول ما يوصل ملف المحتوى
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
+    openSettings() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openSettings(); },
     openQuick() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); mode = "nav"; } openQuick(); },
     // أندرويد يناديها لما ينركّب أو ينحذف تطبيق
     appsChanged() { loadApps(); renderRows(); },

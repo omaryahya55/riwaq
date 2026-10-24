@@ -120,36 +120,42 @@
     return m >= 7 ? `${y}-${y + 1}` : `${y - 1}-${y}`;
   }
 
+  // أرقام الأندية والدوريات أرقام بس (تنحط في رابط الطلب)، والنتيجة رقم أو ما فيه
+  const ID = /^[0-9]{1,10}$/;
+  const score = (v) => (v === null || v === undefined || v === "" || !isFinite(+v) ? null : Math.max(0, Math.round(+v)));
+
   async function loadTables() {
     if (CONFIG.sideCard !== "leagues") return;
-    for (const id of CONFIG.leagues) {
+    for (const id of CONFIG.leagues.filter((x) => ID.test(String(x)))) {
       const key = "table." + id;
       if (!due(key, "table")) continue;
       const path = `/lookuptable.php?l=${id}&s=${season()}`;
       const j = await get(proxied("/sports" + path, sportsBase() + path), "thesportsdb");
       const rows = (j && j.table) || [];
-      if (rows.length) write(key, rows.slice(0, 5).map((r) => ({ id: r.idTeam, name: r.strTeam, pts: +r.intPoints, played: +r.intPlayed })));
+      if (rows.length) write(key, rows.slice(0, 5).map((r) => ({ id: String(r.idTeam || ""), name: String(r.strTeam || ""), pts: +r.intPoints || 0, played: +r.intPlayed || 0 })));
       await sleep(4000); // نوزع الطلبات
     }
   }
 
   async function loadTeams() {
-    for (const t of CONFIG.teams) {
+    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)))) {
       const key = "team." + t.id;
       if (!due(key, "team")) continue;
       const pn = `/eventsnext.php?id=${t.id}`, pl = `/eventslast.php?id=${t.id}`;
       const n = await get(proxied("/sports" + pn, sportsBase() + pn), "thesportsdb");
       await sleep(4000);
       const l = await get(proxied("/sports" + pl, sportsBase() + pl), "thesportsdb");
-      const ev = (e) => e && { home: e.strHomeTeam, away: e.strAwayTeam, homeId: e.idHomeTeam, awayId: e.idAwayTeam,
-        at: e.strTimestamp ? e.strTimestamp.replace(/Z?$/, "Z") : null, hs: e.intHomeScore, as: e.intAwayScore, status: e.strStatus, league: e.strLeague, leagueId: e.idLeague };
+      // كل قيمة من المصدر تتحول لنوعها (نص أو رقم) قبل ما تنحفظ: النتيجة تنعرض كرقم بس
+      const ev = (e) => e && { home: String(e.strHomeTeam || ""), away: String(e.strAwayTeam || ""), homeId: String(e.idHomeTeam || ""), awayId: String(e.idAwayTeam || ""),
+        at: /^\d{4}-\d\d-\d\dT[\d:]+(Z|[+-]\d\d:?\d\d)?$/.test(e.strTimestamp || "") ? (/(Z|[+-]\d\d:?\d\d)$/.test(e.strTimestamp) ? e.strTimestamp : e.strTimestamp + "Z") : null,
+        hs: score(e.intHomeScore), as: score(e.intAwayScore), status: String(e.strStatus || ""), league: String(e.strLeague || ""), leagueId: String(e.idLeague || "") };
       write(key, { next: ev(n && n.events && n.events[0]), last: ev(l && l.results && l.results[0]) });
       await sleep(4000);
     }
   }
 
   async function loadTeamColors() {
-    for (const t of CONFIG.teams) {
+    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)))) {
       const key = "color." + t.id;
       if (!due(key, "color")) continue;
       const p = `/lookupteam.php?id=${t.id}`;

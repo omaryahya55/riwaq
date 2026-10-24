@@ -21,6 +21,7 @@ class MainActivity : Activity() {
     private var loadedVersion = -1L
     private var pendingQuick = false
     private var pendingSaver = false
+    private var pendingSettings = false
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
@@ -41,6 +42,7 @@ class MainActivity : Activity() {
             // أول تشغيل: ننتظر الصفحة تحمّل، وبعدها نفتح اللوحة (إذا ما انفتحت)
             web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
         }
+        if (intent?.action == ACTION_SETTINGS) web.postDelayed({ web.evaluateJavascript(SETTINGS_JS, null) }, 2500)
 
         val f = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
@@ -62,11 +64,13 @@ class MainActivity : Activity() {
         super.onResume()
         // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
         if (ConfigStore.version != loadedVersion) load()
+        else if (pendingSettings) web.evaluateJavascript(SETTINGS_JS, null)
         else if (pendingSaver) web.evaluateJavascript("window.App&&App.show('saver')", null)
         else if (pendingQuick) web.evaluateJavascript(QUICK_JS, null)
         else web.evaluateJavascript("window.App&&App.show('home')", null)
         pendingQuick = false
         pendingSaver = false
+        pendingSettings = false
         web.onResume()
     }
 
@@ -77,6 +81,10 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (intent.action == ACTION_SETTINGS) {
+            pendingSettings = true // إعدادات رواق من اللوحة السريعة: تمر على رمز القفل (لو فيه)
+            return
+        }
         if (intent.action == ACTION_SAVER) {
             pendingSaver = true // نفتحها في onResume (بعد ما ترجع الواجهة)
             return
@@ -117,6 +125,9 @@ class MainActivity : Activity() {
         const val ACTION_QUICK = "app.riwaq.tv.QUICK"
         /** "شاشة الانتظار الحين" من اللوحة السريعة (لو الجهاز ما فيه شاشة توقف النظام) */
         const val ACTION_SAVER = "app.riwaq.tv.SAVER"
+        /** "إعدادات رواق" من اللوحة السريعة: الصفحة تطلب رمز القفل قبل ما تفتحها */
+        const val ACTION_SETTINGS = "app.riwaq.tv.SETTINGS"
+        private const val SETTINGS_JS = "window.App&&App.show('home'),window.Home&&Home.openSettings()"
         private const val QUICK_JS = "window.App&&App.show('home'),window.Home&&Home.openQuick()"
     }
 }

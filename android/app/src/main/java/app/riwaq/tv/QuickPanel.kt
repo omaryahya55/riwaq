@@ -57,7 +57,8 @@ class QuickPanel(private val svc: AccessibilityService) {
         Item("الصوت") { open(Intent(Settings.ACTION_SOUND_SETTINGS)) },
         Item("الشاشة") { open(Intent(Settings.ACTION_DISPLAY_SETTINGS)) },
         Item("شاشة الانتظار الحين") { startSaver() },
-        Item("إعدادات رواق (من الجوال)") { open(Intent(svc, SettingsActivity::class.java)) },
+        // تمر على الواجهة عشان رمز القفل (لو الأهل حاطين رمز)
+        Item("إعدادات رواق (من الجوال)") { open(Intent(svc, MainActivity::class.java).setAction(MainActivity.ACTION_SETTINGS)) },
         Item("كل إعدادات التلفزيون") { open(Intent(Settings.ACTION_SETTINGS)) }
     )
 

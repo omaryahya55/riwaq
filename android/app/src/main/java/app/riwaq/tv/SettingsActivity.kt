@@ -74,6 +74,12 @@ class SettingsActivity : Activity() {
         setContentView(root)
     }
 
+    // الشاشة اختفت (زر البيت أو تطبيق ثاني): نسكرها، فيوقف السيرفر وينتهي الرمز. ما يبقى شي شغال في الخلفية
+    override fun onStop() {
+        super.onStop()
+        if (!isChangingConfigurations) finish()
+    }
+
     override fun onDestroy() {
         server?.stop()
         server = null
