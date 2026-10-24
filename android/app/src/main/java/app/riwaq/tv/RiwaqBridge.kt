@@ -22,7 +22,7 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView) {
     private val io = Executors.newFixedThreadPool(2)
 
     @JavascriptInterface fun getConfig(): String = ConfigStore.get(ctx)
-    @JavascriptInterface fun setConfig(json: String) { ConfigStore.set(ctx, json) }
+    @JavascriptInterface fun setConfig(json: String) { ConfigStore.set(ctx, json, external = false) }
     @JavascriptInterface fun getApps(): String = Apps.listJson(ctx)
     @JavascriptInterface fun getInputs(): String = Apps.inputsJson(ctx)
 

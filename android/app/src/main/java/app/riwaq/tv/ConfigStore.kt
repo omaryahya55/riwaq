@@ -19,12 +19,15 @@ object ConfigStore {
     fun get(ctx: Context): String =
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "{}") ?: "{}"
 
-    /** يحفظ بس إذا النص JSON سليم وحجمه معقول. يرجع false لو مرفوض */
-    fun set(ctx: Context, json: String): Boolean {
+    /**
+     * يحفظ بس إذا النص JSON سليم وحجمه معقول. يرجع false لو مرفوض.
+     * external = التغيير جا من الجوال (الواجهة لازم تعيد التحميل). الصفحة نفسها تحفظ بـ false
+     */
+    fun set(ctx: Context, json: String, external: Boolean = true): Boolean {
         if (json.length > MAX_BYTES) return false
         val obj = try { JSONObject(json) } catch (e: Exception) { return false }
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, obj.toString()).apply()
-        version++
+        if (external) version++
         return true
     }
 }
