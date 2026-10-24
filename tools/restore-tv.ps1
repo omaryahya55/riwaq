@@ -28,7 +28,7 @@ if (-not $adb) { $adb = Join-Path $env:USERPROFILE "Android\Sdk\platform-tools\a
 function Fail($msg) { Write-Host "✗ $msg" -ForegroundColor Red; exit 1 }
 
 # العنوان لازم يكون رقم جهاز بس (مثلاً لو انكتب -Uninstall لاصق فيه بدون مسافة)
-if ($Ip -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { Fail "العنوان غلط: '$Ip'. اكتبه مثل 192.168.3.20 وحط مسافة قبل -Uninstall" }
+if ($Ip -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { Fail "العنوان غلط: '$Ip'. اكتبه مثل 192.168.1.50 وحط مسافة قبل -Uninstall" }
 
 & $adb connect "$Ip`:$Port" | Out-Host
 function Adb { & $adb -s "$Ip`:$Port" @args }
