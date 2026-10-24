@@ -8,8 +8,7 @@
 | [Amiri](https://github.com/aliftype/amiri) | SIL OFL 1.1 | `web/fonts/amiri/` (OFL.txt معه) |
 | [IBM Plex Sans Arabic](https://github.com/IBM/plex) | SIL OFL 1.1 (اسم محجوز: Plex) | `web/fonts/plex/` (OFL.txt معه) |
 | [Reem Kufi](https://github.com/aliftype/reem-kufi) (اسم المشروع فوق الشريط) | SIL OFL 1.1 | `web/fonts/reemkufi/` (OFL.txt معه) |
-| [Amiri Quran](https://github.com/aliftype/amiri) (الآيات) | SIL OFL 1.1 | `web/fonts/amiriquran/` (OFL.txt معه) |
-| [Noto Naskh Arabic](https://github.com/notofonts/arabic) (الأحاديث والأذكار) | SIL OFL 1.1 | `web/fonts/notonaskh/` (OFL.txt معه) |
+| [Scheherazade New](https://software.sil.org/scheherazade/) (الآيات والأحاديث والأذكار) | SIL OFL 1.1 | `web/fonts/scheherazade/` (OFL.txt معه) |
 | [ZXing core](https://github.com/zxing/zxing) 3.5.3 | Apache-2.0 | مكتبة أندرويد (رسم الباركود) |
 | [AndroidX WebKit](https://developer.android.com/jetpack/androidx/releases/webkit) 1.12.1 | Apache-2.0 | مكتبة أندرويد |
 

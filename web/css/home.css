@@ -51,9 +51,9 @@
 .hp-cell.next { background: rgba(232,194,122,.14); box-shadow: inset 0 0 0 1px rgba(232,194,122,.45); }
 .hp-cell.next .n, .hp-cell.next .t { color: var(--gold); }
 
-.hc-text { font-size: 25px; line-height: 1.8; margin-top: 12px; white-space: pre-line; }
-.h-content.long .hc-text { font-size: 21px; line-height: 1.75; }
-.h-content.xlong .hc-text { font-size: 18px; line-height: 1.7; }
+.hc-text { font-size: 29px; line-height: 1.8; margin-top: 12px; white-space: pre-line; }
+.h-content.long .hc-text { font-size: 26px; line-height: 1.75; }
+.h-content.xlong .hc-text { font-size: 23px; line-height: 1.7; }
 /* المصدر جزء من التدفق (مو مثبت) عشان القياس يعرف إذا النص دخل كامل */
 .hc-src { font-size: 17px; color: var(--ink-4); margin-top: 8px; }
 .hc-ref { font-size: 15px; line-height: 1.5; margin-top: 2px; }

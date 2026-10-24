@@ -20,6 +20,7 @@ class MainActivity : Activity() {
     private lateinit var web: WebView
     private var loadedVersion = -1L
     private var pendingQuick = false
+    private var pendingSaver = false
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
@@ -61,9 +62,11 @@ class MainActivity : Activity() {
         super.onResume()
         // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
         if (ConfigStore.version != loadedVersion) load()
+        else if (pendingSaver) web.evaluateJavascript("window.App&&App.show('saver')", null)
         else if (pendingQuick) web.evaluateJavascript(QUICK_JS, null)
         else web.evaluateJavascript("window.App&&App.show('home')", null)
         pendingQuick = false
+        pendingSaver = false
         web.onResume()
     }
 
@@ -74,6 +77,10 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (intent.action == ACTION_SAVER) {
+            pendingSaver = true // نفتحها في onResume (بعد ما ترجع الواجهة)
+            return
+        }
         if (intent.action == Intent.ACTION_ALL_APPS || intent.action == ACTION_QUICK) {
             // ضغطة البيت المطوّلة (من HomeKeyService، أو بعض الأجهزة ترسلها كطلب "كل التطبيقات")
             // أندرويد يوقف الواجهة قبل ما يوصلها الطلب، فنفتح اللوحة في onResume (بعد ما ترجع)
@@ -108,6 +115,8 @@ class MainActivity : Activity() {
     companion object {
         /** ضغطة البيت المطوّلة (HomeKeyService) */
         const val ACTION_QUICK = "app.riwaq.tv.QUICK"
+        /** "شاشة الانتظار الحين" من اللوحة السريعة (لو الجهاز ما فيه شاشة توقف النظام) */
+        const val ACTION_SAVER = "app.riwaq.tv.SAVER"
         private const val QUICK_JS = "window.App&&App.show('home'),window.Home&&Home.openQuick()"
     }
 }

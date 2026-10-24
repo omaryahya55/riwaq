@@ -106,9 +106,9 @@ html, body {
 }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 
-/* خط النص الديني: الآيات بخط المصحف (Amiri Quran)، والأحاديث والأذكار بخط النسخ (Noto Naskh Arabic) */
-.t-quran { font-family: "Amiri Quran", "Amiri", serif !important; line-height: 2.05 !important; }
-.t-naskh { font-family: "Noto Naskh Arabic", "Amiri", serif !important; }
+/* خط النص الديني (الآيات والأحاديث والأذكار): Scheherazade New، خط نسخ واضح مصمم للنص المشكّل
+   (التشكيل له مسافته وما يلتصق)، ومسافة أكبر بين السطور عشان الحركات ما تنحشر */
+.t-quran, .t-naskh { font-family: "Scheherazade New", "Amiri", serif !important; line-height: 2 !important; }
 
 /* رسالة من الجوال (تيليقرام): فوق كل شي، بالنص */
 .phone-msg {

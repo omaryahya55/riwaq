@@ -303,7 +303,7 @@
     $("rRef").textContent = Content.credit(it.item, true).reference;
     // النص كامل دايماً: نصغّر الخط، وإذا للحين أطول من المساحة ينقرا بالسهم تحت
     tx.scrollTop = 0;
-    for (const px of [40, 34, 29, 25]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; }
+    for (const px of [44, 38, 33, 29]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; }
     readScroll = tx.scrollHeight > tx.clientHeight + 1;
     $("rHint").textContent = readScroll ? "تحت وفوق: باقي النص · يمين ويسار: التالي والسابق · رجوع: إغلاق" : "الأسهم: التالي والسابق · رجوع: إغلاق";
   }

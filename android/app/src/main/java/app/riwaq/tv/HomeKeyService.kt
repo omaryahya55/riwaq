@@ -1,7 +1,6 @@
 package app.riwaq.tv
 
 import android.accessibilityservice.AccessibilityService
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
@@ -12,7 +11,7 @@ import android.view.accessibility.AccessibilityEvent
  * زر البيت محجوز لأندرويد وما يوصل للتطبيقات، فنستقبله بخدمة "إمكانية الوصول" (نفس طريقة تطبيقات
  * تخصيص أزرار الريموت):
  *  - ضغطة عادية: نرجعها لأندرويد كما هي (زر البيت يشتغل عادي)
- *  - ضغطة مطوّلة: تفتح لوحة "التلفزيون" السريعة في رواق
+ *  - ضغطة مطوّلة: تفتح اللوحة السريعة فوق التطبيق المفتوح (QuickPanel)، بدون ما تطلعك منه
  * ما نقرا ولا نحفظ أي شي ثاني: كل الأزرار غير البيت تمر بدون ما نلمسها، وما نستقبل أحداث الشاشة.
  * تنشغل من سكربت التركيب (tools/setup-tv.ps1) وتنطفي من سكربت الرجوع.
  * ملاحظة للاختبار: أوامر "adb shell input keyevent" ما تمر على هذي الخدمة، لازم الريموت الحقيقي
@@ -24,13 +23,11 @@ class HomeKeyService : AccessibilityService() {
     private var longFired = false
     private var down = false
 
+    private val panel by lazy { QuickPanel(this) }
+
     private val longPress = Runnable {
         longFired = true
-        startActivity(
-            Intent(this, MainActivity::class.java)
-                .setAction(MainActivity.ACTION_QUICK)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        )
+        panel.toggle()
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
@@ -47,7 +44,10 @@ class HomeKeyService : AccessibilityService() {
             }
             KeyEvent.ACTION_UP -> {
                 handler.removeCallbacks(longPress)
-                if (down && !longFired && !event.isCanceled) performGlobalAction(GLOBAL_ACTION_HOME)
+                if (down && !longFired && !event.isCanceled) {
+                    panel.hide()
+                    performGlobalAction(GLOBAL_ACTION_HOME)
+                }
                 down = false
             }
         }
@@ -59,6 +59,11 @@ class HomeKeyService : AccessibilityService() {
     override fun onInterrupt() {
         handler.removeCallbacks(longPress)
         down = false
+    }
+
+    override fun onDestroy() {
+        panel.hide()
+        super.onDestroy()
     }
 
     companion object {
