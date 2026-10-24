@@ -74,8 +74,10 @@ def main():
                 h = get(f"/hadeeths/one/?language=ar&id={hid}")
                 text = (h.get("hadeeth") or "").strip()
                 grade = (h.get("grade") or "").strip()
-                attribution = (h.get("attribution") or "").strip()
-                if not text or not grade.startswith("صحيح"):
+                # التخريج: السطر الأول بس (بعضها فيه سطر زايد). هذا وصف جنب النص، مو النص نفسه
+                attribution = (h.get("attribution") or "").strip().splitlines()[0].strip().rstrip(".") if h.get("attribution") else ""
+                # الصحيح المرفوع بس: "موقوف" كلام صحابي، مو حديث نبوي
+                if not text or not grade.startswith("صحيح") or "موقوف" in grade:
                     continue
                 if kind == "hadith" and not attribution.startswith(SAHIHAYN):
                     continue

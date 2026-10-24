@@ -133,6 +133,9 @@
   DATA.start();
   fit();
   window.addEventListener("resize", fit);
+  window.addEventListener("load", fit);
+  // بعض متصفحات التلفزيون تكبّر الصفحة بعد التحميل بدون حدث resize: نراقب حجمها بنفسنا
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(viewport);
   const start = params.get("screen") || (location.hash.match(/screen=(\w+)/) || [])[1];
   show(start === "saver" ? "saver" : "home");
   if (!MODE_SAVER_ONLY) resetIdle();
