@@ -29,7 +29,7 @@ jobs:
           for f in web/js/*.js; do node --check "$f"; done
 
       - name: اختبارات الحسابات (الصلاة، والهجري، والراتب)
-        run: node --test tests/logic.test.mjs
+        run: node --test tests/logic.test.mjs tests/worker.test.mjs
 
       - name: مفتاح التوقيع (للإصدارات بس)
         if: startsWith(github.ref, 'refs/tags/v')
