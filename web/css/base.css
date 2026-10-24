@@ -1,0 +1,111 @@
+/* الأساس: الألوان والخطوط، والمسرح الثابت ١٩٢٠×١٠٨٠ اللي يتصغّر على أي شاشة (٧٢٠ تطلع نفس الشكل بالضبط). */
+:root {
+  --ink: #F7F2E8;
+  --ink-2: rgba(247, 242, 232, .74);
+  --ink-3: rgba(247, 242, 232, .5);
+  --ink-4: rgba(247, 242, 232, .28);
+  --gold: #E8C27A;
+  --gold-deep: #C99A4E;
+  --up: #93D9AC;
+  --down: #F2A193;
+  --card: rgba(9, 9, 14, .44);
+  --card-strong: rgba(9, 9, 14, .62);
+  --line: rgba(255, 255, 255, .09);
+  --radius: 28px;
+  --font-ui: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-display: "Amiri", "Noto Naskh Arabic", serif;
+  --ease: cubic-bezier(.22, .8, .24, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #000;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#viewport { position: fixed; inset: 0; background: #000; }
+#viewport.frame720 { inset: auto; width: 1280px; height: 720px; left: 50%; top: 50%; transform: translate(-50%, -50%); outline: 1px dashed rgba(255,255,255,.25); }
+
+#stage {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  overflow: hidden;
+  direction: rtl;
+  background: #05070F;
+}
+
+.scene, .scene svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.scene { transition: opacity 1.2s var(--ease); }
+
+.shade { position: absolute; inset: 0; pointer-events: none; }
+/* النهار سماه فاتحة: نغمّق أكثر عشان النص الأبيض ينقرا (التباين أهم من جمال السماء) */
+#stage[data-period="day"] .shade::after,
+#stage[data-period="fajr"] .shade::after { content: ""; position: absolute; inset: 0; background: rgba(18, 12, 6, .34); }
+#stage[data-period="day"] .card { background: var(--card-strong); }
+.dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity 2s var(--ease); z-index: 40; }
+#stage.night .dim { opacity: .42; }
+
+.screen { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s var(--ease), visibility 0s .7s; }
+.screen.on { opacity: 1; visibility: visible; transition: opacity .7s var(--ease), visibility 0s; }
+
+.ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.14em; }
+
+/* الأرقام تنقرا من اليسار لليمين حتى داخل صفحة عربية */
+.ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+/* النص العربي اللي ينقص بنقاط: نخلي مكان لنقاط الحروف تحت (ي، ج) عشان ما تنقص */
+.clip { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-bottom: .3em; margin-bottom: -.3em; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.label { font-size: 22px; color: var(--ink-3); font-weight: 500; letter-spacing: 0; }
+
+.soft-shadow { text-shadow: 0 2px 22px rgba(0, 0, 0, .35); }
+
+/* شارة النموذج: لازم تبان دايماً في المرحلة ١ عشان ما تنفهم البيانات إنها حية */
+.demo-badge {
+  position: absolute; top: 20px; left: 24px;
+  z-index: 60; font-size: 18px; color: var(--ink-2);
+  background: rgba(0,0,0,.45); border: 1px solid var(--line);
+  padding: 6px 16px 8px; border-radius: 999px;
+}
+
+/* شريط أدوات النموذج (مو جزء من المنتج) */
+#devbar {
+  position: fixed; bottom: 14px; left: 14px; z-index: 1000;
+  display: flex; gap: 6px; flex-wrap: wrap; max-width: calc(100vw - 28px);
+  direction: rtl; font: 500 13px/1 var(--font-ui);
+  background: rgba(20,20,26,.88); border: 1px solid rgba(255,255,255,.12);
+  padding: 6px; border-radius: 12px;
+}
+#devbar button {
+  font: inherit; color: #eee; background: rgba(255,255,255,.07); border: 1px solid transparent;
+  padding: 7px 10px 9px; border-radius: 8px; cursor: pointer;
+}
+#devbar button:hover { background: rgba(255,255,255,.14); }
+#devbar button.on { border-color: var(--gold); color: var(--gold); }
+#devbar .sep { width: 1px; background: rgba(255,255,255,.12); margin: 2px 2px; }
+#devbar.hidden { display: none; }
+
+.toast {
+  position: absolute; bottom: 72px; left: 50%; transform: translate(-50%, 20px);
+  font-size: 26px; background: var(--card-strong); border: 1px solid var(--line);
+  padding: 16px 30px 20px; border-radius: 999px; opacity: 0; z-index: 80;
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

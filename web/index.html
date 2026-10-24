@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>رِواق · نموذج</title>
+  <!-- النموذج يجيب الخطوط من Google Fonts. في التطبيق الحقيقي ملفات الخط (رخصة OFL) تنحط داخل التطبيق عشان يشتغل بدون نت -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/saver.css">
+</head>
+<body>
+  <div id="viewport">
+    <div id="stage">
+      <div class="scene" id="scene"></div>
+      <section class="screen" id="home"></section>
+      <section class="screen" id="saver"></section>
+      <div class="dim"></div>
+      <div class="demo-badge">نموذج · البيانات لقطة تجريبية مو حية</div>
+      <div class="toast" id="toast"></div>
+    </div>
+  </div>
+
+  <div id="devbar">
+    <button data-a="screen" data-v="home">الواجهة</button>
+    <button data-a="screen" data-v="saver">شاشة التوقف</button>
+    <span class="sep"></span>
+    <button data-a="period" data-v="fajr">فجر</button>
+    <button data-a="period" data-v="day">نهار</button>
+    <button data-a="period" data-v="asr">عصر</button>
+    <button data-a="period" data-v="dusk">مغرب</button>
+    <button data-a="period" data-v="night">ليل</button>
+    <span class="sep"></span>
+    <button data-a="alert">تنبيه الأذان</button>
+    <button data-a="night">تعتيم ليلي</button>
+    <span class="sep"></span>
+    <button data-a="res" data-v="1080">١٠٨٠</button>
+    <button data-a="res" data-v="720">٧٢٠</button>
+    <button data-a="hide">إخفاء الشريط</button>
+  </div>
+
+  <script src="js/demo-data.js"></script>
+  <script src="js/format.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/saver.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "riwaq-web",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5310", "--directory", "web"],
+      "port": 5310
+    }
+  ]
+}
