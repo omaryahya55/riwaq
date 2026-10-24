@@ -14,7 +14,7 @@
 
 الاستخدام:
     python tools/import-hadeethenc.py [ملف الإخراج]
-    الافتراضي: web/content/candidates/hadeethenc.json (مرشح، ما ينعرض لين يعتمده صاحب المشروع)
+    الافتراضي: web/content/approved.json (المصدر معتمد من صاحب المشروع 2026-10-24)
 """
 import json
 import os
@@ -26,7 +26,7 @@ from datetime import date
 API = "https://hadeethenc.com/api/v1"
 UA = "Riwaq/0.1 (+https://github.com/omaryahya55/riwaq; riwaq.app1@gmail.com)"
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "web", "content", "candidates", "hadeethenc.json")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "web", "content", "approved.json")  # اعتمده صاحب المشروع 2026-10-24
 
 HADITH_CATS = ["282", "267", "277", "273", "278"]   # الأخلاق الحميدة، الآداب، فضائل الأعمال، بر الوالدين، فضائل الذكر
 ADHKAR_CATS = ["301"]                                 # أذكار الصباح والمساء
@@ -99,7 +99,7 @@ def main():
                 print(f"✓ {kind} {hid}", flush=True)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     content = {
-        "_readme": "منقول حرفياً من موسوعة الأحاديث النبوية HadeethEnc.com حسب سياسة الاستخدام: بدون تعديل، مع ذكر المصدر. لا تعدّل أي نص هنا.",
+        "_readme": "المحتوى الديني المعتمد. منقول حرفياً من موسوعة الأحاديث النبوية HadeethEnc.com حسب سياسة الاستخدام (بدون تعديل، مع ذكر المصدر). لا تعدّل أي نص هنا، والتحديث بالسكربت.",
         "source": "HadeethEnc.com",
         "fetchedAt": date.today().isoformat(),
         "items": items
