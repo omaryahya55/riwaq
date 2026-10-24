@@ -25,8 +25,21 @@ function Say($msg) { Write-Host "• $msg" }
 
 $adb = (Get-Command adb -ErrorAction SilentlyContinue).Source
 if (-not $adb) { $adb = Join-Path $env:USERPROFILE "Android\Sdk\platform-tools\adb.exe" }
+function Fail($msg) { Write-Host "✗ $msg" -ForegroundColor Red; exit 1 }
+
+# العنوان لازم يكون رقم جهاز بس (مثلاً لو انكتب -Uninstall لاصق فيه بدون مسافة)
+if ($Ip -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { Fail "العنوان غلط: '$Ip'. اكتبه مثل 192.168.3.20 وحط مسافة قبل -Uninstall" }
+
 & $adb connect "$Ip`:$Port" | Out-Host
 function Adb { & $adb -s "$Ip`:$Port" @args }
+
+# نتأكد إن التلفزيون متصل قبل أي شي (وإلا ما نكتب "تم" وهو ما تغيّر شي)
+$ok = $false
+for ($i = 0; $i -lt 10; $i++) {
+  if ((& $adb -s "$Ip`:$Port" get-state 2>$null) -eq "device") { $ok = $true; break }
+  Start-Sleep -Seconds 2
+}
+if (-not $ok) { Fail "ما قدرنا نتصل بالتلفزيون. شغّل (تصحيح USB) من خيارات المطوّر، وتأكد إن الكمبيوتر والتلفزيون على نفس الشبكة. وما تغيّر شي في التلفزيون." }
 
 $backupFile = Join-Path $PSScriptRoot "backup-$($Ip.Replace('.','-')).json"
 $backup = $null
