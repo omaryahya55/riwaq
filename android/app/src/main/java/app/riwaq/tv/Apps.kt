@@ -47,6 +47,21 @@ object Apps {
         return out.toString()
     }
 
+    // تطبيقات الفيديو اللي عادة لها زر في الريموت: تطلع أول القائمة لما نختار تطبيق للزر
+    private val POPULAR = listOf(
+        "com.netflix.ninja", "com.google.android.youtube.tv", "com.amazon.amazonvideo.livingroom",
+        "net.mbc.shahidTV", "com.disney.disneyplus", "com.google.android.youtube.tvkids", "com.google.android.youtube.tvunplugged"
+    )
+
+    /** [(اسم الحزمة، اسم التطبيق)]: المشهورة أول، وبعدها بالترتيب */
+    fun choices(ctx: Context): List<Pair<String, String>> {
+        val pm = ctx.packageManager
+        return launchables(pm)
+            .filter { it.activityInfo.packageName != ctx.packageName }
+            .map { it.activityInfo.packageName to it.loadLabel(pm).toString() }
+            .sortedWith(compareBy({ POPULAR.indexOf(it.first).let { i -> if (i < 0) 99 else i } }, { it.second.lowercase() }))
+    }
+
     /** صورة التطبيق PNG (بانر 320×180 أو أيقونة 144×144) */
     fun imagePng(ctx: Context, kind: String, pkg: String): ByteArray? {
         val pm = ctx.packageManager

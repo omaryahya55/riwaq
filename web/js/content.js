@@ -157,8 +157,45 @@
     return pick(x.type, now, offset, x.type === "sahabi" || x.type === "quran" ? null : ctxOf(x)) || x;
   }
 
+  /*
+   * الحديث: الراوي، ومن رواه (العزو)، والدرجة، وتحتها الكتاب ورقم الحديث فيه.
+   * كلها من بيانات الموسوعة الحديثية نفسها (ما نكتب شي من عندنا): الراوي أول اسم بعد «عن» في نص الحديث،
+   * والكتاب ورقمه من سطر التخريج. والأرقام بنفس الطبعات اللي في المكتبة الشاملة
+   * (البخاري ط السلطانية، ومسلم ت عبد الباقي): جربناها على الشاملة 2026-10-30 وطابقت الجزء والصفحة والرقم.
+   */
+  const bare = (s) => String(s || "").replace(/[ً-ٰٟـ​-‏]/g, "");
+  function narrator(x) {
+    if (x.type !== "hadith") return "";
+    const m = bare(x.text).trim().match(/^و?عن\s+(.+?)(?:\s+(?:رضي|رحمه|قال|قالت|أن|أنه|أنها|أنهما|عن|سمع|سمعت|يقول)(?=[\s،,:؛]|$)|\s*[،,:؛«"(\-])/);
+    if (!m) return "";
+    const words = m[1].trim().split(/\s+/);
+    if (words.length > 8) return "";
+    // «عن أبي هريرة» ← الراوي: أبو هريرة (أول الاسم بس، مو «سعد بن أبي وقاص»)
+    return words.map((w, i) => (i === 0 && w === "أبي" ? "أبو" : w === "وأبي" ? "وأبو" : w)).join(" ");
+  }
+  const BOOKS = ["صحيح البخاري", "صحيح مسلم", "سنن أبي داود", "سنن الترمذي", "سنن النسائي", "سنن ابن ماجه", "مسند أحمد", "موطأ مالك", "سنن الدارمي"];
+  const arNum = (s) => String(s).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+  function books(x) {
+    const out = [];
+    for (const line of String(x.reference || "").split("\n")) {
+      const l = line.replace(/^[\s\d\-–.]+/, "").trim();
+      const name = BOOKS.find((b) => l.startsWith(b));
+      const num = name && l.slice(name.length).match(/^\s*(?:\(\s*\d+\s*\/\s*\d+\s*\)\s*)?\(\s*(\d+)\s*\)/);
+      if (num && !out.some((o) => o.startsWith(name))) out.push(name + " (" + arNum(num[1]) + ")");
+    }
+    return out.slice(0, 3);
+  }
+
   // سطر المصدر وتحته المرجع (تخريج الكتاب نفسه، حرفياً). full=false: المصدر بس
   function credit(x, full) {
+    if (x.type === "hadith") {
+      const n = narrator(x);
+      const b = books(x);
+      return {
+        source: [n && "الراوي: " + n, x.attribution, x.grade].filter(Boolean).join(" · "),
+        reference: full ? [b.length ? b.join("، ") : "", x.edition ? "المصدر: " + x.edition : ""].filter(Boolean).join(" · ") : ""
+      };
+    }
     const ref = full && x.sourceId && String(x.sourceId).startsWith("hisn-") ? String(x.reference || "").trim() : "";
     return { source: x.source + (x.edition && !String(x.sourceId).startsWith("hisn-") ? " · المصدر: " + x.edition : "") + (x.imageCredit ? " · " + x.imageCredit : ""), reference: ref };
   }
@@ -205,6 +242,8 @@
     load,
     current,
     credit,
+    narrator,
+    books,
     // خط النص: الآيات بخط المصحف، والأحاديث والأذكار بالنسخ، وحكاية مكان بالخط العادي
     fontClass(x) { return x.type === "quran" ? "t-quran" : x.type === "place" ? "" : "t-naskh"; },
     get source() { return meta.source; },

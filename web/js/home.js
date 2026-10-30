@@ -312,7 +312,7 @@
     tx.className = "reader-text " + Content.fontClass(it.item);
     const im = $("rImg"), okImg = /^img\/places\/[a-z0-9-]+\.jpg$/.test(it.item.image || "");
     im.hidden = !okImg; if (okImg) im.src = it.item.image; else im.removeAttribute("src");
-    $("rSrc").textContent = it.item.source + (it.item.edition ? " · المصدر: " + it.item.edition : "");
+    $("rSrc").textContent = it.item.type === "hadith" ? Content.credit(it.item, false).source : it.item.source + (it.item.edition ? " · المصدر: " + it.item.edition : "");
     $("rRef").textContent = Content.credit(it.item, true).reference;
     // النص كامل دايماً: نصغّر الخط، وإذا للحين أطول من المساحة ينقرا بالسهم تحت
     tx.scrollTop = 0;

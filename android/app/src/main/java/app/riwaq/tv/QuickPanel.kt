@@ -48,7 +48,7 @@ class QuickPanel(private val svc: AccessibilityService) {
     // نفس خطوط الشاشة (داخل التطبيق)، ولو ما انقرت نرجع لخط النظام
     private fun font(path: String): Typeface = try { Typeface.createFromAsset(svc.assets, path) } catch (e: Exception) { Typeface.DEFAULT }
 
-    private data class Item(val label: String, val action: () -> Unit)
+    class Item(val label: String, val action: () -> Unit)
 
     private fun items() = listOf(
         Item("الواجهة الرئيسية") { svc.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME) },
@@ -82,7 +82,8 @@ class QuickPanel(private val svc: AccessibilityService) {
 
     fun toggle() { if (isShowing) hide() else show() }
 
-    fun show() {
+    /** title/note: لوحة بخيارات ثانية (مثل اختيار تطبيق لزر الريموت). بدونها: اللوحة السريعة العادية */
+    fun show(title: String = "رِواق", note: String? = null, entries: List<Item> = items()) {
         if (root != null) return
         val gold = Color.parseColor("#E8C27A")
         // المقاسات من حجم الشاشة نفسه (مو من تكبير الخط في النظام): كل الخيارات تدخل في الطول
@@ -99,14 +100,14 @@ class QuickPanel(private val svc: AccessibilityService) {
         }
 
         panel.addView(TextView(svc).apply {
-            text = "رِواق"; setTextColor(gold); size(this, 0.05f); typeface = font("web/fonts/reemkufi/ReemKufi-Variable.ttf")
+            text = title; setTextColor(gold); size(this, 0.05f); typeface = font("web/fonts/reemkufi/ReemKufi-Variable.ttf")
         })
         val plex = font("web/fonts/plex/IBMPlexSansArabic-Medium.ttf")
         val now = Date()
         val time = SimpleDateFormat("h:mm a", ULocale("ar_SA")).format(now)
         val hijri = SimpleDateFormat("EEEE، d MMMM y", ULocale("ar_SA@calendar=islamic-umalqura")).format(now)
         panel.addView(TextView(svc).apply {
-            text = "$time\n$hijri"; setTextColor(Color.parseColor("#C9CAD3")); size(this, 0.022f); typeface = plex
+            text = note ?: "$time\n$hijri"; setTextColor(Color.parseColor("#C9CAD3")); size(this, 0.022f); typeface = plex
             setPadding(0, px(0.004f), 0, px(0.018f))
         })
 
@@ -117,7 +118,7 @@ class QuickPanel(private val svc: AccessibilityService) {
         rows.clear(); actions.clear(); sel = 0
         // القائمة داخل تمرير: لو طوّلت عن الشاشة، تمشي مع التحديد
         val list = LinearLayout(svc).apply { orientation = LinearLayout.VERTICAL; layoutDirection = View.LAYOUT_DIRECTION_RTL }
-        for (it in items()) {
+        for (it in entries) {
             val tv = TextView(svc).apply {
                 text = it.label; size(this, 0.027f); typeface = plex; setTextColor(textColors)
                 gravity = Gravity.CENTER_VERTICAL or Gravity.START
@@ -183,7 +184,7 @@ class QuickPanel(private val svc: AccessibilityService) {
             KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_BUTTON_A ->
                 if (e.action == KeyEvent.ACTION_UP) { val act = actions.getOrNull(sel); hide(); act?.invoke() }
             // رجوع، أو السهم اليمين (برا اللوحة): نقفل
-            KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_ESCAPE, KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_DPAD_RIGHT ->
+            KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_ESCAPE, KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_SETTINGS, KeyEvent.KEYCODE_DPAD_RIGHT ->
                 if (e.action == KeyEvent.ACTION_UP) hide()
         }
         return true
