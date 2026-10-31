@@ -41,6 +41,11 @@ def arabic_body(data):
 def main():
     sys.stdout.reconfigure(encoding="utf-8")  # طرفية ويندوز ما تطبع ✓ بدونها
     key = os.environ.get("SUNNAH_API_KEY")
+    env = os.path.join(os.path.dirname(__file__), "..", ".env")  # أو من ملف .env (برا المستودع، في .gitignore)
+    if not key and os.path.exists(env):
+        for line in open(env, encoding="utf-8"):
+            if line.strip().startswith("SUNNAH_API_KEY="):
+                key = line.split("=", 1)[1].strip().strip('"')
     if not key:
         sys.exit("حط المفتاح في SUNNAH_API_KEY أول")
     picks = [l.strip() for l in open(sys.argv[1], encoding="utf-8") if l.strip() and not l.startswith("#")]
