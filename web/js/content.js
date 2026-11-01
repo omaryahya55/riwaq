@@ -186,8 +186,24 @@
     return out.slice(0, 3);
   }
 
+  /*
+   * من المكتبة الشاملة (tools/apply-shamela.py): الراوي والتخريج والدرجة جاهزة في العنصر نفسه.
+   * التخريج: الكتاب (الجزء/ الصفحة) ورقم الحديث، والدرجة ومن حكم بها (مثل: صحيح، الألباني).
+   */
+  function takhrijLine(x) {
+    return (x.takhrij || []).slice(0, 3).map((t) =>
+      t.book + (t.printed_page ? " (" + arNum(t.printed_page) + ")" : "") + (t.number ? " رقم " + arNum(t.number) : "")).join("، ");
+  }
+
   // سطر المصدر وتحته المرجع (تخريج الكتاب نفسه، حرفياً). full=false: المصدر بس
   function credit(x, full) {
+    if (Array.isArray(x.takhrij)) {
+      const g = x.grade ? x.grade + (x.gradeBy ? " (" + x.gradeBy + ")" : "") : "";
+      return {
+        source: [x.narrator && "الراوي: " + x.narrator, x.attribution, g].filter(Boolean).join(" · "),
+        reference: full ? [takhrijLine(x), x.edition ? "المصدر: " + x.edition : ""].filter(Boolean).join(" · ") : ""
+      };
+    }
     if (x.type === "hadith") {
       const n = narrator(x);
       const b = books(x);
