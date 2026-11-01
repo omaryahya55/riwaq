@@ -60,6 +60,7 @@ class QuickPanel(private val svc: AccessibilityService) {
         // تمر على الواجهة عشان رمز القفل (لو الأهل حاطين رمز)
         Item("إعدادات رواق (من الجوال)") { open(Intent(svc, MainActivity::class.java).setAction(MainActivity.ACTION_SETTINGS)) },
         Item("كل إعدادات التلفزيون") { open(Intent(Settings.ACTION_SETTINGS)) },
+        Item("معالج إعداد رواق") { open(Intent(svc, SetupActivity::class.java)) },
         // تمر على الواجهة عشان رمز القفل
         Item("الرجوع للواجهة الأصلية") { open(Intent(svc, MainActivity::class.java).setAction(MainActivity.ACTION_RESTORE)) }
     )

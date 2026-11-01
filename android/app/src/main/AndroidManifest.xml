@@ -80,6 +80,11 @@
             android:name=".RestoreActivity"
             android:exported="false" />
 
+        <!-- معالج الإعداد (أول تشغيل): الواجهة الرئيسية، والخدمة، والمنبّه الدقيق -->
+        <activity
+            android:name=".SetupActivity"
+            android:exported="false" />
+
         <!-- الإعدادات: باركود تصوّره بجوالك -->
         <activity
             android:name=".SettingsActivity"

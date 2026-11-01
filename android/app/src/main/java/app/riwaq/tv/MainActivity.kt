@@ -39,6 +39,7 @@ class MainActivity : Activity() {
         web.addJavascriptInterface(RiwaqBridge(this, web), "Riwaq")
         setContentView(web)
         load()
+        if (savedInstanceState == null && intent?.action == Intent.ACTION_MAIN) SetupActivity.maybeLaunch(this)
         if (intent?.action == ACTION_QUICK || intent?.action == Intent.ACTION_ALL_APPS) {
             // أول تشغيل: ننتظر الصفحة تحمّل، وبعدها نفتح اللوحة (إذا ما انفتحت)
             web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
