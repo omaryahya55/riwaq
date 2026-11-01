@@ -72,6 +72,9 @@
 .s-hadith, .s-prayers, .s-week { flex: none; }
 .s-hadith small { display: block; font-size: 18px; color: var(--ink-4); margin-top: 6px; }
 .s-hadith small.s-ref { font-size: 16px; line-height: 1.5; margin-top: 2px; }
+/* حكاية مكان: صورة صغيرة بمقاس ثابت جنب الكلام (بدون مقاس كانت تطلع بحجمها الأصلي وتغطي البطاقة) */
+.s-place-img { float: left; width: 200px; height: 136px; object-fit: cover; border-radius: 14px; margin: 12px 16px 4px 0; }
+.s-hadith.long .s-place-img, .s-hadith.xlong .s-place-img { width: 168px; height: 112px; }
 
 .s-prayers { display: grid; grid-template-columns: repeat(6, 1fr); padding: 14px; gap: 6px; }
 .s-pr { text-align: center; padding: 12px 4px 14px; border-radius: 18px; transition: background .5s; }

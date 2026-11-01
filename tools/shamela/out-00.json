@@ -1,0 +1,153 @@
+[
+ {
+  "sourceId": "58120",
+  "status": "found",
+  "text": "كُنْتُ غُلَامًا فِي حَجْرِ رَسُولِ اللهِ ﷺ وَكَانَتْ يَدِي تَطِيشُ فِي الصَّحْفَةِ، فَقَالَ لِي رَسُولُ اللهِ ﷺ: يَا غُلَامُ، سَمِّ اللهَ، وَكُلْ بِيَمِينِكَ، وَكُلْ مِمَّا يَلِيكَ. فَمَا زَالَتْ تِلْكَ طِعْمَتِي بَعْدُ.",
+  "narrator": "عمر بن أبي سلمة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8031,
+   "printed_page": "7/ 68",
+   "number": "5376"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 68",
+    "number": "5376"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 61",
+    "number": "2092"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1599",
+    "number": "2022"
+   }
+  ],
+  "verified": true,
+  "note": "Companion (عمر بن أبي سلمة) is named inside the isnad in Bukhari (سمع عمر بن أبي سلمة يقول: «كنت...»), so text starts at the first matn word after it. Bukhari's wording has no 'عن ... قال' clause. Only 5376 was located in Shamela; 2092 and Muslim 2022 copied from refs."
+ },
+ {
+  "sourceId": "5798",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ. قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ \"إِنَّ اللَّهَ ليرضى عن العبد أن يأكل الأكلة فيحمده عليها. أو يشرب الشربة فيحمده عليها\".",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6865,
+   "printed_page": "4/ 2095",
+   "number": "2734"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2095",
+    "number": "2734"
+   }
+  ],
+  "verified": true,
+  "note": "Shamela's Muslim text is partly undiacritized; copied as printed. A line break between 'قَالَ:' and 'قَالَ رَسُولُ' in the source was written as a space."
+ },
+ {
+  "sourceId": "58123",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ، قَالَ: «نَهَى رَسُولُ اللَّهِ ﷺ أَنْ يُتَنَفَّسَ فِي الْإِنَاءِ، أَوْ يُنْفَخَ فِيهِ»",
+  "narrator": "ابن عباس",
+  "attribution": "رواه أبو داود والترمذي وابن ماجه وأحمد والدارمي",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 5158,
+   "printed_page": "3/ 338",
+   "number": "3728"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "3/ 338",
+    "number": "3728"
+   },
+   {
+    "book": "سنن الترمذي"
+   },
+   {
+    "book": "سنن ابن ماجه"
+   }
+  ],
+  "verified": true,
+  "note": "Input refs have no page/number (only publisher text); Tirmidhi/Ibn Majah entries listed by name only. Grade printed in the page footnote is just «صحيح» with no name; the edition's footnote grades are Albani's per INSTRUCTIONS, so gradeBy = الألباني (inferred from the edition, not printed on the page)."
+ },
+ {
+  "sourceId": "4209",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ قَالَتْ: كَانَ النَّبِيُّ ﷺ يَأْكُلُ طَعَامًا فِي سِتَّةٍ مِنْ أَصْحَابِهِ، فَجَاءَ أَعْرَابِيٌّ فَأَكَلَهُ بِلُقْمَتَيْنِ، فَقَالَ رَسُولُ اللَّهِ ﷺ: «أَمَا إِنَّهُ لَوْ سَمَّى لَكَفَاكُمْ»",
+  "narrator": "عائشة",
+  "attribution": "رواه الترمذي وابن ماجه وأحمد",
+  "grade": "حسن صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 3223,
+   "printed_page": "4/ 288",
+   "number": "1858"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "4/ 288",
+    "number": "1858"
+   },
+   {
+    "book": "سنن ابن ماجه"
+   },
+   {
+    "book": "مسند أحمد"
+   }
+  ],
+  "verified": true,
+  "note": "This is a second narration printed right after Tirmidhi 1858 introduced by «وبهذا الإسناد عن عائشة» (same isnad as 1858), so it has no number of its own in this edition; number 1858 is the preceding hadith's (page 3222) - flag for caller. Tirmidhi's own verdict printed: «هذا حديث حسن صحيح». No Albani grade is printed on page 3223 (the «صحيح» footnote is on 1858, page 3222). Input grade was صحيح. Input refs have no page/number."
+ },
+ {
+  "sourceId": "65431",
+  "status": "found",
+  "text": "أَنَّ عَبْدَ اللهِ بْنَ مَسْعُودٍ أَتَى أَبَا مُوسَى الْأَشْعَرِيَّ فِي مَنْزِلِهِ، فَحَضَرَتِ الصَّلَاةُ، فَقَالَ أَبُو مُوسَى: تَقَدَّمْ يَا أَبَا عَبْدِ الرَّحْمَنِ، فَإِنَّكَ أَقْدَمُ سِنًّا وَأَعْلَمُ. قَالَ: لَا، بَلْ تَقَدَّمْ أَنْتَ، فَإِنَّمَا أَتَيْنَاكَ فِي مَنْزِلِكَ وَمَسْجِدِكَ، فَأَنْتَ أَحَقُّ. قَالَ: فَتَقَدَّمَ أَبُو مُوسَى، فَخَلَعَ نَعْلَيْهِ، فَلَمَّا سَلَّمَ قَالَ: مَا أَرَدْتَ إِلَى خَلْعِهِمَا؟ أَبِالْوَادِي الْمُقَدَّسِ أَنْتَ؟! لَقَدْ رَأَيْتُ رَسُولَ اللهِ ﷺ يُصَلِّي فِي الْخُفَّيْنِ وَالنَّعْلَيْنِ",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "رواه أحمد",
+  "grade": "صحيح",
+  "gradeBy": "محققو المسند",
+  "primary": {
+   "book": "مسند أحمد",
+   "book_id": 25794,
+   "page_id": 3318,
+   "printed_page": "7/ 405",
+   "number": "4397"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد",
+    "printed_page": "7/ 404",
+    "number": "4397"
+   },
+   {
+    "book": "نخب الأفكار في تنقيح مباني الأخبار في شرح معاني الآثار",
+    "printed_page": "7/ 444"
+   }
+  ],
+  "verified": true,
+  "note": "Hadith 4397 starts on printed page 7/404 (page_id 3317, isnad only, ends «عن») and the matn is on 7/405 (page_id 3318): refs say 404, matn is on 405; primary.printed_page set to the page holding the text, takhrij keeps the ref's 404. Text begins mid-sentence in the source («...فهو هذا الحديث: أَنَّ عبد الله...»), preceded by Abu Ishaq's remark about Alqama, which is dropped. Footnote marker (١) and final period removed. Footnote grade: «صحيح» (editors' own footnote, with a note on Alqama/Abu Ishaq's samaa), so gradeBy = محققو المسند."
+ }
+]

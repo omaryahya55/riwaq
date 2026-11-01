@@ -1,0 +1,892 @@
+[
+ {
+  "sourceId": "65491",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللهِ ﷺ: «إِذَا دَخَلَ رَمَضَانُ فُتِّحَتْ أَبْوَابُ الْجَنَّةِ وَغُلِّقَتْ أَبْوَابُ جَهَنَّمَ وَسُلْسِلَتِ الشَّيَاطِينُ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5127,
+   "printed_page": "4/ 123",
+   "number": "3277"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 123",
+    "number": "3277"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 25",
+    "number": "1899"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 758",
+    "number": "1079"
+   }
+  ],
+  "verified": true,
+  "note": "Text is Bukhari 3277 (closest to input wording). Starts after the isnad because the companion is the speaker there (سمع أبا هريرة يقول:). The input's side riwayat (Bukhari «أبواب السماء» = 1899 wording; Muslim «أبواب الرحمة») are not in this text; Muslim 1079 in Shamela reads «أبواب الجنة… وصفدت»."
+ },
+ {
+  "sourceId": "65524",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ أُمِّ الْمُؤْمِنِينَ. قَالَتْ: دَخَلَ عَلَيَّ النَّبِيُّ ﷺ ذَاتَ يَوْمٍ فَقَالَ \"هَلْ عِنْدَكُمْ شَيْءٌ؟ \" فَقُلْنَا: لَا. قَالَ \"فَإِنِّي إِذَنْ صَائِمٌ\" ثُمَّ أَتَانَا يَوْمًا آخَرَ فَقُلْنَا يَا رَسُولَ اللَّهِ! أُهْدِيَ لَنَا حَيْسٌ. فَقَالَ\" أَرِينِيهِ. فَلَقَدْ أَصْبَحْتُ صائما\" فأكل.",
+  "narrator": "عائشة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2639,
+   "printed_page": "2/ 809",
+   "number": "1154"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 809",
+    "number": "1154"
+   }
+  ],
+  "verified": true,
+  "note": "Printed quote marks and spacing copied as printed (including the odd spacing around the second quote)."
+ },
+ {
+  "sourceId": "4197",
+  "status": "found",
+  "text": "عَنْ أَبِي أُمَامَةَ البَاهِلِيِّ، عَنِ النَّبِيِّ ﷺ قَالَ: «مَنْ صَامَ يَوْمًا فِي سَبِيلِ اللَّهِ جَعَلَ اللَّهُ بَيْنَهُ وَبَيْنَ النَّارِ خَنْدَقًا كَمَا بَيْنَ السَّمَاءِ وَالأَرْضِ»",
+  "narrator": "أبو أمامة الباهلي",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 2824,
+   "printed_page": "4/ 167",
+   "number": "1624"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "4/ 167",
+    "number": "1624"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the bare footnote printed under the hadith in this edition (appended Albani grading): «حسن صحيح». Tirmidhi's own comment on the page is «هذا حديث غريب من حديث أبي أمامة». Input grade was صحيح."
+ },
+ {
+  "sourceId": "10107",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁؛ إن رسول الله ﷺ قَالَ: \"إِذَا جَاءَ رَمَضَانُ فُتِّحَتْ أَبْوَابُ الْجَنَّةِ، وَغُلِّقَتْ أَبْوَابُ النَّارِ، وَصُفِّدَتِ الشَّيَاطِينُ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2427,
+   "printed_page": "2/ 758",
+   "number": "1079"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 758",
+    "number": "1079"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 25",
+    "number": "1899"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording («جاء رمضان… النار… صفدت») matches Muslim 1079, not Bukhari 1899 (which reads «دخل شهر رمضان… أبواب السماء… جهنم… سلسلت»), so Muslim is primary."
+ },
+ {
+  "sourceId": "4449",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ قَالَ: سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ: «لَا يَصُومَنَّ أَحَدُكُمْ يَوْمَ الْجُمُعَةِ إِلَّا يَوْمًا قَبْلَهُ أَوْ بَعْدَهُ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3171,
+   "printed_page": "3/ 42",
+   "number": "1985"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 42",
+    "number": "1985"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 801",
+    "number": "1144"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording is closest («لا يصومن»). Muslim 1144 (2/ 801) reads «لَا يَصُمْ أَحَدُكُمْ يَوْمَ الْجُمُعَةِ. إِلَّا أَنْ يَصُومَ قَبْلَهُ أَوْ يَصُومَ بعده». Input refs had no volume/page; located by search."
+ },
+ {
+  "sourceId": "4538",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ قَالَ: «أَوْصَانِي خَلِيلِي ﷺ بِثَلَاثٍ: صِيَامِ ثَلَاثَةِ أَيَّامٍ مِنْ كُلِّ شَهْرٍ، وَرَكْعَتَيِ الضُّحَى، وَأَنْ أُوتِرَ قَبْلَ أَنْ أَنَامَ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3164,
+   "printed_page": "3/ 41",
+   "number": "1981"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 41",
+    "number": "1981"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 499",
+    "number": "721"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "6213",
+  "status": "found",
+  "text": "لَمْ يَكُنِ النَّبِيُّ ﷺ يَصُومُ شَهْرًا أَكْثَرَ مِنْ شَعْبَانَ، فَإِنَّهُ كَانَ يَصُومُ شَعْبَانَ كُلَّهُ",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3145,
+   "printed_page": "3/ 38",
+   "number": "1970"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 38",
+    "number": "1970"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 811",
+    "number": "1156"
+   }
+  ],
+  "verified": true,
+  "note": "Input had no refs. Text is Bukhari 1970, cut after «كُلَّهُ» (the printed text continues «وَكَانَ يَقُولُ: خُذُوا مِنَ الْعَمَلِ…»); starts after the opening « because the companion is the speaker (أن عائشة حدثته قالت). Page marker ⦗٣٩⦘ removed from inside (so verify_quote says partial only because of that marker). The input's second riwaya «كان يصوم شعبان إلا قليلا» is Muslim 1156 (2/ 811, page_id 2646: «كَانَ يَصُومُ شَعْبَانَ كُلَّهُ. كَانَ يَصُومُ شَعْبَانَ إِلَّا قَلِيلًا»), not in Bukhari, so not included in the text."
+ },
+ {
+  "sourceId": "6217",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ بْنِ عَبَّاسٍ ﵄ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: لَئِنْ بَقِيتُ إِلَى قَابِلٍ لَأَصُومَنَّ التَّاسِعَ.",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2595,
+   "printed_page": "2/ 798",
+   "number": "1134"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 798",
+    "number": "1134"
+   }
+  ],
+  "verified": true,
+  "note": "In Shamela the isnad shows a doubt just before the companion: «(لَعَلَّهُ قَالَ: عَنْ عَبْدِ اللَّهِ بْنِ عَبَّاسٍ…»; text starts at «عَنْ عَبْدِ اللَّهِ بْنِ عَبَّاسٍ». Cut before «وَفِي رِوَايَةِ أَبِي بَكْرٍ…». No refs in input."
+ },
+ {
+  "sourceId": "10121",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ ﵄ قَالَ: «قَدِمَ النَّبِيُّ ﷺ الْمَدِينَةَ، فَرَأَى الْيَهُودَ تَصُومُ يَوْمَ عَاشُورَاءَ، فَقَالَ: مَا هَذَا، قَالُوا: هَذَا يَوْمٌ صَالِحٌ، هَذَا يَوْمُ نَجَّى اللهُ بَنِي إِسْرَائِيلَ مِنْ عَدُوِّهِمْ، فَصَامَهُ مُوسَى. قَالَ: فَأَنَا أَحَقُّ بِمُوسَى مِنْكُمْ، فَصَامَهُ وَأَمَرَ بِصِيَامِهِ.»",
+  "narrator": "ابن عباس",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3194,
+   "printed_page": "3/ 44",
+   "number": "2004"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 44",
+    "number": "2004"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 796",
+    "number": "1130"
+   }
+  ],
+  "verified": true,
+  "note": "Input text is a one-line summary («صام يوم عاشوراء وأمر بصيامه»); no Bukhari/Muslim wording matches it exactly. Used the Ibn Abbas Ashura hadith in Bukhari 2004 (same incident, ends «فصامه وأمر بصيامه»). Muslim 1130 (2/ 796, Ibn Abbas) listed from the sibling item's refs. Flag for review: wording differs from the input."
+ },
+ {
+  "sourceId": "65523",
+  "status": "found",
+  "text": "عَنْ أَبِي أَيُّوبَ الْأَنْصَارِيِّ ﵁؛ أنه حَدَّثَهُ؛ أَنَّ رَسُولَ اللَّهِ ﷺ قال \"من صام رمضان. ثم أتبعه ستا من شوال. كان كصيام الدهر\".",
+  "narrator": "أبو أيوب الأنصاري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2682,
+   "printed_page": "2/ 822",
+   "number": "1164"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 822",
+    "number": "1164"
+   },
+   {
+    "book": "السنن الكبرى للنسائي",
+    "printed_page": "3/ 239",
+    "number": "2873"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "2/ 611",
+    "number": "1715"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "66404",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ ﵄ «أَنَّ النَّبِيَّ ﷺ لَمَّا قَدِمَ الْمَدِينَةَ وَجَدَهُمْ يَصُومُونَ يَوْمًا يَعْنِي عَاشُورَاءَ فَقَالُوا هَذَا يَوْمٌ عَظِيمٌ وَهُوَ يَوْمٌ نَجَّى اللهُ فِيهِ مُوسَى وَأَغْرَقَ آلَ فِرْعَوْنَ فَصَامَ مُوسَى شُكْرًا لِلهِ فَقَالَ أَنَا أَوْلَى بِمُوسَى مِنْهُمْ فَصَامَهُ وَأَمَرَ بِصِيَامِهِ.»",
+  "narrator": "ابن عباس",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5272,
+   "printed_page": "4/ 153",
+   "number": "3397"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 153",
+    "number": "3397"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 796",
+    "number": "1130"
+   }
+  ],
+  "verified": true,
+  "note": "Shamela prints this Bukhari text without punctuation inside the quote (as copied)."
+ },
+ {
+  "sourceId": "3769",
+  "status": "found",
+  "text": "كَانَ رَسُولُ اللهِ ﷺ: يُفْطِرُ مِنَ الشَّهْرِ حَتَّى نَظُنَّ أَنْ لَا يَصُومَُ مِنْهُ، وَيَصُومُ حَتَّى نَظُنَّ أَنْ لَا يُفْطِرَُ مِنْهُ شَيْئًا، وَكَانَ لَا تَشَاءُ تَرَاهُ مِنَ اللَّيْلِ مُصَلِّيًا إِلَّا رَأَيْتَهُ، وَلَا نَائِمًا إِلَّا رَأَيْتَهُ",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3148,
+   "printed_page": "3/ 39",
+   "number": "1972"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 39",
+    "number": "1972"
+   }
+  ],
+  "verified": true,
+  "note": "Input refs had no volume/page. Same hadith also appears at Bukhari 2/ 52 (tahajjud chapter, page_id 1850); the sawm-chapter one (1972) is used. Starts after «يَقُولُ:» since Anas is the speaker; the stray double diacritics in «يَصُومَُ» / «يُفْطِرَُ» are as printed in Shamela; outer quote marks omitted."
+ },
+ {
+  "sourceId": "4541",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو ﵄. قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: \"إِنَّ أَحَبَّ الصِّيَامِ إِلَى اللَّهِ صِيَامُ دَاوُدَ. وَأَحَبَّ الصَّلَاةِ إِلَى اللَّهِ صَلَاةُ دَاوُدَ ﵇. كَانَ يَنَامُ نِصْفَ اللَّيْلِ. وَيَقُومُ ثُلُثَهُ. وَيَنَامُ سُدُسَهُ. وَكَانَ يَصُومُ يَوْمًا وَيُفْطِرُ يَوْمًا\".",
+  "narrator": "عبد الله بن عمرو بن العاص",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2663,
+   "printed_page": "2/ 816",
+   "number": "1159"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 816",
+    "number": "1159"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 161",
+    "number": "3420"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording («إن أحب الصيام… وكان يصوم يوما ويفطر يوما» at the end) matches Muslim 1159; Bukhari 3420 has different order («كان يصوم يوما ويفطر يوما» right after the first clause). Input refs had no volume/page."
+ },
+ {
+  "sourceId": "6183",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ قَالَتْ: «كَانَ النَّبِيُّ ﷺ يَتَحَرَّى صَوْمَ الِاثْنَيْنِ وَالخَمِيسِ»",
+  "narrator": "عائشة",
+  "attribution": "رواه الترمذي والنسائي وابن ماجه وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 1296,
+   "printed_page": "3/ 112",
+   "number": "745"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "3/ 112",
+    "number": "745"
+   }
+  ],
+  "verified": true,
+  "note": "Grade «صحيح» is the bare footnote printed under the hadith in this edition (appended Albani grading). Tirmidhi's own comment: «حديث عائشة حديث حسن غريب من هذا الوجه». Input refs had no volume/page/numbers for Ibn Majah, so only the primary is listed."
+ },
+ {
+  "sourceId": "10111",
+  "status": "found",
+  "text": "مُعَاذَةُ الْعَدَوِيَّةُ؛ أَنَّهَا سَأَلَتْ عَائِشَةَ زَوْجَ النَّبِيِّ ﷺ: أَكَانَ رَسُولُ اللَّهِ ﷺ يَصُومُ مِنْ كُلِّ شَهْرٍ ثَلَاثَةَ أَيَّامٍ؟ قَالَتْ: نَعَمْ. فَقُلْتُ لَهَا: مِنْ أَيِّ أَيَّامِ الشَّهْرِ كَانَ يَصُومُ؟ قَالَتْ: لَمْ يَكُنْ يُبَالِي مِنْ أَيِّ أيام الشهر يصوم.",
+  "narrator": "معاذة العدوية",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2668,
+   "printed_page": "2/ 818",
+   "number": "1160"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 818",
+    "number": "1160"
+   }
+  ],
+  "verified": true,
+  "note": "Starts at the successor's name (the narration is hers about Aisha). Input refs had no volume/page."
+ },
+ {
+  "sourceId": "65517",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂ قَالَتْ: «كَانَ رَسُولُ اللهِ ﷺ يَصُومُ حَتَّى نَقُولَ لَا يُفْطِرُ، وَيُفْطِرُ حَتَّى نَقُولَ لَا يَصُومُ، فَمَا رَأَيْتُ رَسُولَ اللهِ ﷺ اسْتَكْمَلَ صِيَامَ شَهْرٍ إِلَّا رَمَضَانَ، وَمَا رَأَيْتُهُ أَكْثَرَ صِيَامًا مِنْهُ فِي شَعْبَانَ.»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3144,
+   "printed_page": "3/ 38",
+   "number": "1969"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 38",
+    "number": "1969"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 810",
+    "number": "1156"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65521",
+  "status": "found",
+  "text": "عَنْ جُوَيْرِيَةَ بِنْتِ الْحَارِثِ ﵂: «أَنَّ النَّبِيَّ ﷺ دَخَلَ عَلَيْهَا يَوْمَ الْجُمُعَةِ، وَهِيَ صَائِمَةٌ، فَقَالَ: أَصُمْتِ أَمْسِ، قَالَتْ: لَا، قَالَ: تُرِيدِينَ أَنْ تَصُومِينَ غَدًا، قَالَتْ: لَا، قَالَ: فَأَفْطِرِي»",
+  "narrator": "جويرية بنت الحارث",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3172,
+   "printed_page": "3/ 42",
+   "number": "1986"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 42",
+    "number": "1986"
+   }
+  ],
+  "verified": true,
+  "note": "Cut before the following «وَقَالَ حَمَّادُ بْنُ الْجَعْدِ…» comment."
+ },
+ {
+  "sourceId": "65522",
+  "status": "found",
+  "text": "حِينَ صَامَ رَسُولُ اللَّهِ ﷺ يَوْمَ عَاشُورَاءَ وَأَمَرَ بِصِيَامِهِ، قَالُوا: يَا رَسُولَ اللَّهِ! إِنَّهُ يَوْمٌ تُعَظِّمُهُ الْيَهُودُ وَالنَّصَارَى. فَقَالَ رسول الله ﷺ: \"فإذا كَانَ الْعَامُ الْمُقْبِلُ إِنْ شَاءَ اللَّهُ، صُمْنَا الْيَوْمَ التَّاسِعَ. قَالَ: فَلَمْ يَأْتِ الْعَامُ الْمُقْبِلُ، حَتَّى تُوُفِّيَ رَسُولُ اللَّهِ ﷺ.",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2594,
+   "printed_page": "2/ 797",
+   "number": "1134"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 797",
+    "number": "1134"
+   }
+  ],
+  "verified": true,
+  "note": "Starts after «سَمِعْتُ عَبْدَ اللَّهِ بْنَ عَبَّاسٍ ﵄ يَقُولُ:» (companion is the speaker). The printed quote marks are unbalanced in Shamela (opening quote after «فَقَالَ رسول الله ﷺ:» is never closed); copied as printed. A page marker ⦗٧٩٨⦘ sits in the isnad before the text, not inside it."
+ },
+ {
+  "sourceId": "65654",
+  "status": "found",
+  "text": "عَنْ أُمِّ الْفَضْلِ بِنْتِ الْحَارِثِ : «أَنَّ نَاسًا اخْتَلَفُوا عِنْدَهَا يَوْمَ عَرَفَةَ فِي صَوْمِ النَّبِيِّ ﷺ، فَقَالَ بَعْضُهُمْ: هُوَ صَائِمٌ، وَقَالَ بَعْضُهُمْ: لَيْسَ بِصَائِمٍ، فَأَرْسَلَتْ إِلَيْهِ بِقَدَحِ لَبَنٍ، وَهُوَ وَاقِفٌ عَلَى بَعِيرِهِ، فَشَرِبَهُ».",
+  "narrator": "أم الفضل بنت الحارث",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2663,
+   "printed_page": "2/ 162",
+   "number": "1661"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 162",
+    "number": "1661"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 791",
+    "number": "1123"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65954",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁، أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «لَا يَحِلُّ لِلْمَرْأَةِ أَنْ تَصُومَ وَزَوْجُهَا شَاهِدٌ إِلَّا بِإِذْنِهِ، وَلَا تَأْذَنَ فِي بَيْتِهِ إِلَّا بِإِذْنِهِ، وَمَا أَنْفَقَتْ مِنْ نَفَقَةٍ عَنْ غَيْرِ أَمْرِهِ فَإِنَّهُ يُؤَدَّى إِلَيْهِ شَطْرُهُ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 7753,
+   "printed_page": "7/ 30",
+   "number": "5195"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 30",
+    "number": "5195"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 711",
+    "number": "1026"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65503",
+  "status": "found",
+  "text": "عَنِ الرُّبَيِّعِ بِنْتِ مُعَوِّذٍ قَالَتْ: «أَرْسَلَ النَّبِيُّ ﷺ غَدَاةَ عَاشُورَاءَ إِلَى قُرَى الْأَنْصَارِ: مَنْ أَصْبَحَ مُفْطِرًا فَلْيُتِمَّ بَقِيَّةَ يَوْمِهِ، وَمَنْ أَصْبَحَ صَائِمًا فَلْيَصُمْ. قَالَتْ: فَكُنَّا نَصُومُهُ بَعْدُ، وَنُصَوِّمُ صِبْيَانَنَا، وَنَجْعَلُ لَهُمُ اللُّعْبَةَ مِنَ الْعِهْنِ، فَإِذَا بَكَى أَحَدُهُمْ عَلَى الطَّعَامِ أَعْطَيْنَاهُ ذَاكَ حَتَّى يَكُونَ عِنْدَ الْإِفْطَارِ.»",
+  "narrator": "الربيع بنت معوذ",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3130,
+   "printed_page": "3/ 37",
+   "number": "1960"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 37",
+    "number": "1960"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 798",
+    "number": "1136"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "4436",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ ﵁. قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: \"مَنْ صَامَ يَوْمًا فِي سَبِيلِ اللَّهِ، بَاعَدَ اللَّهُ وَجْهَهُ عَنِ النَّارِ سَبْعِينَ خَرِيفًا\".",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2637,
+   "printed_page": "2/ 808",
+   "number": "1153"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 808",
+    "number": "1153"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 26",
+    "number": "2840"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording («بَاعَدَ اللهُ وَجْهَهُ») matches Muslim 1153; Bukhari 2840 (4/ 26, page_id 4501) reads «بَعَّدَ اللهُ وَجْهَهُ» and has no «سَمِعْتُ رَسُولَ اللهِ…» opening, so Muslim is primary."
+ },
+ {
+  "sourceId": "3755",
+  "status": "found",
+  "text": "كَانَ رَسُولُ اللَّهِ ﷺ يَجْتَهِدُ فِي الْعَشْرِ الْأَوَاخِرِ، مَا لَا يَجْتَهِدُ فِي غَيْرِهِ.",
+  "narrator": "عائشة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2714,
+   "printed_page": "2/ 832",
+   "number": "1175"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 832",
+    "number": "1175"
+   }
+  ],
+  "verified": true,
+  "note": "Starts after «قَالَتْ عَائِشَةُ ﵂:» (Aisha is the speaker in the isnad)."
+ },
+ {
+  "sourceId": "65514",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ قَالَ: «كَانَ النَّبِيُّ ﷺ يَعْتَكِفُ فِي العَشْرِ الأَوَاخِرِ مِنْ رَمَضَانَ، فَلَمْ يَعْتَكِفْ عَامًا، فَلَمَّا كَانَ فِي العَامِ المُقْبِلِ اعْتَكَفَ عِشْرِينَ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه الترمذي",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 1390,
+   "printed_page": "3/ 157",
+   "number": "803"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "2/ 158",
+    "number": "803"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 51",
+    "number": "2044"
+   },
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "4/ 122",
+    "number": "2463"
+   },
+   {
+    "book": "السنن الكبرى للنسائي",
+    "printed_page": "3/ 380",
+    "number": "3330"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "2/ 651",
+    "number": "1770"
+   }
+  ],
+  "verified": true,
+  "note": "Grade «صحيح» is the bare footnote printed under the hadith in this edition (appended Albani grading). Tirmidhi's own comment on the page: «هذا حديث حسن صحيح غريب من حديث أنس بن مالك». The input ref page (2/ 158) is a different edition's numbering; in Shamela ت شاكر it is 3/ 157 (number 803 matches)."
+ },
+ {
+  "sourceId": "4540",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂: أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «تَحَرَّوْا لَيْلَةَ الْقَدْرِ فِي الْوِتْرِ، مِنَ الْعَشْرِ الْأَوَاخِرِ مِنْ رَمَضَانَ.»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3211,
+   "printed_page": "3/ 46",
+   "number": "2017"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 46",
+    "number": "2017"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 828",
+    "number": "1169"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "4545",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ ﵄: «أَنَّ رِجَالًا مِنْ أَصْحَابِ النَّبِيِّ ﷺ أُرُوا لَيْلَةَ الْقَدْرِ فِي الْمَنَامِ فِي السَّبْعِ الْأَوَاخِرِ، فَقَالَ رَسُولُ اللهِ ﷺ: أَرَى رُؤْيَاكُمْ قَدْ تَوَاطَأَتْ فِي السَّبْعِ الْأَوَاخِرِ، فَمَنْ كَانَ مُتَحَرِّيهَا فَلْيَتَحَرَّهَا فِي السَّبْعِ الْأَوَاخِرِ.»",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3208,
+   "printed_page": "3/ 46",
+   "number": "2015"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 46",
+    "number": "2015"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 822",
+    "number": "1165"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "4944",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂. قَالَتْ: كَانَ رسول الله ﷺ، إذا دَخَلَ الْعَشْرُ، أَحْيَا اللَّيْلَ وَأَيْقَظَ أَهْلَهُ وَجَدَّ وشد المئزر.",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2713,
+   "printed_page": "2/ 832",
+   "number": "1174"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 832",
+    "number": "1174"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 47",
+    "number": "2024"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording («أحيا الليل وأيقظ أهله وجدّ وشدّ المئزر») matches Muslim 1174. Bukhari 2024 (3/ 47) was not opened; it is listed in takhrij from the input refs only. Note Shamela prints «رسول الله ﷺ، إذا دَخَلَ…» partly without diacritics, as copied."
+ },
+ {
+  "sourceId": "6255",
+  "status": "found",
+  "text": "عَنْ ابْنِ عَبَّاسٍ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «مَا مِنْ أَيَّامٍ الْعَمَلُ الصَّالِحُ فِيهَا أَحَبُّ إِلَى اللَّهِ مِنْ هَذِهِ الْأَيَّامِ» يَعْنِي أَيَّامَ الْعَشْرِ، قَالُوا: يَا رَسُولَ اللَّهِ، وَلَا الْجِهَادُ فِي سَبِيلِ اللَّهِ؟ قَالَ: «وَلَا الْجِهَادُ فِي سَبِيلِ اللَّهِ، إِلَّا رَجُلٌ خَرَجَ بِنَفْسِهِ وَمَالِهِ، فَلَمْ يَرْجِعْ مِنْ ذَلِكَ بِشَيْءٍ»",
+  "narrator": "ابن عباس",
+  "attribution": "رواه البخاري وأبو داود، واللفظ له",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 3279,
+   "printed_page": "2/ 325",
+   "number": "2438"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "4/ 102",
+    "number": "2438"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 20",
+    "number": "969"
+   }
+  ],
+  "verified": true,
+  "note": "Wording is Abu Dawud's (as the attribution says «واللفظ له»), so he is primary. Grade «صحيح» is the bare footnote printed under the hadith in this edition (appended Albani grading). The input ref page for Abu Dawud (4/ 102) is a different edition's numbering; in Shamela ت محيي الدين it is 2/ 325 (number 2438 matches). Bukhari 969 was not opened (takhrij from input refs)."
+ },
+ {
+  "sourceId": "65495",
+  "status": "found",
+  "text": "عَنِ النَّبِيِّ ﷺ قَالَ: «شَهْرَانِ لَا يَنْقُصَانِ، شَهْرَا عِيدٍ: رَمَضَانُ وَذُو الحَجَّةِ.»",
+  "narrator": "أبو بكرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3052,
+   "printed_page": "3/ 27",
+   "number": "1912"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 27",
+    "number": "1912"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 766",
+    "number": "1089"
+   }
+  ],
+  "verified": true,
+  "note": "Abu Bakra's name is not in the matn itself (Shamela isnad says «عَنْ أَبِيهِ ﵁» = son of Abu Bakra), so the text starts at «عَنِ النَّبِيِّ ﷺ قَالَ:». Narrator name comes from the input/isnad. Input used straight quotes and a different wording («شهرا عيد: رمضان وذو الحجة» is the same); Bukhari wording copied."
+ },
+ {
+  "sourceId": "65752",
+  "status": "found",
+  "text": "قال رسول الله ﷺ: \"أَضَلَّ اللَّهُ عَنِ الْجُمُعَةِ مَنْ كَانَ قَبْلَنَا. فَكَانَ لِلْيَهُودِ يَوْمُ السَّبْتِ. وَكَانَ لِلنَّصَارَى يَوْمُ الْأَحَدِ. فَجَاءَ اللَّهُ بِنَا. فَهَدَانَا اللَّهُ لِيَوْمِ الْجُمُعَةِ. فَجَعَلَ الْجُمُعَةَ وَالسَّبْتَ وَالْأَحَدَ. وَكَذَلِكَ هُمْ تَبَعٌ لَنَا يَوْمَ الْقِيَامَةِ. نَحْنُ الْآخِرُونَ مِنْ أَهْلِ الدُّنْيَا وَالْأَوَّلُونَ يَوْمَ الْقِيَامَةِ الْمَقْضِيُّ لَهُمْ قَبْلَ الْخَلَائِقِ\".",
+  "narrator": "أبو هريرة وحذيفة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1910,
+   "printed_page": "2/ 586",
+   "number": "856"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 586",
+    "number": "856"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "5/ 76",
+    "number": "3001"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "5/ 349",
+    "number": "4287-4288"
+   },
+   {
+    "book": "مسند أحمد",
+    "printed_page": "33/ 231",
+    "number": "20029"
+   }
+  ],
+  "verified": true,
+  "note": "Two companions (Abu Hurayra via Abu Hazim; Hudhayfa via Rib'i bin Hirash): text starts after «قَالَا:». Cut before «وَفِي رِوَايَةِ وَاصِلٍ: الْمَقْضِيُّ بَيْنَهُمْ». Takhrij entries other than Muslim are copied from the input refs without opening them."
+ }
+]

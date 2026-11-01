@@ -1,0 +1,832 @@
+[
+ {
+  "sourceId": "66030",
+  "status": "found",
+  "text": "عَنْ جَدَّةٍ لَهُ يُقَالُ لَهَا كَبْشَةُ الْأَنْصَارِيَّةُ، أَنَّ رَسُولَ اللَّهِ ﷺ: «دَخَلَ عَلَيْهَا، وَعِنْدَهَا قِرْبَةٌ مُعَلَّقَةٌ، فَشَرِبَ مِنْهَا، وَهُوَ قَائِمٌ، فَقَطَعَتْ فَمَ الْقِرْبَةِ تَبْتَغِي بَرَكَةَ، مَوْضِعِ فِي رَسُولِ اللَّهِ ﷺ»",
+  "narrator": "كبشة الأنصارية",
+  "attribution": "رواه الترمذي وابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن ابن ماجه",
+   "book_id": 1198,
+   "page_id": 4725,
+   "printed_page": "2/ 1132",
+   "number": "3423"
+  },
+  "takhrij": [
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "4/ 490",
+    "number": "3423"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "3/ 460",
+    "number": "1892"
+   }
+  ],
+  "verified": true,
+  "note": "Ibn Majah wording used (closest to input; Tirmidhi's wording is first-person 'عن جدته كبشة قالت: دخل علي'). Text starts at «عَنْ جَدَّةٍ لَهُ…» because the companion is named inside the isnad clause. Grade 'صحيح' is the footnote printed on the Shamela page (Albani edition). Shamela page 2/ 1132 differs from the ref's 4/ 490 (different edition)."
+ },
+ {
+  "sourceId": "66031",
+  "status": "found",
+  "text": "عن جابر ابن عَبْدِ اللَّهِ. قَالَ: كُنَّا مَعَ رَسُولِ اللَّهِ ﷺ فَاسْتَسْقَى. فَقَالَ رَجُلٌ: يا رسول الله! ألا نسقيك النبيذ؟ فَقَالَ (بَلَى) قَالَ فَخَرَجَ الرَّجُلُ يَسْعَى. فَجَاءَ بِقَدَحٍ فِيهِ نَبِيذٌ. فَقَالَ رَسُولُ اللَّهِ ﷺ (ألا خمرته ولو تعرض عَلَيْهِ عُودًا!) قَالَ فَشَرِبَ.",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5180,
+   "printed_page": "3/ 1593",
+   "number": "2011"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 108",
+    "number": "5606"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1593",
+    "number": "2011"
+   }
+  ],
+  "verified": true,
+  "note": "Wording is Muslim's (the nabidh episode). Bukhari 5606 (7/ 108) is Jabir's milk/Abu Humayd narration with different wording, so Muslim is primary. Print has 'جابر ابن عَبْدِ اللَّهِ' as shown."
+ },
+ {
+  "sourceId": "66032",
+  "status": "found",
+  "text": "عَنْ جَابِرُ بْنُ عَبْدِ اللَّهِ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ (غَطُّوا الْإِنَاءَ. وَأَوْكُوا السِّقَاءَ. فَإِنَّ فِي السَّنَةِ لَيْلَةً يَنْزِلُ فِيهَا وَبَاءٌ. لَا يَمُرُّ بِإِنَاءٍ لَيْسَ عَلَيْهِ غِطَاءٌ، أَوْ سِقَاءٍ لَيْسَ عَلَيْهِ وِكَاءٌ، إِلَّا نزل فيه من ذلك الوباء).",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5191,
+   "printed_page": "3/ 1596",
+   "number": "2014"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1596",
+    "number": "2014"
+   }
+  ],
+  "verified": true,
+  "note": "Copied exactly as printed in Shamela, including the print's case endings 'جَابِرُ بْنُ'."
+ },
+ {
+  "sourceId": "58261",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ. قَالَ: كَانَ رَسُولُ اللَّهِ ﷺ يُنْبَذُ لَهُ الزَّبِيبُ فِي السِّقَاءِ. فَيَشْرَبُهُ يَوْمَهُ وَالْغَدَ وَبَعْدَ الْغَدِ. فَإِذَا كَانَ مَسَاءُ الثَّالِثَةِ شَرِبَهُ وَسَقَاهُ. فَإِنْ فَضَلَ شيء أهراقه.",
+  "narrator": "ابن عباس",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5165,
+   "printed_page": "3/ 1589",
+   "number": "2004"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1589",
+    "number": "2004"
+   }
+  ],
+  "verified": true,
+  "note": "Input refs gave no volume/page/number; located by wording."
+ },
+ {
+  "sourceId": "5356",
+  "status": "found",
+  "text": "أَنَّ رسول الله ﷺ قال (إِذَا أَكَلَ أَحَدُكُمْ فَلْيَأْكُلْ بِيَمِينِهِ. وَإِذَا شَرِبَ فَلْيَشْرَبْ بِيَمِينِهِ. فَإِنَّ الشَّيْطَانَ يَأْكُلُ بِشِمَالِهِ وَيَشْرَبُ بشماله).",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5201,
+   "printed_page": "3/ 1598",
+   "number": "2020"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1598",
+    "number": "2020"
+   }
+  ],
+  "verified": true,
+  "note": "Isnad in print: «عَنْ جَدِّهِ ابْنِ عُمَرَ؛ أَنَّ رسول الله…». Text starts at «أَنَّ» (not at «عَنْ جَدِّهِ») so it reads cleanly; the narrator is Abdullah ibn Umar. Input refs gave no page/number; located by wording."
+ },
+ {
+  "sourceId": "3013",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ : أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «إِذَا سَمِعْتُمُ النِّدَاءَ، فَقُولُوا مِثْلَ مَا يَقُولُ الْمُؤَذِّنُ».",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1012,
+   "printed_page": "1/ 126",
+   "number": "611"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 126",
+    "number": "611"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 288",
+    "number": "383"
+   }
+  ],
+  "verified": true,
+  "note": "Print has a space before the colon (الْخُدْرِيِّ :); the double space after it was collapsed to one."
+ },
+ {
+  "sourceId": "3066",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ، عَنِ النَّبِيِّ ﷺ قَالَ: «إِذَا أُقِيمَتِ الصَّلَاةُ وَحَضَرَ الْعَشَاءُ فَابْدَؤُوا بِالْعَشَاءِ.»",
+  "narrator": "عائشة",
+  "attribution": "حديث عائشة رضي الله عنها: متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8175,
+   "printed_page": "7/ 83",
+   "number": "5465"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 83",
+    "number": "5465"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "Input grade was the typo 'صحيحة'. The input text merges Aisha, Ibn Umar and Anas; the Aisha narration (Bukhari 5465, the one named in attribution) is used. Input refs had no numbers; Muslim page/number not located (not required)."
+ },
+ {
+  "sourceId": "6272",
+  "status": "found",
+  "text": "عَنْ سَعْدِ بْنِ أَبِي وَقَّاصٍ، عَنِ رَسُولِ اللَّهِ ﷺ؛ أَنَّهُ قَالَ: مَنْ قَالَ حِينَ يَسْمَعُ الْمُؤَذِّنَ: أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ. وَأَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. رَضِيتُ بِاللَّهِ رَبًّا وَبِمُحَمَّدٍ رَسُولًا وَبِالإِسْلَامِ دِينًا. غُفِرَ لَهُ ذَنْبُهُ",
+  "narrator": "سعد بن أبي وقاص",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 797,
+   "printed_page": "1/ 290",
+   "number": "386"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 290",
+    "number": "386"
+   }
+  ],
+  "verified": true,
+  "note": "Copied as printed, including 'عَنِ رَسُولِ اللَّهِ' (print slip). Ends before the stray closing quote and before Ibn Rumh's remark."
+ },
+ {
+  "sourceId": "10635",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ عَبْدِ اللهِ : أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «مَنْ قَالَ حِينَ يَسْمَعُ النِّدَاءَ: اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلَاةِ الْقَائِمَةِ، آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ، حَلَّتْ لَهُ شَفَاعَتِي يَوْمَ الْقِيَامَةِ».",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1016,
+   "printed_page": "1/ 126",
+   "number": "614"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 126",
+    "number": "614"
+   }
+  ],
+  "verified": true,
+  "note": "Print has a space before the colon (اللهِ :); the double space after it was collapsed to one."
+ },
+ {
+  "sourceId": "65095",
+  "status": "found",
+  "text": "لَيْتَنِي صَلَّيْتُ فَاسْتَرَحْتُ، فَكَأَنَّهُمْ عَابُوا عَلَيْهِ ذَلِكَ، فَقَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «يَا بِلَالُ أَقِمِ الصَّلَاةَ أَرِحْنَا بِهَا»",
+  "narrator": "رجل من الصحابة",
+  "attribution": "رواه أبو داود",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 6821,
+   "printed_page": "4/ 296",
+   "number": "4985"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 338",
+    "number": "4985"
+   }
+  ],
+  "verified": true,
+  "note": "In Shamela the isnad reads «عَنْ سَالِمِ بْنِ أَبِي الْجَعْدِ، قَالَ: قَالَ رَجُلٌ: قَالَ مِسْعَرٌ أُرَاهُ مِنْ خُزَاعَةَ: …». The speaker is an unnamed man (Mis'ar guesses Khuza'a), not Salim, so the text starts at the man's words; narrator field is a descriptor, not a name. Grade 'صحيح' is the footnote printed on the Shamela page (Albani edition). Shamela page 4/ 296 differs from the ref's 7/ 338."
+ },
+ {
+  "sourceId": "3015",
+  "status": "found",
+  "text": "سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: \"إِنَّ بِلَالًا يُؤَذِّنُ بِلَيْلٍ. فَكُلُوا وَاشْرَبُوا حَتَّى تَسْمَعُوا أَذَانَ ابْنِ أُمِّ مَكْتُومٍ\".",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2469,
+   "printed_page": "2/ 768",
+   "number": "1092"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 768",
+    "number": "1092"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 127",
+    "number": "617"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim's wording is the closest (Bukhari 617 ends «حَتَّى يُنَادِيَ ابْنُ أُمِّ مَكْتُومٍ»; the 'تسمعوا أذان' wording is in Muslim and Bukhari 2656). Text starts after «قَالَ:» because the print there reads «عَنْ عَبْدِ اللَّهِ بْنِ عمر ﵁.» with a glyph that would not render well. Printed quotes kept. Input refs had no numbers."
+ },
+ {
+  "sourceId": "3307",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ؛ قَالَ: أُمِرَ بِلَالٌ أَنْ يَشْفَعَ الأَذَانَ وَيُوتِرَ الإِقَامَةَ.",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 784,
+   "printed_page": "1/ 286",
+   "number": "378"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 286",
+    "number": "378"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 125",
+    "number": "607"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim's wording («وَيُوتِرَ») matches the input; Bukhari reads «وَأَنْ يُوتِرَ». Text stops before Yahya's addition. Input refs had no numbers."
+ },
+ {
+  "sourceId": "5731",
+  "status": "found",
+  "text": "عَنْ أَبِي الشَّعْثَاءِ؛ قَالَ: كُنَّا قُعُودًا فِي الْمَسْجِدِ مَعَ أَبِي هُرَيْرَةَ. فَأَذَّنَ الْمُؤَذِّنُ. فَقَامَ رَجُلٌ مِنَ الْمَسْجِدِ. يَمْشِي. فَأَتْبَعَهُ أَبُو هُرَيْرَةَ بَصَرَهُ حَتَّى خَرَجَ مِنَ الْمَسْجِدِ. فَقَالَ أَبُو هُرَيْرَةَ: أَمَّا هَذَا فَقَدْ عَصَى أَبَا الْقَاسِمِ ﷺ.",
+  "narrator": "أبو الشعثاء",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1429,
+   "printed_page": "1/ 453",
+   "number": "655"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 453",
+    "number": "655"
+   }
+  ],
+  "verified": true,
+  "note": "The page marker ⦗٤٥٤⦘ between «الْمَسْجِدِ.» and «يَمْشِي.» was removed; verify_quote reports 'partial' only because of that marker, everything else is verbatim. Abu al-Sha'tha is the reporter; the companion quoted is Abu Hurayra. Input refs had no numbers."
+ },
+ {
+  "sourceId": "5771",
+  "status": "found",
+  "text": "أَنَّ أَبَا سَعِيدٍ الْخُدْرِيَّ قَالَ لَهُ: «إِنِّي أَرَاكَ تُحِبُّ الْغَنَمَ وَالْبَادِيَةَ، فَإِذَا كُنْتَ فِي غَنَمِكَ، أَوْ بَادِيَتِكَ، فَأَذَّنْتَ بِالصَّلَاةِ فَارْفَعْ صَوْتَكَ بِالنِّدَاءِ، فَإِنَّهُ: لَا يَسْمَعُ مَدَى صَوْتِ الْمُؤَذِّنِ، جِنٌّ وَلَا إِنْسٌ وَلَا شَيْءٌ، إِلَّا شَهِدَ لَهُ يَوْمَ الْقِيَامَةِ.» قَالَ أَبُو سَعِيدٍ سَمِعْتُهُ مِنْ رَسُولِ اللهِ ﷺ.",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1008,
+   "printed_page": "1/ 125",
+   "number": "609"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 125",
+    "number": "609"
+   }
+  ],
+  "verified": true,
+  "note": "Starts at «أَنَّ» (successor narrating about the companion). Input refs had no numbers."
+ },
+ {
+  "sourceId": "10109",
+  "status": "found",
+  "text": "عن أبي هريرة؛ أن النبي ﷺ قَالَ: \"إِذَا نُودِيَ لِلصَّلَاةِ أَدْبَرَ الشَّيْطَانُ لَهُ ضُرَاطٌ حَتَّى لَا يَسْمَعَ التَّأْذِينَ. فَإِذَا قُضِيَ التَّأْذِينُ أَقْبَلَ. حَتَّى إِذَا ثُوِّبَ بِالصَّلَاةِ أَدْبَرَ. حَتَّى إِذَا قُضِيَ التَّثْوِيبُ أَقْبَلَ. حَتَّى يَخْطِرَ بَيْنَ الْمَرْءِ وَنَفْسِهِ. يَقُولُ لَهُ: اذْكُرْ كَذَا وَاذْكُرْ كَذَا لِمَا لَمْ يَكُنْ يَذْكُرُ مِنْ قَبْلُ. حَتَّى يَظَلَّ الرَّجُلُ مَا يَدْرِي كم صلى\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 805,
+   "printed_page": "1/ 291",
+   "number": "389"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 291",
+    "number": "389"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 125",
+    "number": "608"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 389 is the closest wording to the input (Bukhari 608 reads «قَضَى النِّدَاءَ … لَا يَدْرِي»; Bukhari 1231 differs more). Page marker ⦗٢٩٢⦘ (after «حَتَّى يَخْطِرَ») removed; verified in two halves, both verbatim. No listed book matches the input exactly («لما لم يذكر من قبل»). Input refs had no numbers."
+ },
+ {
+  "sourceId": "10115",
+  "status": "found",
+  "text": "سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ \"الْمُؤَذِّنُونَ أَطْوَلُ النَّاسِ أَعْنَاقًا يَوْمَ القيامة\".",
+  "narrator": "معاوية بن أبي سفيان",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 798,
+   "printed_page": "1/ 290",
+   "number": "387"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 290",
+    "number": "387"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts right after «فَقَالَ مُعَاوِيَةُ:» (companion is the speaker in the isnad)."
+ },
+ {
+  "sourceId": "10616",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، قَالَ: \" مِنَ السُّنَّةِ إِذَا قَالَ الْمُؤَذِّنُ فِي أَذَانِ الْفَجْرِ: حِيَّ عَلَى الْفَلَاحِ قَالَ: الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ، الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ، اللهُ أَكْبَرُ اللهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللهُ \"",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه ابن خزيمة والدارقطني والبيهقي",
+  "grade": "صحيح",
+  "gradeBy": "البيهقي",
+  "primary": {
+   "book": "السنن الكبرى للبيهقي (ط العلمية)",
+   "book_id": 7861,
+   "page_id": 2251,
+   "printed_page": "1/ 623",
+   "number": "1984"
+  },
+  "takhrij": [
+   {
+    "book": "السنن الكبرى للبيهقي",
+    "printed_page": "1/ 623",
+    "number": "1984"
+   }
+  ],
+  "verified": true,
+  "note": "Found in al-Bayhaqi's Sunan al-Kubra (the only listed book checked; Ibn Khuzayma and al-Daraqutni not searched). Matn is longer than the input (continues to «لَا إِلَهَ إِلَّا اللهُ»). Grade: al-Bayhaqi writes right after it «وَهُوَ إِسْنَادٌ صَحِيحٌ» (isnad sahih), so gradeBy is al-Bayhaqi, not a ruling on the matn. Printed quotes and spacing kept."
+ },
+ {
+  "sourceId": "10626",
+  "status": "found",
+  "text": "يَا رَسُولَ اللَّهِ اجْعَلْنِي إِمَامَ قَوْمِي، قَالَ: «أَنْتَ إِمَامُهُمْ وَاقْتَدِ بِأَضْعَفِهِمْ وَاتَّخِذْ مُؤَذِّنًا لَا يَأْخُذُ عَلَى أَذَانِهِ أَجْرًا»",
+  "narrator": "عثمان بن أبي العاص",
+  "attribution": "رواه أبو داود والنسائي وأحمد",
+  "grade": "صحيح م دون الاتخاذ",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 717,
+   "printed_page": "1/ 146",
+   "number": "531"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "1/ 146",
+    "number": "531"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "Grade copied exactly as printed on the Abu Dawud page: «صحيح م دون الاتخاذ» (sahih as in Muslim, without the 'ittikhadh' clause), so the page does NOT give a plain 'صحيح' for the muezzin clause; decide how to display. Text starts at «يَا رَسُولَ اللَّهِ» to skip the print's interjection «قُلْتُ: - وَقَالَ مُوسَى فِي مَوْضِعٍ آخَرَ … قَالَ -». Input refs had no numbers for Tirmidhi."
+ },
+ {
+  "sourceId": "10632",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ سَمُرَةَ؛ قَالَ: كَانَ بِلَالٌ يُؤَذِّنُ إِذَا دَحَضَتْ. فَلَا يُقِيمُ حَتَّى يَخْرُجَ النَّبِيُّ ﷺ. فَإِذَا خَرَجَ أقام الصلاة حين يراه.",
+  "narrator": "جابر بن سمرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1311,
+   "printed_page": "1/ 423",
+   "number": "606"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 423",
+    "number": "606"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "1/ 391",
+    "number": "202"
+   }
+  ],
+  "verified": true,
+  "note": "WORDING MISMATCH: the input text («كان مؤذن رسول الله يمهل فلا يقيم…») is Tirmidhi's wording (Tirmidhi 202, 1/ 391, Shakir edition; page footnote grade 'حسن'). Because the attribution says «رواه مسلم» and the grade is sahih, Muslim's own wording of the same hadith is used (Muslim 606). Muslim text verified verbatim."
+ },
+ {
+  "sourceId": "65386",
+  "status": "found",
+  "text": "عَنِ الْبَرَاءِ بْنِ عَازِبٍ أَنَّ نَبِيَّ اللهِ ﷺ قَالَ: «إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى الصَّفِّ الْمُقَدَّمِ، وَالْمُؤَذِّنُ يُغْفَرُ لَهُ بِمَدِّ صَوْتِهِ، وَيُصَدِّقُهُ مَنْ سَمِعَهُ مِنْ رَطْبٍ وَيَابِسٍ، وَلَهُ مِثْلُ أَجْرِ مَنْ صَلَّى مَعَهُ».",
+  "narrator": "البراء بن عازب",
+  "attribution": "رواه النسائي",
+  "grade": "صحيح",
+  "gradeBy": "الموسوعة الحديثية",
+  "primary": {
+   "book": "سنن النسائي",
+   "book_id": 829,
+   "page_id": 1020,
+   "printed_page": "2/ 13",
+   "number": "646"
+  },
+  "takhrij": [
+   {
+    "book": "سنن النسائي",
+    "printed_page": "2/ 13",
+    "number": "646"
+   }
+  ],
+  "verified": true,
+  "note": "No grading is printed on this Shamela page, so the input grade is kept."
+ },
+ {
+  "sourceId": "65387",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «الْإِمَامُ ضَامِنٌ وَالْمُؤَذِّنُ مُؤْتَمَنٌ، اللَّهُمَّ أَرْشِدِ الْأَئِمَّةَ وَاغْفِرْ لِلْمُؤَذِّنِينَ»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أبو داود والترمذي",
+  "grade": "صحيح",
+  "gradeBy": "الموسوعة الحديثية",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 695,
+   "printed_page": "1/ 143",
+   "number": "517"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "1/ 389",
+    "number": "517"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "1/ 282",
+    "number": "207"
+   }
+  ],
+  "verified": true,
+  "note": "No grading is printed on this Shamela page, so the input grade is kept. Shamela page 1/ 143 differs from the ref's 1/ 389."
+ },
+ {
+  "sourceId": "65388",
+  "status": "found",
+  "text": "عن ابن عمر؛ قال: كَانَ لِرَسُولِ اللَّهِ ﷺ مُؤَذِّنَانِ: بِلَالٌ وَابْنُ أُمِّ مَكْتُومٍ الأَعْمَى.",
+  "narrator": "ابن عمر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 789,
+   "printed_page": "1/ 287",
+   "number": "380"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 287",
+    "number": "380"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65389",
+  "status": "found",
+  "text": "عَنْ أَبِي مَحْذُورَةَ قَالَ: «كُنْتُ أُؤَذِّنُ لِرَسُولِ اللهِ ﷺ، وَكُنْتُ أَقُولُ فِي أَذَانِ الْفَجْرِ الْأَوَّلِ: حَيَّ عَلَى الْفَلَاحِ الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ، الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ، اللهُ أَكْبَرُ اللهُ أَكْبَرُ لَا إِلَهَ إِلَّا اللهُ».",
+  "narrator": "أبو محذورة",
+  "attribution": "رواه النسائي",
+  "grade": "صحيح",
+  "gradeBy": "الموسوعة الحديثية",
+  "primary": {
+   "book": "سنن النسائي",
+   "book_id": 829,
+   "page_id": 1022,
+   "printed_page": "2/ 13",
+   "number": "647"
+  },
+  "takhrij": [
+   {
+    "book": "سنن النسائي",
+    "printed_page": "2/ 13",
+    "number": "647"
+   }
+  ],
+  "verified": true,
+  "note": "No grading is printed on this Shamela page, so the input grade is kept. Page marker ⦗١٤⦘ lies in the isnad before the text."
+ },
+ {
+  "sourceId": "65479",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ مُغَفَّلٍ قَالَ: قَالَ النَّبِيُّ ﷺ: «بَيْنَ كُلِّ أَذَانَيْنِ صَلَاةٌ، بَيْنَ كُلِّ أَذَانَيْنِ صَلَاةٌ. ثُمَّ قَالَ فِي الثَّالِثَةِ: لِمَنْ شَاءَ».",
+  "narrator": "عبد الله بن مغفل",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1036,
+   "printed_page": "1/ 128",
+   "number": "627"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 128",
+    "number": "627"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 573",
+    "number": "838"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65714",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ قَالَ: «كَانَ الْمُؤَذِّنُ إِذَا أَذَّنَ، قَامَ نَاسٌ مِنْ أَصْحَابِ النَّبِيِّ ﷺ يَبْتَدِرُونَ السَّوَارِيَ، حَتَّى يَخْرُجَ النَّبِيُّ ﷺ وَهُمْ كَذَلِكَ، يُصَلُّونَ الرَّكْعَتَيْنِ قَبْلَ الْمَغْرِبِ، وَلَمْ يَكُنْ بَيْنَ الْأَذَانِ وَالْإِقَامَةِ شَيْءٌ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1032,
+   "printed_page": "1/ 127",
+   "number": "625"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 127",
+    "number": "625"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 573",
+    "number": "837"
+   }
+  ],
+  "verified": true,
+  "note": "Page marker ⦗١٢٨⦘ (between «النَّبِيُّ» and «ﷺ») removed; verified in two halves, both verbatim."
+ },
+ {
+  "sourceId": "65745",
+  "status": "found",
+  "text": "أَنَّ ابْنَ عُمَرَ أَذَّنَ بِالصَّلَاةِ فِي لَيْلَةٍ ذَاتِ بَرْدٍ وَرِيحٍ، ثُمَّ قَالَ: أَلَا صَلُّوا فِي الرِّحَالِ، ثُمَّ قَالَ: إِنَّ رَسُولَ اللهِ ﷺ كَانَ يَأْمُرُ الْمُؤَذِّنَ، إِذَا كَانَتْ لَيْلَةٌ ذَاتُ بَرْدٍ وَمَطَرٍ، يَقُولُ: أَلَا صَلُّوا فِي الرِّحَالِ.",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1097,
+   "printed_page": "1/ 134",
+   "number": "666"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 134",
+    "number": "666"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 484",
+    "number": "697"
+   }
+  ],
+  "verified": true,
+  "note": "Starts at «أَنَّ» (Nafi' narrating about Ibn Umar); the closing » of the print is dropped because the opening « is not included."
+ },
+ {
+  "sourceId": "10706",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ، أَنَّ بِلَالًا أَذَّنَ قَبْلَ طُلُوعِ الْفَجْرِ، فَأَمَرَهُ النَّبِيُّ ﷺ أَنْ يَرْجِعَ فَيُنَادِيَ: «أَلَا إِنَّ الْعَبْدَ، قَدْ نَامَ أَلَا إِنَّ الْعَبْدَ قَدْ نَامَ»",
+  "narrator": "ابن عمر",
+  "attribution": "رواه أبو داود",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 719,
+   "printed_page": "1/ 146",
+   "number": "532"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "1/ 146",
+    "number": "532"
+   }
+  ],
+  "verified": true,
+  "note": "Grade 'صحيح' is the footnote printed on the Shamela page (Albani edition). Page marker ⦗١٤٧⦘ lies in the isnad before the text. Text stops before Musa's addition."
+ },
+ {
+  "sourceId": "65384",
+  "status": "found",
+  "text": "أَنَّ ابْنَ عُمَرَ كَانَ يَقُولُ: «كَانَ الْمُسْلِمُونَ حِينَ قَدِمُوا الْمَدِينَةَ، يَجْتَمِعُونَ فَيَتَحَيَّنُونَ الصَّلَاةَ، لَيْسَ يُنَادَى لَهَا، فَتَكَلَّمُوا يَوْمًا فِي ذَلِكَ، فَقَالَ بَعْضُهُمُ: اتَّخِذُوا نَاقُوسًا مِثْلَ نَاقُوسِ النَّصَارَى، وَقَالَ بَعْضُهُمْ: بَلْ بُوقًا مِثْلَ قَرْنِ الْيَهُودِ، فَقَالَ عُمَرُ: أَوَلَا تَبْعَثُونَ رَجُلًا يُنَادِي بِالصَّلَاةِ، فَقَالَ رَسُولُ اللهِ ﷺ: يَا بِلَالُ، قُمْ فَنَادِ بِالصَّلَاةِ».",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 999,
+   "printed_page": "1/ 124",
+   "number": "604"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 124",
+    "number": "604"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 285",
+    "number": "377"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari's wording («لَيْسَ يُنَادَى لَهَا») matches the input. Starts at «أَنَّ». Page marker ⦗١٢٥⦘ (after «النَّصَارَى،») removed; verified in two halves, both verbatim."
+ },
+ {
+  "sourceId": "65385",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ، قَالَ: \" إِنَّمَا كَانَ الْأَذَانُ عَلَى عَهْدِ رَسُولِ اللَّهِ ﷺ مَرَّتَيْنِ، مَرَّتَيْنِ وَالْإِقَامَةُ مَرَّةً، مَرَّةً غَيْرَ أَنَّهُ، يَقُولُ: قَدْ قَامَتِ الصَّلَاةُ، قَدْ قَامَتِ الصَّلَاةُ، فَإِذَا سَمِعْنَا الْإِقَامَةَ تَوَضَّأْنَا، ثُمَّ خَرَجْنَا إِلَى الصَّلَاةِ \"",
+  "narrator": "ابن عمر",
+  "attribution": "رواه أبو داود والنسائي",
+  "grade": "حسن",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 685,
+   "printed_page": "1/ 141",
+   "number": "510"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "1/ 141",
+    "number": "510"
+   },
+   {
+    "book": "سنن النسائي",
+    "printed_page": "2/ 20",
+    "number": "668"
+   }
+  ],
+  "verified": true,
+  "note": "Input grade was 'صحيح' but the footnote printed on the Shamela page (Albani edition) is 'حسن'; the printed grade is used. Shamela page 1/ 141 differs from the ref's 1/ 384."
+ },
+ {
+  "sourceId": "65722",
+  "status": "found",
+  "text": "عَنِ الْأَسْوَدِ قَالَ: «سَأَلْتُ عَائِشَةَ ﵂: كَيْفَ صَلَاةُ النَّبِيِّ ﷺ بِاللَّيْلِ؟ قَالَتْ: كَانَ يَنَامُ أَوَّلَهُ، وَيَقُومُ آخِرَهُ، فَيُصَلِّي ثُمَّ يَرْجِعُ إِلَى فِرَاشِهِ، فَإِذَا أَذَّنَ الْمُؤَذِّنُ وَثَبَ، فَإِنْ كَانَ بِهِ حَاجَةٌ اغْتَسَلَ، وَإِلَّا تَوَضَّأَ وَخَرَجَ».",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1859,
+   "printed_page": "2/ 53",
+   "number": "1146"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 53",
+    "number": "1146"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 510",
+    "number": "739"
+   }
+  ],
+  "verified": true,
+  "note": "The text keeps the print's honorific glyph after Aisha's name (﵂). The text begins with al-Aswad's question; the narrator (companion) is Aisha."
+ }
+]

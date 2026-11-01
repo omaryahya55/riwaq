@@ -1,0 +1,842 @@
+[
+ {
+  "sourceId": "5218",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ. قَالَتْ: مِنْ كُلِّ اللَّيْلِ قَدْ أَوْتَرَ رَسُولُ اللَّهِ ﷺ. مِنْ أَوَّلِ اللَّيْلِ وَأَوْسَطِهِ وَآخِرِهِ. فَانْتَهَى وِتْرُهُ إِلَى السَّحَرِ.",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1670,
+   "printed_page": "1/ 512",
+   "number": "745"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 512",
+    "number": "745"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 25",
+    "number": "996"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim wording is the closest to the input (includes من أول الليل وأوسطه وآخره). Bukhari 996 (page 2/ 25) has a shorter wording without that clause."
+ },
+ {
+  "sourceId": "11261",
+  "status": "found",
+  "text": "عَنْ أبي هريرة ﵁ قال: قال رَسُولُ اللَّهِ ﷺ: \"أَفْضَلُ الصِّيَامِ، بَعْدَ رَمَضَانَ، شَهْرُ اللَّهِ الْمُحَرَّمُ. وَأَفْضَلُ الصَّلَاةِ، بَعْدَ الْفَرِيضَةِ، صَلَاةُ اللَّيْلِ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 2679,
+   "printed_page": "2/ 821",
+   "number": "1163"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 821",
+    "number": "1163"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "11275",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ؛ أَنّ النَّبِيَّ ﷺ قَالَ: \"أَوْتِرُوا قَبْلَ أَنْ تصبحوا\".",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1695,
+   "printed_page": "1/ 519",
+   "number": "754"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 519",
+    "number": "754"
+   }
+  ],
+  "verified": true,
+  "note": "The Shamela page names him only أبو سعيد; full name Al-Khudri is from the input source."
+ },
+ {
+  "sourceId": "11278",
+  "status": "found",
+  "text": "عَنْ جابر؛ قال: قال رسول الله ﷺ \"مَنْ خَافَ أَنْ لَا يَقُومَ مِنْ آخِرِ اللَّيْلِ فَلْيُوتِرْ أَوَّلَهُ. وَمَنْ طَمِعَ أَنْ يَقُومَ آخِرَهُ فَلْيُوتِرْ آخِرَ اللَّيْلِ. فَإِنَّ صَلَاةَ آخِرِ اللَّيْلِ مَشْهُودَةٌ. وَذَلِكَ أَفْضَلُ\".",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1697,
+   "printed_page": "1/ 520",
+   "number": "755"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 520",
+    "number": "755"
+   }
+  ],
+  "verified": true,
+  "note": "The Shamela page names him only جابر; the full name is from the input source. Text omits the printed remark after the matn (وقال أبو معاوية: محضورة)."
+ },
+ {
+  "sourceId": "3577",
+  "status": "found",
+  "text": "عَنْ عَلِيٍّ - ﵁: «أَنَّ رَسُولَ اللهِ ﷺ طَرَقَهُ وَفَاطِمَةَ، قَالَ: أَلَا تُصَلِّيَانِ».",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 6959,
+   "printed_page": "6/ 88",
+   "number": "4724"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "6/ 88",
+    "number": "4724"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 50",
+    "number": "1127"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 537",
+    "number": "775"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 4724 (tafsir of Al-Kahf) has this short wording exactly as in the input. Bukhari 1127 and Muslim 775 carry the longer version (Muslim ref copied from the sibling item 65724; not opened in Shamela). The page names him only عَلِيٍّ; full name appears in Bukhari 1127."
+ },
+ {
+  "sourceId": "3655",
+  "status": "found",
+  "text": "عن ابن عمر؛ أن النبي ﷺ قال \"بادروا الصبح بالوتر\".",
+  "narrator": "ابن عمر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1684,
+   "printed_page": "1/ 517",
+   "number": "750"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 517",
+    "number": "750"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "3734",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللَّهِ ﷺ: \"إِذَا قَامَ أَحَدُكُمْ مِنَ اللَّيْلِ، فَاسْتَعْجَمَ الْقُرْآنُ عَلَى لِسَانِهِ، فَلَمْ يَدْرِ مَا يقول، فليضطجع\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1765,
+   "printed_page": "1/ 543",
+   "number": "787"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 543",
+    "number": "787"
+   }
+  ],
+  "verified": true,
+  "note": "This is from the Sahifa of Hammam ibn Munabbih (page: هذا ما حدثنا أبو هريرة عن محمد رسول الله ﷺ ... وقال رسول الله ﷺ). Text starts at قال, dropping the leading واو, because the isnad clause precedes it. Hadith number 787 is of the chain that opens this Sahifa group."
+ },
+ {
+  "sourceId": "4830",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂: أَنَّ نَبِيَّ اللهِ ﷺ «كَانَ يَقُومُ مِنَ اللَّيْلِ حَتَّى تَتَفَطَّرَ قَدَمَاهُ، فَقَالَتْ عَائِشَةُ: لِمَ تَصْنَعُ هَذَا يَا رَسُولَ اللهِ، وَقَدْ غَفَرَ اللهُ لَكَ مَا تَقَدَّمَ مِنْ ذَنْبِكَ وَمَا تَأَخَّرَ؟ قَالَ: أَفَلَا أُحِبُّ أَنْ أَكُونَ عَبْدًا شَكُورًا، فَلَمَّا كَثُرَ لَحْمُهُ صَلَّى جَالِسًا، فَإِذَا أَرَادَ أَنْ يَرْكَعَ، قَامَ فَقَرَأَ ثُمَّ رَكَعَ».",
+  "narrator": "عائشة",
+  "attribution": "حديث عائشة -رضي الله عنها-: متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 7155,
+   "printed_page": "6/ 135",
+   "number": "4837"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "6/ 135",
+    "number": "4837"
+   }
+  ],
+  "verified": true,
+  "note": "The input text blends Aisha's and Al-Mughira's wordings. Bukhari 4837 (Aisha) is the closest (تتفطر قدماه + أفلا أحب أن أكون عبدا شكورا). The matn here continues after شكورا (فلما كثر لحمه...), so the full matn is kept. Al-Mughira's version is in Muslim at page 4/ 2171 (worded حتى ورمت قدماه), not used. The Muslim parallel for Aisha was not located."
+ },
+ {
+  "sourceId": "5443",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللَّهِ ﷺ: \"مَنْ نَامَ عَنْ حِزْبِهِ، أَوْ عَنْ شَيْءٍ مِنْهُ، فَقَرَأَهُ فِيمَا بَيْنَ صَلَاةِ الْفَجْرِ وَصَلَاةِ الظُّهْرِ، كُتِبَ لَهُ كَأَنَّمَا قَرَأَهُ مِنَ اللَّيْلِ\".",
+  "narrator": "عمر بن الخطاب",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1676,
+   "printed_page": "1/ 515",
+   "number": "747"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 515",
+    "number": "747"
+   }
+  ],
+  "verified": true,
+  "note": "Narrator is the speaker in the isnad (سمعت عمر بن الخطاب يقول:), so text starts right after that colon."
+ },
+ {
+  "sourceId": "5789",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ : أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «إِذَا نَعَسَ أَحَدُكُمْ وَهُوَ يُصَلِّي فَلْيَرْقُدْ حَتَّى يَذْهَبَ عَنْهُ النَّوْمُ، فَإِنَّ أَحَدَكُمْ إِذَا صَلَّى وَهُوَ نَاعِسٌ لَا يَدْرِي لَعَلَّهُ يَسْتَغْفِرُ فَيَسُبُّ نَفْسَهُ».",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 370,
+   "printed_page": "1/ 53",
+   "number": "212"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 53",
+    "number": "212"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 542",
+    "number": "786"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 212 is closest to the input (وهو يصلي ... لا يدري). The input also has يذهب before يستغفر, which is the Muslim 786 wording (Muslim: إذا نعس أحدكم في الصلاة ... لعله يذهب يستغفر). Bukhari wording used in full; no mixing."
+ },
+ {
+  "sourceId": "5828",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ ﵁ قَالَ: «دَخَلَ النَّبِيُّ ﷺ، فَإِذَا حَبْلٌ مَمْدُودٌ بَيْنَ السَّارِيَتَيْنِ، فَقَالَ: مَا هَذَا الْحَبْلُ؟. قَالُوا: هَذَا حَبْلٌ لِزَيْنَبَ، فَإِذَا فَتَرَتْ تَعَلَّقَتْ. فَقَالَ النَّبِيُّ ﷺ: لَا، حُلُّوهُ، لِيُصَلِّ أَحَدُكُمْ نَشَاطَهُ، فَإِذَا فَتَرَ فَلْيَقْعُدْ».",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1866,
+   "printed_page": "2/ 53",
+   "number": "1150"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 53",
+    "number": "1150"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 1150 wording differs slightly from the input (no المسجد; فليقعد instead of فليرقد; adds لا). The Muslim parallel (agreed upon) was searched but not located in the local copy, so it is not listed in takhrij."
+ },
+ {
+  "sourceId": "5845",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ : «أَنَّ النَّبِيَّ ﷺ دَخَلَ عَلَيْهَا وَعِنْدَهَا امْرَأَةٌ، قَالَ: مَنْ هَذِهِ؟ قَالَتْ: فُلَانَةُ، تَذْكُرُ مِنْ صَلَاتِهَا. قَالَ: مَهْ، عَلَيْكُمْ بِمَا تُطِيقُونَ، فَوَاللهِ لَا يَمَلُّ اللهُ حَتَّى تَمَلُّوا، وَكَانَ أَحَبَّ الدِّينِ إِلَيْهِ مَا دَاوَمَ عَلَيْهِ صَاحِبُهُ».",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 84,
+   "printed_page": "1/ 17",
+   "number": "43"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 17",
+    "number": "43"
+   }
+  ],
+  "verified": true,
+  "note": "The Muslim parallel was searched but not located in the local copy, so it is not listed in takhrij."
+ },
+ {
+  "sourceId": "10967",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ، قَالَتْ: «قَامَ النَّبِيُّ ﷺ بِآيَةٍ مِنَ القُرْآنِ لَيْلَةً»",
+  "narrator": "عائشة",
+  "attribution": "رواه الترمذي",
+  "grade": "صحيح الإسناد",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 794,
+   "printed_page": "2/ 310",
+   "number": "448"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "2/ 310",
+    "number": "448"
+   }
+  ],
+  "verified": true,
+  "note": "The page prints Tirmidhi's own remark «هذا حديث حسن غريب من هذا الوجه» after the matn, and the appended bare footnote «صحيح الإسناد» (treated as the edition's Albani grade per the rules). Text ends at the matn."
+ },
+ {
+  "sourceId": "11259",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ قَالَ: «سَأَلَ رَجُلٌ النَّبِيَّ ﷺ وَهُوَ عَلَى الْمِنْبَرِ مَا تَرَى فِي صَلَاةِ اللَّيْلِ قَالَ: مَثْنَى مَثْنَى فَإِذَا خَشِيَ الصُّبْحَ صَلَّى وَاحِدَةً فَأَوْتَرَتْ لَهُ مَا صَلَّى وَإِنَّهُ كَانَ يَقُولُ: اجْعَلُوا آخِرَ صَلَاتِكُمْ وِتْرًا فَإِنَّ النَّبِيَّ ﷺ أَمَرَ بِهِ».",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 799,
+   "printed_page": "1/ 102",
+   "number": "472"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 102",
+    "number": "472"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 517",
+    "number": "751"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim entry copied from the input ref (page 1/ 517 number 751 exists in Shamela as the line اجعلوا آخر صلاتكم بالليل وترا only)."
+ },
+ {
+  "sourceId": "11262",
+  "status": "found",
+  "text": "عَنْ أَبِي أَيُّوبَ أَنَّ النَّبِيَّ ﷺ قَالَ: «الْوِتْرُ حَقٌّ، فَمَنْ شَاءَ أَوْتَرَ بِسَبْعٍ، وَمَنْ شَاءَ أَوْتَرَ بِخَمْسٍ، وَمَنْ شَاءَ أَوْتَرَ بِثَلَاثٍ، وَمَنْ شَاءَ أَوْتَرَ بِوَاحِدَةٍ».",
+  "narrator": "أبو أيوب الأنصاري",
+  "attribution": "رواه النسائي وأبو داود وابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "الموسوعة الحديثية",
+  "primary": {
+   "book": "سنن النسائي",
+   "book_id": 829,
+   "page_id": 2719,
+   "printed_page": "3/ 238",
+   "number": "1710"
+  },
+  "takhrij": [
+   {
+    "book": "سنن النسائي",
+    "printed_page": "3/ 238",
+    "number": "1710"
+   }
+  ],
+  "verified": true,
+  "note": "No grading is printed on the Nasa'i page for this hadith in the local edition, so the input grade is kept. The page names him أبو أيوب only; الأنصاري is from the input. Nasa'i 1710 is the wording with سبع (the next narration, 1711, omits سبع). Abu Dawud and Ibn Majah were not located (no refs given)."
+ },
+ {
+  "sourceId": "11270",
+  "status": "found",
+  "text": "قَالَ لِي رَسُولُ اللهِ ﷺ: يَا عَبْدَ اللهِ، لَا تَكُنْ مِثْلَ فُلَانٍ، كَانَ يَقُومُ اللَّيْلَ فَتَرَكَ قِيَامَ اللَّيْلِ.",
+  "narrator": "عبد الله بن عمرو بن العاص",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1869,
+   "printed_page": "2/ 54",
+   "number": "1152"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 54",
+    "number": "1152"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker in the isnad (حدثني عبد الله بن عمرو بن العاص قال:), so text starts right after that colon and omits the printed quotation marks around it. The Muslim parallel was not located (input ref lists Bukhari only)."
+ },
+ {
+  "sourceId": "11271",
+  "status": "found",
+  "text": "عَنْ عَلِيٍّ ﵁، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «يَا أَهْلَ الْقُرْآنِ، أَوْتِرُوا، فَإِنَّ اللَّهَ وِتْرٌ، يُحِبُّ الْوِتْرَ»",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "رواه أبو داود والترمذي والنسائي وابن ماجه وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1909,
+   "printed_page": "2/ 61",
+   "number": "1416"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 61",
+    "number": "1416"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "2/ 316",
+    "number": "453"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "1/ 370",
+    "number": "1169"
+   }
+  ],
+  "verified": true,
+  "note": "Abu Dawud wording used (Ali reports the Prophet's words directly) since Tirmidhi (453) and Ibn Majah (1169) give it inside Ali's own sentence (الوتر ليس بحتم ... ) with a different order or setting. Tirmidhi/Ibn Majah entries were located in Shamela and read; the page numbers there are the Shamela editions' pagination. The page prints a trailing comma after the matn, omitted."
+ },
+ {
+  "sourceId": "11272",
+  "status": "found",
+  "text": "عَنْ قَيْسِ بْنِ طَلْقٍ، قَالَ: زَارَنَا طَلْقُ بْنُ عَلِيٍّ فِي يَوْمٍ مِنْ رَمَضَانَ، وَأَمْسَى عِنْدَنَا، وَأَفْطَرَ، ثُمَّ قَامَ بِنَا اللَّيْلَةَ، وَأَوْتَرَ بِنَا، ثُمَّ انْحَدَرَ إِلَى مَسْجِدِهِ، فَصَلَّى بِأَصْحَابِهِ، حَتَّى إِذَا بَقِيَ الْوِتْرُ قَدَّمَ رَجُلًا، فَقَالَ: أَوْتِرْ بِأَصْحَابِكَ، فَإِنِّي سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ: «لَا وِتْرَانِ فِي لَيْلَةٍ»",
+  "narrator": "طلق بن علي",
+  "attribution": "رواه أبو داود والترمذي والنسائي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1940,
+   "printed_page": "2/ 67",
+   "number": "1439"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 67",
+    "number": "1439"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "2/ 333",
+    "number": "470"
+   }
+  ],
+  "verified": true,
+  "note": "The text is Qays ibn Talq's report about the companion Talq ibn Ali (as in the input), so it starts at عن قيس بن طلق. Tirmidhi 470 gives only the short saying (سمعت رسول الله ﷺ يقول: لا وتران في ليلة); located and read in Shamela, its page numbers are the Shamela edition's."
+ },
+ {
+  "sourceId": "11277",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ «مَنْ نَامَ عَنْ وِتْرِهِ، أَوْ نَسِيَهُ، فَلْيُصَلِّهِ إِذَا ذَكَرَهُ»",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه أبو داود والترمذي وابن ماجه وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1929,
+   "printed_page": "2/ 65",
+   "number": "1431"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 65",
+    "number": "1431"
+   }
+  ],
+  "verified": true,
+  "note": "The page names him أبو سعيد only; full name from the input. Abu Dawud wording (من نام عن وتره، أو نسيه، فليصله إذا ذكره) matches the input; Tirmidhi/Ibn Majah say عن الوتر with different endings. Ahmad and the other books were not located (refs carry no numbers)."
+ },
+ {
+  "sourceId": "65512",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ : أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «مَنْ قَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 74,
+   "printed_page": "1/ 16",
+   "number": "37"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 16",
+    "number": "37"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 523",
+    "number": "759"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65723",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ؛ قَالَتْ: كَانَ رَسُولُ اللَّهِ ﷺ، إِذَا قَامَ مِنِ اللَّيْلِ لِيُصَلِّيَ، افْتَتَحَ صَلَاتَهُ بِرَكْعَتَيْنِ خَفِيفَتَيْنِ.",
+  "narrator": "عائشة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1736,
+   "printed_page": "1/ 532",
+   "number": "767"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 532",
+    "number": "767"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65724",
+  "status": "found",
+  "text": "أَنَّ عَلِيَّ بْنَ أَبِي طَالِبٍ أَخْبَرَهُ: «أَنَّ رَسُولَ اللهِ ﷺ طَرَقَهُ وَفَاطِمَةَ بِنْتَ النَّبِيِّ ﵇ لَيْلَةً فَقَالَ: أَلَا تُصَلِّيَانِ؟. فَقُلْتُ: يَا رَسُولَ اللهِ، أَنْفُسُنَا بِيَدِ اللهِ، فَإِذَا شَاءَ أَنْ يَبْعَثَنَا بَعَثَنَا، فَانْصَرَفَ حِينَ قُلْنَا ذَلِكَ، وَلَمْ يَرْجِعْ إِلَيَّ شَيْئًا، ثُمَّ سَمِعْتُهُ وَهُوَ مُوَلٍّ يَضْرِبُ فَخِذَهُ وَهُوَ يَقُولُ: ﴿وَكَانَ الإِنْسَانُ أَكْثَرَ شَيْءٍ جَدَلا﴾».",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1830,
+   "printed_page": "2/ 50",
+   "number": "1127"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 50",
+    "number": "1127"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 537",
+    "number": "775"
+   }
+  ],
+  "verified": true,
+  "note": "Narration about the companion by a successor (أن علي بن أبي طالب أخبره:), so text starts at أَنَّ. Verse is printed in the Bukhari text as ﴿وَكَانَ الإِنْسَانُ أَكْثَرَ شَيْءٍ جَدَلا﴾ without the surah reference."
+ },
+ {
+  "sourceId": "65727",
+  "status": "found",
+  "text": "أَنَّ عَائِشَةَ أَخْبَرَتْهُ: أَنَّ رَسُولَ اللهِ ﷺ «كَانَ يُصَلِّي إِحْدَى عَشْرَةَ رَكْعَةً، كَانَتْ تِلْكَ صَلَاتَهُ، تَعْنِي بِاللَّيْلِ، فَيَسْجُدُ السَّجْدَةَ مِنْ ذَلِكَ قَدْرَ مَا يَقْرَأُ أَحَدُكُمْ خَمْسِينَ آيَةً، قَبْلَ أَنْ يَرْفَعَ رَأْسَهُ، وَيَرْكَعُ رَكْعَتَيْنِ قَبْلَ صَلَاةِ الْفَجْرِ، ثُمَّ يَضْطَجِعُ عَلَى شِقِّهِ الْأَيْمَنِ، حَتَّى يَأْتِيَهُ الْمُؤَذِّنُ لِلصَّلَاةِ».",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1618,
+   "printed_page": "2/ 25",
+   "number": "994"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 25",
+    "number": "994"
+   }
+  ],
+  "verified": true,
+  "note": "Narration about the companion by a successor (أن عائشة أخبرته:), so text starts at أَنَّ. The input ref lists Muslim at (4/ 2084) (2713), which does not fit this hadith (page 4/2084 is in the book of dhikr), so it is not copied into takhrij; the Muslim parallel was not located."
+ },
+ {
+  "sourceId": "3528",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ قَالَ: «بِتُّ عِنْدَ خَالَتِي، فَقَامَ النَّبِيُّ ﷺ يُصَلِّي مِنَ اللَّيْلِ، فَقُمْتُ أُصَلِّي مَعَهُ، فَقُمْتُ عَنْ يَسَارِهِ، فَأَخَذَ بِرَأْسِي فَأَقَامَنِي عَنْ يَمِينِهِ.»",
+  "narrator": "ابن عباس",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1149,
+   "printed_page": "1/ 141",
+   "number": "699"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 141",
+    "number": "699"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 531",
+    "number": "763"
+   }
+  ],
+  "verified": true,
+  "note": "The input is a shortened wording naming ميمونة; Bukhari 699 is the only Bukhari narration containing فأخذ برأسي فأقامني عن يمينه (it says عند خالتي without naming ميمونة and adds فقمت أصلي معه). Muslim 763 (page 1/ 531) is the long narration naming ميمونة, with different wording (not used)."
+ },
+ {
+  "sourceId": "11276",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ، أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «مَنْ أَدْرَكَ الصُّبْحَ، وَلَمْ يُوتِرْ فَلَا وِتْرَ لَهُ»",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه ابن خزيمة وابن حبان والحاكم",
+  "grade": "صحيح على شرط مسلم",
+  "gradeBy": "الحاكم",
+  "primary": {
+   "book": "المستدرك على الصحيحين - ط العلمية",
+   "book_id": 2266,
+   "page_id": 1126,
+   "printed_page": "1/ 443",
+   "number": "1125"
+  },
+  "takhrij": [
+   {
+    "book": "المستدرك على الصحيحين",
+    "printed_page": "1/ 443",
+    "number": "1125"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is Al-Hakim's own remark printed after the matn: «هذا حديث صحيح على شرط مسلم، ولم يخرجاه». Edition: دار الكتب العلمية (as in the input ref); the Risala edition has it at 2/ 84. Ibn Khuzayma and Ibn Hibban were not located (not in the book table)."
+ },
+ {
+  "sourceId": "65729",
+  "status": "found",
+  "text": "عَنْ عَلِيِّ بْنِ أَبِي طَالِبٍ، أَنَّ النَّبِيَّ ﷺ كَانَ يَقُولُ: فِي آخِرِ الْوِتْرِ «اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَأَعُوذُ بِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ، وَأَعُوذُ بِكَ مِنْكَ، لَا أُحْصِي ثَنَاءً عَلَيْكَ، أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ»",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "رواه أبو داود والترمذي والنسائي وابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن ابن ماجه",
+   "book_id": 1198,
+   "page_id": 1528,
+   "printed_page": "1/ 373",
+   "number": "1179"
+  },
+  "takhrij": [
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "1/ 373",
+    "number": "1179"
+   },
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 565",
+    "number": "1427"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "5/ 453",
+    "number": "3566"
+   },
+   {
+    "book": "سنن النسائي",
+    "printed_page": "3/ 248",
+    "number": "1747"
+   }
+  ],
+  "verified": true,
+  "note": "Abu Dawud 1427 (Shamela ed. page 2/ 64) is the closest in wording (رسول ... في آخر وتره) but the local Shamela text prints «أَنَّ رَسُولَ صَلَّى عَلَيْهِ وَسَلَّمَ» with the word الله missing, so it was not used. Ibn Majah 1179 is clean and has the same supplication word for word. Differences from the input: أن النبي (not رسول الله) and في آخر الوتر (not وتره). Non-primary takhrij entries (Abu Dawud, Tirmidhi, Nasa'i) are copied from the input ref's own pagination."
+ },
+ {
+  "sourceId": "7186",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ قَالَ: «سَأَلَ رَجُلٌ النَّبِيَّ ﷺ وَهُوَ عَلَى الْمِنْبَرِ مَا تَرَى فِي صَلَاةِ اللَّيْلِ قَالَ: مَثْنَى مَثْنَى فَإِذَا خَشِيَ الصُّبْحَ صَلَّى وَاحِدَةً فَأَوْتَرَتْ لَهُ مَا صَلَّى وَإِنَّهُ كَانَ يَقُولُ: اجْعَلُوا آخِرَ صَلَاتِكُمْ وِتْرًا فَإِنَّ النَّبِيَّ ﷺ أَمَرَ بِهِ».",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 799,
+   "printed_page": "1/ 102",
+   "number": "472"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 102",
+    "number": "472"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 517",
+    "number": "751"
+   }
+  ],
+  "verified": true,
+  "note": "The input blends two variants (it has فإذا خشي أحدكم الصبح and ... آخر صلاتكم بالليل وترا). Bukhari 472 is the only listed-book narration with the المنبر wording, used in full without mixing. Muslim 751 (page 1/ 517) is only the short line اجعلوا آخر صلاتكم بالليل وترا."
+ },
+ {
+  "sourceId": "4196",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ قَالَ: قَالَ رَسُولُ اللهِ ﷺ «مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 76,
+   "printed_page": "1/ 16",
+   "number": "38"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 16",
+    "number": "38"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 523",
+    "number": "760"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5863",
+  "status": "found",
+  "text": "كُنَّا مَعَ النَّبِيِّ ﷺ فَقَالَ: «مَنِ اسْتَطَاعَ الْبَاءَةَ فَلْيَتَزَوَّجْ، فَإِنَّهُ أَغَضُّ لِلْبَصَرِ وَأَحْصَنُ لِلْفَرْجِ، وَمَنْ لَمْ يَسْتَطِعْ فَعَلَيْهِ بِالصَّوْمِ، فَإِنَّهُ لَهُ وِجَاءٌ.»",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3043,
+   "printed_page": "3/ 26",
+   "number": "1905"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 26",
+    "number": "1905"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 1018",
+    "number": "1400"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker in the isnad (فقال: كنا مع النبي ﷺ), so text starts right after that colon. The Shamela page names him only عبد الله (the chain: بينا أنا أمشي مع عبد الله)؛ the full name ابن مسعود is from the input source and the ref."
+ },
+ {
+  "sourceId": "3738",
+  "status": "found",
+  "text": "عَنْ سَهْلٍ ﵁، عَنِ النَّبِيِّ ﷺ قَالَ: «إِنَّ فِي الْجَنَّةِ بَابًا يُقَالُ لَهُ الرَّيَّانُ، يَدْخُلُ مِنْهُ الصَّائِمُونَ يَوْمَ الْقِيَامَةِ، لَا يَدْخُلُ مِنْهُ أَحَدٌ غَيْرُهُمْ، يُقَالُ: أَيْنَ الصَّائِمُونَ، فَيَقُومُونَ لَا يَدْخُلُ مِنْهُ أَحَدٌ غَيْرُهُمْ، فَإِذَا دَخَلُوا أُغْلِقَ، فَلَمْ يَدْخُلْ مِنْهُ أَحَدٌ.»",
+  "narrator": "سهل",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3028,
+   "printed_page": "3/ 25",
+   "number": "1896"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 25",
+    "number": "1896"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 808",
+    "number": "1152"
+   }
+  ],
+  "verified": true,
+  "note": "The Shamela page names him only سهل (no father's name)."
+ }
+]

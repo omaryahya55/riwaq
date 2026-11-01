@@ -1,0 +1,817 @@
+[
+ {
+  "sourceId": "3591",
+  "status": "found",
+  "text": "عن أبي هريرة؛ أن رسول اللَّهِ ﷺ كَانَ يَقُولُ: \"الصلوات الخمس. والجمعة إلى الجمعة. ورمضان إلى رَمَضَانَ. مُكَفِّرَاتٌ مَا بَيْنَهُنَّ. إِذَا اجْتَنَبَ الْكَبَائِرَ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 501,
+   "printed_page": "1/ 209",
+   "number": "233"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 209",
+    "number": "233"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5435",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللَّهِ ﷺ \"من صلى صلاة الصبح فهو في ذمة الله. فلا يطلبنكم اللَّهُ مِنْ ذِمَّتِهِ بِشَيْءٍ. فَإِنَّهُ مَنْ يَطْلُبْهُ مِنْ ذِمَّتِهِ بِشَيْءٍ يُدْرِكْهُ. ثُمَّ يَكُبَّهُ عَلَى وجهه في نار جهنم\".",
+  "narrator": "جندب بن عبد الله القسري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1434,
+   "printed_page": "1/ 454",
+   "number": "657"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 454",
+    "number": "657"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker in the isnad (سمعت جندبا القسري يقول:); text starts right after the colon. Page marker ⦗٤٥٥⦘ removed from the middle (verified in two parts)."
+ },
+ {
+  "sourceId": "65003",
+  "status": "found",
+  "text": "عَنْ جَابِرٍ؛ أَنَّ رَجُلًا سَأَلَ رَسُولَ اللَّهِ ﷺ فَقَالَ: أَرَأَيْتَ إِذَا صَلَّيْتُ الصَّلَوَاتِ الْمَكْتُوبَاتِ وَصُمْتُ رَمَضَانَ. وَأَحْلَلْتُ الْحَلَالَ وَحَرَّمْتُ الْحَرَامَ. وَلَمْ أَزِدْ عَلَى ذَلِكَ شَيْئًا. أَأَدْخُلُ الْجَنَّةَ؟ قَالَ: \"نَعَمْ\" قَالَ: وَاللَّهِ! لَا أَزِيدُ عَلَى ذَلِكَ شَيْئًا.",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 78,
+   "printed_page": "1/ 44",
+   "number": "15"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 44",
+    "number": "15"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65004",
+  "status": "found",
+  "text": "عَنْ أَبِي مَالِكٍ الأَشْعَرِيِّ؛ قال: قال رسول الله ﷺ \"الطُّهُورُ شَطْرُ الإِيمَانِ. وَالْحَمْدُ لِلَّهِ تَمْلَأُ الْمِيزَانَ. وَسُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ تَمْلَآَنِ (أَوْ تَمْلَأُ) مَا بَيْنَ السَّمَاوَاتِ وَالأَرْضِ. وَالصَّلَاةُ نُورٌ. وَالصَّدَقَةُ بُرْهَانٌ. وَالصَّبْرُ ضِيَاءٌ. وَالْقُرْآنُ حُجَّةٌ لَكَ أو عليك. كل الناس يغدو. فبايع نفسه. فمعتقها أو موبقها \".",
+  "narrator": "أبو مالك الأشعري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 482,
+   "printed_page": "1/ 203",
+   "number": "223"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 203",
+    "number": "223"
+   }
+  ],
+  "verified": true,
+  "note": "Other refs listed are commentaries (not added to takhrij)."
+ },
+ {
+  "sourceId": "3365",
+  "status": "found",
+  "text": "سَأَلْتُ النَّبِيَّ ﷺ: أَيُّ الْعَمَلِ أَحَبُّ إِلَى اللهِ؟ قَالَ: الصَّلَاةُ عَلَى وَقْتِهَا. قَالَ: ثُمَّ أَيُّ؟ قَالَ: ثُمَّ بِرُّ الْوَالِدَيْنِ. قَالَ: ثُمَّ أَيُّ؟ قَالَ: الْجِهَادُ فِي سَبِيلِ اللهِ. قَالَ: حَدَّثَنِي بِهِنَّ، وَلَوِ اسْتَزَدْتُهُ لَزَادَنِي",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 884,
+   "printed_page": "1/ 112",
+   "number": "527"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 112",
+    "number": "527"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 90",
+    "number": "85"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording matches the input. In the isnad the companion is «صاحب هذه الدار» (pointing to the house of عبد الله). Text starts after the opening « and omits the closing »+period (exact substring). Muslim 85 not compared."
+ },
+ {
+  "sourceId": "3512",
+  "status": "found",
+  "text": "بَايَعْتُ رَسُولَ اللهِ ﷺ عَلَى شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللهُ، وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلَاةِ، وَإِيتَاءِ الزَّكَاةِ، وَالسَّمْعِ وَالطَّاعَةِ، وَالنُّصْحِ لِكُلِّ مُسْلِمٍ.",
+  "narrator": "جرير بن عبد الله",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3435,
+   "printed_page": "3/ 72",
+   "number": "2157"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 72",
+    "number": "2157"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 111",
+    "number": "524"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 75",
+    "number": "56"
+   }
+  ],
+  "verified": true,
+  "note": "The input wording (with the shahada and السمع والطاعة) is Bukhari 2157, not Bukhari 524 (على إقام الصلاة…) nor Muslim 56 (النصح لكل مسلم فقط). Text starts after the colon of «سمعت جريرا ﵁:»."
+ },
+ {
+  "sourceId": "3569",
+  "status": "found",
+  "text": "عَنْ جَابِرٍ؛ قَالَ: قال رسول الله ﷺ \"أفضل الصلاة طول القنوت\".",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1699,
+   "printed_page": "1/ 520",
+   "number": "756"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 520",
+    "number": "756"
+   }
+  ],
+  "verified": true,
+  "note": "Ref gave no page/number; located by wording. Muslim 756 has two narrations on 1/520; used the first (clean wording). The second (page_id 1700) reads «سُئِلَ رَسُولُ اللَّهِ ﷺ أَفْضَلُ؟ قَالَ \"طُولُ الْقُنُوتِ\"» (closer to the input question form but the printed text omits «أي الصلاة»)."
+ },
+ {
+  "sourceId": "4198",
+  "status": "found",
+  "text": "أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ».",
+  "narrator": "أبو موسى الأشعري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 952,
+   "printed_page": "1/ 119",
+   "number": "574"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 119",
+    "number": "574"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 440",
+    "number": "635"
+   }
+  ],
+  "verified": true,
+  "note": "In the isnad the companion is «عن أبيه» (أبو بكر بن أبي موسى), so text starts at «أَنَّ». Muslim 635 not compared."
+ },
+ {
+  "sourceId": "4968",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ: أَنَّهُ سَمِعَ رَسُولَ اللهِ ﷺ يَقُولُ: «أَرَأَيْتُمْ لَوْ أَنَّ نَهَرًا بِبَابِ أَحَدِكُمْ، يَغْتَسِلُ فِيهِ كُلَّ يَوْمٍ خَمْسًا، مَا تَقُولُ: ذَلِكَ يُبْقِي مِنْ دَرَنِهِ. قَالُوا: لَا يُبْقِي مِنْ دَرَنِهِ شَيْئًا، قَالَ: فَذَلِكَ مِثْلُ الصَّلَوَاتِ الْخَمْسِ، يَمْحُو اللهُ بِهِ الْخَطَايَا».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 886,
+   "printed_page": "1/ 112",
+   "number": "528"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 112",
+    "number": "528"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 462",
+    "number": "667"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 667 not compared."
+ },
+ {
+  "sourceId": "6215",
+  "status": "found",
+  "text": "سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ \"لَنْ يَلِجَ النَّارَ أَحَدٌ صَلَّى قَبْلَ طُلُوعِ الشَّمْسِ وَقَبْلَ غُرُوبِهَا\" يَعْنِي الْفَجْرَ وَالْعَصْرَ.",
+  "narrator": "أبو زهير عمارة بن رؤيبة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1376,
+   "printed_page": "1/ 440",
+   "number": "634"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 440",
+    "number": "634"
+   }
+  ],
+  "verified": true,
+  "note": "In the isnad the companion is «عن أبيه» (أبو بكر بن عمارة), text starts after the colon at the companion speech. The closing «يعني الفجر والعصر» is printed outside the Prophet quote marks (narrator gloss); drop it if only the Prophet words are wanted."
+ },
+ {
+  "sourceId": "6254",
+  "status": "found",
+  "text": "سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ \"مَا مِنِ امْرِئٍ مُسْلِمٍ تَحْضُرُهُ صَلَاةٌ مَكْتُوبَةٌ. فَيُحْسِنُ وُضُوءَهَا وَخُشُوعَهَا وَرُكُوعَهَا. إِلَّا كَانَتْ كَفَّارَةً لِمَا قَبْلَهَا مِنَ الذُّنُوبِ. مَا لَمْ. يُؤْتِ كَبِيرَةً. وَذَلِكَ الدَّهْرَ كُلَّهُ\".",
+  "narrator": "عثمان بن عفان",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 492,
+   "printed_page": "1/ 206",
+   "number": "228"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 206",
+    "number": "228"
+   }
+  ],
+  "verified": true,
+  "note": "Companion (عثمان) is the speaker after «فقال:» in the isnad; text starts after the colon."
+ },
+ {
+  "sourceId": "65316",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ ﵁ قَالَ: «كُنْتُ عِنْدَ النَّبِيِّ ﷺ فَجَاءَهُ رَجُلٌ فَقَالَ: يَا رَسُولَ اللهِ، إِنِّي أَصَبْتُ حَدًّا فَأَقِمْهُ عَلَيَّ، قَالَ: وَلَمْ يَسْأَلْهُ عَنْهُ، قَالَ: وَحَضَرَتِ الصَّلَاةُ، فَصَلَّى مَعَ النَّبِيِّ ﷺ، فَلَمَّا قَضَى النَّبِيُّ ﷺ الصَّلَاةَ، قَامَ إِلَيْهِ الرَّجُلُ فَقَالَ: يَا رَسُولَ اللهِ، إِنِّي أَصَبْتُ حَدًّا، فَأَقِمْ فِيَّ كِتَابَ اللهِ، قَالَ: أَلَيْسَ قَدْ صَلَّيْتَ مَعَنَا؟، قَالَ: نَعَمْ، قَالَ: فَإِنَّ اللهَ قَدْ غَفَرَ لَكَ ذَنْبَكَ، أَوْ قَالَ: حَدَّكَ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 10193,
+   "printed_page": "8/ 167",
+   "number": "6823"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 166",
+    "number": "6823"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2117",
+    "number": "2764"
+   }
+  ],
+  "verified": true,
+  "note": "Contains the printed glyph ﵁ (U+FD41) after the name. Page marker ⦗١٦٧⦘ precedes the isnad, so the matn is on 8/167 (ref says 8/166). Muslim 2764 not compared."
+ },
+ {
+  "sourceId": "65370",
+  "status": "found",
+  "text": "حَدَّثَنَا رَسُولُ اللَّهِ ﷺ عِنْدَ انْصِرَافِنَا مِنْ صَلَاتِنَا هَذِهِ (قَالَ مِسْعَرٌ: أُرَاهَا الْعَصْرَ) فَقَالَ \"مَا أَدْرِي. أُحَدِّثُكُمْ بِشَيْءٍ أَوْ أَسْكُتُ؟ \" فَقُلْنَا: يَا رَسُولَ اللَّهِ! إِنْ كَانَ خَيْرًا فَحَدِّثْنَا. وَإِنْ كَانَ غَيْرَ ذَلِكَ فَاللَّهُ وَرَسُولُهُ أَعْلَمُ. قَالَ \"مَا مِنْ مُسْلِمٍ يَتَطَهَّرُ، فَيُتِمُّ الطُّهُورَ الَّذِي كَتَبَ اللَّهُ عَلَيْهِ، فَيُصَلِّي هَذِهِ الصَّلَوَاتِ الْخَمْسَ، إِلَّا كَانَتْ كَفَّارَاتٍ لِمَا بَيْنَهَا\".",
+  "narrator": "عثمان بن عفان",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 495,
+   "printed_page": "1/ 207",
+   "number": "231"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 207",
+    "number": "231"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker (وقال عثمان:); text starts after the colon. Page marker ⦗٢٠٨⦘ removed from the middle (verified in two parts)."
+ },
+ {
+  "sourceId": "65390",
+  "status": "found",
+  "text": "عَنْ عُقْبَةَ بْنِ عَامِرٍ، قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: \" يَعْجَبُ رَبُّكُمْ مِنْ رَاعِي غَنَمٍ فِي رَأْسِ شَظِيَّةٍ بِجَبَلٍ، يُؤَذِّنُ بِالصَّلَاةِ، وَيُصَلِّي، فَيَقُولُ اللَّهُ ﷿: انْظُرُوا إِلَى عَبْدِي هَذَا يُؤَذِّنُ، وَيُقِيمُ الصَّلَاةَ، يَخَافُ مِنِّي، قَدْ غَفَرْتُ لِعَبْدِي وَأَدْخَلْتُهُ الْجَنَّةَ \"",
+  "narrator": "عقبة بن عامر",
+  "attribution": "رواه أبو داود والنسائي",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1628,
+   "printed_page": "2/ 4",
+   "number": "1203"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 402",
+    "number": "1203"
+   },
+   {
+    "book": "سنن النسائي",
+    "printed_page": "2/ 20",
+    "number": "666"
+   }
+  ],
+  "verified": true,
+  "note": "Abu Dawud is first in refs and has the Albani grade «صحيح» printed under it; ref page 2/402 is another print (this edition: 2/4). Nasai 666 (page_id 829/1052, 2/20) has «ربك» as in the input but no grade printed on its page. Contains the printed glyph ﷿ (U+FDBF). Spaces inside the quote marks are as printed."
+ },
+ {
+  "sourceId": "65392",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ: أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «يَتَعَاقَبُونَ فِيكُمْ مَلَائِكَةٌ بِاللَّيْلِ وَمَلَائِكَةٌ بِالنَّهَارِ، وَيَجْتَمِعُونَ فِي صَلَاةِ الْفَجْرِ وَصَلَاةِ الْعَصْرِ، ثُمَّ يَعْرُجُ الَّذِينَ بَاتُوا فِيكُمْ، فَيَسْأَلُهُمْ وَهُوَ أَعْلَمُ بِهِمْ: كَيْفَ تَرَكْتُمْ عِبَادِي؟ فَيَقُولُونَ: تَرَكْنَاهُمْ وَهُمْ يُصَلُّونَ، وَأَتَيْنَاهُمْ وَهُمْ يُصَلُّونَ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 922,
+   "printed_page": "1/ 115",
+   "number": "555"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 115",
+    "number": "555"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 439",
+    "number": "632"
+   }
+  ],
+  "verified": true,
+  "note": "Page marker ⦗١١٦⦘ removed from the middle (after the first word; verified in two parts). Muslim 632 not compared."
+ },
+ {
+  "sourceId": "65412",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو، قَالَ: صَلَّيْنَا مَعَ رَسُولِ اللَّهِ ﷺ الْمَغْرِبَ، فَرَجَعَ مَنْ رَجَعَ، وَعَقَّبَ مَنْ عَقَّبَ، فَجَاءَ رَسُولُ اللَّهِ ﷺ مُسْرِعًا، قَدْ حَفَزَهُ النَّفَسُ، وَقَدْ حَسَرَ عَنْ رُكْبَتَيْهِ، فَقَالَ: \" أَبْشِرُوا، هَذَا رَبُّكُمْ قَدْ فَتَحَ بَابًا مِنْ أَبْوَابِ السَّمَاءِ، يُبَاهِي بِكُمُ الْمَلَائِكَةَ، يَقُولُ: انْظُرُوا إِلَى عِبَادِي قَدْ قَضَوْا فَرِيضَةً، وَهُمْ يَنْتَظِرُونَ أُخْرَى \"",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "رواه ابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن ابن ماجه",
+   "book_id": 1198,
+   "page_id": 1032,
+   "printed_page": "1/ 262",
+   "number": "801"
+  },
+  "takhrij": [
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "1/ 513",
+    "number": "801"
+   }
+  ],
+  "verified": true,
+  "note": "Bare «صحيح» footnote = Albani grade of this edition (also printed: «في الزوائد هذا إسناد صحيح. ورجاله ثقات»). Ref page 1/513 is another print (this edition: 1/262). Spaces inside the quote marks are as printed."
+ },
+ {
+  "sourceId": "65455",
+  "status": "found",
+  "text": "كُنْتُ أَبِيتُ مَعَ رَسُولِ اللَّهِ ﷺ. فَأَتَيْتُهُ بِوَضُوئِهِ وَحَاجَتِهِ. فَقَالَ لِي \"سَلْ\" فَقُلْتُ: أَسْأَلُكَ مُرَافَقَتَكَ فِي الْجَنَّةِ. قَالَ \"أَوْ غَيْرَ ذَلِكَ؟ \" قُلْتُ: هُوَ ذَاكَ. قَالَ \"فَأَعِنِّي عَلَى نَفْسِكَ بِكَثْرَةِ السُّجُودِ\".",
+  "narrator": "ربيعة بن كعب الأسلمي",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1041,
+   "printed_page": "1/ 353",
+   "number": "489"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 353",
+    "number": "489"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker in the isnad (حدثني ربيعة بن كعب الأسلمي؛ قال:); text starts after the colon."
+ },
+ {
+  "sourceId": "65456",
+  "status": "found",
+  "text": "تَأْكُلُ النَّارُ مِنَ ابْنِ آدَمَ إِلَّا أَثَرَ السُّجُودِ. حَرَّمَ اللَّهُ عَلَى النَّارِ أَنْ تَأْكُلَ أَثَرَ السُّجُودِ.",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 399,
+   "printed_page": "1/ 165",
+   "number": "182"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 163",
+    "number": "182"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 128",
+    "number": "7437"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 117",
+    "number": "6573"
+   }
+  ],
+  "verified": true,
+  "note": "EXCERPT from the middle of the long hadith of رؤية الله (Muslim 182), which is how the input also quotes it. Muslim wording «مِنَ ابْنِ آدَمَ» matches the input exactly (Bukhari 7437 reads «تَأْكُلُ النَّارُ ابْنَ آدَمَ» without مِنَ). Page marker ⦗١٦٥⦘ precedes it, so printed page 1/165 (hadith starts 1/163)."
+ },
+ {
+  "sourceId": "65555",
+  "status": "found",
+  "text": "حُدِّثَ ابْنُ عُمَرَ: أَنَّ أَبَا هُرَيْرَةَ ﵃ يَقُولُ: مَنْ تَبِعَ جَنَازَةً فَلَهُ قِيرَاطٌ فَقَالَ: أَكْثَرَ أَبُو هُرَيْرَةَ عَلَيْنَا. فَصَدَّقَتْ، يَعْنِي عَائِشَةَ، أَبَا هُرَيْرَةَ، وَقَالَتْ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُهُ: فَقَالَ ابْنُ عُمَرَ ﵄: لَقَدْ فَرَّطْنَا فِي قَرَارِيطَ كَثِيرَةٍ",
+  "narrator": "ابن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2133,
+   "printed_page": "2/ 87",
+   "number": "1323"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 87",
+    "number": "1323"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 653",
+    "number": "945"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording matches the input. Text is Bukhari 1323 + 1324 (the sentence continues): the inner hadith-number marker «١٣٢٤ - » was removed from the middle (verified in two parts). Starts after «سمعت نافعا يقول: «» and omits the closing »; contains printed glyphs ﵃ ﵄. The narration is Nafi’ from Ibn Umar about Abu Hurayra and Aisha; narrator field set to ابن عمر (the last speaker). Muslim 945 not compared."
+ },
+ {
+  "sourceId": "65563",
+  "status": "notfound",
+  "reason": "Found Muslim 947 (page_id 2130, printed 2/ 654) with matn «مَا مِنْ مَيِّتٍ تُصَلِّي عَلَيْهِ أُمَّةٌ مِنَ الْمُسْلِمِينَ يَبْلُغُونَ مِائَةً…», but this edition prints the isnad as «عَنْ عَبْدِ اللَّهِ بن يزيد رضيع عائشة، عن النبي ﷺ قَالَ» (Aisha is not named as the narrator; the page then adds a second route via أنس بن مالك). The input says narrator = Aisha, so the narrator cannot be confirmed from Shamela; decide manually."
+ },
+ {
+  "sourceId": "6269",
+  "status": "found",
+  "text": "عَنْ جُنْدُبِ بْنِ سُفْيَانَ الْبَجَلِيِّ، عَنِ النَّبِيِّ أَنَّهُ قَالَ: \" مَنْ صَلَّى صَلَاةَ الصُّبْحِ، فَهُوَ فِي ذِمَّةِ اللهِ ﷿، فَانْظُرْ يَا ابْنَ آدَمَ لَا يَطْلُبَنَّكَ اللهُ مِنْ ذِمَّتِهِ بِشَيْءٍ \"",
+  "narrator": "جندب بن سفيان البجلي",
+  "attribution": "رواه مسلم بلفظ: «من صلى الصبح فهو في ذمة الله، فلا يطلبنكم الله من ذمته بشيء فيدركه فيكبه في نار جهنم»، وهذا لفظ أحمد",
+  "grade": "صحيح",
+  "gradeBy": "محققو المسند",
+  "primary": {
+   "book": "مسند أحمد",
+   "book_id": 25794,
+   "page_id": 15318,
+   "printed_page": "31/ 111",
+   "number": "18814"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد",
+    "printed_page": "31/ 111",
+    "number": "18814"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 454",
+    "number": "657"
+   }
+  ],
+  "verified": true,
+  "note": "Ahmad’s own wording (as the input attribution says; Muslim 657 has a different ending). Editors’ grading printed on the page: «إسناده صحيح على شرط مسلم». Printed «عَنِ النَّبِيِّ» has no ﷺ in this edition. Contains glyph ﷿; spaces inside the quote marks and the footnote marker (١) after the closing quote are as printed/omitted."
+ },
+ {
+  "sourceId": "11287",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ؛ قَالَ: أَتَى النَّبِيَّ ﷺ رَجُلٌ أَعْمَى. فَقَالَ: يَا رَسُولَ اللَّهِ! إِنَّهُ لَيْسَ لِي قَائِدٌ يَقُودُنِي إِلَى الْمَسْجِدِ. فَسَأَلَ رَسُولَ اللَّهِ ﷺ أَنْ يُرَخِّصَ لَهُ فَيُصَلِّيَ فِي بَيْتِهِ. فَرَخَّصَ لَهُ. فَلَمَّا وَلَّى دَعَاهُ فَقَالَ \"هَلْ تَسْمَعُ النِّدَاءَ بِالصَّلَاةِ؟ \" فقال: نَعَمْ. قَالَ \"فَأَجِبْ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1426,
+   "printed_page": "1/ 452",
+   "number": "653"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 452",
+    "number": "653"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5436",
+  "status": "found",
+  "text": "عَنْ أَبِي هريرة، عن النبي ﷺ: \"مَنْ غَدَا إِلَى الْمَسْجِدِ أَوْ رَاحَ. أَعَدَّ اللَّهُ لَهُ فِي الْجَنَّةِ نُزُلًا. كُلَّمَا غَدَا أو راح\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1462,
+   "printed_page": "1/ 463",
+   "number": "669"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 463",
+    "number": "669"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 133",
+    "number": "662"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim wording matches the input («أو راح أعد الله له في الجنة نزلا»); Bukhari 662 (page_id 1090) reads «وَرَاحَ، أَعَدَّ اللهُ لَهُ نُزُلَهُ مِنَ الْجَنَّةِ», so Muslim was used as primary."
+ },
+ {
+  "sourceId": "8953",
+  "status": "found",
+  "text": "إِنَّكُمْ، أَيُّهَا النَّاسُ! تَأْكُلُونَ شَجَرَتَيْنِ لَا أَرَاهُمَا إِلَّا خَبِيثَتَيْنِ. هَذَا الْبَصَلَ وَالثُّومَ. لَقَدْ رَأَيْتُ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ سلم، إِذَا وَجَدَ رِيحَهُمَا مِنَ الرَّجُلِ فِي الْمَسْجِدِ، أَمَرَ بِهِ فَأُخْرِجَ إِلَى الْبَقِيعِ. فَمَنْ أَكَلَهُمَا فليمتهما طبخا.",
+  "narrator": "عمر بن الخطاب",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1205,
+   "printed_page": "1/ 396",
+   "number": "567"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 396",
+    "number": "567"
+   }
+  ],
+  "verified": true,
+  "note": "Ref gave no page/number; located by wording. EXCERPT from Umar’s Friday khutba (starts at «إِنَّكُمْ», dropping the leading «ثُمَّ»). Printed typo in this edition: «صَلَّى اللَّهُ عَلَيْهِ سلم» (missing «و») kept verbatim; fix by hand only if Omar approves."
+ },
+ {
+  "sourceId": "11286",
+  "status": "found",
+  "text": "سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «تَفْضُلُ صَلَاةُ الْجَمِيعِ صَلَاةَ أَحَدِكُمْ وَحْدَهُ، بِخَمْسٍ وَعِشْرِينَ جُزْءًا، وَتَجْتَمِعُ مَلَائِكَةُ اللَّيْلِ وَمَلَائِكَةُ النَّهَارِ فِي صَلَاةِ الْفَجْرِ». ثُمَّ يَقُولُ أَبُو هُرَيْرَةَ: فَاقْرَءُوا إِنْ شِئْتُمْ: ﴿إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودًا﴾.",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1072,
+   "printed_page": "1/ 131",
+   "number": "648"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 131",
+    "number": "648"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 450",
+    "number": "649"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts after the colon of «أن أبا هريرة قال:». Verse printed in ﴿﴾ without the sura reference. Muslim 649 not compared."
+ },
+ {
+  "sourceId": "11288",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ، عَنِ النَّبِيِّ ﷺ، قَالَ: «مَنْ سَمِعَ النِّدَاءَ فَلَمْ يَأْتِهِ، فَلَا صَلَاةَ لَهُ، إِلَّا مِنْ عُذْرٍ»",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "رواه ابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن ابن ماجه",
+   "book_id": 1198,
+   "page_id": 1022,
+   "printed_page": "1/ 260",
+   "number": "793"
+  },
+  "takhrij": [
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "1/ 260",
+    "number": "793"
+   }
+  ],
+  "verified": true,
+  "note": "Ref gave no page/number; located by wording. Bare «صحيح» footnote = Albani grade of this edition."
+ },
+ {
+  "sourceId": "11299",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ؛ قَالَ: قال رسول الله ﷺ: \"خَيْرُ صُفُوفِ الرِّجَالِ أَوَّلُهَا. وَشَرُّهَا آخِرُهَا. وَخَيْرُ صُفُوفِ النِّسَاءِ آخِرُهَا. وَشَرُّهَا أَوَّلُهَا\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 931,
+   "printed_page": "1/ 326",
+   "number": "440"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 326",
+    "number": "440"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65737",
+  "status": "found",
+  "text": "أَنَّ رَسُولَ اللَّهِ ﷺ، قَالَ: «أَقِيمُوا الصُّفُوفَ وَحَاذُوا بَيْنَ الْمَنَاكِبِ وَسُدُّوا الْخَلَلَ وَلِينُوا بِأَيْدِي إِخْوَانِكُمْ - لَمْ يَقُلْ عِيسَى بِأَيْدِي إِخْوَانِكُمْ - وَلَا تَذَرُوا فُرُجَاتٍ لِلشَّيْطَانِ وَمَنْ وَصَلَ صَفًّا وَصَلَهُ اللَّهُ، وَمَنْ قَطَعَ صَفًّا قَطَعَهُ اللَّهُ»",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "رواه أبو داود",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 907,
+   "printed_page": "1/ 179",
+   "number": "666"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 8",
+    "number": "666"
+   }
+  ],
+  "verified": true,
+  "note": "Abu Dawud 666 prints an inline isnad remark INSIDE the matn («- لَمْ يَقُلْ عِيسَى بِأَيْدِي إِخْوَانِكُمْ -»), kept verbatim as required; the wording is otherwise the input’s. In the isnad the Ibn Umar route is broken by «عن أبي شجرة - لم يذكر ابن عمر -» (Qutaiba), so text starts at «أَنَّ». Page marker ⦗١٧٩⦘ precedes the matn (ref page 2/8 is another print). Review whether to show this one or take a cleaner wording from Ahmad."
+ },
+ {
+  "sourceId": "3325",
+  "status": "found",
+  "text": "سمعت رسول الله ﷺ يقول: \"لا تمنعوا نسائكم الْمَسَاجِدَ إِذَا اسْتَأْذَنَّكُمْ إِلَيْهَا\". قَالَ فَقَالَ بِلَالُ بْنُ عَبْدِ اللَّهِ: وَاللَّهِ! لَنَمْنَعُهُنَّ. قَالَ فَأَقْبَلَ عَلَيْهِ عَبْدُ اللَّهِ فَسَبَّهُ سَبًّا سَيِّئًا. مَا سَمِعْتُهُ سَبَّهُ مِثْلَهُ قَطُّ. وَقَالَ: أُخْبِرُكَ عَنْ رسول الله ﷺ، وتقول: والله! لنمنعهن!.",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "الرواية الأولى: متفق عليها",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 935,
+   "printed_page": "1/ 327",
+   "number": "442"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 327",
+    "number": "442"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 173",
+    "number": "873"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 38",
+    "number": "5238"
+   }
+  ],
+  "verified": true,
+  "note": "The input text blends two Muslim 442 narrations. Muslim 442 (page_id 934, 1/326) has «إِذَا اسْتَأْذَنَتْ أَحَدَكُمُ امْرَأَتُهُ إِلَى الْمَسْجِدِ فَلَا يَمْنَعْهَا» with no Bilal story; the Bilal story is only in the narration on 1/327 used here, whose first line reads «لا تمنعوا نسائكم المساجد إذا استأذنكم إليها». Bukhari 873 / 5238 (page_ids 1425 / 7824) are the short «إِذَا اسْتَأْذَنَتِ امْرَأَةُ أَحَدِكُمْ فَلَا يَمْنَعْهَا». Text starts after the colon of «عبد الله بن عمر قال:»."
+ },
+ {
+  "sourceId": "3441",
+  "status": "found",
+  "text": "عن ابن عمر؛ أن رسول الله ﷺ قال: \"صَلَاةُ الْجَمَاعَةِ أَفْضَلُ مِنْ صَلَاةِ الْفَذِّ بِسَبْعٍ وعشرين درجة\".",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1417,
+   "printed_page": "1/ 450",
+   "number": "650"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 450",
+    "number": "650"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 131",
+    "number": "645"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim wording («أَفْضَلُ مِنْ صَلَاةِ الْفَذِّ») matches the input; Bukhari 645 (page_id 1068) reads «تَفْضُلُ صَلَاةَ الْفَذِّ». Refs gave no page/number."
+ }
+]

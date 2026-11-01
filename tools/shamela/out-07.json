@@ -1,0 +1,852 @@
+[
+ {
+  "sourceId": "65753",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ : «أَنَّ رَسُولَ اللهِ ﷺ ذَكَرَ يَوْمَ الْجُمُعَةِ فَقَالَ: فِيهِ سَاعَةٌ لَا يُوَافِقُهَا عَبْدٌ مُسْلِمٌ، وَهُوَ قَائِمٌ يُصَلِّي، يَسْأَلُ اللهَ تَعَالَى شَيْئًا، إِلَّا أَعْطَاهُ إِيَّاهُ. وَأَشَارَ بِيَدِهِ يُقَلِّلُهَا».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1522,
+   "printed_page": "2/ 13",
+   "number": "935"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 13",
+    "number": "935"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 583",
+    "number": "852"
+   }
+  ],
+  "verified": true,
+  "note": "Wording matches Bukhari 935 closely (input text); Muslim 852 not compared."
+ },
+ {
+  "sourceId": "65754",
+  "status": "found",
+  "text": "عَنْ أَبِي بُرْدَةَ بْنِ أَبِي مُوسَى الْأَشْعَرِيِّ. قَالَ: قَالَ لِي عَبْدُ اللَّهِ بْنُ عُمَرَ: أَسَمِعْتَ أَبَاكَ يُحَدِّثُ عَنْ رَسُولِ اللَّهِ ﷺ في شَأْنِ سَاعَةِ الْجُمُعَةِ؟ قَالَ قُلْتُ: نَعَمْ. سَمِعْتُهُ يَقُولُ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: \"هِيَ مَا بَيْنَ أَنْ يَجْلِسَ الْإِمَامُ إِلَى أَنْ تُقْضَى الصَّلَاةُ\".",
+  "narrator": "أبو موسى الأشعري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1903,
+   "printed_page": "2/ 584",
+   "number": "853"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 584",
+    "number": "853"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at Abu Burda (successor) because the dialogue with Ibn Umar is part of the matn; the companion who heard the Prophet is his father Abu Musa al-Ashari. Input grade was 'صحيح بشواهده'; Muslim = صحيح per rules."
+ },
+ {
+  "sourceId": "65755",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ عَبْدِ اللَّهِ، عَنْ رَسُولِ اللَّهِ ﷺ أَنَّهُ قَالَ: «يَوْمُ الْجُمُعَةِ ثِنْتَا عَشْرَةَ - يُرِيدُ - سَاعَةً، لَا يُوجَدُ مُسْلِمٌ يَسْأَلُ اللَّهَ ﷿ شَيْئًا، إِلَّا أَتَاهُ اللَّهُ ﷿، فَالْتَمِسُوهَا آخِرَ سَاعَةٍ بَعْدَ الْعَصْرِ»",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه أبو داود والنسائي",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1408,
+   "printed_page": "1/ 275",
+   "number": "1048"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 281",
+    "number": "1048"
+   },
+   {
+    "book": "سنن النسائي",
+    "printed_page": "3/ 99",
+    "number": "1389"
+   }
+  ],
+  "verified": true,
+  "note": "Printed page 1/ 275 in this edition (ref says 2/ 281). Grade is the bare footnote 'صحيح' of the edition."
+ },
+ {
+  "sourceId": "65756",
+  "status": "found",
+  "text": "عَنْ سَلْمَانَ الْفَارِسِيِّ قَالَ: قَالَ النَّبِيُّ ﷺ: «لَا يَغْتَسِلُ رَجُلٌ يَوْمَ الْجُمُعَةِ، وَيَتَطَهَّرُ مَا اسْتَطَاعَ مِنْ طُهْرٍ، وَيَدَّهِنُ مِنْ دُهْنِهِ، أَوْ يَمَسُّ مِنْ طِيبِ بَيْتِهِ، ثُمَّ يَخْرُجُ فَلَا يُفَرِّقُ بَيْنَ اثْنَيْنِ، ثُمَّ يُصَلِّي مَا كُتِبَ لَهُ، ثُمَّ يُنْصِتُ إِذَا تَكَلَّمَ الْإِمَامُ، إِلَّا غُفِرَ لَهُ مَا بَيْنَهُ وَبَيْنَ الْجُمُعَةِ الْأُخْرَى».",
+  "narrator": "سلمان الفارسي",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1442,
+   "printed_page": "2/ 3",
+   "number": "883"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 3",
+    "number": "883"
+   }
+  ],
+  "verified": true,
+  "note": "Page marker [ص: ٤] (between 'مِنْ' and 'دُهْنِهِ') removed; verify_quote returned verbatim for the two halves split at the marker. Number is 883 in this edition."
+ },
+ {
+  "sourceId": "65761",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، عَنِ النَّبِيِّ ﷺ قَالَ: \"مَنِ اغْتَسَلَ، ثُمَّ أَتَى الْجُمُعَةَ، فَصَلَّى مَا قُدِّرَ لَهُ. ثُمَّ أَنْصَتَ حَتَّى يَفْرُغَ مِنْ خُطْبَتِهِ. ثُمَّ يُصَلِّي مَعَهُ، غُفِرَ لَهُ مَا بَيْنَهُ وَبَيْنَ الْجُمُعَةِ الْأُخْرَى، وَفَضْلُ ثَلَاثَةِ أَيَّامٍ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1915,
+   "printed_page": "2/ 587",
+   "number": "857"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 587",
+    "number": "857"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65767",
+  "status": "found",
+  "text": "أَنَّ عَبْدَ اللَّهِ بْنَ عُمَرَ وَأَبَا هُرَيْرَةَ حَدَّثَاهُ؛ أَنَّهُمَا سَمِعَا رَسُولَ اللَّهِ ﷺ يَقُولُ، عَلَى أَعْوَادِ مِنْبَرِهِ. \"لَيَنْتَهِيَنَّ أَقْوَامٌ عَنْ وَدْعِهِمُ الْجُمُعَاتِ. أَوْ لَيَخْتِمَنَّ اللَّهُ عَلَى قُلُوبِهِمْ. ثُمَّ لَيَكُونُنَّ من الغافلين\".",
+  "narrator": "عبد الله بن عمر وأبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1930,
+   "printed_page": "2/ 591",
+   "number": "865"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "2/ 591",
+    "number": "865"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "65768",
+  "status": "found",
+  "text": "عَنْ أَبِي الْجَعْدِ الضَّمْرِيِّ، وَكَانَتْ لَهُ صُحْبَةٌ، أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: «مَنْ تَرَكَ ثَلَاثَ جُمَعٍ تَهَاوُنًا بِهَا، طَبَعَ اللَّهُ عَلَى قَلْبِهِ»",
+  "narrator": "أبو الجعد الضمري",
+  "attribution": "رواه أبو داود والترمذي والنسائي وابن ماجه وأحمد",
+  "grade": "حسن صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 1414,
+   "printed_page": "1/ 277",
+   "number": "1052"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "2/ 284",
+    "number": "1052"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "1/ 630",
+    "number": "500"
+   },
+   {
+    "book": "سنن النسائي",
+    "printed_page": "3/ 88",
+    "number": "1369"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "printed_page": "2/ 213",
+    "number": "1125"
+   },
+   {
+    "book": "مسند أحمد",
+    "printed_page": "24/ 255",
+    "number": "15498"
+   }
+  ],
+  "verified": true,
+  "note": "Grade copied verbatim from the bare footnote 'حسن صحيح' printed under the hadith in this edition (Albani grades). Printed page 1/ 277 (ref says 2/ 284)."
+ },
+ {
+  "sourceId": "66520",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، عَنِ النَّبِيِّ ﷺ قَالَ: «لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ».",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 29,
+   "printed_page": "1/ 12",
+   "number": "13"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 12",
+    "number": "13"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 67",
+    "number": "45"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording matches input. Text taken from the second isnad of Bukhari 13 (via Husayn al-Muallim); the Shamela text says 'أنس' only."
+ },
+ {
+  "sourceId": "66521",
+  "status": "found",
+  "text": "ثِنْتَانِ حَفِظْتُهُمَا عَنْ رَسُولِ اللَّهِ ﷺ. قَالَ (إِنَّ اللَّهَ كَتَبَ الْإِحْسَانَ عَلَى كُلِّ شَيْءٍ. فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ. وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذَّبْحَ. وَلْيُحِدَّ أَحَدُكُمْ شفرته. فليرح ذبيحته).",
+  "narrator": "شداد بن أوس",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4989,
+   "printed_page": "3/ 1548",
+   "number": "1955"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1548",
+    "number": "1955"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording (الذِّبْحَةَ / وَلْيُرِحْ ذَبِيحَتَهُ) is not the wording of Muslim 1955 in Shamela; this is Muslim's own wording (same hadith as sourceId 4319). Text starts after the companion colon 'عَنْ شَدَّادِ بْنِ أَوْسٍ. قَالَ:'. Printed parentheses kept as printed."
+ },
+ {
+  "sourceId": "66523",
+  "status": "found",
+  "text": "قَالَ النَّبِيُّ ﷺ: «إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلَامِ النُّبُوَّةِ الْأُولَى: إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ.»",
+  "narrator": "أبو مسعود عقبة بن عمرو الأنصاري",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9164,
+   "printed_page": "8/ 29",
+   "number": "6120"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 29",
+    "number": "6120"
+   }
+  ],
+  "verified": true,
+  "note": "Companion is the speaker in the isnad ('حَدَّثَنَا أَبُو مَسْعُودٍ قَالَ:'), text starts right after the colon."
+ },
+ {
+  "sourceId": "3017",
+  "status": "found",
+  "text": "عَنِ الْمِقْدَامِ بْنِ مَعْدِي كَرِبَ، وَقَدْ كَانَ أَدْرَكَهُ عَنِ النَّبِيِّ ﷺ، قَالَ: «إِذَا أَحَبَّ الرَّجُلُ أَخَاهُ فَلْيُخْبِرْهُ أَنَّهُ يُحِبُّهُ»",
+  "narrator": "المقدام بن معدي كرب",
+  "attribution": "رواه أبو داود والترمذي والنسائي في الكبرى وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 6998,
+   "printed_page": "4/ 332",
+   "number": "5124"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 444",
+    "number": "5124"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "4/ 199",
+    "number": "2392"
+   },
+   {
+    "book": "مسند أحمد",
+    "printed_page": "28/ 408",
+    "number": "17171"
+   }
+  ],
+  "verified": true,
+  "note": "Printed page 4/ 332 in this edition (ref says 7/ 444). Grade is the bare footnote 'صحيح'. Text includes the printed isnad phrase 'وَقَدْ كَانَ أَدْرَكَهُ'."
+ },
+ {
+  "sourceId": "3716",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ عَبْدِ اللهِ ﵄: أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «رَحِمَ اللهُ رَجُلًا، سَمْحًا إِذَا بَاعَ، وَإِذَا اشْتَرَى، وَإِذَا اقْتَضَى.»",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3303,
+   "printed_page": "3/ 57",
+   "number": "2076"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 57",
+    "number": "2076"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "3753",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ؛ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ (كَانَ رَجُلٌ يُدَايِنُ النَّاسَ. فَكَانَ يَقُولُ لِفَتَاهُ: إِذَا أَتَيْتَ مُعْسِرًا فَتَجَاوَزْ عَنْهُ. لَعَلَّ اللَّهَ يَتَجَاوَزُ عَنَّا. فَلَقِيَ اللَّهَ فَتَجَاوَزَ عَنْهُ).",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 3931,
+   "printed_page": "3/ 1196",
+   "number": "1562"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1196",
+    "number": "1562"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 176",
+    "number": "3480"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim chosen as primary because its wording matches the input text exactly; Bukhari 3480 has different wording (كان الرجل ... أن يتجاوز عنا). Printed parentheses kept as printed."
+ },
+ {
+  "sourceId": "4319",
+  "status": "found",
+  "text": "ثِنْتَانِ حَفِظْتُهُمَا عَنْ رَسُولِ اللَّهِ ﷺ. قَالَ (إِنَّ اللَّهَ كَتَبَ الْإِحْسَانَ عَلَى كُلِّ شَيْءٍ. فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ. وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذَّبْحَ. وَلْيُحِدَّ أَحَدُكُمْ شفرته. فليرح ذبيحته).",
+  "narrator": "شداد بن أوس",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4989,
+   "printed_page": "3/ 1548",
+   "number": "1955"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1548",
+    "number": "1955"
+   }
+  ],
+  "verified": true,
+  "note": "Same hadith and same Shamela text as sourceId 66521 (duplicate item). Text starts after the companion colon 'عَنْ شَدَّادِ بْنِ أَوْسٍ. قَالَ:'. Printed parentheses kept as printed."
+ },
+ {
+  "sourceId": "4709",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁: «أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ ﷺ: أَوْصِنِي، قَالَ: لَا تَغْضَبْ، فَرَدَّدَ مِرَارًا قَالَ: لَا تَغْضَبْ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9158,
+   "printed_page": "8/ 28",
+   "number": "6116"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 28",
+    "number": "6116"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "4935",
+  "status": "found",
+  "text": "قال رسول الله ﷺ (إِنَّ الْمُقْسِطِينَ، عِنْدَ اللَّهِ، عَلَى مَنَابِرَ مِنْ نُورٍ. عَنْ يَمِينِ الرَّحْمَنِ ﷿. وَكِلْتَا يَدَيْهِ يَمِينٌ؛ الَّذِينَ يَعْدِلُونَ فِي حُكْمِهِمْ وَأَهْلِيهِمْ وما ولوا).",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4662,
+   "printed_page": "3/ 1458",
+   "number": "1827"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1458",
+    "number": "1827"
+   }
+  ],
+  "verified": true,
+  "note": "The isnad in Shamela is mixed (Ibn Numayr/Abu Bakr vs Zuhayr variants: 'عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو ... وَفِي حَدِيثِ زُهَيْرٍ قَالَ:'), so the text starts at the matn 'قال رسول الله ﷺ'. Printed parentheses kept as printed."
+ },
+ {
+  "sourceId": "4939",
+  "status": "found",
+  "text": "عَنْ جَرِيرٍ، عَنِ النَّبِيِّ ﷺ قال \"من يحرم الرفق، يحرم الخير\".",
+  "narrator": "جرير بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6533,
+   "printed_page": "4/ 2003",
+   "number": "2592"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2003",
+    "number": "2592"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2592 has two narrations under the same number (sections 74 and 75, pages 6533 and 6534). Used the first (74, 'عَنْ جَرِيرٍ، عَنِ النَّبِيِّ ﷺ'), which matches the input wording."
+ },
+ {
+  "sourceId": "5348",
+  "status": "found",
+  "text": "عَنْ أَبِي ذَرٍّ. قَالَ: قَالَ لي النبي ﷺ \"لا تحقرن من المعروف شيئا، ولو أن تلقى أخاك بوجه طلق\".",
+  "narrator": "أبو ذر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6626,
+   "printed_page": "4/ 2026",
+   "number": "2626"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2026",
+    "number": "2626"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5351",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9156,
+   "printed_page": "8/ 28",
+   "number": "6114"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 28",
+    "number": "6114"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2014",
+    "number": "2609"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording matches input; Muslim 2609 not compared."
+ },
+ {
+  "sourceId": "5354",
+  "status": "found",
+  "text": "عَنْ أَبِي مَسْعُودٍ الأَنْصَارِيِّ. قَالَ: جَاءَ رَجُلٌ إِلَى النَّبِيِّ ﷺ فَقَالَ: إِنِّي أُبْدِعَ بِي فَاحْمِلْنِي. فَقَالَ (مَا عِنْدِي) فَقَال رَجُلٌ: يَا رَسُولَ اللَّهِ! أَنَا أَدُلُّهُ عَلَى مَنْ يَحْمِلُهُ. فَقَالَ رَسُولُ اللَّهِ ﷺ (مَنْ دَلَّ على خير فله مثل أجر فاعله).",
+  "narrator": "أبو مسعود الأنصاري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4834,
+   "printed_page": "3/ 1506",
+   "number": "1893"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1506",
+    "number": "1893"
+   }
+  ],
+  "verified": true,
+  "note": "Printed parentheses kept as printed."
+ },
+ {
+  "sourceId": "5437",
+  "status": "found",
+  "text": "عن أبي هريرة، عن رسول الله ﷺ قَالَ \"مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ. وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيُكْرِمْ جاره. ومن كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ ضَيْفَهُ\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 137,
+   "printed_page": "1/ 68",
+   "number": "47"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 68",
+    "number": "47"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 11",
+    "number": "6018"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim chosen as primary because its wording (فَلْيُكْرِمْ جاره ... فَلْيُكْرِمْ ضَيْفَهُ) matches the input; on Bukhari page 8/ 11 the search hit shows 'فَلَا يُؤْذِ جَارَهُ' in the hadith with this beginning, so it differs."
+ },
+ {
+  "sourceId": "5439",
+  "status": "found",
+  "text": "عَنْ جَرِيرِ بْنِ عَبْدِ اللَّهِ. قَالَ: قَالَ رسول الله ﷺ \"من لَا يَرْحَمْ النَّاسَ لَا يَرْحَمْهُ اللَّهُ ﷿\".",
+  "narrator": "جرير بن عبد الله",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5964,
+   "printed_page": "4/ 1809",
+   "number": "2319"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1809",
+    "number": "2319"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 10",
+    "number": "6013"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim chosen as primary because its wording matches the input; a Bukhari search for this phrase returned no match."
+ },
+ {
+  "sourceId": "5478",
+  "status": "found",
+  "text": "سمع النبي ﷺ رَجُلًا يَعِظُ أَخَاهُ فِي الْحَيَاءِ. فَقَالَ: \"الْحَيَاءُ من الإيمان\".",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 121,
+   "printed_page": "1/ 63",
+   "number": "36"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 63",
+    "number": "36"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 14",
+    "number": "24"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim chosen as primary because its wording matches the input; Bukhari 24 words it differently (مَرَّ عَلَى رَجُلٍ مِنَ الْأَنْصَارِ). In Muslim the isnad ends 'عَنْ سَالِمٍ، عَنْ أبيه؛' (the father, Ibn Umar, is not named on the page), so the text starts at 'سمع'; narrator name is taken from the input."
+ },
+ {
+  "sourceId": "5514",
+  "status": "found",
+  "text": "عَنْ أَبِي الدَّرْدَاءِ، عَنِ النَّبِيِّ ﷺ قَالَ: «مَنْ رَدَّ عَنْ عِرْضِ أَخِيهِ رَدَّ اللَّهُ عَنْ وَجْهِهِ النَّارَ يَوْمَ القِيَامَةِ»",
+  "narrator": "أبو الدرداء",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن الترمذي",
+   "book_id": 1435,
+   "page_id": 3343,
+   "printed_page": "4/ 327",
+   "number": "1931"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "3/ 488",
+    "number": "1931"
+   },
+   {
+    "book": "مسند أحمد",
+    "printed_page": "45/ 528",
+    "number": "27543"
+   }
+  ],
+  "verified": true,
+  "note": "Edition footnote 'صحيح' = Albani. Tirmidhi's own grade printed after the hadith: 'هَذَا حَدِيثٌ حَسَنٌ'. Printed page 4/ 327 (ref says 3/ 488)."
+ },
+ {
+  "sourceId": "5545",
+  "status": "found",
+  "text": "سمعت رسول الله ﷺ يقول \"إن الله يحب العبد التقي، الغني، الخفي\".",
+  "narrator": "سعد بن أبي وقاص",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 7364,
+   "printed_page": "4/ 2277",
+   "number": "2965"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2277",
+    "number": "2965"
+   }
+  ],
+  "verified": true,
+  "note": "In Muslim the hadith comes at the end of a story (Sad rebukes his son Umar: 'اسكت. سمعت رسول الله ﷺ يقول ...'). Text starts at Sad's own words 'سمعت رسول الله ﷺ'; the story before it is not included."
+ },
+ {
+  "sourceId": "5796",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ، زَوْجِ النَّبِيِّ ﷺ، عَنِ النَّبِيِّ ﷺ قال \"إن الرفق لا يكون في شيء إلا زانه. ولا ينزع من شيء إلا شانه\".",
+  "narrator": "عائشة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6537,
+   "printed_page": "4/ 2004",
+   "number": "2594"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2004",
+    "number": "2594"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5799",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ رَحِمَهَا اللَّهُ، قَالَتْ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: «إِنَّ الْمُؤْمِنَ لَيُدْرِكُ بِحُسْنِ خُلُقِهِ دَرَجَةَ الصَّائِمِ الْقَائِمِ»",
+  "narrator": "عائشة",
+  "attribution": "رواه أبو داود وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 6557,
+   "printed_page": "4/ 252",
+   "number": "4798"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 176",
+    "number": "4798"
+   },
+   {
+    "book": "مسند أحمد",
+    "printed_page": "40/ 414",
+    "number": "24355"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the bare footnote 'صحيح' of the edition (input grade was 'صحيح بشواهده'). Printed page 4/ 252 (ref says 7/ 176)."
+ },
+ {
+  "sourceId": "5803",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ عَمْرٍو ﵄ قَالَ «لَمْ يَكُنِ النَّبِيُّ ﷺ فَاحِشًا وَلَا مُتَفَحِّشًا وَكَانَ يَقُولُ إِنَّ مِنْ خِيَارِكُمْ أَحْسَنَكُمْ أَخْلَاقًا.»",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5480,
+   "printed_page": "4/ 189",
+   "number": "3559"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 189",
+    "number": "3559"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1810",
+    "number": "2321"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 3559 wording matches input."
+ },
+ {
+  "sourceId": "5866",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، عَنِ النَّبِيِّ ﷺ قَالَ: «يَسِّرُوا وَلَا تُعَسِّرُوا، وَبَشِّرُوا وَلَا تُنَفِّرُوا».",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 131,
+   "printed_page": "1/ 25",
+   "number": "69"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 25",
+    "number": "69"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1358",
+    "number": "1732"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari wording matches input; Muslim 1732 not compared."
+ },
+ {
+  "sourceId": "8289",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو، يَبْلُغُ بِهِ النَّبِيَّ ﷺ، «الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ ارْحَمُوا أَهْلَ الْأَرْضِ يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ»",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "رواه أبو داود والترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 6758,
+   "printed_page": "4/ 285",
+   "number": "4941"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 297",
+    "number": "4941"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "3/ 483",
+    "number": "1924"
+   },
+   {
+    "book": "مسند أحمد ط الرسالة",
+    "printed_page": "11/ 33",
+    "number": "6494"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the bare footnote 'صحيح' of the edition. Printed page 4/ 285 (ref says 7/ 297). The printed phrase 'يَبْلُغُ بِهِ النَّبِيَّ' is part of the text."
+ }
+]
