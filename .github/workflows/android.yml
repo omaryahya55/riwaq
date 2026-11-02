@@ -11,15 +11,15 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
         with:
           distribution: temurin
           java-version: "17"
@@ -27,6 +27,13 @@ jobs:
       - name: فحص سريع لملفات الشاشة
         run: |
           for f in web/js/*.js; do node --check "$f"; done
+          # الصفحة تدعم Chrome 87 وفوق (WebHost.MIN_WEBVIEW): ممنوع مزايا أحدث بدون فحص
+          ! grep -nE "\?\.|\?\?=|\.at\(|structuredClone|replaceAll\(" web/js/*.js --exclude=quran-meta.js
+
+      - name: تباين النص فوق صور الخلفية
+        run: |
+          pip install --quiet pillow
+          python tools/check-contrast.py
 
       - name: اختبارات الحسابات (الصلاة، والهجري، والراتب)
         run: node --test tests/logic.test.mjs tests/worker.test.mjs
@@ -51,15 +58,36 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug assembleRelease
 
-      - uses: actions/upload-artifact@v4
+      # أسماء ثابتة يدوّر عليها زر التحديث في التطبيق (Update.latest)
+      - name: تسمية ملفات الإصدار
+        run: |
+          mkdir -p dist
+          V="${GITHUB_REF_NAME#v}"
+          [ "$V" = "$GITHUB_REF_NAME" ] && V=dev
+          cp android/app/build/outputs/apk/lite/release/*.apk "dist/riwaq-$V.apk"
+          cp android/app/build/outputs/apk/full/release/*.apk "dist/riwaq-full-$V.apk"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: riwaq-apk
-          path: android/app/build/outputs/apk/**/*.apk
+          path: dist/*.apk
 
-      - name: إصدار على GitHub
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
+  # الكتابة في المستودع لهذا الجزء بس، وللإصدارات (tag) بس
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          files: |
-            android/app/build/outputs/apk/release/*.apk
+          name: riwaq-apk
+          path: dist
+      - name: إصدار على GitHub
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: dist/*.apk
           body_path: CHANGELOG.md
+          prerelease: true

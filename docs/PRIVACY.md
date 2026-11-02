@@ -2,9 +2,9 @@
 
 # سياسة الخصوصية — رِواق
 
-آخر تحديث: 2026-10-24
+آخر تحديث: 2026-11-02
 
-رواق تطبيق واجهة رئيسية وشاشة توقف للتلفزيون. **ما يجمع أي بيانات عنك.**
+رواق تطبيق واجهة رئيسية وشاشة توقف للتلفزيون. **ما يجمع أي بيانات عنك، وما عنده سيرفر يستقبل شي منك.**
 
 ## اللي ما نسويه
 - ما فيه حساب ولا تسجيل دخول
@@ -13,19 +13,37 @@
 - ما نستخدم الكاميرا ولا الميكروفون ولا موقعك الجغرافي
 
 ## وين تنحفظ إعداداتك
-كل الإعدادات (المدينة، والأندية، وروابط الأخبار، وترتيب التطبيقات) **تنحفظ على التلفزيون نفسه بس**. إذا حذفت التطبيق، تنحذف معه.
+كل الإعدادات (المدينة، والأندية، وروابط الأخبار، وترتيب التطبيقات، والرمز) **تنحفظ على التلفزيون نفسه بس**. إذا حذفت التطبيق، تنحذف معه.
 
 ## الطلبات اللي تطلع من التلفزيون
-عشان تطلع البيانات الحية، التلفزيون يطلب من هذي المصادر مباشرة (أو عن طريق سيرفرنا الوسيط اللي ما يحفظ شي):
-- **Open-Meteo**: إحداثيات **المدينة** اللي اخترتها (مو موقعك الدقيق)، عشان الطقس
-- **gold-api.com** و **Frankfurter**: أسعار عامة، بدون أي معلومة عنك
-- **TheSportsDB**: أرقام الدوريات والأندية اللي اخترتها
-- **روابط الأخبار** اللي أنت تضيفها
+هذي المواقع تشوف عنوان الإنترنت (IP) حق بيتك مثل أي موقع تفتحه. ما نرسل لهم أي شي غير اللي تحت، وما يطلع طلب والواجهة ورا تطبيق ثاني:
 
-هذي المواقع تشوف عنوان الإنترنت (IP) حق بيتك مثل أي موقع تفتحه. ما نرسل لهم أي شي ثاني.
+| المصدر | وش ينرسل | متى |
+|---|---|---|
+| **Open-Meteo** | إحداثيات **المدينة** اللي اخترتها (مو موقعك الدقيق) | دايماً لو اخترت مدينة |
+| **raw.githubusercontent.com** (openfootball) | طلب ملف الدوري | لو تتابع نادي أوروبي أو تعرض جدوله |
+| **TheSportsDB** | أرقام الأندية والدوريات | لو شغّلت دوري روشن |
+| **gold-api.com** و **Frankfurter** | طلب أسعار عامة | في الكثافة الكاملة بس |
+| **روابط الأخبار** | طلب الخلاصة | لو اخترت مصادر أخبار |
+| **api.github.com** | طلب رقم آخر إصدار، مرة باليوم | دايماً. وتنزيل الملف لما تضغط «حدّث» |
+| **api.todoist.com** | مفتاحك أنت | لو أضفت مفتاح Todoist |
+| **api.telegram.org** | مفتاح البوت حقك | لو ربطت رسالة الجوال |
+| **رابط تقويمك** (قوقل) | الرابط السري نفسه | لو أضفته |
+
+مفتاح Todoist ورابط التقويم ومفتاح البوت يبقون على التلفزيون، وما يرجعون للجوال.
 
 ## صفحة الإعدادات من الجوال
-لما تفتح شاشة الإعدادات، التلفزيون يشغّل صفحة على **شبكة بيتك بس**، برمز سري جديد كل مرة يكون داخل الباركود. الصفحة تقفل أول ما تطلع من الشاشة.
+لما تفتح شاشة الإعدادات، التلفزيون يشغّل صفحة على **شبكة بيتك بس**، برمز سري جديد كل مرة داخل الباركود، وتقفل أول ما تطلع من الشاشة.
+**الصفحة بدون تشفير:** أي أحد على نفس الواي فاي ممكن يشوف اللي ينكتب وقتها، ومنها الرمز والمفاتيح وكلمة شبكة المجلس. استخدمها على شبكة بيتك بس.
+
+## خدمة إمكانية الوصول (النسخة الكاملة بس)
+تستقبل أزرار الريموت عشان الضغطة المطوّلة وأزرار التطبيقات، وما تقرأ محتوى أي شاشة، وما تحفظ الأزرار ولا تسجلها.
+
+## أكمل المشاهدة
+رواق يقرأ من قائمة النظام اسم التطبيق وعنوان اللي وقفت عنده ونسبة المشاهدة، ويعرضها على الشاشة بس، وما تطلع من الجهاز. يطلب إذن مرة وحدة، وتقدر تطفي الصف من الإعدادات.
+
+## الإبلاغ عن مشكلة
+يطلع باركود يفتح إيميل في جوالك، وتشوف كل اللي فيه قبله على الشاشة: الإصدار، وموديل الجهاز، ونسخة أندرويد وWebView، وآخر خطأ في الصفحة. ما ينرسل شي لحاله.
 
 ## الأطفال
 التطبيق مناسب لكل العائلة، وما يجمع بيانات من أحد.
@@ -39,4 +57,4 @@
 
 # Privacy Policy — Riwaq
 
-Riwaq collects **no personal data**: no account, no analytics, no ads, no tracking. All settings stay on the TV. To show live information the TV requests public data from Open-Meteo (the chosen city's coordinates), gold-api.com, Frankfurter, TheSportsDB and any news feeds you add; those services see your IP address like any website. The phone-settings page runs only on your home network while the settings screen is open, protected by a one-time token in the QR code.
+Riwaq collects **no personal data** and has no server that receives anything from you: no account, no analytics, no ads, no tracking. All settings stay on the TV. Requests leave the TV only while the screen is showing: Open-Meteo (the chosen city's coordinates), raw.githubusercontent.com (openfootball league files, if you follow a European club), TheSportsDB (only if you turn on the Saudi league), gold-api.com and Frankfurter (full-density screensaver only), news feeds you add, api.github.com (latest version number, once a day), and Todoist, Telegram or your calendar link only if you add them. Those services see your IP address like any website. The phone-settings page runs only on your home network while the settings screen is open, protected by a one-time token in the QR code, and is not encrypted. The accessibility service (full edition only) receives remote keys and does not read screens or store keys. The Continue Watching row reads titles from the system's Watch Next list and shows them on screen only. Problem reports are never sent automatically: a QR code opens an email on your phone with the text shown first.

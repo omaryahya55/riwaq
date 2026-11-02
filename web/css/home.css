@@ -5,7 +5,7 @@
 }
 
 /* ===== فوق: التاريخ | شريط التنقل | الوقت ===== */
-.h-top { position: absolute; top: 6px; right: 92px; left: 92px; height: 152px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.h-top { position: absolute; top: 20px; right: 92px; left: 92px; height: 152px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .h-top > .h-status { min-height: 58px; }
 /* اسم المشروع فوق الشريط بخط ريم كوفي (اختيار صاحب المشروع) */
 .h-center { display: flex; flex-direction: column; align-items: center; gap: 12px; }
@@ -45,7 +45,7 @@
 .hp-sub b { color: var(--gold); }
 .hp-cells { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 4px; }
 .hp-cell { text-align: center; padding: 8px 2px 10px; border-radius: 14px; }
-.hp-cell .n { font-size: 18px; color: var(--ink-3); }
+.hp-cell .n { font-size: 20px; color: var(--ink-3); }
 .hp-cell .t { font-size: 24px; font-weight: 600; }
 .hp-cell.past { opacity: .45; }
 .hp-cell.next { background: rgba(232,194,122,.14); box-shadow: inset 0 0 0 1px rgba(232,194,122,.45); }
@@ -55,8 +55,8 @@
 .h-content.long .hc-text { font-size: 26px; line-height: 1.75; }
 .h-content.xlong .hc-text { font-size: 23px; line-height: 1.7; }
 /* المصدر جزء من التدفق (مو مثبت) عشان القياس يعرف إذا النص دخل كامل */
-.hc-src { font-size: 17px; color: var(--ink-4); margin-top: 8px; }
-.hc-ref { font-size: 15px; line-height: 1.5; margin-top: 2px; }
+.hc-src { font-size: 20px; color: var(--ink-3); margin-top: 8px; }
+.hc-ref { font-size: 18px; line-height: 1.5; margin-top: 2px; }
 
 .h-today { display: flex; flex-direction: column; gap: 14px; }
 .ht-wx { display: flex; align-items: center; gap: 14px; font-size: 24px; margin-top: 4px; }
@@ -163,6 +163,7 @@
 .qk .ic { font-size: 30px; color: var(--gold); }
 .qk.focus { background: var(--gold); color: #1E1608; }
 .qk.focus .ic { color: #1E1608; }
+#stage.moment .quick h2 .ic { color: var(--ink-2); }
 
 /* ===== قفل التطبيقات ===== */
 .lock-badge { position: absolute; top: 12px; left: 12px; z-index: 3; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(0,0,0,.6); color: var(--gold); font-size: 24px; }
@@ -183,3 +184,74 @@
 .hc-place-img { float: left; width: 190px; height: 130px; object-fit: cover; border-radius: 16px; margin: 12px 18px 6px 0; }
 .reader-img { display: block; width: 100%; height: 300px; object-fit: cover; border-radius: 22px; margin-top: 20px; }
 .reader-img[hidden] { display: none; }
+
+/* ===== لوحة اللحظة (CONFIG.homeLayout = moment). عنصر حي واحد، والذهبي للوقت بس، والتحديد عاجي ===== */
+#home .m-top, #home .m-clock, #home .m-prayers, #home .m-next, #home .m-text, #home .m-rows, #home .m-credit { display: none; }
+#stage.moment .h-top, #stage.moment .h-rows, #stage.moment .h-prayer { display: none; }
+#stage.moment #home .m-top { display: flex; position: absolute; top: 56px; right: 96px; left: 96px; justify-content: space-between; align-items: center; }
+#stage.moment .m-date { font-size: 30px; font-weight: 500; }
+#stage.moment .m-date small { display: block; font-size: 24px; color: var(--ink-2); margin-top: 2px; font-weight: 400; }
+#stage.moment .m-nav { display: flex; gap: 14px; }
+#stage.moment .nav-pill { height: 60px; padding: 0 28px 4px; font-size: 24px; color: var(--ink); background: rgba(10,9,8,.42); border-color: rgba(255,255,255,.14); }
+#stage.moment .nav-pill .ic { color: var(--ink-2); }
+#stage.moment .nav-pill.focus { background: var(--ink); color: #15110A; transform: scale(1.05); }
+#stage.moment .nav-pill.focus .ic { color: #15110A; }
+#stage.moment #home .m-clock { display: block; position: absolute; top: 176px; right: 96px; font-family: var(--font-display); font-size: 176px; line-height: 1.1; }
+#stage.moment .m-clock small { font: 500 44px var(--font-ui); color: var(--gold); margin-right: 18px; vertical-align: 44px; }
+.m-prayers { gap: 42px; font-size: 30px; font-weight: 500; }
+.m-prayers > div { text-align: center; }
+.m-prayers label { display: block; font-size: 24px; font-weight: 400; color: var(--ink-2); }
+.m-prayers .n, .m-prayers .n label { color: var(--gold); font-weight: 600; }
+.m-next { color: var(--gold); font-size: 30px; font-weight: 600; }
+#stage.moment #home .m-prayers { display: flex; position: absolute; top: 400px; right: 96px; }
+#stage.moment #home .m-next { display: block; position: absolute; top: 514px; right: 96px; }
+#stage.moment #home .m-text { display: block; position: absolute; top: 196px; left: 96px; width: 760px; height: 400px; overflow: hidden; }
+.m-text b { display: block; font-size: 24px; font-weight: 500; color: var(--ink-2); margin-bottom: 4px; }
+.m-text p { font-size: 38px; white-space: pre-line; }
+.m-text small { display: block; font-size: 24px; line-height: 1.5; color: var(--ink-2); margin-top: 8px; }
+.m-match { font-size: 48px; font-weight: 600; margin-top: 12px; }
+.m-match span { color: var(--gold); margin: 0 12px; }
+#stage.moment #home .m-rows { display: block; position: absolute; right: 0; left: 0; bottom: 84px; }
+.m-cap { height: 66px; padding: 0 96px; font-size: 44px; font-weight: 600; white-space: nowrap; overflow: hidden; }
+.m-track { position: relative; height: 164px; }
+.m-track .h-strip { right: 96px; top: 12px; gap: 24px; }
+#stage.moment .tile { width: 248px; height: 140px; border-radius: 18px; }
+#stage.moment .tile .bg { background: rgba(24,22,19,.74); }
+#stage.moment .tile .bg::after { display: none; }
+#stage.moment .tile .name { font-size: 24px; bottom: 12px; right: 18px; left: 18px; }
+#stage.moment .tile .mono { top: 18px; right: 18px; font-size: 44px; }
+#stage.moment .tile.has-icon .app-ic { top: 14px; right: 18px; width: 64px; height: 64px; }
+#stage.moment .tile.has-img .name { display: none; }
+#stage.moment .tile.focus, #stage.moment .tile.moving { transform: scale(1.05); box-shadow: 0 0 0 3px var(--ink); }
+.tile.all { background: rgba(10,9,8,.42); border: 1px solid rgba(255,255,255,.14); }
+.tile.all .name { position: static !important; display: grid; place-items: center; height: 100%; font-size: 24px !important; font-weight: 400; color: var(--ink-2); }
+/* صف أكمل المشاهدة: اسم وأيقونة بدون صور */
+.m-track-title { font-size: 24px; color: var(--ink-2); padding: 0 96px; height: 36px; }
+.wt-track { height: 136px; }
+.wt-track .h-strip { top: 42px; }
+#stage.moment .tile.wt { width: 380px; height: 84px; background: rgba(24,22,19,.74); border-radius: 14px; padding: 0 18px; display: flex; align-items: center; gap: 14px; }
+.wt-ic { width: 48px; height: 48px; border-radius: 10px; object-fit: contain; flex: none; }
+.wt-t { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-bottom: .2em; flex: 1; min-width: 0; }
+.wt-p { position: absolute; bottom: 0; right: 0; left: 0; height: 5px; background: rgba(255,255,255,.14); }
+.wt-p i { display: block; height: 100%; background: var(--ink); }
+/* مع صف المشاهدة: النص أقصر عشان ما يطلع على الصف */
+.has-watch .m-text { height: 340px !important; }
+#stage.moment .has-watch .m-next { top: 500px !important; }
+.m-credit { color: var(--ink-3); font-size: 20px; }
+#stage.moment #home .m-credit { display: block; position: absolute; left: 96px; bottom: 28px; }
+/* يومك: طبقة تطلع بالسهم تحت */
+#stage.moment .h-dash { top: 590px; right: 96px; left: 96px; height: 360px; grid-template-columns: 1fr 520px; opacity: 0; visibility: hidden; transform: translateY(30px); transition: opacity .28s var(--ease), transform .28s var(--ease), visibility 0s .28s; z-index: 5; }
+#stage.moment .day-open .h-dash { opacity: 1; visibility: visible; transform: none; transition: opacity .28s var(--ease), transform .28s var(--ease); }
+#stage.moment .h-card { background: rgba(12,11,10,.86); }
+#stage.moment .h-card .label { color: var(--ink-2); }
+#stage.moment .h-card .label .ic { color: var(--ink-2); }
+#stage.moment #home.day-open .m-rows, #stage.moment #home.day-open .m-text { display: none; }
+#stage.moment .quick { overflow: hidden; }
+.quick-list { transition: transform .2s ease-out; }
+#stage.moment .qk.focus { background: var(--ink); color: #15110A; }
+#stage.moment .qk .ic { color: var(--ink-2); }
+#stage.moment .qk.focus .ic { color: #15110A; }
+
+#stage.moment .reader { background: rgba(5,5,8,.94); }
+#stage.moment .reader-box { background: rgb(18,17,15); }
+#stage.moment .reader-head { color: var(--ink-2); }

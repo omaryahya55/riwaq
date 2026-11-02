@@ -181,6 +181,55 @@
     } catch (e) { status("ما قدرنا نوصل للتلفزيون", true); }
   }
 
+  // ===== وقت المسجد والإقامة =====
+  function paintTimes() {
+    const options = (cur, lo, hi, empty) => `<option value="0">${empty}</option>` + Array.from({ length: hi - lo + 1 }, (_, i) => i + lo).filter((n) => n)
+      .map((n) => `<option value="${n}" ${n === cur ? "selected" : ""}>${n > 0 && lo < 0 ? "+" : ""}${ar(n)}</option>`).join("");
+    $("prayerAdjust").innerHTML = ADHAN_PRAYERS.map(([k, n]) => `<label>${n}<select data-p="${k}">${options((cfg.prayerAdjust || {})[k] || 0, -10, 10, "بدون")}</select></label>`).join("");
+    $("iqama").innerHTML = ADHAN_PRAYERS.map(([k, n]) => `<label>${n}<select data-p="${k}">${options((cfg.iqama || {})[k] || 0, 1, 40, "تقريبي")}</select></label>`).join("");
+    const warn = () => {
+      const v = (p) => +$("prayerAdjust").querySelector(`[data-p="${p}"]`).value;
+      $("adjustWarn").hidden = !(v("fajr") || v("maghrib"));
+    };
+    $("prayerAdjust").querySelectorAll("select").forEach((s) => s.addEventListener("change", warn));
+    warn();
+  }
+  const readTimes = (id) => { const o = {}; $(id).querySelectorAll("select").forEach((s) => { if (+s.value) o[s.dataset.p] = +s.value; }); return o; };
+
+  // ===== أسماء المداخل، وشاشة المجلس (مع التلفزيون بس) =====
+  async function loadInputs() {
+    if (!remote) return;
+    try {
+      const list = await (await fetch("/api/inputs?token=" + encodeURIComponent(token))).json();
+      if (!list.length) return;
+      $("inputNames").innerHTML = list.map((i) => `<label class="inp-row"><bdi>${esc(i.name)}</bdi><input type="text" maxlength="20" data-id="${esc(i.id)}" value="${esc((cfg.inputNames || {})[i.id] || "")}" placeholder="${esc(i.name)}"></label>`).join("");
+      $("inputsCard").hidden = false;
+    } catch (e) { /* التلفزيون ما رد: القسم يبقى مخفي */ }
+  }
+  async function loadMajlis() {
+    if (!remote) return;
+    $("majlisCard").hidden = false;
+    try {
+      const j = await (await fetch("/api/majlis?token=" + encodeURIComponent(token))).json();
+      $("majlisSsid").value = j.ssid || "";
+      if (j.ssid) $("majlisPass").placeholder = "محفوظة (اكتبها من جديد لو بتغيّر الشبكة)";
+    } catch (e) { /* نخلي الحقول فاضية */ }
+  }
+  async function saveMajlis() {
+    const ssid = $("majlisSsid").value.trim();
+    if (!ssid) { status("اكتب اسم الشبكة", true); return; }
+    try {
+      const r = await fetch("/api/majlis?token=" + encodeURIComponent(token), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ssid, pass: $("majlisPass").value }) });
+      if (!r.ok) throw new Error();
+      $("majlisPass").value = ""; $("majlisPass").placeholder = "محفوظة (اكتبها من جديد لو بتغيّر الشبكة)";
+      status("انحفظت الشبكة ✓");
+    } catch (e) { status("ما انحفظت. جرّب مرة ثانية", true); }
+  }
+  async function clearMajlis() {
+    try { await fetch("/api/majlis?token=" + encodeURIComponent(token), { method: "DELETE" }); $("majlisSsid").value = ""; $("majlisPass").value = ""; status("انحذفت الشبكة ✓"); }
+    catch (e) { status("ما قدرنا نوصل للتلفزيون", true); }
+  }
+
   // ===== القرآن: راجع محفوظك =====
   function paintQuran() {
     const M = window.QURAN_META;
@@ -200,7 +249,10 @@
     cfg.placeDaily = $("placeDaily").checked;
     cfg.motion = $("motion").checked;
     cfg.bgStyle = $("bgStyle").value === "drawn" ? "drawn" : "photo";
-    cfg.density = $("density").value === "full" ? "full" : "calm";
+    cfg.density = ["full", "frame"].includes($("density").value) ? $("density").value : "calm";
+    cfg.homeLayout = $("homeLayout").value === "classic" ? "classic" : "moment";
+    cfg.continueRow = $("continueRow").checked;
+    cfg.roshn = $("roshn").checked;
   }
 
   // ===== رسالة من الجوال (تيليقرام) =====
@@ -229,7 +281,14 @@
     $("alertMinutes").value = String(cfg.alertMinutes);
     paintAdhan();
     $("reminders").checked = cfg.reminders !== false;
-    $("showSalary").checked = cfg.showSalary !== false;
+    $("showSalary").checked = cfg.showSalary === true;
+    $("homeLayout").value = cfg.homeLayout === "classic" ? "classic" : "moment";
+    $("continueRow").checked = cfg.continueRow !== false;
+    $("roshn").checked = cfg.roshn === true;
+    $("kidsOn").checked = !!(cfg.kids && cfg.kids.on);
+    paintTimes();
+    loadInputs();
+    loadMajlis();
     $("icalUrl").value = cfg.icalUrl || "";
     $("todoistToken").value = cfg.todoistToken || "";
     paintTelegram();
@@ -238,7 +297,7 @@
     $("placeDaily").checked = cfg.placeDaily !== false;
     $("motion").checked = cfg.motion !== false;
     $("bgStyle").value = cfg.bgStyle === "drawn" ? "drawn" : "photo";
-    $("density").value = cfg.density === "full" ? "full" : "calm";
+    $("density").value = ["full", "frame"].includes(cfg.density) ? cfg.density : "calm";
     $("nightClock").checked = cfg.nightClock !== false;
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
     paintSecrets();
@@ -255,6 +314,14 @@
     const pin = $("lockPin").value.trim();
     if (pin && !/^[0-9]{4}$/.test(pin)) { status("رمز القفل لازم يكون ٤ أرقام", true); return; }
     cfg.lock = { pin, apps: [...$("lockApps").querySelectorAll("input:checked")].map((x) => x.value) };
+    cfg.kids = { on: $("kidsOn").checked, apps: [...$("kidsApps").querySelectorAll("input:checked")].map((x) => x.value) };
+    if (cfg.kids.on && !pin && !secretsSet.pin) { status("وضع الأطفال يحتاج رمز قفل", true); return; }
+    if (cfg.kids.on && !cfg.kids.apps.length) { status("اختر تطبيق واحد على الأقل لوضع الأطفال", true); return; }
+    cfg.prayerAdjust = readTimes("prayerAdjust");
+    cfg.iqama = readTimes("iqama");
+    const names = {};
+    $("inputNames").querySelectorAll("input").forEach((x) => { const v = x.value.trim(); if (v) names[x.dataset.id] = v; });
+    if ($("inputNames").children.length) cfg.inputNames = names;
     cfg.nightClock = $("nightClock").checked;
     const ical = $("icalUrl").value.trim();
     if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
@@ -300,6 +367,8 @@
     const chosen = new Set((cfg.lock && cfg.lock.apps) || []);
     $("lockApps").innerHTML = list.map((a) => `<label><input type="checkbox" value="${esc(a.id)}" ${chosen.has(a.id) ? "checked" : ""}><bdi>${esc(a.name)}</bdi></label>`).join("")
       || `<p class="tiny">ما قدرنا نجيب قائمة التطبيقات.</p>`;
+    const kidsOk = new Set((cfg.kids && cfg.kids.apps) || []);
+    $("kidsApps").innerHTML = list.map((a) => `<label><input type="checkbox" value="${esc(a.id)}" ${kidsOk.has(a.id) ? "checked" : ""}><bdi>${esc(a.name)}</bdi></label>`).join("");
   }
 
   // محتوى اليوم مع روابط التحقق (نفس طريقة اختيار الشاشة: عنصر لكل يوم)
@@ -307,7 +376,7 @@
     const file = new URLSearchParams(location.search).get("content") === "hadeethenc" ? "content/candidates/hadeethenc.json" : (cfg.contentFile || "content/approved.json");
     try {
       const j = await (await fetch(file)).json();
-      const items = (j.items || []).filter((x) => x.approved === true && x.text && x.source);
+      const items = (j.items || []).filter((x) => x.approved === true && x.text && x.source && (!window.Rules || Rules.displayable(x)));
       if (!items.length) return;
       const day = Math.floor(Date.now() / 86400000);
       const general = (x) => (x.context || "general") === "general";
@@ -329,6 +398,8 @@
   $("addFeed").addEventListener("click", addCustomFeed);
   $("feedUrl").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addCustomFeed(); } });
   $("save").addEventListener("click", save);
+  $("majlisSave").addEventListener("click", saveMajlis);
+  $("majlisClear").addEventListener("click", clearMajlis);
   if ($("adhanUpload")) $("adhanUpload").addEventListener("click", uploadAdhan);
   if ($("adhanTest")) $("adhanTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل الأذان على التلفزيون الحين (رجوع يوقفه)"));
   if ($("adhanReset")) $("adhanReset").addEventListener("click", () => adhanCall("/api/adhan", "DELETE", "رجع الصوت الافتراضي ✓"));

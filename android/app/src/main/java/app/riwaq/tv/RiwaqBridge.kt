@@ -35,6 +35,15 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     // أكمل المشاهدة: اسم وأيقونة بس (WatchNext.kt)
     @JavascriptInterface fun getWatchNext(): String = WatchNext.listJson(ctx)
     @JavascriptInterface fun openWatch(i: Int) { main.post { WatchNext.open(ctx, i) } }
+    @JavascriptInterface fun watchAllowed(): Boolean = WatchNext.allowed(ctx)
+    /** انرفض الإذن قبل: أندرويد ما يسأل مرة ثانية، فنفتح صفحة أذونات رواق */
+    @JavascriptInterface fun askWatch() {
+        main.post {
+            val i = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:${ctx.packageName}"))
+            if (ctx !is Activity) i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            try { ctx.startActivity(i) } catch (e: Exception) { }
+        }
+    }
 
     private fun openActivity(c: Class<*>) {
         main.post {

@@ -45,6 +45,8 @@ $backupFile = Join-Path $PSScriptRoot "backup-$($Ip.Replace('.','-')).json"
 $backup = $null
 if (Test-Path $backupFile) { $backup = Get-Content $backupFile -Raw | ConvertFrom-Json }
 
+# مفتاح الأمان ما يحتاج يشتغل بعد الحين
+Adb shell "touch /data/local/tmp/riwaq-ok" 2>&1 | Out-Null
 $toEnable = if ($backup -and $backup.disabled) { @($backup.disabled) } else { $StockHomes }
 foreach ($p in $toEnable) {
   Say "نشغّل: $p"

@@ -61,3 +61,9 @@ body { overflow-x: hidden; }
 .verify a { color: var(--gold); }
 
 .waqf { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--gold-ink); background: var(--gold); border-radius: 999px; padding: 2px 12px 4px; }
+
+.times { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.times label { display: grid; gap: 4px; font-size: 14px; text-align: center; color: var(--ink-2); }
+.times select { padding: 8px 2px; text-align: center; min-height: 44px; }
+.warn { color: var(--bad); }
+.inp-row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; align-items: center; margin-top: 8px; font-size: 15px; }

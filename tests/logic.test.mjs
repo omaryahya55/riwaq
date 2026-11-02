@@ -228,12 +228,13 @@ test("فحص الإعدادات: القيم الغلط ترجع للافتراض
   assert.equal(good.city.tz, "Asia/Riyadh");
 });
 
-test("صوت الأذان: أوقات ٣ أيام بدون الفجر افتراضياً، وما يرسل شي لو انطفى", () => {
+test("صوت الأذان: جدول ٣٠ يوم بدون الفجر افتراضياً، وما يرسل شي لو انطفى", () => {
   const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/adhan.js"]);
   Object.assign(w.CONFIG, { city: RIYADH });
   const now = new Date("2026-10-26T12:00:00+03:00"); // بعد الظهر
   const list = w.AdhanSchedule._test.upcoming(now);
-  assert.ok(list.length >= 10 && list.length <= 12, "٤ صلوات × ٣ أيام (ناقص اللي فاتت اليوم)");
+  assert.ok(list.length >= 118 && list.length <= 120, "٤ صلوات × ٣٠ يوم (ناقص اللي فاتت اليوم)");
+  assert.ok(list.length <= 160 && JSON.stringify(list).length < 16000, "ضمن حدود AdhanScheduler.save");
   assert.ok(!list.some((x) => x.name === "الفجر"), "الفجر مطفي افتراضياً");
   assert.equal(list[0].name, "العصر");
   assert.ok(list.every((x) => x.at > now.getTime()));
@@ -241,4 +242,114 @@ test("صوت الأذان: أوقات ٣ أيام بدون الفجر افترا
   assert.ok(w.AdhanSchedule._test.upcoming(now).some((x) => x.name === "الفجر"));
   w.CONFIG.adhan.on = false;
   assert.equal(w.AdhanSchedule._test.upcoming(now).length, 0);
+});
+
+const FULL = ["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/rules.js", "js/data.js", "js/content.js"];
+
+test("ما فيه تذكير صيام تطوع في رمضان والعيدين وأيام التشريق", () => {
+  const w = load(FULL, { city: RIYADH });
+  const h = (d) => w.F.hijriParts(new Date(d + "T12:00:00+03:00"));
+  assert.equal(w.F.noVoluntaryFast(h("2030-02-04")), true, "١ شوال ١٤٥١");
+  assert.equal(w.F.noVoluntaryFast(h("2027-05-16")), true, "١٠ ذي الحجة");
+  assert.equal(w.F.noVoluntaryFast(h("2027-05-19")), true, "١٣ ذي الحجة");
+  assert.equal(w.F.noVoluntaryFast(h("2027-03-01")), true, "رمضان");
+  assert.equal(w.F.noVoluntaryFast(h("2026-11-02")), false, "يوم عادي");
+  const fd = w.Content._test.fastingDay;
+  assert.equal(fd(new Date("2030-02-04T12:00:00+03:00")), false, "عيد الفطر يوم اثنين: ما هو يوم صيام");
+  assert.equal(fd(new Date("2027-05-17T12:00:00+03:00")), false, "١١ ذي الحجة يوم اثنين");
+  assert.equal(fd(new Date("2026-11-02T12:00:00+03:00")), true, "اثنين عادي");
+});
+
+test("الجمعة بدل الظهر، وتعديل الوقت يتجمع مع عشاء رمضان", () => {
+  const w = load(FULL, { city: RIYADH });
+  const fri = w.Prayer.timesFor(new Date("2026-11-06T09:00:00+03:00"), 0);
+  assert.equal(fri.find((p) => p.id === "dhuhr").name, "الجمعة");
+  const sat = w.Prayer.timesFor(new Date("2026-11-07T09:00:00+03:00"), 0);
+  assert.equal(sat.find((p) => p.id === "dhuhr").name, "الظهر");
+  const ram = new Date("2027-03-01T09:00:00+03:00");
+  const base = w.Prayer.timesFor(ram, 0).find((p) => p.id === "isha").at.getTime();
+  w.CONFIG.prayerAdjust = { isha: 5 };
+  const adj = w.Prayer.timesFor(ram, 0).find((p) => p.id === "isha").at.getTime();
+  assert.equal(adj - base, 5 * 60000, "+٥ فوق +٣٠ رمضان، مو بدالها");
+});
+
+test("فحص الإعدادات: حدود المواقيت والإقامة، والإعدادات القديمة ترجع للافتراضي الجديد", () => {
+  const w = load(["js/config.js"]);
+  const c = w.Config.sanitize({ v: 3, prayerAdjust: { maghrib: -40, fajr: 7, isha: "x" }, iqama: { dhuhr: 15, asr: 500 } });
+  assert.equal(c.prayerAdjust.maghrib, undefined, "-٤٠ مرفوض");
+  assert.equal(c.prayerAdjust.fajr, 7);
+  assert.equal(c.iqama.dhuhr, 15);
+  assert.equal(c.iqama.asr, undefined);
+  const old = w.Config.sanitize({ showSalary: true, homeLayout: "classic" });
+  assert.equal(old.showSalary, false, "الراتب مطفي لمن ما اختاره بعد ٠٫٣");
+  assert.equal(old.homeLayout, "moment");
+  const now = w.Config.sanitize({ v: 3, showSalary: true, homeLayout: "classic", density: "frame" });
+  assert.equal(now.showSalary, true);
+  assert.equal(now.homeLayout, "classic");
+  assert.equal(now.density, "frame");
+});
+
+test("صيغ العدد العربية", () => {
+  const w = load(["js/config.js", "js/format.js"]);
+  assert.equal(w.F.days(1), "يوم");
+  assert.equal(w.F.days(2), "يومين");
+  assert.equal(w.F.days(3), "٣ أيام");
+  assert.equal(w.F.days(11), "١١ يوم");
+  assert.equal(w.F.duration(1), "دقيقة");
+  assert.equal(w.F.duration(2), "دقيقتين");
+  assert.equal(w.F.duration(60), "ساعة");
+  assert.equal(w.F.duration(120), "ساعتين");
+});
+
+test("تنبيه الغبار يحتاج رؤية ضعيفة، والقمر بالليل", () => {
+  const store = {};
+  const w = load(FULL, { city: RIYADH }, { localStorage: { getItem: (k) => store[k] || null, setItem: (k, v) => { store[k] = v; }, removeItem: (k) => { delete store[k]; } } });
+  const key = (n) => `riwaq.cache.${n}.${RIYADH.lat.toFixed(2)},${RIYADH.lon.toFixed(2)}`;
+  const put = (dust, vis) => {
+    store[key("dust")] = JSON.stringify({ at: Date.now(), data: { dust } });
+    store[key("wx")] = JSON.stringify({ at: Date.now(), data: { now: { temp: 26, code: 0, visibility: vis }, days: [] } });
+  };
+  put(1362, 20180);
+  assert.equal(w.DATA.dustAlert(), false, "غبار عالي بالنموذج والرؤية ٢٠ كم: ما فيه تنبيه");
+  put(1362, 1500);
+  assert.equal(w.DATA.dustAlert(), true);
+  put(50, 1500);
+  assert.equal(w.DATA.dustAlert(), false);
+  assert.equal(w.F.sky(0, new Date("2026-11-02T00:30:00Z"))[1], "moon", "٣:٣٠ الفجر");
+  assert.equal(w.F.sky(0, new Date("2026-11-02T09:00:00Z"))[1], "sun", "١٢ الظهر");
+});
+
+test("شرط الحديث: راوي ومصدر ودرجة واضحة", () => {
+  const w = load(["js/rules.js"]);
+  const ok = { type: "hadith", text: "عَنْ أَبِي هُرَيْرَةَ قَالَ: نص", attribution: "رواه مسلم", grade: "صحيح", edition: "HadeethEnc.com" };
+  assert.equal(w.Rules.displayable(ok), true);
+  assert.equal(w.Rules.narrator(ok), "أبو هريرة");
+  assert.equal(w.Rules.displayable(Object.assign({}, ok, { text: "«نص بلا راوي»" })), false);
+  assert.equal(w.Rules.displayable(Object.assign({}, ok, { grade: "صحيح م دون الاتخاذ" })), false);
+  assert.equal(w.Rules.displayable(Object.assign({}, ok, { grade: "" })), false);
+  assert.equal(w.Rules.displayable(Object.assign({}, ok, { attribution: "" })), false);
+  const shamela = { type: "hadith", narrator: "ابن عباس", takhrij: [{ book: "سنن أبي داود" }], attribution: "رواه أبو داود", grade: "صحيح", edition: "المكتبة الشاملة" };
+  assert.equal(w.Rules.displayable(shamela), false, "خارج الصحيحين بلا قائل");
+  assert.equal(w.Rules.displayable(Object.assign({}, shamela, { gradeBy: "الألباني" })), true);
+  assert.equal(w.Rules.displayable({ type: "quran", text: "نص" }), true, "القرآن والأذكار ما يدخلون في هذا الشرط");
+});
+
+test("كل المحتوى المعروض يكمل الشرط، والمخفي قليل", () => {
+  const w = load(["js/rules.js"]);
+  const items = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8")).items.filter((x) => x.type === "hadith" || x.type === "sahabi");
+  const hidden = items.filter((x) => !w.Rules.displayable(x));
+  assert.ok(hidden.length < 30, "مخفي " + hidden.length);
+});
+
+test("openfootball: التوقيت، والترتيب، وما نعرض ترتيب قديم، وكل الأندية لها رقم", () => {
+  const w = load(FULL, { city: RIYADH });
+  const { zonedToUtc, ofStandings } = w.DATA._test;
+  assert.equal(new Date(zonedToUtc("2026-08-21", "20:00", "Europe/London")).toISOString(), "2026-08-21T19:00:00.000Z", "لندن صيفي");
+  assert.equal(new Date(zonedToUtc("2026-12-21", "20:00", "Europe/Madrid")).toISOString(), "2026-12-21T19:00:00.000Z", "مدريد شتوي");
+  const m = [{ date: "2026-10-30", team1: "A", team2: "B", score: { ft: [2, 0] } }, { date: "2026-10-31", team1: "B", team2: "C", score: { ft: [1, 1] } }, { date: "2026-11-20", team1: "A", team2: "C" }];
+  const st = ofStandings(m, Date.parse("2026-11-02T00:00:00Z"));
+  assert.equal(JSON.stringify(st.map((r) => [r.name, r.pts, r.played])), JSON.stringify([["A", 3, 1], ["C", 1, 1], ["B", 1, 2]]));
+  assert.equal(ofStandings(m, Date.parse("2026-12-20T00:00:00Z")), null, "آخر نتيجة أقدم من ١٠ أيام: نخفي الترتيب");
+  const known = new Set(w.LEAGUES.flatMap((l) => Object.keys(l.teams)));
+  for (const [n, id] of Object.entries(w.OF_TEAMS)) assert.ok(known.has(String(id)), "نادي بلا اسم عربي: " + n);
 });

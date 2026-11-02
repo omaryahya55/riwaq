@@ -329,13 +329,14 @@
     const cells = [];
     if (np) {
       const c = F.clock(np.p.at);
-      cells.push(cell("bell", "الصلاة القادمة", `${np.p.name} <small>${c.h}:${c.m} ${c.ampm}</small>`, "بعد " + F.duration(np.mins)));
+      cells.push(cell("bell", "الصلاة القادمة", `${np.p.name} <small>${c.h}:${c.m} ${c.ampm}</small>`, "بعد " + F.duration(np.mins)).replace('class="s-cell', 'class="s-cell np'));
     }
     // المناسبات: رمضان، وعرفة، وعاشوراء. نعرض الأقرب
     const h = F.hijriParts(now);
     if (h.m === 9 && np) {
       const r = Prayer.ramadan(now);
-      if (r) cells.push(cell("crescent", `رمضان · اليوم ${F.digits(h.d)}`, `${r.label} بعد ${F.duration(r.mins)}`, r.label === "الإمساك" ? "مع أذان الفجر" : "حسب تقويم أم القرى", true));
+      // السطر الرئيسي تحت الساعة فيه الإفطار والإمساك: الخانة هذي للكثافة الكاملة
+      if (r) cells.push(cell("crescent", `رمضان · اليوم ${F.digits(h.d)}`, `${r.label} بعد ${F.duration(r.mins)}`, r.label === "الإمساك" ? "مع أذان الفجر" : "حسب تقويم أم القرى"));
     } else {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, daysToHijri(now, m, d) || { days: 9999 }))
@@ -369,7 +370,8 @@
       }
     }
     const el = $(root, "bottom");
-    el.style.gridTemplateColumns = `repeat(${Math.max(cells.length, 1)}, 1fr)`;
+    const shown = CONFIG.density === "calm" ? cells.filter((x) => x.includes(" now")).length : cells.length;
+    el.style.gridTemplateColumns = `repeat(${Math.max(shown, 1)}, 1fr)`;
     el.innerHTML = cells.join("");
     // كل سطر يصغر خطه لين يدخل عرض خانته
     el.querySelectorAll(".label, .s-cell-main, .s-cell-sub").forEach((x) => {
@@ -399,7 +401,7 @@
 
   function renderCredit(root) {
     const parts = [Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
-    if (DATA.weather()) parts.push("الطقس: Open-Meteo.com");
+    if (CONFIG.density === "full" && DATA.weather()) parts.push("الطقس: Open-Meteo.com");
     if (CONFIG.density === "full" && DATA.metals()) parts.push("الأسعار: gold-api.com");
     if (CONFIG.density === "full" && DATA.fx()) parts.push("العملات: Frankfurter");
     $(root, "credit").textContent = parts.join(" · ");
@@ -420,6 +422,8 @@
         root.querySelector(".saver-content").style.transform = `translate(${SHIFTS[shiftIdx][0]}px, ${SHIFTS[shiftIdx][1]}px)`;
       }, 4 * 60 * 1000);
       DATA.onChange(() => { if (visible()) this.tick(true); });
+      window.addEventListener("riwaq-remeasure", () => { hadithSig = ""; });
+      window.addEventListener("riwaq-content", () => { hadithSig = ""; });
       this.ready = true;
       this.tick(true);
       // خانة المحتوى تتبدل كل ٤٠ ثانية تقريباً (أذكار، حديث، صحابة)، فنحدّثها بدون انتظار الدقيقة

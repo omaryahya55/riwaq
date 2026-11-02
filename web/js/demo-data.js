@@ -26,3 +26,6 @@ window.DEMO = {
     { id: "tv",    name: "القنوات", icon: "tv" }
   ]
 };
+
+// صف "أكمل المشاهدة" في المتصفح بس (تجربة الشكل). على التلفزيون يجي من النظام
+window.DEMO && (DEMO.watch = [{ i: 0, pkg: "demo", title: "درس في التجويد · الحلقة ٤", progress: 42 }, { i: 1, pkg: "demo", title: "وثائقي عن الجزيرة العربية", progress: 71 }, { i: 2, pkg: "demo", title: "مباراة الجولة العاشرة", progress: 18 }]);

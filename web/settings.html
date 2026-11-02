@@ -51,6 +51,13 @@
           <option value="20">٢٠ دقيقة</option>
         </select>
       </label>
+      <h3>وقت مسجدك</h3>
+      <p class="muted">لو مسجدك يؤذّن قبل الوقت المحسوب أو بعده بدقايق. لين ±١٠ دقايق لكل صلاة.</p>
+      <div class="times" id="prayerAdjust"></div>
+      <p class="tiny warn" id="adjustWarn" hidden>تعديل الفجر والمغرب يغيّر وقت الإمساك والإفطار المعروض على الشاشة. تأكد من وقت مسجدك أو الجهة الرسمية في بلدك.</p>
+      <h3>الإقامة بعد الأذان (بالدقايق)</h3>
+      <div class="times" id="iqama"></div>
+      <p class="tiny">فاضي = التقريبي المعمول به. يحدد وقت "حان الآن وقت الصلاة" وأذكار بعد السلام بس، وما يغيّر الأذان.</p>
       <label class="switch"><input type="checkbox" id="adhanOn"><span>صوت الأذان وقت الصلاة (والتلفزيون شغال، حتى لو أنت في تطبيق ثاني: البرنامج يوقف وقت الأذان، وزر الرجوع يوقف الأذان)</span></label>
       <div class="chips" id="adhanPrayers"></div>
       <div id="adhanVoice">
@@ -64,10 +71,23 @@
           <button class="btn ghost" id="adhanReset" type="button">رجوع للصوت الافتراضي</button>
         </div>
         <p class="tiny">تقدر ترفع صوت الأذان اللي تحبه (مثل أذان الحرم) من جوالك: mp3 أو m4a أو غيرها، لين ١٠ ميجا. الصوت لتلفزيونك بس.</p>
+        <p class="tiny">الصوت الافتراضي واحد لكل الصلوات، وما فيه «الصلاة خير من النوم». لو شغّلت الفجر وتبيها، ارفع صوتك.</p>
       </div>
-      <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض)</span></label>
-      <label class="switch"><input type="checkbox" id="nightClock"><span>ساعة الليل: من ١:٣٠ بالليل لين قبل الفجر، شاشة الانتظار تصير ساعة بسيطة خافتة</span></label>
-      <label class="switch" id="salaryRow"><input type="checkbox" id="showSalary"><span>عدّاد الراتب وحساب المواطن</span></label>
+      <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض). ما يطلع تذكير الصيام في رمضان والعيدين وأيام التشريق</span></label>
+      <label class="switch"><input type="checkbox" id="nightClock"><span>ساعة الليل: من ١:٣٠ بالليل لين قبل الفجر، شاشة الانتظار تصير ساعة بسيطة خافتة (إلا في رمضان)</span></label>
+      <label class="switch" id="salaryRow"><input type="checkbox" id="showSalary"><span>عدّاد الراتب وحساب المواطن (مطفي افتراضياً)</span></label>
+    </section>
+
+    <section class="card">
+      <h2>شكل الواجهة</h2>
+      <div class="field"><span>الواجهة الرئيسية</span>
+        <select id="homeLayout"><option value="moment">لوحة اللحظة: هادئة، الساعة والصلوات ونص واحد (الافتراضي)</option><option value="classic">الكلاسيكية: ثلاث بطاقات وأزرار أكثر</option></select></div>
+      <div class="field"><span>كثافة شاشة الانتظار</span>
+        <select id="density"><option value="calm">هادئة: الساعة والصلوات ونص واحد (الافتراضي)</option><option value="frame">إطار: صورة كاملة وساعة صغيرة بس</option><option value="full">كاملة: مع الطقس والأسعار والدوريات والأخبار</option></select></div>
+      <div class="field"><span>الخلفية</span>
+        <select id="bgStyle"><option value="photo">صور حقيقية (فجر، نهار، عصر، مغرب، ليل مع القمر)</option><option value="drawn">رسمة (شمس بالنهار وقمر بالليل)</option></select></div>
+      <label class="switch"><input type="checkbox" id="motion"><span>الرسمة: غيوم تتحرك بهدوء</span></label>
+      <label class="switch"><input type="checkbox" id="continueRow"><span>صف «أكمل المشاهدة» تحت التطبيقات: اسم وأيقونة بدون صور. يطلع فيه اللي تكتبه التطبيقات في قائمة النظام، ومو كل تطبيق يكتب فيها</span></label>
     </section>
 
     <section class="card">
@@ -79,7 +99,8 @@
       <div class="chips" id="teamList"></div>
       <h3>جدول الترتيب جنب الساعة</h3>
       <div class="checks" id="leagues"></div>
-      <p class="tiny">البيانات: TheSportsDB. أسماء الأندية بس، بدون شعارات.</p>
+      <label class="switch"><input type="checkbox" id="roshn"><span>دوري روشن (مطفي افتراضياً: مصدره TheSportsDB، وننتظر ردهم على استخدام مفتاحهم المجاني في تطبيق منشور)</span></label>
+      <p class="tiny">الدوريات الأوروبية من openfootball (ملكية عامة): مواعيد المباريات، والترتيب لو نتائج المصدر حديثة، وإلا يختفي بدل ما يطلع قديم. بدون نتائج مباشرة. أسماء الأندية بس، بدون شعارات.</p>
     </section>
 
     <section class="card">
@@ -102,6 +123,27 @@
         <small>خلّه فاضي عشان تلغي القفل.</small>
       </label>
       <div class="checks" id="lockApps"></div>
+      <h3>وضع الأطفال</h3>
+      <label class="switch"><input type="checkbox" id="kidsOn"><span>الواجهة تعرض التطبيقات المسموحة بس، والخروج منها بالرمز (يحتاج رمز فوق). هذا ترتيب للشاشة مو حماية كاملة: ما يمنع المساعد الصوتي</span></label>
+      <div class="checks" id="kidsApps"></div>
+    </section>
+
+    <section class="card" id="inputsCard" hidden>
+      <h2>أسماء المداخل</h2>
+      <p class="muted">سمِّ كل مدخل باسم تعرفه (الرسيفر، PS5). فاضي = اسمه من التلفزيون.</p>
+      <div id="inputNames"></div>
+    </section>
+
+    <section class="card" id="majlisCard" hidden>
+      <h2>شاشة المجلس</h2>
+      <p class="muted">باركود واي فاي للضيوف يطلع بضغطة من «التحكم» وينقفل لحاله بعد ٥ دقايق. الأفضل شبكة ضيوف، مو شبكة البيت.</p>
+      <input id="majlisSsid" type="text" autocomplete="off" maxlength="32" placeholder="اسم الشبكة" aria-label="اسم شبكة الضيوف" style="direction:ltr;text-align:left">
+      <input id="majlisPass" type="password" autocomplete="off" maxlength="63" placeholder="كلمة الشبكة" aria-label="كلمة شبكة الضيوف" style="direction:ltr;text-align:left;margin-top:8px">
+      <div class="search" style="margin-top:8px">
+        <button class="btn" id="majlisSave" type="button">حفظ الشبكة</button>
+        <button class="btn ghost" id="majlisClear" type="button">حذف</button>
+      </div>
+      <p class="tiny">الكلمة تنحفظ على التلفزيون بس وما ترجع للجوال. وصفحة الإعدادات على شبكة البيت بدون تشفير، فلا تحفظها وأنت على شبكة مشتركة.</p>
     </section>
 
     <section class="card">
@@ -112,11 +154,6 @@
       <h3>بين محتوى اليوم</h3>
       <label class="switch"><input type="checkbox" id="sunnahDaily"><span>سنّة نعيشها: كل يوم سنّة من آداب اليوم (السلام، والأكل، والنوم…)</span></label>
       <label class="switch"><input type="checkbox" id="placeDaily"><span>حكاية مكان: صورة مكان إسلامي أو تاريخي مع تعريفه (أول جملة من ويكيبيديا العربية)</span></label>
-      <div class="field"><span>كثافة شاشة الانتظار</span>
-        <select id="density"><option value="calm">هادئة: الساعة والصلاة وبطاقة وحدة (الافتراضي)</option><option value="full">كاملة: مع الطقس والأسعار والدوريات والأخبار</option></select></div>
-      <div class="field"><span>الخلفية</span>
-        <select id="bgStyle"><option value="photo">صور حقيقية (فجر، نهار، عصر، مغرب، ليل مع القمر)</option><option value="drawn">رسمة (شمس بالنهار وقمر بالليل)</option></select></div>
-      <label class="switch"><input type="checkbox" id="motion"><span>الرسمة: غيوم تتحرك بهدوء</span></label>
     </section>
 
     <section class="card">
@@ -158,6 +195,7 @@
   <script src="js/config.js"></script>
   <script src="js/demo-data.js"></script>
   <script src="js/teams-ar.js"></script>
+  <script src="js/rules.js"></script>
   <script src="js/quran-meta.js"></script>
   <script src="js/news-sources.js"></script>
   <script src="js/settings.js"></script>

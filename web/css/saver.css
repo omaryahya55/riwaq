@@ -30,7 +30,7 @@
 .s-price .label { font-size: 20px; }
 .s-price-val { font-size: 34px; font-weight: 600; margin-top: 4px; line-height: 1.2; }
 .s-price-sub { font-size: 19px; color: var(--ink-3); margin-top: 2px; }
-.s-prices-time { position: absolute; top: 112px; left: 30px; font-size: 17px; color: var(--ink-4); white-space: nowrap; }
+.s-prices-time { position: absolute; top: 112px; left: 30px; font-size: 20px; color: var(--ink-3); white-space: nowrap; }
 
 /* ===== الوسط: ساعة | بطاقة جانبية | عمود البطاقات ===== */
 .s-clock-wrap { position: absolute; top: 300px; right: 92px; width: 712px; }
@@ -60,7 +60,7 @@
 .s-row.mine .rk, .s-row.mine .pl { color: inherit; opacity: .75; }
 .s-row-head { height: 34px; font-size: 18px; color: var(--ink-4); border-top: 0; }
 .s-row-head .pt { font-weight: 400; }
-.s-side-src { position: absolute; bottom: 22px; right: 32px; font-size: 16px; color: var(--ink-4); }
+.s-side-src { position: absolute; bottom: 22px; right: 32px; font-size: 20px; color: var(--ink-3); }
 
 .s-col { position: absolute; top: 290px; left: 92px; width: 580px; display: flex; flex-direction: column; gap: 18px; overflow: hidden; }
 
@@ -70,8 +70,8 @@
 .s-hadith.long p { font-size: 27px; line-height: 1.75; }
 .s-hadith.xlong p { font-size: 24px; line-height: 1.7; }
 .s-hadith, .s-prayers, .s-week { flex: none; }
-.s-hadith small { display: block; font-size: 18px; color: var(--ink-4); margin-top: 6px; }
-.s-hadith small.s-ref { font-size: 16px; line-height: 1.5; margin-top: 2px; }
+.s-hadith small { display: block; font-size: 20px; color: var(--ink-3); margin-top: 6px; }
+.s-hadith small.s-ref { font-size: 18px; line-height: 1.5; margin-top: 2px; }
 /* حكاية مكان: صورة صغيرة بمقاس ثابت جنب الكلام (بدون مقاس كانت تطلع بحجمها الأصلي وتغطي البطاقة) */
 .s-place-img { float: left; width: 200px; height: 136px; object-fit: cover; border-radius: 14px; margin: 12px 16px 4px 0; }
 .s-hadith.long .s-place-img, .s-hadith.xlong .s-place-img { width: 168px; height: 112px; }
@@ -116,7 +116,7 @@
 
 /* ===== تنبيه الصلاة: ملاحظة صغيرة في الزاوية فوق (ما تغطي المحتوى) ===== */
 .adhan-alert {
-  position: absolute; top: 14px; left: 92px; z-index: 50;
+  position: absolute; top: 40px; left: 96px; z-index: 50;
   display: flex; align-items: center; gap: 10px;
   font-size: 22px; font-weight: 600; color: #1E1608;
   background: #E8C27A; padding: 6px 18px 9px; border-radius: 999px;
@@ -125,7 +125,7 @@
 .adhan-alert .ic { font-size: 22px; }
 #stage.alert .adhan-alert { opacity: 1; transform: none; }
 
-.credit { position: absolute; bottom: 20px; left: 92px; font-size: 15px; color: var(--ink-4); }
+.credit { position: absolute; bottom: 28px; left: 96px; font-size: 20px; color: var(--ink-3); }
 
 /* صفحة المواعيد في البطاقة الجانبية */
 .s-row.s-cal { grid-template-columns: 1fr auto; gap: 14px; font-size: 24px; }
@@ -134,7 +134,24 @@
 
 /* ===== ساعة الليل: الوقت والتاريخ والصلاة الجاية بس، في النص ===== */
 /* كثافة هادئة (الافتراضي): الساعة والصلاة وبطاقة محتوى، بدون الأسعار والدوريات والطقس الأسبوعي وشريط الأخبار */
-#stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-ticker { display: none !important; }
+#stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-ticker, #stage.calm .s-now, #stage.calm .s-prayers, #stage.calm .s-clock-city { display: none !important; }
+#stage.calm:not(.nightclock) .s-mprayers { display: flex; margin-top: 8px; justify-content: flex-start; }
+#stage.calm:not(.nightclock) .s-mnext { display: block; margin-top: 20px; }
+#stage.calm .s-clock-wrap { top: 250px; right: 96px; }
+#stage.calm .s-date { top: 56px; right: 96px; }
+#stage.calm .s-hijri { font-size: 38px; }
+#stage.calm .s-col { top: 290px; left: 96px; width: 760px; }
+#stage.calm .s-hadith { background: none; border: 0; padding: 0; }
+#stage.calm .s-card-title { font-size: 24px; color: var(--ink-2); font-weight: 500; }
+#stage.calm .s-hadith p { font-size: 38px; }
+#stage.calm .s-hadith small { font-size: 24px; color: var(--ink-2); }
+#stage.calm:not(.nightclock) .s-cell:not(.now) { display: none; }
+/* إطار الهدوء: الصورة كاملة وساعة صغيرة بس */
+#stage.frame .s-col, #stage.frame .s-date, #stage.frame .s-bottom, #stage.frame .s-chips, #stage.frame .s-mprayers, #stage.frame .s-mnext { display: none !important; }
+#stage.frame .s-clock-wrap { top: auto; bottom: 64px; right: 96px; width: auto; }
+#stage.frame .s-clock .d { font-size: 96px; }
+#stage.frame .s-clock .colon { font-size: 80px; }
+#stage.frame .s-clock .ampm { font-size: 30px; margin-top: 18px; }
 #stage.nightclock .s-prices, #stage.nightclock .s-side, #stage.nightclock .s-col, #stage.nightclock .s-ticker,
 #stage.nightclock .s-chips, #stage.nightclock .s-now, #stage.nightclock .credit, #stage.nightclock .s-clock-city { display: none !important; }
 #stage.nightclock .s-date { right: 0; left: 0; top: 150px; text-align: center; }
@@ -142,9 +159,11 @@
 #stage.nightclock .s-clock { justify-content: center; }
 #stage.nightclock .s-bottom { grid-template-columns: 1fr !important; text-align: center; top: 760px; }
 #stage.nightclock .s-bottom .s-cell { border: 0; padding: 0; }
-#stage.nightclock .s-bottom .s-cell:not(:first-child) { display: none; }
+#stage.nightclock .s-bottom .s-cell:not(.np) { display: none; }
 #stage.nightclock .s-bottom .label { justify-content: center; }
 
 /* الهادئة: النص ما يكبر عن المساحة (القياس في saver.js يختار نص كامل يدخل، وما يقص أبداً). وصف الصلوات الجديد ما يطلع إلا مع لوحة اللحظة */
 #stage.calm .s-hadith { max-height: 400px; overflow: hidden; }
 .s-mprayers, .s-mnext { display: none; }
+/* الحافة قصّت همزة أول حرف في العنوان */
+#stage.calm .s-col { padding: 8px 10px 0 0; }

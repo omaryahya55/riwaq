@@ -28,7 +28,14 @@ function weatherQuery(url) {
   const lat = Number(p.get("latitude")), lon = Number(p.get("longitude"));
   if (!isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return null;
   const q = new URLSearchParams({ latitude: lat.toFixed(2), longitude: lon.toFixed(2) });
-  for (const k of ["current", "daily", "timezone", "forecast_days"]) if (p.get(k)) q.set(k, p.get(k).slice(0, 200));
+  // قيم معروفة بس: قيمة حرة تكسر التخزين وتستنزف حد Open-Meteo على كل المستخدمين
+  const VALUES = { current: /^[a-z0-9_,]{1,120}$/, daily: /^[a-z0-9_,]{1,120}$/, timezone: /^[A-Za-z_]+(\/[A-Za-z0-9_+-]+){0,2}$/, forecast_days: /^[1-9]$/ };
+  for (const k of Object.keys(VALUES)) {
+    const v = p.get(k);
+    if (v === null) continue;
+    if (!VALUES[k].test(v)) return null;
+    q.set(k, v);
+  }
   return q.toString();
 }
 
@@ -71,7 +78,9 @@ export default {
     if (sp) {
       const q = new URLSearchParams();
       for (const k of ["l", "s", "id"]) { const v = url.searchParams.get(k); if (v && /^[0-9-]{1,12}$/.test(v)) q.set(k, v); }
-      const key = env.SPORTS_KEY || "123";
+      // بدون مفتاح مدفوع ما نخدم: ما نوزّع المفتاح المجاني على كل المستخدمين عبر السيرفر
+      if (!env.SPORTS_KEY) return new Response("no key", { status: 503, headers: cors(req) });
+      const key = env.SPORTS_KEY;
       return cached(req, ctx, `https://www.thesportsdb.com/api/v1/json/${key}/${sp[1]}.php?${q}`, TTL.sports);
     }
 
@@ -79,6 +88,8 @@ export default {
       let target;
       try { target = new URL(url.searchParams.get("url") || ""); } catch (e) { return new Response("bad url", { status: 400 }); }
       if (target.protocol !== "https:") return new Response("https only", { status: 400 });
+      // اسم موقع حقيقي بس، بدون أرقام IP ولا أسماء داخلية ولا اسم مستخدم في الرابط
+      if (target.username || target.password || target.port || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(target.hostname)) return new Response("bad host", { status: 400 });
       const res = await cached(req, ctx, target.toString(), TTL.rss, { headers: { "User-Agent": "Riwaq/1.0" } });
       if (!res.ok) return res;
       const len = Number(res.headers.get("Content-Length") || 0);

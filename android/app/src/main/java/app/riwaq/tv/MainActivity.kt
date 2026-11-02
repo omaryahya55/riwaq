@@ -95,7 +95,6 @@ class MainActivity : Activity() {
         }
         if (Build.VERSION.SDK_INT >= 33) registerReceiver(pkgReceiver, f, Context.RECEIVER_NOT_EXPORTED)
         else @Suppress("UnspecifiedRegisterReceiverFlag") registerReceiver(pkgReceiver, f)
-        askWatchNextOnce()
     }
 
     /** أكمل المشاهدة يحتاج إذن مرة وحدة. لو رفض المستخدم الصف ما يطلع، وما نسأل مرة ثانية */
@@ -127,6 +126,8 @@ class MainActivity : Activity() {
         else runJs("window.App&&App.show('home')")
         web?.onResume()
         Update.checkDaily(this)
+        // بعد ما يخلص المعالج، عشان السؤال ما يطلع فوقه
+        if (SetupActivity.isDone(this)) askWatchNextOnce()
     }
 
     override fun onPause() {

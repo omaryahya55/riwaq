@@ -40,7 +40,7 @@
       const el = document.getElementById("scene");
       // تعتيم، تبديل، ظهور: ما تجتمع صورتين بحجم الشاشة، وما فيه قطع مفاجئ
       if (first) Scene.render(el, period);
-      else { el.style.opacity = 0; setTimeout(() => { Scene.render(el, period); el.style.opacity = 1; }, 450); }
+      else { el.style.opacity = 0; setTimeout(() => { Scene.render(el, period); el.style.opacity = 1; Saver.tick(true); Home.tick(); }, 450); }
     }
     // التعتيم الليلي وساعة الليل: من ١:٣٠ بالليل لين قبل الفجر بنص ساعة (اختيار صاحب المشروع)
     const start = 90, fajr = pm.fajr - 30;
@@ -165,7 +165,10 @@
   setInterval(() => { if (document.hidden) return; Saver.tick(); Home.tick(); updateScene(); }, 1000 * 15);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) { Saver.tick(true); Home.tick(); updateScene(); } });
   // الخطوط توصل متأخر شوي: نعيد الرسم بعدها
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { Saver.tick(true); Home.tick(); });
+  const remeasure = () => { window.dispatchEvent(new Event("riwaq-remeasure")); Saver.tick(true); Home.tick(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+  // خط النص الديني يتحمل أول ما ينطلب، بعد القياس الأول: نقيس مرة ثانية بالخط الحقيقي عشان ما ينقص شي
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", remeasure);
   // أندرويد ينتظر هذي الإشارة قبل ما ينفذ أي أمر معلّق (بدل انتظار ثابت)، وسكربت التركيب يتأكد منها إن الصفحة انرسمت
   if (window.Riwaq && Riwaq.ready) Riwaq.ready();
 })();

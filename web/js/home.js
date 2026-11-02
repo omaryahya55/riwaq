@@ -1,8 +1,8 @@
 /*
- * الواجهة الرئيسية.
- * فوق: التاريخ، وشريط تنقل (الإعدادات، شاشة الانتظار، اختيار التطبيقات، الأذكار والأحاديث)، والوقت والطقس.
- * الوسط: ثلاث بطاقات (الصلاة القادمة، الأذكار والأحاديث، اليوم).
- * تحت: صف التطبيقات اللي يختارها المستخدم ويرتبها، وصف المداخل (لو الجهاز فيه مداخل).
+ * الواجهة الرئيسية، بشكلين (CONFIG.homeLayout):
+ * - لوحة اللحظة (الافتراضي): الساعة والصلوات يمين، ونص واحد حي يسار، وتحت صف التطبيقات وصف "أكمل المشاهدة".
+ *   السهم تحت من آخر صف يفتح "يومك" (بطاقة المحتوى وبطاقة اليوم). عنصر واحد يبدأ منه النظر، والباقي لما تطلبه.
+ * - الكلاسيكية: شريط تنقل، وثلاث بطاقات، وصف التطبيقات، وصف المداخل.
  * على التلفزيون: التطبيقات وأيقوناتها والمداخل تجي من أندرويد (Riwaq.*). في المتصفح: قائمة تجريبية.
  */
 (function () {
@@ -13,7 +13,8 @@
   let apps = [], appById = {}, inputs = [];
   let pinned = [];
   let row = 1, col = 0;      // الصف ٠ = شريط التنقل، ١ = التطبيقات، ٢ = المداخل
-  let mode = "nav";          // nav | menu | move | picker | reader | quick | pin
+  let mode = "nav";          // nav | menu | move | picker | reader | quick | pin | day
+  let watch = [], quickList = [];
   let menuIdx = 0, pickIdx = 0, readIdx = 0, readList = [], quickIdx = 0;
   let pinDigits = [0, 0, 0, 0], pinPos = 0, pinThen = null, pinTries = 0;
   let root;
@@ -27,6 +28,17 @@
     { type: "nav", id: "timed", name: "ذكر الوقت", ic: "bell" },
     { type: "nav", id: "reader", name: "الأذكار", ic: "book" }
   ];
+  // لوحة اللحظة: ثلاث أزرار بكلماتها دايماً. "الأذكار" فيها ذكر الوقت أول
+  const NAV_MOMENT = [
+    { type: "nav", id: "reader", name: "الأذكار", ic: "book" },
+    { type: "nav", id: "inputs", name: "المداخل", ic: "hdmi" },
+    { type: "nav", id: "quick", name: "التحكم", ic: "gear" }
+  ];
+  const moment = () => CONFIG.homeLayout !== "classic";
+  // وضع الأطفال يحتاج رمز (الخروج منه بالرمز)، وهو ترتيب مو حماية كاملة
+  const kids = () => !!(CONFIG.kids && CONFIG.kids.on && CONFIG.lock && /^[0-9]{4}$/.test(CONFIG.lock.pin || ""));
+  const navItems = () => (moment() ? NAV_MOMENT.filter((n) => n.id !== "inputs" || inputs.length) : NAV);
+  const inputName = (i) => (CONFIG.inputNames && CONFIG.inputNames[i.id]) || i.name;
   // اللوحة السريعة (بدل لوحة Google TV اللي كانت تطلع بضغطة البيت المطوّلة)
   const QUICK = [
     { id: "system", name: "إعدادات التلفزيون", ic: "gear" },
@@ -36,8 +48,21 @@
     { id: "display", name: "الشاشة والصورة", ic: "tv" },
     { id: "riwaq", name: "إعدادات رواق (بالجوال)", ic: "grid" },
     { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" },
+    { id: "picker", name: "اختيار التطبيقات", ic: "grid", kidsHide: true },
+    { id: "majlis", name: "شاشة المجلس (واي فاي الضيوف)", ic: "wifi" },
+    { id: "update", name: "تحديث رواق", ic: "gear" },
+    { id: "report", name: "إبلاغ عن مشكلة", ic: "bell" },
     { id: "restore", name: "الرجوع للواجهة الأصلية", ic: "hide" }
   ];
+  function controlItems() {
+    const out = QUICK.filter((q) => !(q.kidsHide && kids())).map((q) => {
+      const v = q.id === "update" && native() && Riwaq.updateAvailable ? Riwaq.updateAvailable() : "";
+      return v ? Object.assign({}, q, { name: "تحديث رواق · نسخة جديدة " + F.digits(v) }) : q;
+    });
+    if (native() && Riwaq.keysOff && Riwaq.keysOff()) out.unshift({ id: "setup", name: "خدمة الأزرار توقفت: شغّلها", ic: "bell" });
+    if (native() && moment() && CONFIG.continueRow !== false && Riwaq.watchAllowed && !Riwaq.watchAllowed()) out.push({ id: "askWatch", name: "اسمح بصف أكمل المشاهدة", ic: "grid" });
+    return out;
+  }
 
   function loadApps() {
     if (native()) {
@@ -51,6 +76,19 @@
     appById = Object.fromEntries(apps.map((a) => [a.id, a]));
     const saved = Array.isArray(CONFIG.pinned) ? CONFIG.pinned : (window.DEMO && !native() ? DEMO.pinned : defaultPinned());
     pinned = saved.filter((id) => appById[id]);
+    if (kids()) pinned = (CONFIG.kids.apps || []).filter((id) => appById[id]);
+    loadWatch();
+  }
+
+  // أكمل المشاهدة: اسم وأيقونة بس، بدون صور. يعتمد على التطبيق: اللي ما يكتب في قائمة النظام ما يطلع
+  function loadWatch() {
+    watch = [];
+    if (!moment() || CONFIG.continueRow === false || kids()) return;
+    let list = [];
+    if (native() && Riwaq.getWatchNext) { try { list = JSON.parse(Riwaq.getWatchNext()) || []; } catch (e) { list = []; } }
+    else if (!native() && window.DEMO && DEMO.watch) list = DEMO.watch;
+    const clean = (window.DATA && DATA.clean) || (() => true);
+    watch = list.filter((w) => w && w.title && clean(String(w.title))).slice(0, 8);
   }
 
   // أول مرة (قبل ما يختار المستخدم): التطبيقات المشهورة أول، وتطبيقات النظام (الإعدادات والمتجر) آخر شي
@@ -72,12 +110,23 @@
   }
 
   function rows() {
-    const R = [NAV, pinned.map((id) => ({ type: "app", id, name: appById[id].name }))];
-    if (inputs.length) R.push(inputs.map((i) => ({ type: "input", id: i.id, name: i.name, ic: i.icon || "hdmi" })));
+    const R = [navItems(), pinned.map((id) => ({ type: "app", id, name: appById[id].name }))];
+    if (moment()) {
+      if (!kids()) R[1] = R[1].concat({ type: "all", id: "all", name: "كل التطبيقات" });
+      if (watch.length) R.push(watch.map((w) => ({ type: "watch", id: w.i, name: w.title, watch: w })));
+      return R;
+    }
+    if (inputs.length) R.push(inputs.map((i) => ({ type: "input", id: i.id, name: inputName(i), ic: i.icon || "hdmi" })));
     return R;
   }
 
   function tileHTML(item, r, c) {
+    if (item.type === "all") return `<div class="tile all" data-r="${r}" data-c="${c}"><div class="name">${esc(item.name)}</div></div>`;
+    if (item.type === "watch") {
+      const w = item.watch;
+      const ic = /^\/icons\/icon\/[A-Za-z0-9_.]+\.png$/.test(w.icon || "") ? `<img class="wt-ic" src="${w.icon}" alt="">` : "";
+      return `<div class="tile wt" data-r="${r}" data-c="${c}">${ic}<div class="wt-t"><bdi>${esc(w.title)}</bdi></div>${w.progress ? `<div class="wt-p"><i style="width:${+w.progress}%"></i></div>` : ""}</div>`;
+    }
     if (item.type === "app") {
       const a = appById[item.id];
       // البانر فيه اسم التطبيق أصلاً: اسمنا يطلع بس لما يتحدد
@@ -93,11 +142,25 @@
   function build(el) {
     el.innerHTML = `
       <div class="shade home-shade"></div>
+      <div class="m-top soft-shadow">
+        <div class="m-date" data-k="mDate"></div>
+        <nav class="m-nav" data-k="mNav"></nav>
+      </div>
+      <div class="m-clock soft-shadow" data-k="mClock"></div>
+      <div class="m-prayers soft-shadow" data-k="mPrayers"></div>
+      <div class="m-next soft-shadow" data-k="mNext"></div>
+      <div class="m-text soft-shadow" data-k="mText"></div>
+      <div class="m-rows">
+        <div class="m-cap soft-shadow" data-k="mCap"></div>
+        <div class="m-track"><div class="h-strip" data-k="m1"></div></div>
+        <div class="m-track wt-track" data-k="mWatch"><div class="m-track-title soft-shadow">أكمل المشاهدة</div><div class="h-strip" data-k="m2"></div></div>
+      </div>
+      <div class="m-credit" data-k="mCredit"></div>
       <div class="h-top soft-shadow">
         <div class="h-date" data-k="date"></div>
         <div class="h-center">
           <div class="h-brand" aria-label="رِواق">رِواق</div>
-          <nav class="h-nav">${NAV.map((n, c) => `<div class="nav-pill" data-r="0" data-c="${c}">${icon(n.ic)}<span>${n.name}</span></div>`).join("")}</nav>
+          <nav class="h-nav" data-k="hNav"></nav>
         </div>
         <div class="h-status">
           <span class="chip" data-k="wx"></span>
@@ -132,7 +195,7 @@
         <div class="picker-list"><div class="picker-scroll" data-k="plist"></div></div>
       </div>
       <div class="quick" data-k="quick">
-        <h2>${icon("tv")}التلفزيون</h2>
+        <h2 data-k="qTitle">${icon("tv")}التلفزيون</h2>
         <div class="quick-list" data-k="qlist"></div>
       </div>
       <div class="pin" data-k="pin">
@@ -161,12 +224,26 @@
   // يكتب في العنصر بس لو المحتوى تغيّر (كل كتابة = إعادة تخطيط ورسم على التلفزيون)
   const setHTML = (el, h) => { if (el && el.__h !== h) { el.innerHTML = h; el.__h = h; } };
 
+  const rowEl = (r) => $((moment() ? "m" : "r") + r);
   function renderRows() {
     const R = rows();
-    $("r1").innerHTML = R[1].length ? R[1].map((it, c) => tileHTML(it, 1, c)).join("")
+    const nav = R[0].map((n, c) => `<div class="nav-pill" data-r="0" data-c="${c}">${icon(n.ic)}<span>${n.name}</span></div>`).join("");
+    $("mNav").innerHTML = moment() ? nav : "";
+    $("hNav").innerHTML = moment() ? "" : nav;
+    const apps1 = R[1].length ? R[1].map((it, c) => tileHTML(it, 1, c)).join("")
       : `<div class="h-row-hint" style="padding-top:60px">ما اخترت أي تطبيق. اضغط السهم فوق واختر "اختيار التطبيقات".</div>`;
-    $("inputsRow").style.display = inputs.length ? "" : "none";
-    if (inputs.length) $("r2").innerHTML = R[2].map((it, c) => tileHTML(it, 2, c)).join("");
+    if (moment()) {
+      $("m1").innerHTML = apps1;
+      $("r1").innerHTML = ""; $("r2").innerHTML = "";
+      $("mWatch").style.display = watch.length ? "" : "none";
+      root.classList.toggle("has-watch", !!watch.length);
+      $("m2").innerHTML = watch.length ? R[2].map((it, c) => tileHTML(it, 2, c)).join("") : "";
+    } else {
+      $("r1").innerHTML = apps1;
+      $("m1").innerHTML = ""; $("m2").innerHTML = "";
+      $("inputsRow").style.display = inputs.length ? "" : "none";
+      if (inputs.length) $("r2").innerHTML = R[2].map((it, c) => tileHTML(it, 2, c)).join("");
+    }
     if (row >= R.length) row = R.length - 1;
     if (row === 1 && !R[1].length) row = 0;
     col = Math.max(0, Math.min(col, R[row].length - 1));
@@ -176,11 +253,17 @@
   function paintFocus() {
     root.querySelectorAll(".tile, .nav-pill").forEach((t) => t.classList.remove("focus", "moving"));
     const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
-    if (t && !["picker", "reader", "quick", "pin"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
+    if (t && !["picker", "reader", "quick", "pin", "day"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
-      const strip = $("r" + row), pitch = row === 1 ? 328 : 248, w = row === 1 ? 300 : 220;
-      if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - 1736 + 60)}px)`;
+      const m = moment();
+      const strip = rowEl(row), pitch = m ? (row === 1 ? 272 : 404) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 248 : 380) : (row === 1 ? 300 : 220);
+      if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - (m ? 1728 : 1736) + 60)}px)`;
+    }
+    // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع
+    if (moment()) {
+      const it = row > 0 && mode !== "day" ? (rows()[row] || [])[col] : null;
+      setHTML($("mCap"), it ? `<bdi>${esc(it.name)}</bdi>` : "");
     }
     const menu = $("menu");
     menu.classList.toggle("on", mode === "menu");
@@ -200,6 +283,56 @@
   }
 
   // ===== البطاقات =====
+  // ===== لوحة اللحظة =====
+  let momentSig = "";
+  function renderMomentText(now) {
+    const el = $("mText");
+    // مباراة فريقك قبلها بساعة (أو نتيجتها خلال ساعتين) تاخذ مكان النص
+    const fm = DATA.featuredMatch(now);
+    if (fm && ((fm.kind === "next" && fm.at - now < 3600000) || (fm.kind === "last" && now - fm.at < 2 * 3600000))) {
+      const E = fm.ev, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
+      const mid = fm.kind === "last" ? `${F.num(E.hs)} - ${F.num(E.as)}` : "×";
+      const h = `<b>${fm.kind === "last" ? "نتيجة مباراتك" : "مباراتك بعد " + F.duration((fm.at - now) / 60000)}</b><div class="m-match"><bdi>${nm(E.homeId, E.home)}</bdi> <span>${mid}</span> <bdi>${nm(E.awayId, E.away)}</bdi></div>`;
+      momentSig = "match"; setHTML(el, h); return;
+    }
+    const first = window.Content && Content.current(now, 0);
+    const sig = first ? (first.item.sourceId || first.item.text.slice(0, 40)) + "|" + first.title : "none";
+    if (sig === momentSig) return;
+    momentSig = sig;
+    el.__h = null;
+    // نص كامل بس: ناخذ أول نص يدخل في المساحة (٤ أسطر تقريباً)، وما نقص أي نص
+    for (let offset = 0; offset < 12; offset++) {
+      const c = window.Content && Content.current(now, offset);
+      if (!c) break;
+      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
+      el.innerHTML = `<b>${esc(c.title)}</b><p class="${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(Content.credit(c.item, false).source)}</small>`;
+      if (el.scrollHeight <= el.clientHeight + 1) return;
+    }
+    const tm = window.Content && Content.timed ? Content.timed(now) : [];
+    el.innerHTML = tm.length ? `<b>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}</b><small>افتحها كاملة من «الأذكار» فوق</small>` : "";
+  }
+
+  function renderMoment(now) {
+    const c = F.clock(now);
+    setHTML($("mClock"), `<span class="ltr">${c.h}:${c.m}</span><small>${c.ampm}</small>`);
+    const w = DATA.weather();
+    const g = w && F.sky(w.data.now.code, now);
+    setHTML($("mDate"), `${esc(F.hijri(now))}<small>${esc(F.gregorian(now))} م${w ? ` · ${F.num(w.data.now.temp)}° ${g[0]}` : ""}</small>`);
+    const np = Prayer.next(now);
+    if (np) {
+      setHTML($("mPrayers"), np.today.filter((p) => !p.notPrayer).map((p) => { const t = F.clock(p.at); return `<div class="${p.id === np.p.id ? "n" : ""}"><label>${p.name}</label>${t.h}:${t.m}</div>`; }).join(""));
+      const r = Prayer.ramadan(now);
+      setHTML($("mNext"), r ? `${r.label} بعد ${F.duration(r.mins)}` : `${np.p.name}${np.tomorrow ? " بكرة" : ""} بعد ${F.duration(np.mins)}`);
+    } else {
+      setHTML($("mPrayers"), "");
+      setHTML($("mNext"), "اختر مدينتك: السهم فوق ← التحكم ← إعدادات رواق");
+    }
+    renderMomentText(now);
+    const parts = [window.Scene && Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة" : ""];
+    if (w) parts.push("الطقس: Open-Meteo.com");
+    setHTML($("mCredit"), esc(parts.filter(Boolean).join(" · ")));
+  }
+
   function renderPrayerCard(now) {
     const el = $("prayerCard");
     const np = Prayer.next(now);
@@ -253,8 +386,8 @@
     const lines = [];
     const w = DATA.weather(), days = DATA.forecast();
     if (w) {
-      const g = F.weather(w.data.now.code), d = days && days[0];
-      lines.push(`<div class="ht-wx">${icon(g[1])}<span class="ht-temp">${F.num(w.data.now.temp)}°</span><span>${g[0]}${d ? `<small>${F.num(d.max)}° / ${F.num(d.min)}°</small>` : ""}</span></div>`);
+      const g = F.sky(w.data.now.code, now), d = days && days[0];
+      lines.push(`<div class="ht-wx">${icon(g[1])}<span class="ht-temp">${F.num(w.data.now.temp)}°</span><span>${g[0]}${d ? `<small>${F.num(d.max)}° / ${F.num(d.min)}°</small>` : ""}<small>Open-Meteo.com</small></span></div>`);
     }
     const H = window.Saver && Saver.helpers;
     // مباراة الفريق
@@ -267,14 +400,14 @@
     }
     // ذكر الوقت: أول سطر (أهم شي الحين)
     const tm = window.Content && Content.timed ? Content.timed(now) : [];
-    if (tm.length) lines.unshift(`<div class="ht-line ht-timed">${icon("bell")}<span>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}<small>افتحها كاملة من «ذكر الوقت» فوق</small></span></div>`);
+    if (tm.length) lines.unshift(`<div class="ht-line ht-timed">${icon("bell")}<span>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}<small>افتحها كاملة من ${moment() ? "«الأذكار»" : "«ذكر الوقت»"} فوق</small></span></div>`);
     if (H) {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, H.daysToHijri(now, m, d) || { days: 9999 })).sort((a, b) => a.days - b.days)[0];
-      if (occ && occ.days > 0 && occ.days < 9999) lines.push(`<div class="ht-line">${icon("crescent")}<span>${occ.n}: باقي ${F.digits(occ.days)} ${occ.days >= 3 && occ.days <= 10 ? "أيام" : "يوم"}</span></div>`);
+      if (occ && occ.days > 0 && occ.days < 9999) lines.push(`<div class="ht-line">${icon("crescent")}<span>${occ.n}: باقي ${F.days(occ.days)}</span></div>`);
       if (CONFIG.city && CONFIG.city.country === "SA" && CONFIG.showSalary) {
         const s = H.nextMonthly(now, 27, "salary");
-        lines.push(`<div class="ht-line">${icon("wallet")}<span>الراتب: ${s.days === 0 ? "اليوم" : `باقي ${F.digits(s.days)} ${s.days >= 3 && s.days <= 10 ? "أيام" : "يوم"}`} <small>متوقع</small></span></div>`);
+        lines.push(`<div class="ht-line">${icon("wallet")}<span>الراتب: ${s.days === 0 ? "اليوم" : `باقي ${F.days(s.days)}`} <small>متوقع</small></span></div>`);
       }
     }
     // البطاقة ما تكبر: لو ما دخل كل شي نشيل من آخر القائمة (الأقل أهمية) بدل ما ينقص سطر من نصه
@@ -289,12 +422,17 @@
   function renderStatus() {
     if (window.App && App.current && App.current !== "home") return; // الواجهة مخفية (شاشة الانتظار ظاهرة)
     const now = new Date();
+    if (moment()) {
+      renderMoment(now);
+      if (mode === "day") { renderContentCard(now); renderTodayCard(now); }
+      return;
+    }
     const c = F.clock(now);
     setHTML($("time"), `<span class="ltr">${c.h}:${c.m}</span><small>${c.ampm}</small>`);
     const parts = F.hijri(now).split("،");
     setHTML($("date"), `${esc(parts[0])}<small>${esc((parts[1] || "").trim())}</small><small class="h-greg">${esc(F.gregorian(now))} م</small>`);
     const w = DATA.weather();
-    if (w) { const g = F.weather(w.data.now.code); setHTML($("wx"), `${icon(g[1])}${F.num(w.data.now.temp)}°`); }
+    if (w) { const g = F.sky(w.data.now.code, now); setHTML($("wx"), `${icon(g[1])}${F.num(w.data.now.temp)}°`); }
     $("wx").style.display = w ? "" : "none";
     renderPrayerCard(now);
     renderContentCard(now);
@@ -312,7 +450,7 @@
     tx.className = "reader-text " + Content.fontClass(it.item);
     const im = $("rImg"), okImg = /^img\/places\/[a-z0-9-]+\.jpg$/.test(it.item.image || "");
     im.hidden = !okImg; if (okImg) im.src = it.item.image; else im.removeAttribute("src");
-    $("rSrc").textContent = it.item.type === "hadith" || Array.isArray(it.item.takhrij) ? Content.credit(it.item, false).source : it.item.source + (it.item.edition ? " · المصدر: " + it.item.edition : "");
+    $("rSrc").textContent = it.item.type === "hadith" || Array.isArray(it.item.takhrij) ? Content.credit(it.item, false).source : it.item.source + (it.item.edition ? " · المصدر: " + it.item.edition : "") + (it.item.imageCredit ? " · " + it.item.imageCredit : "");
     $("rRef").textContent = Content.credit(it.item, true).reference;
     // النص كامل دايماً: نصغّر الخط، وإذا للحين أطول من المساحة ينقرا بالسهم تحت
     tx.scrollTop = 0;
@@ -323,13 +461,37 @@
   let readScroll = false;
 
   function renderQuick() {
-    $("qlist").innerHTML = QUICK.map((q, i) => `<div class="qk ${i === quickIdx ? "focus" : ""}">${icon(q.ic)}<span>${q.name}</span></div>`).join("");
+    const box = $("qlist");
+    box.innerHTML = quickList.map((q, i) => `<div class="qk ${i === quickIdx ? "focus" : ""}">${icon(q.ic)}<span><bdi>${esc(q.name)}</bdi></span></div>`).join("");
+    // القائمة أطول من الشاشة: تمشي مع التحديد
+    box.style.transform = `translateY(${-Math.max(0, quickIdx * 86 - 560)}px)`;
   }
-  function openQuick() { mode = "quick"; quickIdx = 0; $("quick").classList.add("on"); renderQuick(); paintFocus(); }
+  function openList(title, ic, list) {
+    mode = "quick"; quickIdx = 0; quickList = list;
+    $("qTitle").innerHTML = icon(ic) + esc(title);
+    $("quick").classList.add("on"); renderQuick(); paintFocus();
+  }
+  function openQuick() { openList(moment() ? "التحكم" : "التلفزيون", moment() ? "gear" : "tv", controlItems()); }
+  function openInputs() { openList("المداخل", "hdmi", inputs.map((i) => ({ input: i, name: inputName(i), ic: i.icon || "hdmi" }))); }
   function closeQuick() { mode = "nav"; $("quick").classList.remove("on"); paintFocus(); }
+  // يقفل أي طبقة مفتوحة (من زر ريموت أو أمر من أندرويد)، عشان الأزرار ما تحرك شي مخفي
+  function closeLayers() {
+    ["picker", "reader", "quick", "pin"].forEach((k) => $(k).classList.remove("on"));
+    root.classList.remove("day-open");
+    mode = "nav"; pinThen = null;
+  }
+  function openDay() { mode = "day"; root.classList.add("day-open"); const now = new Date(); renderContentCard(now); renderTodayCard(now); paintFocus(); }
+  function closeDay() { mode = "nav"; root.classList.remove("day-open"); paintFocus(); }
   function runQuick(q) {
     closeQuick();
+    if (q.input) return launchItem({ type: "input", id: q.input.id, name: q.name });
     if (q.id === "saver") return App.show("saver");
+    if (q.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
+    if (q.id === "majlis") return guarded(() => (native() && Riwaq.openMajlis ? Riwaq.openMajlis() : App.toast("شاشة المجلس على التلفزيون بس")), "شاشة المجلس");
+    if (q.id === "update") return native() && Riwaq.openUpdate ? Riwaq.openUpdate() : App.toast("التحديث على التلفزيون بس");
+    if (q.id === "report") return native() && Riwaq.openReport ? Riwaq.openReport() : App.toast("الإبلاغ على التلفزيون بس");
+    if (q.id === "setup") return native() && Riwaq.openSetup ? Riwaq.openSetup() : undefined;
+    if (q.id === "askWatch") return native() && Riwaq.askWatch ? Riwaq.askWatch() : undefined;
     if (q.id === "riwaq") return openSettings();
     if (q.id === "restore") return openRestore();
     if (native() && Riwaq.openSystem) return Riwaq.openSystem(q.id);
@@ -342,6 +504,7 @@
   function renderPin() {
     $("pinDigits").innerHTML = pinDigits.map((d, i) => `<span class="pd ${i === pinPos ? "on" : ""}">${F.digits(d)}</span>`).join("");
   }
+  const guarded = (go, name) => { if (CONFIG.lock && CONFIG.lock.pin) askPin(go, name); else go(); };
   // إعدادات رواق (الباركود): لو فيه رمز قفل، تنطلب أول (غير كذا الطفل يقدر يشيل القفل من الجوال)
   function openSettings() {
     const go = () => { if (native()) Riwaq.openSettings(); else location.href = "settings.html"; };
@@ -381,15 +544,18 @@
     if (native()) {
       if (item.type === "app") Riwaq.launch(item.id);
       if (item.type === "input") Riwaq.openInput(item.id);
+      if (item.type === "watch") Riwaq.openWatch(item.watch.i);
       return;
     }
-    App.toast({ app: `يفتح ${item.name} (في المتصفح ما يفتح شي)`, input: `يحوّل إلى ${item.name}` }[item.type]);
+    App.toast({ app: `يفتح ${item.name} (في المتصفح ما يفتح شي)`, input: `يحوّل إلى ${item.name}`, watch: `يكمل ${item.name} (في المتصفح ما يفتح شي)` }[item.type]);
   }
 
   function open(item) {
     if (item.type === "app" && isLocked(item.id)) { askPin(() => launchItem(item), item.name); return; }
+    if (item.type === "all") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
     if (item.type === "nav") {
-      if (item.id === "quick") { openQuick(); return; }
+      if (item.id === "quick") { if (kids()) askPin(openQuick, "التحكم"); else openQuick(); return; }
+      if (item.id === "inputs") { if (kids()) askPin(openInputs, "المداخل"); else openInputs(); return; }
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
       if (item.id === "saver") { App.show("saver"); return; }
       if (item.id === "timed") {
@@ -416,22 +582,37 @@
       root = build(el); loadApps(); renderRows(); renderStatus();
       DATA.onChange(renderStatus);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
-      setInterval(() => { if (!window.App || App.current === "home") renderContentCard(new Date()); }, 20000);
-      window.addEventListener("riwaq-content", () => { contentSig = ""; renderContentCard(new Date()); }); // أول ما يوصل ملف المحتوى
+      setInterval(() => {
+        if (document.hidden || (window.App && App.current !== "home")) return;
+        if (moment()) { renderMomentText(new Date()); if (mode === "day") renderContentCard(new Date()); }
+        else renderContentCard(new Date());
+      }, 20000);
+      const fresh = () => { contentSig = ""; momentSig = ""; renderStatus(); };
+      window.addEventListener("riwaq-content", fresh); // أول ما يوصل ملف المحتوى
+      window.addEventListener("riwaq-remeasure", fresh); // أول ما يوصل الخط
+      // رجعنا من تطبيق: يمكن تغيّرت قائمة "أكمل المشاهدة"
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden || !moment()) return;
+        const before = JSON.stringify(watch);
+        loadWatch();
+        if (JSON.stringify(watch) !== before) renderRows();
+      });
     },
+    // فيه قارئ أو رمز أو قائمة مفتوحة: شاشة الانتظار تنتظر
+    busy() { return mode !== "nav"; },
     // زر تطبيق في الريموت (أو اختيار تطبيق له) على تطبيق مقفل: أندرويد يمرره هنا عشان يطلب الرمز مثل البطاقة
     launchApp(pkg) {
       if (!/^[A-Za-z0-9_.]{1,200}$/.test(String(pkg))) return;
-      if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; }
+      closeLayers();
       open({ type: "app", id: pkg, name: (appById[pkg] || {}).name || pkg });
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
-    openRestore() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openRestore(); },
-    openSettings() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openSettings(); },
-    openQuick() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); mode = "nav"; } openQuick(); },
+    openRestore() { closeLayers(); openRestore(); },
+    openSettings() { closeLayers(); openSettings(); },
+    openQuick() { closeLayers(); if (kids()) askPin(openQuick, "التحكم"); else openQuick(); },
     // أندرويد يناديها لما ينركّب أو ينحذف تطبيق
     appsChanged() { loadApps(); renderRows(); },
-    tick() { renderStatus(); },
+    tick() { if (root) renderStatus(); },
     key(k) {
       const R = rows();
       if (mode === "pin") {
@@ -449,10 +630,15 @@
       }
       if (mode === "quick") {
         if (k === "up") quickIdx = Math.max(0, quickIdx - 1);
-        if (k === "down") quickIdx = Math.min(QUICK.length - 1, quickIdx + 1);
-        if (k === "ok") { runQuick(QUICK[quickIdx]); return true; }
+        if (k === "down") quickIdx = Math.min(quickList.length - 1, quickIdx + 1);
+        if (k === "ok") { runQuick(quickList[quickIdx]); return true; }
         if (k === "back" || k === "menu" || k === "right") { closeQuick(); return true; }
         renderQuick(); return true;
+      }
+      if (mode === "day") {
+        if (k === "up" || k === "back") { closeDay(); return true; }
+        if (k === "ok") { closeDay(); open({ type: "nav", id: "reader" }); return true; }
+        return true;
       }
       if (mode === "reader") {
         // النص الطويل: تحت وفوق يمشون فيه، ولين يوصل آخره السهم تحت ينقل للتالي
@@ -510,13 +696,14 @@
         row--; if (row === 1 && !R[1].length) row = 0;
         col = Math.min(col, R[row].length - 1);
       }
-      if (k === "down" && row < R.length - 1) {
+      else if (k === "down" && moment() && row === R.length - 1) { openDay(); return true; }
+      else if (k === "down" && row < R.length - 1) {
         row++; if (row === 1 && !R[1].length && R.length > 2) row = 2;
         if (!R[row].length) row--;
         col = Math.min(col, R[row].length - 1);
       }
       if (k === "ok" && R[row][col]) open(R[row][col]);
-      if (k === "menu" && R[row][col] && R[row][col].type === "app") { mode = "menu"; menuIdx = 0; }
+      if (k === "menu" && R[row][col] && R[row][col].type === "app" && !kids()) { mode = "menu"; menuIdx = 0; }
       paintFocus();
       return true;
     }
