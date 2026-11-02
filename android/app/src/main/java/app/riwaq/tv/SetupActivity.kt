@@ -32,6 +32,7 @@ import android.widget.Toast
  *  ٢. خدمة الضغطة المطوّلة وأزرار التطبيقات (إمكانية الوصول): أندرويد ما يسمح لتطبيق يفعّلها بنفسه،
  *     فنفتح صفحتها والمستخدم يضغط "تشغيل"
  *  ٣. الأذان في وقته: صلاحية المنبّه الدقيق (أندرويد ١٢ بس، وغيره تلقائي)
+ *  ٤. المدينة: باركود يفتح الإعدادات في الجوال، وبدونها ما تطلع أوقات الصلاة
  * كل خطوة عليها ✓ لما تتم، والصفحة تحدّث حالتها كل ما ترجع لها. ما نطفي واجهة الشركة (اختياري، من السكربت).
  */
 class SetupActivity : Activity() {
@@ -51,7 +52,7 @@ class SetupActivity : Activity() {
         list = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
-            setPadding(px(0.08f), px(0.05f), px(0.08f), px(0.05f))
+            setPadding(px(0.08f), px(0.025f), px(0.08f), px(0.025f))
         }
         setContentView(ScrollView(this).apply {
             setBackgroundColor(Color.rgb(10, 11, 16))
@@ -74,7 +75,7 @@ class SetupActivity : Activity() {
         setTextColor(color)
         if (bold) typeface = Typeface.DEFAULT_BOLD
         textDirection = View.TEXT_DIRECTION_RTL
-        setPadding(0, px(0.008f), 0, px(0.008f))
+        setPadding(0, px(0.004f), 0, px(0.004f))
     }
 
     private fun button(label: String, onClick: () -> Unit) = TextView(this).apply {
@@ -82,7 +83,7 @@ class SetupActivity : Activity() {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, h * 0.03f)
         textDirection = View.TEXT_DIRECTION_RTL
         gravity = Gravity.CENTER_VERTICAL or Gravity.START
-        setPadding(px(0.025f), px(0.014f), px(0.025f), px(0.016f))
+        setPadding(px(0.025f), px(0.009f), px(0.025f), px(0.011f))
         isFocusable = true; isClickable = true
         setTextColor(ColorStateList(arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf()), intArrayOf(Color.rgb(30, 22, 8), ink)))
         background = StateListDrawable().apply {
@@ -103,13 +104,14 @@ class SetupActivity : Activity() {
         val a11yOk = a11yOn(this)
         val hasKeys = BuildConfig.HAS_KEYS
         val alarmOk = alarmOk(this)
-        val ready = homeOk && (a11yOk || !hasKeys) && alarmOk
+        val city = cityName(this)
+        val ready = homeOk && (a11yOk || !hasKeys) && alarmOk && city.isNotEmpty()
 
-        add(text("إعداد رِواق", 0.05f, gold, true), 0f)
-        add(text(if (ready) "كل شي جاهز ✓" else "ثلاث خطوات سريعة بالريموت (كل خطوة تفتح صفحتها، وترجع هنا بزر الرجوع).", 0.024f, if (ready) ok else ink2))
+        add(text("إعداد رِواق", 0.042f, gold, true), 0f)
+        add(text(if (ready) "كل شي جاهز ✓" else "أربع خطوات سريعة بالريموت (كل خطوة تفتح صفحتها، وترجع هنا بزر الرجوع).", 0.024f, if (ready) ok else ink2))
 
         // ١. الواجهة الرئيسية
-        add(text("١. خله الواجهة الرئيسية", 0.032f, ink, true), 0.03f)
+        add(text("١. خله الواجهة الرئيسية", 0.03f, ink, true), 0.016f)
         if (homeOk) add(text("✓ زر البيت يفتح رواق", 0.024f, ok))
         else {
             add(text("عشان زر البيت يفتح رواق بدل واجهة الشركة.", 0.022f, ink2))
@@ -118,10 +120,10 @@ class SetupActivity : Activity() {
 
         // ٢. الضغطة المطوّلة وأزرار الريموت (النسخة الكاملة بس)
         if (!hasKeys) {
-            add(text("٢. الضغطة المطوّلة وأزرار الريموت", 0.032f, ink, true), 0.03f)
+            add(text("٢. الضغطة المطوّلة وأزرار الريموت", 0.03f, ink, true), 0.016f)
             add(text("مو موجودة في هذي النسخة الخفيفة (قوقل تحظر تركيبها من خارج المتجر). تحتاج النسخة الكاملة، وشرحها في صفحة رواق على GitHub.", 0.022f, ink2))
         } else {
-        add(text("٢. فعّل الضغطة المطوّلة وأزرار الريموت", 0.032f, ink, true), 0.03f)
+        add(text("٢. فعّل الضغطة المطوّلة وأزرار الريموت", 0.03f, ink, true), 0.016f)
         if (a11yOk) add(text("✓ شغّالة (البيت المطوّل يفتح اللوحة السريعة، وأزرار نتفلكس ويوتيوب تفتح تطبيقاتها)", 0.024f, ok))
         else {
             add(text("افتح الصفحة، اختر «رِواق» ثم اضغط «تشغيل». الخدمة ما تقرا ولا تحفظ أي شي غير أزرار الريموت.", 0.022f, ink2))
@@ -135,14 +137,25 @@ class SetupActivity : Activity() {
         }
 
         // ٣. الأذان
-        add(text("٣. الأذان في وقته", 0.032f, ink, true), 0.03f)
+        add(text("٣. الأذان في وقته", 0.03f, ink, true), 0.016f)
         if (alarmOk) add(text("✓ الأذان بتوقيت دقيق", 0.024f, ok))
         else {
             add(text("اسمح لرواق بالمنبّهات والتذكيرات عشان يطلع الأذان بالضبط.", 0.022f, ink2))
             add(button("افتح إذن المنبّهات") { openAlarmPermission() }.also { if (firstFocus == null) firstFocus = it })
         }
 
-        add(button(if (ready) "ابدأ ✓" else "تخطّى (أقدر أرجع لها من اللوحة السريعة)") { finishSetup() }.also { if (firstFocus == null || ready) firstFocus = it }, 0.04f)
+        // ٤. المدينة. الزر يطلع بس لو ما فيه مدينة: المعالج ينفتح من اللوحة السريعة، وما يصير طريق للإعدادات يتخطى رمز القفل
+        add(text("٤. اختر مدينتك", 0.03f, ink, true), 0.016f)
+        if (city.isNotEmpty()) add(text("✓ $city", 0.024f, ok))
+        else if (hasPin(this)) add(text("اختر المدينة من «التحكم» ← «إعدادات رواق» بعد ما تكتب الرمز.", 0.022f, ink2))
+        else {
+            add(text("عشان تطلع أوقات الصلاة والطقس. تصوّر الباركود بجوالك، تختار المدينة، وتضغط حفظ.", 0.022f, ink2))
+            add(button("اعرض الباركود") {
+                startActivity(Intent(this, SettingsActivity::class.java).putExtra(SettingsActivity.EXTRA_CITY, true))
+            }.also { if (firstFocus == null) firstFocus = it })
+        }
+
+        add(button(if (ready) "ابدأ ✓" else "تخطّى (أقدر أرجع لها من اللوحة السريعة)") { finishSetup() }.also { if (firstFocus == null || ready) firstFocus = it }, 0.02f)
         firstFocus?.requestFocus()
     }
 
@@ -194,6 +207,13 @@ class SetupActivity : Activity() {
 
         fun isDone(ctx: Context) = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_DONE, false)
 
+        private fun config(ctx: Context) = try { org.json.JSONObject(ConfigStore.get(ctx)) } catch (e: Exception) { org.json.JSONObject() }
+
+        /** اسم المدينة من الإعدادات. فاضي = لسا ما اختار */
+        fun cityName(ctx: Context): String = config(ctx).optJSONObject("city")?.optString("name").orEmpty()
+
+        private fun hasPin(ctx: Context) = config(ctx).optJSONObject("lock")?.optString("pin").orEmpty().isNotEmpty()
+
         fun isHome(ctx: Context): Boolean {
             if (Build.VERSION.SDK_INT >= 29) {
                 val rm = ctx.getSystemService(RoleManager::class.java)
@@ -226,7 +246,7 @@ class SetupActivity : Activity() {
 
         /** أول تشغيل: نفتح المعالج لو فيه خطوة ناقصة (مرة وحدة، لين المستخدم يضغط "ابدأ" أو "تخطّى") */
         fun maybeLaunch(act: Activity) {
-            if (isDone(act) || (isHome(act) && (a11yOn(act) || !BuildConfig.HAS_KEYS) && alarmOk(act))) return
+            if (isDone(act) || (isHome(act) && (a11yOn(act) || !BuildConfig.HAS_KEYS) && alarmOk(act) && cityName(act).isNotEmpty())) return
             act.startActivity(Intent(act, SetupActivity::class.java))
         }
     }

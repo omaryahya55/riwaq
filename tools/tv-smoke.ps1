@@ -39,6 +39,8 @@ Adb shell am start -n app.riwaq.tv/.MainActivity | Out-Null
 Start-Sleep -Seconds 8
 $top = (Adb shell dumpsys activity activities 2>$null | Select-String "ResumedActivity" | Out-String)
 if ($top -notmatch "app\.riwaq\.tv") { Fail "رواق مو ظاهر في الشاشة" } else { Say "الواجهة ظاهرة ✓" }
+# معالج الإعداد مفتوح (لسا ما انختارت مدينة مثلاً): نقفله عشان الأزرار توصل للواجهة
+if ($top -match "SetupActivity") { Say "معالج الإعداد مفتوح، نقفله للفحص"; Keys @("KEYCODE_BACK"); Start-Sleep -Seconds 2 }
 Shot "1-home"
 
 Say "يومك: السهم تحت"

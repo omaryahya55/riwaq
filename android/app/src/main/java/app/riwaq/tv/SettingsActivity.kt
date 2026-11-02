@@ -51,14 +51,21 @@ class SettingsActivity : Activity() {
         status = tv("", 22f, ink2)
 
         val ip = localIp()
-        val srv = ConfigServer(this) { runOnUiThread { status.text = getString(R.string.settings_saved) } }
+        // من خطوة المدينة في المعالج: أول ما تنحفظ مدينة نرجع له، ويطلع عليها ✓
+        val forCity = intent.getBooleanExtra(EXTRA_CITY, false)
+        val srv = ConfigServer(this) {
+            runOnUiThread {
+                status.text = getString(R.string.settings_saved)
+                if (forCity && SetupActivity.cityName(this).isNotEmpty()) status.postDelayed({ finish() }, 2000)
+            }
+        }
         if (ip == null || !srv.start()) {
             text.addView(tv(getString(R.string.settings_no_network), 24f, ink))
         } else {
             server = srv
             val url = "http://$ip:${srv.port}/settings.html?token=${srv.token}"
             text.addView(tv(getString(R.string.settings_scan), 28f, ink))
-            text.addView(tv(getString(R.string.settings_hint), 20f, ink2))
+            text.addView(tv(if (forCity) "اختر مدينتك واضغط حفظ، وترجع للإعداد لحالها. الباقي تقدر تغيره بعدين." else getString(R.string.settings_hint), 20f, ink2))
             text.addView(tv("http://$ip:${srv.port}", 20f, ink2).apply { textDirection = View.TEXT_DIRECTION_LTR })
             qr.setImageBitmap(TvUi.qr(url, dp(380)))
             root.addView(qr, LinearLayout.LayoutParams(dp(380), dp(380)).apply { marginEnd = dp(56) })
@@ -82,6 +89,10 @@ class SettingsActivity : Activity() {
     }
 
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
+
+    companion object {
+        const val EXTRA_CITY = "city"
+    }
 
     /** عنوان التلفزيون على شبكة البيت (IPv4 خاص) */
     private fun localIp(): String? = try {
