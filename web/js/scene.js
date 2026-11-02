@@ -1,6 +1,6 @@
 /*
  * الخلفية حسب وقت اليوم (فجر، نهار، عصر، مغرب، ليل):
- * - صور حقيقية (الافتراضي، من web/js/backgrounds.js)، وبالليل نرسم القمر فوقها
+ * - صور حقيقية (الافتراضي، من web/js/backgrounds.js)، بدون رسم فوقها
  * - أو رسمة (SVG): سماء وكثبان تتغير ألوانها، فيها شمس بالنهار وقمر بالليل (CONFIG.bgStyle = "drawn")
  * ما فيها صور ناس (البريف: الهدف).
  */
@@ -51,7 +51,7 @@
     return `<div class="cloud-layer" style="opacity:${opacity}">${row(190, 1.1, "c1")}${row(330, 0.8, "c2")}</div>`;
   }
 
-  // صورة حقيقية للفترة (web/js/backgrounds.js)، وفوقها تظليل عشان الكلام ينقرا، والقمر بالليل
+  // صورة حقيقية للفترة (web/js/backgrounds.js)
   function pick(period) {
     const list = window.BACKGROUNDS && BACKGROUNDS[period];
     if (!Array.isArray(list) || !list.length) return null;
@@ -64,20 +64,19 @@
     Scene.own = false;
     // نسخة صغيرة مموهة تجهزت وقت البناء: زجاج بدون تمويه حي (backdrop-filter ثقيل على التلفزيون)
     document.getElementById("stage").style.setProperty("--glass", /^img\/bg\/blur\/[a-z]+-\d\.jpg$/.test(b.blur || "") ? `url("../${b.blur}")` : "none");
-    const p = P[period] || P.night;
-    const moon = period === "night" && p.moon
-      ? `<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".22"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient></defs><circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".92"/></svg>` : "";
     // التظليل داخل الصورة نفسها (tools/import-backgrounds.py): طبقة وحدة بس، أخف على التلفزيون
-    el.innerHTML = `<img class="bg-photo" src="${b.src}" alt="" decoding="async">${moon}`;
+    el.innerHTML = `<img class="bg-photo" src="${b.src}" alt="" decoding="async">`;
     document.getElementById("stage").classList.add("bgphoto");
     Scene.credit = b.credit;
     return true;
   }
 
   // صورة من ألبوم البيت (شاشة الانتظار بس). فوقها تظليل لأن التباين مو مضمون في صور الناس
-  function album(el, id) {
+  function album(el, id, period) {
     if (!/^\d{1,2}$/.test(String(id))) return false;
     el.innerHTML = `<img class="bg-photo" src="/album/${id}.jpg" alt="" decoding="async"><div class="album-veil"></div>`;
+    // الصورة انحذفت أو ما تنقرا: نرجع لخلفية رواق بدل شاشة سودا
+    el.querySelector("img").onerror = () => { Scene.own = false; render(el, period); };
     document.getElementById("stage").classList.add("bgphoto");
     Scene.credit = ""; Scene.own = true;
     return true;

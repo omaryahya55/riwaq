@@ -222,7 +222,7 @@
 #stage.moment .tile .mono { top: 0; right: 0; left: 0; bottom: 0; display: grid; place-items: center; font-size: 46px; font-weight: 500; }
 #stage.moment .tile.has-icon .app-ic { top: 30px; right: 82px; width: 72px; height: 72px; }
 /* البانرات البيضا تطغى على الصورة: تخف لين يتحدد التطبيق */
-#stage.moment .tile.has-img:not(.focus):not(.moving) img { opacity: .78; }
+#stage.moment .tile.has-img:not(.focus):not(.moving)::after { content: ""; position: absolute; inset: 0; background: rgba(10,9,8,.3); }
 #stage.moment .tile.focus, #stage.moment .tile.moving { transform: scale(1.06); box-shadow: 0 0 0 3px var(--ink); }
 .tile.all .name { position: static !important; display: grid; place-items: center; height: 100%; font-size: 24px !important; font-weight: 400; color: var(--ink-2); }
 #stage.moment .tile.all { width: 150px; }

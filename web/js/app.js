@@ -54,7 +54,7 @@
       const first = !sceneKey;
       sceneKey = key;
       const el = document.getElementById("scene");
-      const paint = () => { if (own !== null) Scene.album(el, own); else Scene.render(el, period); };
+      const paint = () => { if (own !== null) Scene.album(el, own, period); else Scene.render(el, period); };
       // تعتيم، تبديل، ظهور: ما تجتمع صورتين بحجم الشاشة، وما فيه قطع مفاجئ
       if (first) paint();
       else { el.style.opacity = 0; setTimeout(() => { paint(); el.style.opacity = 1; Saver.tick(true); Home.tick(); }, 450); }
@@ -77,7 +77,7 @@
     App.current = name;
     document.getElementById("home").classList.toggle("on", name === "home");
     document.getElementById("saver").classList.toggle("on", name === "saver");
-    if (name === "saver") Saver.tick(true); else { stage.classList.remove("alert"); Home.tick(); }
+    if (name === "saver") { albumIds = null; Saver.tick(true); } else { stage.classList.remove("alert"); Home.tick(); }
     updateScene();
     syncDevbar();
   }
@@ -90,7 +90,8 @@
 
   // ===== الأزرار =====
   const MAP = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", Enter: "ok", " ": "ok",
-                Escape: "back", Backspace: "back", GoBack: "back", BrowserBack: "back", ContextMenu: "menu", m: "menu", M: "menu" };
+                Escape: "back", Backspace: "back", GoBack: "back", BrowserBack: "back", ContextMenu: "menu", m: "menu", M: "menu",
+                MediaPlayPause: "media", MediaPlay: "media", MediaPause: "media" };
   let okDown = 0, okLong = false, okTimer;
 
   // أزرار الأرقام (لو الريموت فيها): d0 إلى d9
@@ -98,6 +99,7 @@
 
   function dispatch(k) {
     resetIdle();
+    if (k === "media") { if (window.Tilawa) Tilawa.toggle(); return true; }
     if (window.PhoneMsg && PhoneMsg.key(k)) return true; // رسالة الجوال ظاهرة: الزر يقفلها
     if (App.current === "saver") { if (!MODE_SAVER_ONLY) show("home"); return; } // أي زر يرجّع للواجهة
     return Home.key(k);

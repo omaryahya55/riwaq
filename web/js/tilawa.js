@@ -170,7 +170,7 @@
       if (timer) clearInterval(timer);
       timer = setInterval(() => {
         if (document.hidden) return;
-        if (Date.now() - lastKey > IDLE_MS && state().on) { close(); return; }
+        if (Date.now() - lastKey > IDLE_MS) { close(); return; }
         renderPlayer();
       }, 1000);
     },
@@ -227,6 +227,7 @@
       return s && rc ? `${s.name} · ${rc.name}` : "";
     },
     playing() { return !!state().on; },
+    toggle() { if (state().on) act("toggle"); },
     stop
   };
 })();
