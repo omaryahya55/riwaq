@@ -56,6 +56,22 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     @JavascriptInterface fun openUpdate() = openActivity(UpdateActivity::class.java)
     @JavascriptInterface fun openReport() = openActivity(ReportActivity::class.java)
     @JavascriptInterface fun openSetup() = openActivity(SetupActivity::class.java)
+    @JavascriptInterface fun getAlbum(): String = Album.listJson(ctx)
+    @JavascriptInterface fun tilawaPlay(edition: String, surah: Int, verse: Boolean, rate: Int, at: Int) { main.post { Tilawa.play(ctx, edition, surah, verse, rate, at) } }
+    @JavascriptInterface fun tilawaToggle() { main.post { Tilawa.command(ctx, TilawaService.ACTION_TOGGLE) } }
+    @JavascriptInterface fun tilawaStop() { main.post { Tilawa.command(ctx, TilawaService.ACTION_STOP) } }
+    @JavascriptInterface fun tilawaSeek(dir: Int) { main.post { Tilawa.seek(ctx, dir) } }
+    @JavascriptInterface fun tilawaState(): String = Tilawa.stateJson(ctx)
+    /** البحث الصوتي حق النظام. كل جهاز يدعم واحد منها */
+    @JavascriptInterface fun openSearch() {
+        main.post {
+            val tries = listOf(Intent("android.search.action.GLOBAL_SEARCH"), Intent(Intent.ACTION_ASSIST), Intent(Intent.ACTION_VOICE_COMMAND), Intent(android.provider.Settings.ACTION_VOICE_INPUT_SETTINGS))
+            for (i in tries) {
+                try { ctx.startActivity(i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); return@post } catch (e: Exception) { }
+            }
+            android.widget.Toast.makeText(ctx, "الجهاز ما يدعم البحث الصوتي", android.widget.Toast.LENGTH_LONG).show()
+        }
+    }
     /** رقم نسخة أحدث لو فيه (فاضي = عندك الأخيرة) */
     @JavascriptInterface fun updateAvailable(): String = Update.available(ctx)
     /** النسخة الكاملة وخدمة الأزرار توقفت (يصير بعد تحديث التطبيق أحياناً): الواجهة تنبّه */

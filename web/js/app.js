@@ -29,19 +29,37 @@
     const m = {}; t.forEach((p) => (m[p.id] = F.minutesOfDay(p.at))); return m;
   }
 
+  let sceneKey = "";
+  const CLOCK_FONTS = { amiri: '"Amiri", serif', alyamama: '"Alyamama", "Amiri", serif', readex: '"Readex Pro", "Amiri", serif', fustat: '"Fustat", "Amiri", serif' };
+  // ألبوم البيت: شاشة الانتظار بس، وبالنهار والسهرة، وتتبدل كل نص ساعة. "مع صورنا" بالتناوب
+  let albumIds = null;
+  function albumNow(now, min, pm) {
+    if (App.current !== "saver" || CONFIG.albumMode === "off" || CONFIG.density === "full") return null;
+    if (albumIds === null) { try { albumIds = window.Riwaq && Riwaq.getAlbum ? JSON.parse(Riwaq.getAlbum()).ids || [] : []; } catch (e) { albumIds = []; } }
+    if (!albumIds.length || (min >= 90 && min < pm.fajr - 30 && F.hijriParts(now).m !== 9)) return null;
+    const slot = Math.floor(now.getTime() / 1800000);
+    if (CONFIG.albumMode === "mix" && slot % 2) return null;
+    return albumIds[Math.floor(slot / (CONFIG.albumMode === "mix" ? 2 : 1)) % albumIds.length];
+  }
+
   function updateScene() {
     const now = new Date();
     const min = F.minutesOfDay(now);
     const pm = prayerMinutes(now);
     const period = forcedPeriod || Scene.periodAt(min, pm);
-    if (period !== stage.dataset.period) {
-      const first = !stage.dataset.period;
-      stage.dataset.period = period;
+    stage.dataset.period = period;
+    const own = albumNow(now, min, pm);
+    const key = (own !== null ? "album:" + own : period) + "|" + Math.floor(now.getTime() / 86400000);
+    if (key !== sceneKey) {
+      const first = !sceneKey;
+      sceneKey = key;
       const el = document.getElementById("scene");
+      const paint = () => { if (own !== null) Scene.album(el, own); else Scene.render(el, period); };
       // تعتيم، تبديل، ظهور: ما تجتمع صورتين بحجم الشاشة، وما فيه قطع مفاجئ
-      if (first) Scene.render(el, period);
-      else { el.style.opacity = 0; setTimeout(() => { Scene.render(el, period); el.style.opacity = 1; Saver.tick(true); Home.tick(); }, 450); }
+      if (first) paint();
+      else { el.style.opacity = 0; setTimeout(() => { paint(); el.style.opacity = 1; Saver.tick(true); Home.tick(); }, 450); }
     }
+    stage.style.setProperty("--font-clock", CLOCK_FONTS[CONFIG.clockFont] || CLOCK_FONTS.amiri);
     // التعتيم الليلي وساعة الليل: من ١:٣٠ بالليل لين قبل الفجر بنص ساعة (اختيار صاحب المشروع)
     const start = 90, fajr = pm.fajr - 30;
     // رمضان: بدون تعتيم وقت السحور، والإمساك ظاهر (قرار صاحب المشروع)

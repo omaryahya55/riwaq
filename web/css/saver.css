@@ -35,7 +35,7 @@
 /* ===== الوسط: ساعة | بطاقة جانبية | عمود البطاقات ===== */
 .s-clock-wrap { position: absolute; top: 300px; right: 92px; width: 712px; }
 /* الساعة من اليمين: كل رقم في صندوقه لأن المتصفح يتجاهل تباعد الحروف في العربي */
-.s-clock { display: flex; align-items: flex-start; justify-content: flex-end; direction: ltr; font-family: var(--font-display); line-height: .9; }
+.s-clock { display: flex; align-items: flex-start; justify-content: flex-end; direction: ltr; font-family: var(--font-clock, var(--font-display)); line-height: .9; }
 .s-clock .d { font-size: 244px; display: inline-block; margin: 0 .015em; }
 .s-clock .colon { font-size: 206px; color: var(--gold); margin: 0 .02em; transform: translateY(-.04em); }
 .s-clock .ampm { font-size: 58px; color: var(--gold); margin-right: 18px; margin-top: 36px; font-family: var(--font-ui); font-weight: 500; }
@@ -140,11 +140,15 @@
 #stage.calm .s-clock-wrap { top: 250px; right: 96px; }
 #stage.calm .s-date { top: 56px; right: 96px; }
 #stage.calm .s-hijri { font-size: 38px; }
-#stage.calm .s-col { top: 290px; left: 96px; width: 760px; }
+#stage.calm .s-col { top: 270px; left: 96px; width: 720px; }
+#stage.calm .s-chips, #stage.calm .s-greg { display: none !important; }
+#stage.calm .s-clock .d { font-size: 196px; }
+#stage.calm .s-clock .colon { font-size: 166px; }
+#stage.calm .s-clock .ampm { font-size: 44px; margin-top: 28px; }
 #stage.calm .s-hadith { background: none; border: 0; padding: 0; }
 #stage.calm .s-card-title { font-size: 24px; color: var(--ink-2); font-weight: 500; }
-#stage.calm .s-hadith p { font-size: 38px; }
-#stage.calm .s-hadith small { font-size: 24px; color: var(--ink-2); }
+#stage.calm .s-hadith p { font-size: 32px; line-height: 1.75; color: var(--ink); }
+#stage.calm .s-hadith small { font-size: 22px; color: var(--ink-2); }
 #stage.calm:not(.nightclock) .s-cell:not(.now) { display: none; }
 /* إطار الهدوء: الصورة كاملة وساعة صغيرة بس */
 #stage.frame .s-col, #stage.frame .s-date, #stage.frame .s-bottom, #stage.frame .s-chips, #stage.frame .s-mprayers, #stage.frame .s-mnext { display: none !important; }
@@ -153,7 +157,7 @@
 #stage.frame .s-clock .colon { font-size: 80px; }
 #stage.frame .s-clock .ampm { font-size: 30px; margin-top: 18px; }
 #stage.nightclock .s-prices, #stage.nightclock .s-side, #stage.nightclock .s-col, #stage.nightclock .s-ticker,
-#stage.nightclock .s-chips, #stage.nightclock .s-now, #stage.nightclock .credit, #stage.nightclock .s-clock-city { display: none !important; }
+#stage.nightclock .s-chips, #stage.nightclock .s-now, #stage.nightclock .s-clock-city { display: none !important; }
 #stage.nightclock .s-date { right: 0; left: 0; top: 150px; text-align: center; }
 #stage.nightclock .s-clock-wrap { right: 0; left: 0; width: auto; top: 330px; }
 #stage.nightclock .s-clock { justify-content: center; }

@@ -26,7 +26,7 @@
         <button class="btn" id="citySearch" type="button">بحث</button>
       </div>
       <ul class="results" id="cityResults"></ul>
-      <p class="tiny">البحث من Open-Meteo (بيانات GeoNames).</p>
+      <p class="tiny">المدن المشهورة موجودة بدون نت، والباقي من بحث Open-Meteo (بيانات GeoNames، CC BY 4.0).</p>
     </section>
 
     <section class="card">
@@ -71,7 +71,16 @@
           <button class="btn ghost" id="adhanReset" type="button">رجوع للصوت الافتراضي</button>
         </div>
         <p class="tiny">تقدر ترفع صوت الأذان اللي تحبه (مثل أذان الحرم) من جوالك: mp3 أو m4a أو غيرها، لين ١٠ ميجا. الصوت لتلفزيونك بس.</p>
-        <p class="tiny">الصوت الافتراضي واحد لكل الصلوات، وما فيه «الصلاة خير من النوم». لو شغّلت الفجر وتبيها، ارفع صوتك.</p>
+        <h3>صوت أذان الفجر (اختياري)</h3>
+        <p class="tiny" id="fajrVoiceNow">الصوت الافتراضي واحد لكل الصلوات، وما فيه «الصلاة خير من النوم». ترفع هنا صوت للفجر بس.</p>
+        <div class="search">
+          <input id="fajrFile" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav,.aac,.flac" aria-label="ملف صوت أذان الفجر">
+          <button class="btn" id="fajrUpload" type="button">رفع</button>
+        </div>
+        <div class="search" style="margin-top:8px">
+          <button class="btn ghost" id="fajrTest" type="button">جرّب صوت الفجر</button>
+          <button class="btn ghost" id="fajrReset" type="button">حذف صوت الفجر</button>
+        </div>
       </div>
       <label class="switch"><input type="checkbox" id="reminders"><span>تذكير الجمعة والصيام (الاثنين والخميس والأيام البيض). ما يطلع تذكير الصيام في رمضان والعيدين وأيام التشريق</span></label>
       <label class="switch"><input type="checkbox" id="nightClock"><span>ساعة الليل: من ١:٣٠ بالليل لين قبل الفجر، شاشة الانتظار تصير ساعة بسيطة خافتة (إلا في رمضان)</span></label>
@@ -84,6 +93,8 @@
         <select id="homeLayout"><option value="moment">لوحة اللحظة: هادئة، الساعة والصلوات ونص واحد (الافتراضي)</option><option value="classic">الكلاسيكية: ثلاث بطاقات وأزرار أكثر</option></select></div>
       <div class="field"><span>كثافة شاشة الانتظار</span>
         <select id="density"><option value="calm">هادئة: الساعة والصلوات ونص واحد (الافتراضي)</option><option value="frame">إطار: صورة كاملة وساعة صغيرة بس</option><option value="full">كاملة: مع الطقس والأسعار والدوريات والأخبار</option></select></div>
+      <div class="field"><span>خط الساعة</span>
+        <select id="clockFont"><option value="amiri">أميري (الافتراضي)</option><option value="alyamama">اليمامة</option><option value="readex">ريدكس</option><option value="fustat">الفسطاط</option></select></div>
       <div class="field"><span>الخلفية</span>
         <select id="bgStyle"><option value="photo">صور حقيقية (فجر، نهار، عصر، مغرب، ليل مع القمر)</option><option value="drawn">رسمة (شمس بالنهار وقمر بالليل)</option></select></div>
       <label class="switch"><input type="checkbox" id="motion"><span>الرسمة: غيوم تتحرك بهدوء</span></label>
@@ -132,6 +143,28 @@
       <h2>أسماء المداخل</h2>
       <p class="muted">سمِّ كل مدخل باسم تعرفه (الرسيفر، PS5). فاضي = اسمه من التلفزيون.</p>
       <div id="inputNames"></div>
+    </section>
+
+    <section class="card" id="albumCard" hidden>
+      <h2>ألبوم البيت</h2>
+      <p class="muted">صورك في شاشة الانتظار (لين ١٠). الجوال يصغّرها ويشيل منها الموقع والبيانات قبل الرفع، وتنحفظ على التلفزيون بس. تذكر إنها تطلع قدام الضيوف.</p>
+      <div class="field"><span>في شاشة الانتظار</span>
+        <select id="albumMode"><option value="off">مطفي</option><option value="mix">مع صور رواق بالتناوب</option><option value="only">صوري بس</option></select></div>
+      <div class="search">
+        <input id="albumFile" type="file" accept="image/*" multiple aria-label="صور الألبوم">
+        <button class="btn" id="albumUpload" type="button">رفع</button>
+      </div>
+      <div class="thumbs" id="albumList"></div>
+      <p class="tiny">الرفع على شبكة البيت بدون تشفير، فلا ترفع صور خاصة وأنت على شبكة مشتركة.</p>
+    </section>
+
+    <section class="card">
+      <h2>نقل الإعدادات</h2>
+      <p class="muted">لتلفزيون ثاني: انسخ الإعدادات في ملف، وافتحه من صفحة إعدادات التلفزيون الثاني. الرمز والمفاتيح وكلمة الواي فاي ما تنتقل.</p>
+      <div class="search">
+        <button class="btn" id="exportCfg" type="button">حفظ في ملف</button>
+        <input id="importCfg" type="file" accept=".json,application/json" aria-label="ملف الإعدادات">
+      </div>
     </section>
 
     <section class="card" id="majlisCard" hidden>
@@ -196,6 +229,7 @@
   <script src="js/demo-data.js"></script>
   <script src="js/teams-ar.js"></script>
   <script src="js/rules.js"></script>
+  <script src="js/cities.js"></script>
   <script src="js/quran-meta.js"></script>
   <script src="js/news-sources.js"></script>
   <script src="js/settings.js"></script>

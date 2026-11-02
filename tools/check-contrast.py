@@ -41,7 +41,9 @@ def bake(img):
         src, dst = img.load(), out.load()
         for y in range(h):
             t = y / h
-            k = f if t < 0.6 else f + (1 - f) * 0.35 * min(1, (t - 0.6) / 0.15) if t < 0.85 else f
+            # نخفف الغمقة بين مناطق النص بتدرج، بدون قفزة تبان كخط في الصورة
+            lift = max(0, min((t - 0.6) / 0.12, (0.93 - t) / 0.12, 1))
+            k = f + (1 - f) * 0.35 * lift
             for x in range(w):
                 r, g, b = src[x, y]
                 dst[x, y] = (int(r * k), int(g * k), int(b * k))
@@ -54,14 +56,14 @@ def main():
     do_bake = "--bake" in sys.argv
     bad = 0
     for name in sorted(os.listdir(BG)):
-        if not name.endswith(".jpg"):
+        if not name.endswith(".jpg"):  # مجلد blur يتجاهله
             continue
         path = os.path.join(BG, name)
         img = Image.open(path).convert("RGB")
         worst = min(contrast(p90(img, a, b)) for a, b in REGIONS)
         if worst < TARGET and do_bake:
             img = bake(img)
-            img.save(path, quality=82, optimize=True, progressive=False)
+            img.save(path, quality=74, optimize=True, progressive=True)
             worst = min(contrast(p90(img, a, b)) for a, b in REGIONS)
         print(f"{name}: {worst:.2f}")
         if worst < TARGET:

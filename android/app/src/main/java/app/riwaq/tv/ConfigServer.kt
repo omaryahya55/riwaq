@@ -28,7 +28,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         private set
 
     private var server: ServerSocket? = null
-    private val pool = Executors.newFixedThreadPool(4)
+    private val pool = Executors.newFixedThreadPool(3)
 
     private val files = mapOf(
         "/settings.html" to "text/html; charset=utf-8",
@@ -37,6 +37,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         "/js/teams-ar.js" to "application/javascript; charset=utf-8",
         "/js/settings.js" to "application/javascript; charset=utf-8",
         "/js/rules.js" to "application/javascript; charset=utf-8",
+        "/js/cities.js" to "application/javascript; charset=utf-8",
         "/js/quran-meta.js" to "application/javascript; charset=utf-8",
         "/js/news-sources.js" to "application/javascript; charset=utf-8",
         "/js/demo-data.js" to "application/javascript; charset=utf-8",
@@ -109,6 +110,31 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                     if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
                     return send(out, 200, "application/json; charset=utf-8", Apps.inputsJson(ctx).toByteArray())
                 }
+                // ألبوم البيت: الجوال يصغّر الصورة وينظفها، والتلفزيون يتأكد إنها JPEG بحدود معقولة
+                if (path == "/api/album" || path.startsWith("/api/album/")) {
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    val id = path.removePrefix("/api/album").removePrefix("/")
+                    when (method) {
+                        "GET" -> {
+                            if (id.isEmpty()) return send(out, 200, "application/json", Album.listJson(ctx).toByteArray())
+                            val f = if (Regex("^\\d{1,2}$").matches(id)) Album.file(ctx, id) else null
+                            return if (f != null && f.exists()) send(out, 200, "image/jpeg", f.readBytes()) else send(out, 404, "text/plain", "not found".toByteArray())
+                        }
+                        "DELETE" -> { Album.delete(ctx, id); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                        "POST" -> {
+                            val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
+                            if (len <= 0 || len > Album.MAX_BYTES) return send(out, 413, "text/plain", "too large".toByteArray())
+                            sock.soTimeout = 60000
+                            val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
+                            return when (Album.save(ctx, body)) {
+                                Album.OK -> send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
+                                Album.FULL -> send(out, 409, "text/plain", "full".toByteArray())
+                                else -> send(out, 415, "text/plain", "not jpeg".toByteArray())
+                            }
+                        }
+                        else -> return send(out, 405, "text/plain", "method".toByteArray())
+                    }
+                }
                 // شاشة المجلس: كلمة الواي فاي تنحفظ لحالها، وما ترجع للجوال أبداً
                 if (path == "/api/majlis") {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
@@ -128,20 +154,21 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                 // صوت أذان من عند المستخدم (مثل أذان الحرم): يرفعه من جواله. رواق نفسه ما يوزّع تسجيل له حقوق
                 if (path == "/api/adhan" || path == "/api/adhan/test") {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    val fajrKind = query.split("&").contains("kind=fajr")
                     if (path == "/api/adhan/test") {
                         if (method != "POST") return send(out, 405, "text/plain", "method".toByteArray())
-                        AdhanService.test(ctx)
+                        AdhanService.test(ctx, fajrKind)
                         return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
                     }
                     when (method) {
-                        "GET" -> return send(out, 200, "application/json", "{\"custom\":${AdhanAudio.hasCustom(ctx)}}".toByteArray())
-                        "DELETE" -> { AdhanAudio.clear(ctx); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                        "GET" -> return send(out, 200, "application/json", "{\"custom\":${AdhanAudio.hasCustom(ctx)},\"fajr\":${AdhanAudio.hasCustom(ctx, true)}}".toByteArray())
+                        "DELETE" -> { AdhanAudio.clear(ctx, fajrKind); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
                         "POST" -> {
                             val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
                             if (len <= 0 || len > AdhanAudio.MAX_BYTES) return send(out, 413, "text/plain", "too large".toByteArray())
                             sock.soTimeout = 60000 // ملف كبير على واي فاي البيت
                             val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
-                            if (!AdhanAudio.save(ctx, body)) return send(out, 415, "text/plain", "not audio".toByteArray())
+                            if (!AdhanAudio.save(ctx, body, fajrKind)) return send(out, 415, "text/plain", "not audio".toByteArray())
                             return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
                         }
                         else -> return send(out, 405, "text/plain", "method".toByteArray())

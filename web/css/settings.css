@@ -67,3 +67,8 @@ body { overflow-x: hidden; }
 .times select { padding: 8px 2px; text-align: center; min-height: 44px; }
 .warn { color: var(--bad); }
 .inp-row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; align-items: center; margin-top: 8px; font-size: 15px; }
+
+.thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.thumbs button { position: relative; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: none; aspect-ratio: 16 / 9; cursor: pointer; }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumbs span { position: absolute; inset: auto 0 0 0; font-size: 12px; background: rgba(0,0,0,.65); color: #fff; padding: 2px; }

@@ -50,6 +50,12 @@ object WebHost {
 
         val loader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(ctx))
+            .addPathHandler("/album/") { path ->
+                // صور ألبوم البيت من مجلد التطبيق الخاص (أرقام بس)
+                val m = ALBUM.matchEntire(path) ?: return@addPathHandler null
+                val file = Album.file(ctx, m.groupValues[1])
+                if (file.exists()) WebResourceResponse("image/jpeg", null, file.inputStream()) else null
+            }
             .addPathHandler("/icons/") { path ->
                 // path = "banner/<pkg>.png" أو "icon/<pkg>.png"
                 val m = ICON.matchEntire(path) ?: return@addPathHandler null
@@ -75,5 +81,6 @@ object WebHost {
 
     fun isOurs(uri: Uri) = uri.scheme == "https" && uri.host == "appassets.androidplatform.net"
 
+    private val ALBUM = Regex("^(\\d{1,2})\\.jpg$")
     private val ICON = Regex("^(banner|icon)/([A-Za-z0-9_.]{1,200})\\.png$")
 }

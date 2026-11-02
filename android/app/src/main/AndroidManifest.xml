@@ -118,6 +118,12 @@
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
+        <!-- تلاوة القرآن -->
+        <service
+            android:name=".TilawaService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
         <!-- شاشة التوقف -->
         <service
             android:name=".RiwaqDream"

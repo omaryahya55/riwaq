@@ -25,6 +25,11 @@
     sound: `<path ${S} d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>`,
     lock: `<rect x="5" y="10.5" width="14" height="10" rx="2.2" ${S}/><path ${S} d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>`,
     calendar: `<rect x="3.5" y="5" width="17" height="15.5" rx="2.4" ${S}/><path ${S} d="M3.5 10h17M8 3v4M16 3v4"/>`,
+    tplay: `<path fill="currentColor" d="M7 5.5v13L17.5 12z"/>`,
+    tpause: `<path fill="currentColor" d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z"/>`,
+    tnext: `<path fill="currentColor" d="M5 5.5v13L14 12zM15.5 5.5h3v13h-3z"/>`,
+    tprev: `<path fill="currentColor" d="M19 5.5v13L10 12zM5.5 5.5h3v13h-3z"/>`,
+    tstop: `<path fill="currentColor" d="M6.5 6.5h11v11h-11z"/>`,
     bell: `<path ${S} d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path ${S} d="M10 20.5a2 2 0 0 0 4 0"/>`
   };
   window.icon = function (name, cls) {

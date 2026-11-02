@@ -44,8 +44,8 @@ test("مواعيد الراتب تطابق جدول وزارة المالية 20
   for (const [from, want] of cases) {
     assert.equal(iso(nextMonthly(new Date(from + "T09:00:00+03:00"), 27, "salary").date), want, "from " + from);
   }
-  // مايو ٢٠٢٦ صار ٢٤ بسبب العيد (إجازة رسمية): القاعدة ما تعرفها، وعشان كذا نكتب "متوقع"
-  assert.equal(iso(nextMonthly(new Date("2026-05-01T09:00:00+03:00"), 27, "salary").date), "2026-05-27");
+  // مايو ٢٠٢٦ صار ٢٤ بسبب العيد (إجازة رسمية): في جدول الاستثناءات. والشهور اللي ما فيها جدول نكتب عليها "متوقع"
+  assert.equal(iso(nextMonthly(new Date("2026-05-01T09:00:00+03:00"), 27, "salary").date), "2026-05-24");
 });
 
 test("العد لرمضان ١٤٤٨ من ٢٤ أكتوبر ٢٠٢٦ = ١٠٧ يوم (أم القرى)", () => {
@@ -352,4 +352,15 @@ test("openfootball: التوقيت، والترتيب، وما نعرض ترتي
   assert.equal(ofStandings(m, Date.parse("2026-12-20T00:00:00Z")), null, "آخر نتيجة أقدم من ١٠ أيام: نخفي الترتيب");
   const known = new Set(w.LEAGUES.flatMap((l) => Object.keys(l.teams)));
   for (const [n, id] of Object.entries(w.OF_TEAMS)) assert.ok(known.has(String(id)), "نادي بلا اسم عربي: " + n);
+});
+
+test("القرآن: جدول الآيات في أندرويد يطابق بيانات السور، وأسماء الشيوخ والنسخ سليمة", () => {
+  const data = readFileSync(new URL("../web/js/tilawa-data.js", import.meta.url), "utf8");
+  const T = JSON.parse(data.slice(data.indexOf("window.TILAWA = ") + 16, data.lastIndexOf(";")));
+  const kt = readFileSync(new URL("../android/app/src/main/java/app/riwaq/tv/Extras.kt", import.meta.url), "utf8");
+  const nums = kt.match(/AYAHS = intArrayOf\(([\s\S]*?)\)/)[1].split(",").map((x) => +x.trim());
+  assert.equal(T.surahs.length, 114);
+  assert.equal(JSON.stringify(nums), JSON.stringify(T.surahs.map((s) => s.ayahs)));
+  assert.equal(nums.reduce((a, b) => a + b, 0), 6236);
+  for (const r of T.reciters) assert.match(r.id, /^[a-z0-9.-]{3,60}$/);
 });

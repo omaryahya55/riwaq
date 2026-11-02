@@ -52,9 +52,18 @@
   }
 
   // صورة حقيقية للفترة (web/js/backgrounds.js)، وفوقها تظليل عشان الكلام ينقرا، والقمر بالليل
+  function pick(period) {
+    const list = window.BACKGROUNDS && BACKGROUNDS[period];
+    if (!Array.isArray(list) || !list.length) return null;
+    // صورة لليوم كله في كل فترة، وتتبدل كل يوم
+    return list[Math.floor(Date.now() / 86400000) % list.length];
+  }
   function photo(el, period) {
-    const b = window.BACKGROUNDS && BACKGROUNDS[period];
-    if (!b || !/^img\/bg\/[a-z]+\.jpg$/.test(b.src)) return false;
+    const b = pick(period);
+    if (!b || !/^img\/bg\/[a-z]+-\d\.jpg$/.test(b.src)) return false;
+    Scene.own = false;
+    // نسخة صغيرة مموهة تجهزت وقت البناء: زجاج بدون تمويه حي (backdrop-filter ثقيل على التلفزيون)
+    document.getElementById("stage").style.setProperty("--glass", /^img\/bg\/blur\/[a-z]+-\d\.jpg$/.test(b.blur || "") ? `url("../${b.blur}")` : "none");
     const p = P[period] || P.night;
     const moon = period === "night" && p.moon
       ? `<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="moonGlow"><stop offset="0" stop-color="#C9D6FF" stop-opacity=".22"/><stop offset="1" stop-color="#C9D6FF" stop-opacity="0"/></radialGradient></defs><circle cx="${p.moon[0]}" cy="${p.moon[1]}" r="160" fill="url(#moonGlow)"/><path d="M${p.moon[0] + 22} ${p.moon[1] - 40} a44 44 0 1 0 22 78 a36 36 0 1 1 -22 -78z" fill="#F4EBD6" opacity=".92"/></svg>` : "";
@@ -62,6 +71,15 @@
     el.innerHTML = `<img class="bg-photo" src="${b.src}" alt="" decoding="async">${moon}`;
     document.getElementById("stage").classList.add("bgphoto");
     Scene.credit = b.credit;
+    return true;
+  }
+
+  // صورة من ألبوم البيت (شاشة الانتظار بس). فوقها تظليل لأن التباين مو مضمون في صور الناس
+  function album(el, id) {
+    if (!/^\d{1,2}$/.test(String(id))) return false;
+    el.innerHTML = `<img class="bg-photo" src="/album/${id}.jpg" alt="" decoding="async"><div class="album-veil"></div>`;
+    document.getElementById("stage").classList.add("bgphoto");
+    Scene.credit = ""; Scene.own = true;
     return true;
   }
 
@@ -102,5 +120,5 @@
     return "night";
   }
 
-  window.Scene = { render, periodAt, periods: Object.keys(P), credit: "" };
+  window.Scene = { render, album, periodAt, periods: Object.keys(P), credit: "", own: false };
 })();

@@ -1,7 +1,7 @@
 /*
  * الواجهة الرئيسية، بشكلين (CONFIG.homeLayout):
- * - لوحة اللحظة (الافتراضي): الساعة والصلوات يمين، ونص واحد حي يسار، وتحت صف التطبيقات وصف "أكمل المشاهدة".
- *   السهم تحت من آخر صف يفتح "يومك" (بطاقة المحتوى وبطاقة اليوم). عنصر واحد يبدأ منه النظر، والباقي لما تطلبه.
+ * - لوحة اللحظة (الافتراضي): الساعة والصلاة الجاية بس فوق الصورة، وتحت صف التطبيقات و"أكمل المشاهدة".
+ *   السهم تحت من آخر صف يفتح "يومك": الصلوات كلها، والحديث، والطقس، والمباراة. كل شي ثاني لما تطلبه.
  * - الكلاسيكية: شريط تنقل، وثلاث بطاقات، وصف التطبيقات، وصف المداخل.
  * على التلفزيون: التطبيقات وأيقوناتها والمداخل تجي من أندرويد (Riwaq.*). في المتصفح: قائمة تجريبية.
  */
@@ -26,11 +26,13 @@
     { type: "nav", id: "saver", name: "شاشة الانتظار", ic: "moon" },
     { type: "nav", id: "picker", name: "التطبيقات", ic: "grid" },
     { type: "nav", id: "timed", name: "ذكر الوقت", ic: "bell" },
-    { type: "nav", id: "reader", name: "الأذكار", ic: "book" }
+    { type: "nav", id: "reader", name: "الأذكار", ic: "crescent" },
+    { type: "nav", id: "tilawa", name: "القرآن", ic: "book" }
   ];
-  // لوحة اللحظة: ثلاث أزرار بكلماتها دايماً. "الأذكار" فيها ذكر الوقت أول
+  // لوحة اللحظة: أزرار بكلماتها دايماً، بدون خلفيات. "الأذكار" فيها ذكر الوقت أول
   const NAV_MOMENT = [
-    { type: "nav", id: "reader", name: "الأذكار", ic: "book" },
+    { type: "nav", id: "tilawa", name: "القرآن", ic: "book" },
+    { type: "nav", id: "reader", name: "الأذكار", ic: "crescent" },
     { type: "nav", id: "inputs", name: "المداخل", ic: "hdmi" },
     { type: "nav", id: "quick", name: "التحكم", ic: "gear" }
   ];
@@ -48,6 +50,7 @@
     { id: "display", name: "الشاشة والصورة", ic: "tv" },
     { id: "riwaq", name: "إعدادات رواق (بالجوال)", ic: "grid" },
     { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" },
+    { id: "search", name: "بحث بالصوت", ic: "sound" },
     { id: "picker", name: "اختيار التطبيقات", ic: "grid", kidsHide: true },
     { id: "majlis", name: "شاشة المجلس (واي فاي الضيوف)", ic: "wifi" },
     { id: "update", name: "تحديث رواق", ic: "gear" },
@@ -59,6 +62,7 @@
       const v = q.id === "update" && native() && Riwaq.updateAvailable ? Riwaq.updateAvailable() : "";
       return v ? Object.assign({}, q, { name: "تحديث رواق · نسخة جديدة " + F.digits(v) }) : q;
     });
+    if (window.Tilawa && Tilawa.playing()) out.unshift({ id: "tilawaStop", name: "وقّف التلاوة", ic: "book" });
     if (native() && Riwaq.keysOff && Riwaq.keysOff()) out.unshift({ id: "setup", name: "خدمة الأزرار توقفت: شغّلها", ic: "bell" });
     if (native() && moment() && CONFIG.continueRow !== false && Riwaq.watchAllowed && !Riwaq.watchAllowed()) out.push({ id: "askWatch", name: "اسمح بصف أكمل المشاهدة", ic: "grid" });
     return out;
@@ -142,20 +146,21 @@
   function build(el) {
     el.innerHTML = `
       <div class="shade home-shade"></div>
-      <div class="m-top soft-shadow">
+      <div class="m-top soft-shadow"><nav class="m-nav" data-k="mNav"></nav></div>
+      <div class="m-info soft-shadow">
+        <div class="m-clock" data-k="mClock"></div>
         <div class="m-date" data-k="mDate"></div>
-        <nav class="m-nav" data-k="mNav"></nav>
+        <div class="m-next" data-k="mNext"></div>
+        <div class="m-prayers" data-k="mPrayers"></div>
+        <div class="m-text" data-k="mText"></div>
       </div>
-      <div class="m-clock soft-shadow" data-k="mClock"></div>
-      <div class="m-prayers soft-shadow" data-k="mPrayers"></div>
-      <div class="m-next soft-shadow" data-k="mNext"></div>
-      <div class="m-text soft-shadow" data-k="mText"></div>
       <div class="m-rows">
         <div class="m-cap soft-shadow" data-k="mCap"></div>
         <div class="m-track"><div class="h-strip" data-k="m1"></div></div>
         <div class="m-track wt-track" data-k="mWatch"><div class="m-track-title soft-shadow">أكمل المشاهدة</div><div class="h-strip" data-k="m2"></div></div>
       </div>
       <div class="m-credit" data-k="mCredit"></div>
+      <div class="m-hint" data-k="mHint"></div>
       <div class="h-top soft-shadow">
         <div class="h-date" data-k="date"></div>
         <div class="h-center">
@@ -253,11 +258,11 @@
   function paintFocus() {
     root.querySelectorAll(".tile, .nav-pill").forEach((t) => t.classList.remove("focus", "moving"));
     const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
-    if (t && !["picker", "reader", "quick", "pin", "day"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
+    if (t && !["picker", "reader", "quick", "pin", "day", "tilawa"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
       const m = moment();
-      const strip = rowEl(row), pitch = m ? (row === 1 ? 272 : 404) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 248 : 380) : (row === 1 ? 300 : 220);
+      const strip = rowEl(row), pitch = m ? (row === 1 ? 256 : 364) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 236 : 344) : (row === 1 ? 300 : 220);
       if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - (m ? 1728 : 1736) + 60)}px)`;
     }
     // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع
@@ -284,32 +289,18 @@
 
   // ===== البطاقات =====
   // ===== لوحة اللحظة =====
-  let momentSig = "";
+  // فوق الصورة: مباراتك لو قربت، والتلاوة لو شغالة. سطر هادي لكل واحد، والنصوص في "يومك"
   function renderMomentText(now) {
-    const el = $("mText");
-    // مباراة فريقك قبلها بساعة (أو نتيجتها خلال ساعتين) تاخذ مكان النص
+    const lines = [];
     const fm = DATA.featuredMatch(now);
     if (fm && ((fm.kind === "next" && fm.at - now < 3600000) || (fm.kind === "last" && now - fm.at < 2 * 3600000))) {
       const E = fm.ev, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
       const mid = fm.kind === "last" ? `${F.num(E.hs)} - ${F.num(E.as)}` : "×";
-      const h = `<b>${fm.kind === "last" ? "نتيجة مباراتك" : "مباراتك بعد " + F.duration((fm.at - now) / 60000)}</b><div class="m-match"><bdi>${nm(E.homeId, E.home)}</bdi> <span>${mid}</span> <bdi>${nm(E.awayId, E.away)}</bdi></div>`;
-      momentSig = "match"; setHTML(el, h); return;
+      lines.push(`${fm.kind === "last" ? "نتيجة مباراتك" : "مباراتك بعد " + F.duration((fm.at - now) / 60000)}: <bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi>`);
     }
-    const first = window.Content && Content.current(now, 0);
-    const sig = first ? (first.item.sourceId || first.item.text.slice(0, 40)) + "|" + first.title : "none";
-    if (sig === momentSig) return;
-    momentSig = sig;
-    el.__h = null;
-    // نص كامل بس: ناخذ أول نص يدخل في المساحة (٤ أسطر تقريباً)، وما نقص أي نص
-    for (let offset = 0; offset < 12; offset++) {
-      const c = window.Content && Content.current(now, offset);
-      if (!c) break;
-      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
-      el.innerHTML = `<b>${esc(c.title)}</b><p class="${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(Content.credit(c.item, false).source)}</small>`;
-      if (el.scrollHeight <= el.clientHeight + 1) return;
-    }
-    const tm = window.Content && Content.timed ? Content.timed(now) : [];
-    el.innerHTML = tm.length ? `<b>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}</b><small>افتحها كاملة من «الأذكار» فوق</small>` : "";
+    const tl = window.Tilawa && Tilawa.nowLine();
+    if (tl) lines.push(esc(tl));
+    setHTML($("mText"), lines.map((l) => `<div>${l}</div>`).join(""));
   }
 
   function renderMoment(now) {
@@ -477,6 +468,7 @@
   // يقفل أي طبقة مفتوحة (من زر ريموت أو أمر من أندرويد)، عشان الأزرار ما تحرك شي مخفي
   function closeLayers() {
     ["picker", "reader", "quick", "pin"].forEach((k) => $(k).classList.remove("on"));
+    if (mode === "tilawa" && window.Tilawa) Tilawa.close();
     root.classList.remove("day-open");
     mode = "nav"; pinThen = null;
   }
@@ -488,13 +480,16 @@
     if (q.id === "saver") return App.show("saver");
     if (q.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
     if (q.id === "majlis") return guarded(() => (native() && Riwaq.openMajlis ? Riwaq.openMajlis() : App.toast("شاشة المجلس على التلفزيون بس")), "شاشة المجلس");
+    if (q.id === "search") return native() && Riwaq.openSearch ? Riwaq.openSearch() : App.toast("البحث على التلفزيون بس");
+    if (q.id === "tilawaStop") return window.Tilawa && Tilawa.stop();
     if (q.id === "update") return native() && Riwaq.openUpdate ? Riwaq.openUpdate() : App.toast("التحديث على التلفزيون بس");
     if (q.id === "report") return native() && Riwaq.openReport ? Riwaq.openReport() : App.toast("الإبلاغ على التلفزيون بس");
     if (q.id === "setup") return native() && Riwaq.openSetup ? Riwaq.openSetup() : undefined;
     if (q.id === "askWatch") return native() && Riwaq.askWatch ? Riwaq.askWatch() : undefined;
     if (q.id === "riwaq") return openSettings();
     if (q.id === "restore") return openRestore();
-    if (native() && Riwaq.openSystem) return Riwaq.openSystem(q.id);
+    // إعدادات التلفزيون تمر على الرمز لو فيه (الواي فاي والبلوتوث وغيرها)
+    if (native() && Riwaq.openSystem) return guarded(() => Riwaq.openSystem(q.id), q.name);
     App.toast(`يفتح ${q.name} (في المتصفح ما يفتح شي)`);
   }
 
@@ -523,19 +518,25 @@
     $("pin").classList.add("on"); renderPin(); paintFocus();
   }
   function closePin() { mode = "nav"; $("pin").classList.remove("on"); pinThen = null; paintFocus(); }
-  // ٥ محاولات غلط = انتظار دقيقة (عشان ما تنجرب الأرقام كلها وحدة وحدة). ينحفظ لو انعادت الصفحة
-  const PIN_LOCK_KEY = "riwaq.pinLock";
+  // ٥ محاولات غلط = انتظار، ويزيد مع التكرار (دقيقة، ٥، ١٥). ينحفظ لو انعادت الصفحة، عشان ما تنجرب الأرقام كلها
+  const PIN_LOCK_KEY = "riwaq.pinLock", PIN_ROUND_KEY = "riwaq.pinRound";
   const pinLockUntil = () => { try { return +localStorage.getItem(PIN_LOCK_KEY) || 0; } catch (e) { return 0; } };
+  const pinRound = () => { try { return +localStorage.getItem(PIN_ROUND_KEY) || 0; } catch (e) { return 0; } };
   function checkPin() {
     const wait = pinLockUntil() - Date.now();
     if (wait > 0) { $("pinSub").textContent = `محاولات كثيرة. انتظر ${F.digits(Math.ceil(wait / 1000))} ثانية`; return; }
-    if (pinDigits.join("") === String(CONFIG.lock.pin)) { const fn = pinThen; pinTries = 0; closePin(); if (fn) fn(); return; }
+    if (pinDigits.join("") === String(CONFIG.lock.pin)) {
+      const fn = pinThen; pinTries = 0;
+      try { localStorage.removeItem(PIN_ROUND_KEY); } catch (e) { /* بدون تخزين */ }
+      closePin(); if (fn) fn(); return;
+    }
     pinTries++;
     $("pin").classList.remove("shake"); void $("pin").offsetWidth; $("pin").classList.add("shake");
     if (pinTries >= 5) {
       pinTries = 0;
-      try { localStorage.setItem(PIN_LOCK_KEY, String(Date.now() + 60000)); } catch (e) { /* بدون تخزين: الانتظار لين تنعاد الصفحة */ }
-      $("pinSub").textContent = "محاولات كثيرة. انتظر دقيقة واسأل أهلك عن الرمز";
+      const round = pinRound(), mins = [1, 5, 15][Math.min(round, 2)];
+      try { localStorage.setItem(PIN_LOCK_KEY, String(Date.now() + mins * 60000)); localStorage.setItem(PIN_ROUND_KEY, String(round + 1)); } catch (e) { /* بدون تخزين: الانتظار لين تنعاد الصفحة */ }
+      $("pinSub").textContent = `محاولات كثيرة. انتظر ${F.duration(mins)} واسأل أهلك عن الرمز`;
     } else $("pinSub").textContent = pinTries >= 3 ? "الرمز غلط. اسأل أهلك عن الرمز" : "الرمز غلط، جرّب مرة ثانية";
     pinDigits = [0, 0, 0, 0]; pinPos = 0; renderPin();
   }
@@ -558,6 +559,7 @@
       if (item.id === "inputs") { if (kids()) askPin(openInputs, "المداخل"); else openInputs(); return; }
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
       if (item.id === "saver") { App.show("saver"); return; }
+      if (item.id === "tilawa") { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; paintFocus(); renderStatus(); }); return; }
       if (item.id === "timed") {
         // ذكر الوقت: اللي وقته الحين كامل (أذكار الصباح، المساء، الملك، الكهف، أدعية الجمعة)
         const secs = window.Content ? Content.timed(new Date()) : [];
@@ -580,6 +582,11 @@
   window.Home = {
     init(el) {
       root = build(el); loadApps(); renderRows(); renderStatus();
+      // تلميح أول ٣ مرات تفتح فيها الواجهة بس، بدل سطر دايم
+      try {
+        const n = +localStorage.getItem("riwaq.hints") || 0;
+        if (moment() && n < 3) { $("mHint").textContent = "السهم تحت: يومك · OK مطوّل على تطبيق: تحريك أو إخفاء"; localStorage.setItem("riwaq.hints", String(n + 1)); }
+      } catch (e) { /* بدون تخزين: ما يطلع التلميح */ }
       DATA.onChange(renderStatus);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
       setInterval(() => {
@@ -587,7 +594,7 @@
         if (moment()) { renderMomentText(new Date()); if (mode === "day") renderContentCard(new Date()); }
         else renderContentCard(new Date());
       }, 20000);
-      const fresh = () => { contentSig = ""; momentSig = ""; renderStatus(); };
+      const fresh = () => { contentSig = ""; renderStatus(); };
       window.addEventListener("riwaq-content", fresh); // أول ما يوصل ملف المحتوى
       window.addEventListener("riwaq-remeasure", fresh); // أول ما يوصل الخط
       // رجعنا من تطبيق: يمكن تغيّرت قائمة "أكمل المشاهدة"
@@ -615,6 +622,7 @@
     tick() { if (root) renderStatus(); },
     key(k) {
       const R = rows();
+      if (mode === "tilawa") return Tilawa.key(k);
       if (mode === "pin") {
         if (/^d[0-9]$/.test(k)) {
           pinDigits[pinPos] = +k[1];

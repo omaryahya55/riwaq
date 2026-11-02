@@ -21,15 +21,18 @@
 
   // يوم ثابت في الشهر الميلادي مع قاعدة الإجازة. الإجازات الرسمية تغيّره بعد، فنكتب "متوقع"
   // الراتب (وزارة المالية): الجمعة ← الخميس، والسبت ← الأحد. حساب المواطن: يتقدم إذا وافق جمعة أو سبت
+  // أشهر غيّرتها الإجازات الرسمية حسب جدول وزارة المالية (البريف قسم ٣ب). نضيف عليها مع كل جدول سنوي جديد
+  const SALARY_DAYS = { "2026-05": 24 };
   function nextMonthly(now, dayOfMonth, rule) {
     const p = F.parts(now, { year: "numeric", month: "numeric", day: "numeric" });
     let y = +p.year, m = +p.month;
     const today = Date.UTC(+p.year, +p.month - 1, +p.day, 9);
     for (let k = 0; k < 3; k++) {
-      let d = new Date(Date.UTC(y, m - 1, dayOfMonth, 9));
+      const known = rule === "salary" && SALARY_DAYS[`${y}-${String(m).padStart(2, "0")}`];
+      let d = new Date(Date.UTC(y, m - 1, known || dayOfMonth, 9));
       const wd = d.getUTCDay(); // 5 جمعة، 6 سبت
-      if (wd === 5) d = new Date(d.getTime() - DAY);
-      if (wd === 6) d = new Date(d.getTime() + (rule === "salary" ? DAY : -2 * DAY));
+      if (!known && wd === 5) d = new Date(d.getTime() - DAY);
+      if (!known && wd === 6) d = new Date(d.getTime() + (rule === "salary" ? DAY : -2 * DAY));
       if (d.getTime() >= today) return { date: d, days: Math.round((d.getTime() - today) / DAY) };
       m++; if (m > 12) { m = 1; y++; }
     }
@@ -400,11 +403,12 @@
   }
 
   function renderCredit(root) {
-    const parts = [Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
+    const tl = window.Tilawa && Tilawa.nowLine();
+    const parts = [tl ? "تلاوة: " + tl : "", Scene.own ? "الصورة: ألبوم البيت" : Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
     if (CONFIG.density === "full" && DATA.weather()) parts.push("الطقس: Open-Meteo.com");
     if (CONFIG.density === "full" && DATA.metals()) parts.push("الأسعار: gold-api.com");
     if (CONFIG.density === "full" && DATA.fx()) parts.push("العملات: Frankfurter");
-    $(root, "credit").textContent = parts.join(" · ");
+    $(root, "credit").textContent = parts.filter(Boolean).join(" · ");
   }
 
   // حماية من حرق الشاشة: نحرك المحتوى كم بكسل كل ٤ دقايق، بتسلسل ثابت

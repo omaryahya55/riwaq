@@ -95,19 +95,24 @@ object AdhanScheduler {
  */
 object AdhanAudio {
     const val MAX_BYTES = 10 * 1024 * 1024
-    private fun file(ctx: Context) = java.io.File(ctx.filesDir, "adhan_custom")
+    // صوت عام، وصوت خاص بالفجر اختياري (فيه «الصلاة خير من النوم»)
+    private fun file(ctx: Context, fajr: Boolean = false) = java.io.File(ctx.filesDir, if (fajr) "adhan_fajr" else "adhan_custom")
 
-    fun hasCustom(ctx: Context) = file(ctx).let { it.exists() && it.length() > 0 }
-    fun customPath(ctx: Context): String? = file(ctx).takeIf { it.exists() && it.length() > 0 }?.absolutePath
+    fun hasCustom(ctx: Context, fajr: Boolean = false) = file(ctx, fajr).let { it.exists() && it.length() > 0 }
+    /** للفجر: صوته لو فيه، وإلا الصوت العام */
+    fun customPath(ctx: Context, fajr: Boolean = false): String? =
+        (if (fajr) file(ctx, true).takeIf { it.exists() && it.length() > 0 } else null)?.absolutePath
+            ?: file(ctx).takeIf { it.exists() && it.length() > 0 }?.absolutePath
 
-    fun save(ctx: Context, bytes: ByteArray): Boolean {
+    fun save(ctx: Context, bytes: ByteArray, fajr: Boolean = false): Boolean {
         if (bytes.size < 1024 || !isAudio(bytes)) return false
         val tmp = java.io.File(ctx.filesDir, "adhan_custom.tmp")
         tmp.writeBytes(bytes)
-        return tmp.renameTo(file(ctx)) || run { file(ctx).writeBytes(bytes); tmp.delete(); true }
+        val target = file(ctx, fajr)
+        return tmp.renameTo(target) || run { target.writeBytes(bytes); tmp.delete(); true }
     }
 
-    fun clear(ctx: Context) { file(ctx).delete() }
+    fun clear(ctx: Context, fajr: Boolean = false) { file(ctx, fajr).delete() }
 
     // MP3 (ID3 أو بداية إطار)، OGG، M4A/AAC (ftyp)، WAV، FLAC، AAC ADTS
     private fun isAudio(b: ByteArray): Boolean {
@@ -165,7 +170,7 @@ class AdhanService : Service() {
             @Suppress("DEPRECATION") am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
         }
         // صوت المستخدم لو رفع واحد (وإلا أو لو خرب: الافتراضي)
-        player = (AdhanAudio.customPath(this)?.let { path ->
+        player = (AdhanAudio.customPath(this, name == "الفجر")?.let { path ->
             try {
                 MediaPlayer().apply { setAudioAttributes(attrs); setDataSource(path); prepare() }
             } catch (e: Exception) { null }
@@ -219,8 +224,8 @@ class AdhanService : Service() {
         @Volatile var playing = false
 
         /** تجربة الصوت من صفحة الإعدادات (التطبيق ظاهر وقتها) */
-        fun test(ctx: Context) {
-            val s = Intent(ctx, AdhanService::class.java).putExtra("name", "")
+        fun test(ctx: Context, fajr: Boolean = false) {
+            val s = Intent(ctx, AdhanService::class.java).putExtra("name", if (fajr) "الفجر" else "")
             try { if (Build.VERSION.SDK_INT >= 26) ctx.startForegroundService(s) else ctx.startService(s) } catch (e: Exception) { }
         }
 

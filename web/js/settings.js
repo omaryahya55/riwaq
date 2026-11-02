@@ -59,23 +59,29 @@
   async function searchCity() {
     const q = $("cityQ").value.trim();
     if (q.length < 2) return;
-    $("cityResults").innerHTML = `<li class="muted">نبحث…</li>`;
+    const near = localCities(q);
+    if (near.length) showCities(near);
+    else $("cityResults").innerHTML = `<li class="muted">نبحث…</li>`;
     try {
       const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=ar&format=json`);
       const j = await r.json();
-      const list = (j.results || []).filter((x) => x.timezone);
+      const list = near.concat((j.results || []).filter((x) => x.timezone && !near.some((n) => Math.abs(n.latitude - x.latitude) < 0.1 && Math.abs(n.longitude - x.longitude) < 0.1)));
       if (!list.length) { $("cityResults").innerHTML = `<li class="muted">ما لقينا شي. جرّب اسم ثاني أو بالإنقليزي.</li>`; return; }
-      $("cityResults").innerHTML = list.map((x, i) => `<li><button type="button" data-i="${i}">${esc(x.name)}<small>${esc([x.admin1, x.country].filter(Boolean).join("، "))}</small></button></li>`).join("");
-      $("cityResults").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
-        const x = list[+b.dataset.i];
-        const clean = (s) => String(s || "").replace(/[‎‏]/g, "").trim(); // علامات اتجاه مخفية تجي من GeoNames
-        cfg.city = { name: clean(x.name), region: clean(x.admin1), lat: x.latitude, lon: x.longitude, tz: x.timezone, country: x.country_code };
-        $("cityResults").innerHTML = ""; $("cityQ").value = "";
-        paintCity();
-      }));
+      showCities(list);
     } catch (e) {
-      $("cityResults").innerHTML = `<li class="muted">ما قدرنا نبحث. تأكد من النت.</li>`;
+      // بدون نت: اللي لقيناه محلياً يبقى
+      if (!near.length) $("cityResults").innerHTML = `<li class="muted">ما قدرنا نبحث. تأكد من النت.</li>`;
     }
+  }
+  function showCities(list) {
+    $("cityResults").innerHTML = list.map((x, i) => `<li><button type="button" data-i="${i}">${esc(x.name)}<small>${esc([x.admin1, x.country].filter(Boolean).join("، "))}</small></button></li>`).join("");
+    $("cityResults").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+      const x = list[+b.dataset.i];
+      const clean = (s) => String(s || "").replace(/[\u200E\u200F]/g, "").trim(); // علامات اتجاه مخفية تجي من GeoNames
+      cfg.city = { name: clean(x.name), region: clean(x.admin1), lat: x.latitude, lon: x.longitude, tz: x.timezone, country: x.country_code };
+      $("cityResults").innerHTML = ""; $("cityQ").value = "";
+      paintCity();
+    }));
   }
 
   // ===== الأندية =====
@@ -157,25 +163,29 @@
       const j = await (await fetch("/api/adhan?token=" + encodeURIComponent(token))).json();
       $("adhanVoiceNow").textContent = j.custom ? "الصوت: صوت رفعته أنت ✓" : "الصوت: الافتراضي";
       $("adhanReset").style.display = j.custom ? "" : "none";
+      $("fajrVoiceNow").textContent = j.fajr ? "صوت الفجر: صوت رفعته أنت ✓" : "الصوت الافتراضي واحد لكل الصلوات، وما فيه «الصلاة خير من النوم». ترفع هنا صوت للفجر بس.";
+      $("fajrReset").style.display = j.fajr ? "" : "none";
+      $("fajrTest").style.display = j.fajr ? "" : "none";
     } catch (e) { /* التلفزيون ما رد: نخلي النص زي ما هو */ }
   }
-  async function uploadAdhan() {
-    const f = $("adhanFile").files[0];
+  async function uploadAdhan(fajr) {
+    const input = $(fajr === true ? "fajrFile" : "adhanFile");
+    const f = input.files[0];
     if (!f) { status("اختر ملف صوت من جوالك أول", true); return; }
     if (f.size > 10 * 1024 * 1024) { status("الملف أكبر من ١٠ ميجا", true); return; }
     status("نرفع الصوت…");
     try {
-      const r = await fetch("/api/adhan?token=" + encodeURIComponent(token), { method: "POST", body: f });
+      const r = await fetch("/api/adhan?token=" + encodeURIComponent(token) + (fajr === true ? "&kind=fajr" : ""), { method: "POST", body: f });
       if (r.status === 415) throw new Error("هذا مو ملف صوت. اختر mp3 أو m4a");
       if (!r.ok) throw new Error("ما انرفع. جرّب مرة ثانية");
       status("انرفع الصوت ✓ اضغط (جرّب الصوت) تسمعه");
-      $("adhanFile").value = "";
+      input.value = "";
       paintAdhanVoice();
     } catch (e) { status(e.message, true); }
   }
-  async function adhanCall(path, method, done) {
+  async function adhanCall(path, method, done, fajr) {
     try {
-      const r = await fetch(path + "?token=" + encodeURIComponent(token), { method });
+      const r = await fetch(path + "?token=" + encodeURIComponent(token) + (fajr ? "&kind=fajr" : ""), { method });
       if (!r.ok) throw new Error();
       status(done); paintAdhanVoice();
     } catch (e) { status("ما قدرنا نوصل للتلفزيون", true); }
@@ -195,6 +205,90 @@
     warn();
   }
   const readTimes = (id) => { const o = {}; $(id).querySelectorAll("select").forEach((s) => { if (+s.value) o[s.dataset.p] = +s.value; }); return o; };
+
+  // ===== مدن بدون نت =====
+  const normCity = (s) => String(s || "").toLowerCase().replace(/[\u064B-\u0652\u0640]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").trim();
+  function localCities(q) {
+    const n = normCity(q);
+    return (window.CITIES || []).filter((c) => normCity(c.name).includes(n) || normCity(c.en).includes(n)).slice(0, 6)
+      .map((c) => ({ name: c.name, admin1: c.region, country: "", latitude: c.lat, longitude: c.lon, timezone: c.tz, country_code: c.country }));
+  }
+
+  // ===== نقل الإعدادات: بدون أسرار، والجهاز الثاني يفحصها بنفس الفحص =====
+  function exportCfg() {
+    const out = Object.assign({}, cfg);
+    delete out.icalUrl; delete out.todoistToken; delete out.pinned; delete out.inputNames; delete out.kids;
+    out.lock = { pin: "", apps: [] };
+    out.telegram = { token: "", code: "", allowed: [], fails: 0 };
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: "application/json" }));
+    a.download = "riwaq-settings.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    status("حفظنا الملف ✓");
+  }
+  async function importCfg() {
+    const f = $("importCfg").files[0];
+    if (!f) return;
+    try {
+      if (f.size > 64 * 1024) throw new Error();
+      const j = JSON.parse(await f.text());
+      if (!j || typeof j !== "object" || Array.isArray(j)) throw new Error();
+      // اللي يخص هذا الجهاز يبقى: الرمز والتطبيقات والمفاتيح
+      const keep = { lock: cfg.lock, pinned: cfg.pinned, kids: cfg.kids, inputNames: cfg.inputNames, icalUrl: cfg.icalUrl, todoistToken: cfg.todoistToken, telegram: cfg.telegram };
+      cfg = Config.sanitize(Object.assign({}, Config.DEFAULTS, j, keep, { v: 3 }));
+      fill();
+      status("قرينا الملف. راجع الإعدادات واضغط حفظ");
+    } catch (e) { status("هذا مو ملف إعدادات رواق", true); }
+    $("importCfg").value = "";
+  }
+
+  // ===== ألبوم البيت =====
+  // نصغّر في الجوال لـ١٩٢٠ بكسل ونرسم من جديد: هذا يشيل الموقع والتاريخ وكل بيانات الصورة قبل ما تطلع من الجوال
+  function shrink(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, 1920 / img.width, 1080 / img.height);
+        const c = document.createElement("canvas");
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error())), "image/jpeg", 0.85);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error()); };
+      img.src = url;
+    });
+  }
+  const albumUrl = (x) => `/api/album${x ? "/" + x : ""}?token=${encodeURIComponent(token)}`;
+  async function loadAlbum() {
+    if (!remote) return;
+    $("albumCard").hidden = false;
+    try {
+      const j = await (await fetch(albumUrl())).json();
+      $("albumList").innerHTML = (j.ids || []).map((id) => `<button type="button" data-id="${+id}" aria-label="حذف الصورة"><img src="${albumUrl(+id)}" alt=""><span>اضغط للحذف</span></button>`).join("");
+      $("albumList").querySelectorAll("button").forEach((b) => b.addEventListener("click", async () => {
+        await fetch(albumUrl(b.dataset.id), { method: "DELETE" }); loadAlbum(); status("انحذفت الصورة ✓");
+      }));
+    } catch (e) { /* التلفزيون ما رد */ }
+  }
+  async function uploadAlbum() {
+    const files = [...$("albumFile").files];
+    if (!files.length) { status("اختر صور من جوالك أول", true); return; }
+    let done = 0;
+    for (const f of files) {
+      status(`نرفع ${ar(done + 1)} من ${ar(files.length)}…`);
+      try {
+        const r = await fetch(albumUrl(), { method: "POST", body: await shrink(f) });
+        if (r.status === 409) { status("الألبوم مليان (١٠ صور). احذف صورة أول", true); break; }
+        if (!r.ok) throw new Error();
+        done++;
+      } catch (e) { status("صورة ما انرفعت. جرّب مرة ثانية", true); break; }
+    }
+    if (done) status(`انرفعت ${ar(done)} ✓`);
+    $("albumFile").value = "";
+    loadAlbum();
+  }
 
   // ===== أسماء المداخل، وشاشة المجلس (مع التلفزيون بس) =====
   async function loadInputs() {
@@ -251,6 +345,8 @@
     cfg.bgStyle = $("bgStyle").value === "drawn" ? "drawn" : "photo";
     cfg.density = ["full", "frame"].includes($("density").value) ? $("density").value : "calm";
     cfg.homeLayout = $("homeLayout").value === "classic" ? "classic" : "moment";
+    cfg.clockFont = $("clockFont").value;
+    cfg.albumMode = $("albumMode").value;
     cfg.continueRow = $("continueRow").checked;
     cfg.roshn = $("roshn").checked;
   }
@@ -283,6 +379,9 @@
     $("reminders").checked = cfg.reminders !== false;
     $("showSalary").checked = cfg.showSalary === true;
     $("homeLayout").value = cfg.homeLayout === "classic" ? "classic" : "moment";
+    $("clockFont").value = cfg.clockFont || "amiri";
+    $("albumMode").value = cfg.albumMode || "off";
+    loadAlbum();
     $("continueRow").checked = cfg.continueRow !== false;
     $("roshn").checked = cfg.roshn === true;
     $("kidsOn").checked = !!(cfg.kids && cfg.kids.on);
@@ -400,7 +499,13 @@
   $("save").addEventListener("click", save);
   $("majlisSave").addEventListener("click", saveMajlis);
   $("majlisClear").addEventListener("click", clearMajlis);
-  if ($("adhanUpload")) $("adhanUpload").addEventListener("click", uploadAdhan);
+  if ($("adhanUpload")) $("adhanUpload").addEventListener("click", () => uploadAdhan(false));
+  $("fajrUpload").addEventListener("click", () => uploadAdhan(true));
+  $("fajrTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل أذان الفجر على التلفزيون الحين", true));
+  $("fajrReset").addEventListener("click", () => adhanCall("/api/adhan", "DELETE", "انحذف صوت الفجر ✓", true));
+  $("albumUpload").addEventListener("click", uploadAlbum);
+  $("exportCfg").addEventListener("click", exportCfg);
+  $("importCfg").addEventListener("change", importCfg);
   if ($("adhanTest")) $("adhanTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل الأذان على التلفزيون الحين (رجوع يوقفه)"));
   if ($("adhanReset")) $("adhanReset").addEventListener("click", () => adhanCall("/api/adhan", "DELETE", "رجع الصوت الافتراضي ✓"));
   $("adhanOn").addEventListener("change", () => { cfg.adhan.on = $("adhanOn").checked; $("adhanPrayers").style.display = cfg.adhan.on ? "" : "none"; });

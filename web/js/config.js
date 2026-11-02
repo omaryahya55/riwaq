@@ -24,6 +24,8 @@
     prayerAdjust: {},        // تعديل وقت كل صلاة لمسجد الحي (±١٠ دقايق)
     iqama: {},               // دقايق الإقامة بعد الأذان لكل صلاة (فاضي = التقريبي)
     inputNames: {},          // أسماء المداخل: { رقم المدخل: "الرسيفر" }
+    albumMode: "off",        // ألبوم البيت في شاشة الانتظار: off، mix مع صورنا، only صورك بس
+    clockFont: "amiri",      // خط الساعة: amiri، alyamama، readex، fustat
     kids: { on: false, apps: [] }, // وضع الأطفال: يطلع التطبيقات المسموحة بس، والخروج بالرمز. ترتيب، مو حماية كاملة
     pinned: null,            // ترتيب التطبيقات في الواجهة (null = الافتراضي)
     lock: { pin: "", apps: [] }, // قفل التطبيقات للأطفال: رمز من ٤ أرقام (على الجهاز بس) والتطبيقات المقفلة
@@ -84,6 +86,8 @@
     o.iqama = mins(c.iqama, 1, 60);
     o.inputNames = {};
     if (c.inputNames && typeof c.inputNames === "object") Object.keys(c.inputNames).slice(0, 12).forEach((k) => { const n = str(c.inputNames[k], 20).trim(); if (k.length <= 200 && n) o.inputNames[k] = n; });
+    o.albumMode = ["mix", "only"].includes(c.albumMode) ? c.albumMode : "off";
+    o.clockFont = ["alyamama", "readex", "fustat"].includes(c.clockFont) ? c.clockFont : "amiri";
     const kids = c.kids && typeof c.kids === "object" ? c.kids : {};
     o.kids = { on: bool(kids.on, false), apps: (Array.isArray(kids.apps) ? kids.apps : []).map(String).filter((x) => PKG.test(x)).slice(0, 40) };
     o.reminders = bool(c.reminders, true);

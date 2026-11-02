@@ -1,0 +1,60 @@
+/* شاشة القرآن: الشيخ، ثم السورة، ثم التشغيل. الأسماء بخط أميري، والتحديد عاجي، بدون ألوان ثانية */
+.tl { position: absolute; inset: 0; z-index: 38; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility 0s .3s; }
+.tl.on { opacity: 1; visibility: visible; transition: opacity .3s var(--ease); }
+/* خلفية الصفحة نفسها مموهة (جاهزة من وقت البناء) وفوقها تغميق: زجاج بدون تمويه حي */
+.tl-bg { position: absolute; inset: 0; background-color: rgb(14,13,12); background-image: linear-gradient(rgba(10,9,8,.74), rgba(10,9,8,.74)), var(--glass, none); background-size: auto, 1920px 1080px; transition: opacity .35s var(--ease); }
+.tl.on-p .tl-bg { opacity: .62; }
+
+.tl-lists { position: absolute; inset: 0; transition: opacity .25s var(--ease); }
+.tl.on-p .tl-lists { opacity: 0; visibility: hidden; }
+.tl-head { position: absolute; top: 56px; right: 96px; left: 96px; display: flex; align-items: baseline; gap: 28px; }
+.tl-head h2 { font-family: var(--font-display); font-size: 62px; font-weight: 400; line-height: 1.35; }
+.tl-step { font-size: 28px; color: var(--ink-2); }
+
+/* الشيوخ: عمود يمين */
+.tl-reciters { position: absolute; top: 196px; right: 72px; width: 520px; height: 756px; overflow: hidden; padding: 0 24px; }
+.tl-rs { transition: transform .2s ease-out; will-change: transform; }
+.tl-r { display: flex; align-items: center; justify-content: space-between; height: 76px; margin-bottom: 8px; padding: 0 26px 4px; border-radius: 16px; color: var(--ink-2); transition: background .12s, color .12s; }
+.tl-r b { font-size: 30px; font-weight: 500; white-space: nowrap; overflow: hidden; }
+.tl-r small { font-size: 22px; color: var(--ink-3); flex: none; margin-right: 14px; }
+.tl-r.on { background: var(--ink); color: #15110A; }
+.tl-r.on small { color: #4A4336; }
+.tl-r.on.was { background: rgba(255,255,255,.14); color: var(--ink); }
+.tl-r.on.was small { color: var(--ink-2); }
+.tl-resume { display: block; height: 76px; padding-top: 6px; }
+.tl-resume b { display: block; font-family: var(--font-display); font-size: 27px; line-height: 1.4; font-weight: 400; color: var(--ink); }
+.tl-resume.on:not(.was) b { color: #15110A; }
+.tl-resume small { display: block; margin: 0; font-size: 20px; line-height: 1.1; }
+
+/* السور: شبكة يسار */
+.tl-surahs { position: absolute; top: 196px; left: 72px; right: 620px; height: 756px; overflow: hidden; padding: 8px 24px; opacity: .55; transition: opacity .2s var(--ease); }
+.tl.on-s .tl-surahs { opacity: 1; }
+.tl-ss { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 16px; grid-auto-rows: 120px; transition: transform .2s ease-out; will-change: transform; }
+.tl-s { position: relative; border-radius: 16px; background: rgba(255,255,255,.05); padding: 8px 74px 0 18px; overflow: hidden; }
+.tl-s b { display: block; font-family: var(--font-display); font-size: 36px; font-weight: 400; line-height: 1.6; white-space: nowrap; }
+.tl-s small { display: block; font-size: 20px; color: var(--ink-3); line-height: 1.1; margin-top: 2px; }
+.tl-no { position: absolute; top: 36px; right: 18px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: var(--ink-2); border: 1px solid rgba(255,255,255,.2); }
+.tl-s.on { background: var(--ink); color: #15110A; }
+.tl-s.on small, .tl-s.on .tl-no { color: #4A4336; border-color: rgba(21,17,10,.3); }
+.tl-src { position: absolute; left: 96px; bottom: 28px; font-size: 20px; color: var(--ink-3); }
+
+/* التشغيل: اسم السورة في الوسط، وكل شي ثاني يخدمه */
+.tl-player { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; visibility: hidden; transition: opacity .35s var(--ease); }
+.tl.on-p .tl-player { opacity: 1; visibility: visible; }
+.tl-reciter { font-size: 34px; color: var(--ink-2); text-shadow: 0 2px 16px rgba(0,0,0,.6); margin-bottom: 18px; }
+.tl-name { font-family: var(--font-display); font-size: 132px; line-height: 1.7; text-shadow: 0 4px 34px rgba(0,0,0,.65); white-space: nowrap; }
+.tl-meta { height: 40px; font-size: 26px; color: var(--ink-2); text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.tl-bar, .tl-times, .tl-ctl { direction: ltr; }
+.tl-bar { width: 860px; height: 4px; margin-top: 24px; border-radius: 2px; background: rgba(255,255,255,.22); overflow: hidden; }
+.tl-bar i { display: block; height: 100%; width: 0; background: var(--ink); transition: width .9s linear; margin-right: 0; }
+.tl-times { width: 860px; height: 36px; display: flex; justify-content: space-between; margin-top: 8px; font-size: 22px; color: var(--ink-2); }
+/* الواجهة وراء الشاشة تختفي، وتبقى الصورة بس */
+#stage.moment #home.tl-open .m-top, #stage.moment #home.tl-open .m-info, #stage.moment #home.tl-open .m-rows, #stage.moment #home.tl-open .m-hint { visibility: hidden; }
+#home.tl-open .h-top, #home.tl-open .h-dash, #home.tl-open .h-rows { visibility: hidden; }
+.tl-ctl { display: flex; gap: 28px; margin-top: 30px; align-items: flex-start; }
+.tl-b { width: 132px; text-align: center; color: var(--ink-2); }
+.tl-b .ic { display: block; width: 76px; height: 76px; margin: 0 auto; padding: 21px; border-radius: 50%; background: rgba(255,255,255,.1); color: var(--ink); font-size: 34px; transition: transform .12s ease-out, background .12s, color .12s; box-sizing: border-box; }
+.tl-b span { display: block; margin-top: 10px; font-size: 22px; opacity: 0; transition: opacity .12s; white-space: nowrap; }
+.tl-b.on { color: var(--ink); }
+.tl-b.on .ic { background: var(--ink); color: #15110A; transform: scale(1.1); }
+.tl-b.on span { opacity: 1; }

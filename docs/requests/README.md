@@ -9,7 +9,8 @@
 | [thesportsdb.md](thesportsdb.md) | TheSportsDB | تشغيل دوري روشن افتراضياً | ما انرسلت |
 | [shamela.md](shamela.md) | المكتبة الشاملة | بقاء ٢٣٩ حديث وملفات `tools/shamela` | ما انرسلت |
 | [hisn-almuslim.md](hisn-almuslim.md) | ورثة المؤلف أو ناشر الطبعة | عرض كل ذكر منفرد في التطبيق | ما انرسلت |
-| [mp3quran.md](mp3quran.md) | mp3quran.net | إضافة إذاعة القرآن | ما انرسلت |
+| [islamic-network.md](islamic-network.md) | Islamic Network | إشعار وتأكيد (مش شرط للتشغيل) | ما انرسلت |
+| [mp3quran.md](mp3quran.md) | mp3quran.net | اختياري: ما عاد شرط | ما انرسلت |
 
 **إيميل المختص الشرعي:** ما عندنا اسم للحين. القائمة اللي تنتظره في [docs/CONTENT.md](../CONTENT.md).
 

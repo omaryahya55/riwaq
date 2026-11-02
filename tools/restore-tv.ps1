@@ -63,6 +63,11 @@ if ($backup -and $backup.screensaver_enabled -and $backup.screensaver_enabled -n
 }
 Say "رجعت شاشة التوقف الأصلية"
 
+# حماية العائلة (لو كانت شغالة من tools/family-dns.ps1): ترجع مثل ما كانت
+if (Test-Path (Join-Path $PSScriptRoot "backup-dns-$($Ip.Replace('.','-')).json")) {
+  & (Join-Path $PSScriptRoot "family-dns.ps1") -Ip $Ip -Port $Port -Off
+}
+
 # نطفي خدمة ضغطة البيت المطوّلة، ونخلي أي خدمة ثانية كانت شغالة زي ما هي
 $a11y = "$Pkg/$Pkg.HomeKeyService"
 $cur = (Adb shell settings get secure enabled_accessibility_services | Out-String).Trim()
