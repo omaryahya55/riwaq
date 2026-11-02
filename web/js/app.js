@@ -69,6 +69,8 @@
     stage.classList.toggle("calm", CONFIG.density !== "full");
     stage.classList.toggle("frame", CONFIG.density === "frame");
     stage.classList.toggle("moment", CONFIG.homeLayout !== "classic");
+    stage.classList.toggle("shape-square", CONFIG.appShape === "square");
+    stage.classList.toggle("shape-circle", CONFIG.appShape === "circle");
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
@@ -90,16 +92,14 @@
 
   // ===== الأزرار =====
   const MAP = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", Enter: "ok", " ": "ok",
-                Escape: "back", Backspace: "back", GoBack: "back", BrowserBack: "back", ContextMenu: "menu", m: "menu", M: "menu",
-                MediaPlayPause: "media", MediaPlay: "media", MediaPause: "media" };
+                Escape: "back", Backspace: "back", GoBack: "back", BrowserBack: "back", ContextMenu: "menu", m: "menu", M: "menu" };
   let okDown = 0, okLong = false, okTimer;
 
   // أزرار الأرقام (لو الريموت فيها): d0 إلى d9
   for (let n = 0; n <= 9; n++) MAP[String(n)] = "d" + n;
 
   function dispatch(k) {
-    resetIdle();
-    if (k === "media") { if (window.Tilawa) Tilawa.toggle(); return true; }
+    resetIdle();
     if (window.PhoneMsg && PhoneMsg.key(k)) return true; // رسالة الجوال ظاهرة: الزر يقفلها
     if (App.current === "saver") { if (!MODE_SAVER_ONLY) show("home"); return; } // أي زر يرجّع للواجهة
     return Home.key(k);

@@ -1,7 +1,7 @@
 /*
  * الواجهة الرئيسية، بشكلين (CONFIG.homeLayout):
- * - لوحة اللحظة (الافتراضي): الساعة والصلاة الجاية بس فوق الصورة، وتحت صف التطبيقات و"أكمل المشاهدة".
- *   السهم تحت من آخر صف يفتح "يومك": الصلوات كلها، والحديث، والطقس، والمباراة. كل شي ثاني لما تطلبه.
+ * - لوحة اللحظة (الافتراضي): الساعة والصلوات ونص قصير فوق الصورة، وسطر خفيف (الطقس والمباراة والمناسبة)،
+ *   وتحت صف التطبيقات و"أكمل المشاهدة". السهم تحت من آخر صف يفتح "يومك" بالتفاصيل.
  * - الكلاسيكية: شريط تنقل، وثلاث بطاقات، وصف التطبيقات، وصف المداخل.
  * على التلفزيون: التطبيقات وأيقوناتها والمداخل تجي من أندرويد (Riwaq.*). في المتصفح: قائمة تجريبية.
  */
@@ -39,7 +39,14 @@
   const moment = () => CONFIG.homeLayout !== "classic";
   // وضع الأطفال يحتاج رمز (الخروج منه بالرمز)، وهو ترتيب مو حماية كاملة
   const kids = () => !!(CONFIG.kids && CONFIG.kids.on && CONFIG.lock && /^[0-9]{4}$/.test(CONFIG.lock.pin || ""));
-  const navItems = () => (moment() ? NAV_MOMENT.filter((n) => n.id !== "inputs" || inputs.length) : NAV);
+  // وقت التلاوة يطلع زر إيقافها جنب "القرآن"، فما تحتاج تفتح شاشتها
+  let tlOn = false;
+  const navItems = () => {
+    if (!moment()) return NAV;
+    const out = NAV_MOMENT.filter((n) => n.id !== "inputs" || inputs.length);
+    if (tlOn) out.splice(1, 0, { type: "nav", id: "tilawaStop", name: "وقّف التلاوة", ic: "tstop" });
+    return out;
+  };
   const inputName = (i) => (CONFIG.inputNames && CONFIG.inputNames[i.id]) || i.name;
   // اللوحة السريعة (بدل لوحة Google TV اللي كانت تطلع بضغطة البيت المطوّلة)
   const QUICK = [
@@ -135,7 +142,8 @@
       const a = appById[item.id];
       // البانر فيه اسم التطبيق أصلاً: اسمنا يطلع بس لما يتحدد
       const lockBadge = isLocked(a.id) ? `<span class="lock-badge">${icon("lock")}</span>` : "";
-      if (a.banner) return `<div class="tile has-img" data-r="${r}" data-c="${c}">${lockBadge}<img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
+      const shaped = moment() && a.icon && (CONFIG.appShape === "square" || CONFIG.appShape === "circle");
+      if (a.banner && !shaped) return `<div class="tile has-img" data-r="${r}" data-c="${c}">${lockBadge}<img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
       if (a.icon) return `<div class="tile has-icon" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.04)};--c2:${shade(a.tint, -0.55)}">${lockBadge}<div class="bg"></div><img class="app-ic" src="${a.icon}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
       const mono = /^[A-Za-z]/.test(a.name) ? a.name[0] : a.name.replace(/^ال/, "")[0];
       return `<div class="tile" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.08)};--c2:${shade(a.tint, -0.45)}">${lockBadge}<div class="bg"></div><div class="mono">${esc(mono)}</div><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
@@ -150,12 +158,15 @@
       <div class="m-info soft-shadow">
         <div class="m-clock" data-k="mClock"></div>
         <div class="m-date" data-k="mDate"></div>
-        <div class="m-next" data-k="mNext"></div>
         <div class="m-prayers" data-k="mPrayers"></div>
-        <div class="m-text" data-k="mText"></div>
+        <div class="m-next" data-k="mNext"></div>
       </div>
+      <div class="m-text soft-shadow" data-k="mText"></div>
       <div class="m-rows">
-        <div class="m-cap soft-shadow" data-k="mCap"></div>
+        <div class="m-caprow">
+          <div class="m-cap soft-shadow" data-k="mCap"></div>
+          <div class="m-chips" data-k="mChips"></div>
+        </div>
         <div class="m-track"><div class="h-strip" data-k="m1"></div></div>
         <div class="m-track wt-track" data-k="mWatch"><div class="m-track-title soft-shadow">أكمل المشاهدة</div><div class="h-strip" data-k="m2"></div></div>
       </div>
@@ -262,7 +273,8 @@
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
       const m = moment();
-      const strip = rowEl(row), pitch = m ? (row === 1 ? 256 : 364) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 236 : 344) : (row === 1 ? 300 : 220);
+      const small = CONFIG.appShape === "square" || CONFIG.appShape === "circle";
+      const strip = rowEl(row), w = m ? (row === 1 ? (small ? 152 : 236) : 344) : (row === 1 ? 300 : 220), pitch = m ? w + 20 : (row === 1 ? 328 : 248);
       if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - (m ? 1728 : 1736) + 60)}px)`;
     }
     // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع
@@ -289,26 +301,54 @@
 
   // ===== البطاقات =====
   // ===== لوحة اللحظة =====
-  // فوق الصورة: مباراتك لو قربت، والتلاوة لو شغالة. سطر هادي لكل واحد، والنصوص في "يومك"
+  // نص قصير فوق الصورة بمصدره. نص كامل بس: ناخذ أول نص يدخل في المساحة، وما نقص أي نص. والطويل في "يومك" و"الأذكار"
+  let momentSig = "";
   function renderMomentText(now) {
-    const lines = [];
+    const el = $("mText");
+    const first = window.Content && Content.current(now, 0);
+    const sig = first ? (first.item.sourceId || first.item.text.slice(0, 40)) + "|" + first.title : "none";
+    if (sig === momentSig) return;
+    momentSig = sig;
+    for (let offset = 0; offset < 12; offset++) {
+      const c = window.Content && Content.current(now, offset);
+      if (!c) break;
+      const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
+      el.innerHTML = `<b>${esc(c.title)}</b><p class="${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(Content.credit(c.item, false).source)}</small>`;
+      if (el.scrollHeight <= el.clientHeight + 1) return;
+    }
+    el.innerHTML = "";
+  }
+
+  // سطر خفيف فوق التطبيقات: التلاوة، وذكر الوقت، والطقس، والمباراة، وأقرب مناسبة. أربعة بالكثير
+  function renderChips(now) {
+    const out = [];
+    const tl = window.Tilawa && Tilawa.nowLine();
+    if (tl) out.push(["book", esc(tl)]);
+    const tm = window.Content && Content.timed ? Content.timed(now) : [];
+    if (tm.length) out.push(["bell", "حان وقت " + esc(tm.map((s) => s.title).join(" و"))]);
+    const w = DATA.weather();
+    if (w) { const g = F.sky(w.data.now.code, now); out.push([g[1], `${F.num(w.data.now.temp)}° ${g[0]}`]); }
     const fm = DATA.featuredMatch(now);
-    if (fm && ((fm.kind === "next" && fm.at - now < 3600000) || (fm.kind === "last" && now - fm.at < 2 * 3600000))) {
+    if (fm) {
       const E = fm.ev, nm = (id, en) => esc((window.TEAMS_AR && TEAMS_AR[id]) || en);
       const mid = fm.kind === "last" ? `${F.num(E.hs)} - ${F.num(E.as)}` : "×";
-      lines.push(`${fm.kind === "last" ? "نتيجة مباراتك" : "مباراتك بعد " + F.duration((fm.at - now) / 60000)}: <bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi>`);
+      const soon = fm.kind === "next" && fm.at - now < 3600000 ? ` · بعد ${F.duration((fm.at - now) / 60000)}` : "";
+      out.push(["ball", `<bdi>${nm(E.homeId, E.home)}</bdi> ${mid} <bdi>${nm(E.awayId, E.away)}</bdi>${soon}`]);
     }
-    const tl = window.Tilawa && Tilawa.nowLine();
-    if (tl) lines.push(esc(tl));
-    setHTML($("mText"), lines.map((l) => `<div>${l}</div>`).join(""));
+    const H = window.Saver && Saver.helpers;
+    if (H) {
+      const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
+        .map(([n, m, d]) => Object.assign({ n }, H.daysToHijri(now, m, d) || { days: 9999 })).sort((x, y) => x.days - y.days)[0];
+      if (occ && occ.days > 0 && occ.days < 9999) out.push(["crescent", `${occ.n}: باقي ${F.days(occ.days)}`]);
+    }
+    setHTML($("mChips"), out.slice(0, 4).map(([ic, t]) => `<span class="m-chip">${icon(ic)}<span>${t}</span></span>`).join(""));
   }
 
   function renderMoment(now) {
     const c = F.clock(now);
     setHTML($("mClock"), `<span class="ltr">${c.h}:${c.m}</span><small>${c.ampm}</small>`);
     const w = DATA.weather();
-    const g = w && F.sky(w.data.now.code, now);
-    setHTML($("mDate"), `${esc(F.hijri(now))}<small>${esc(F.gregorian(now))} م${w ? ` · ${F.num(w.data.now.temp)}° ${g[0]}` : ""}</small>`);
+    setHTML($("mDate"), `${esc(F.hijri(now))}<small>${esc(F.gregorian(now))} م</small>`);
     const np = Prayer.next(now);
     if (np) {
       setHTML($("mPrayers"), np.today.filter((p) => !p.notPrayer).map((p) => { const t = F.clock(p.at); return `<div class="${p.id === np.p.id ? "n" : ""}"><label>${p.name}</label>${t.h}:${t.m}</div>`; }).join(""));
@@ -319,6 +359,7 @@
       setHTML($("mNext"), "اختر مدينتك: السهم فوق ← التحكم ← إعدادات رواق");
     }
     renderMomentText(now);
+    renderChips(now);
     const parts = [window.Scene && Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة" : ""];
     if (w) parts.push("الطقس: Open-Meteo.com");
     setHTML($("mCredit"), esc(parts.filter(Boolean).join(" · ")));
@@ -410,10 +451,17 @@
     while (lines.length > 1 && el.scrollHeight > el.clientHeight + 1) { lines.pop(); paint(); }
   }
 
+  // التلاوة بدأت أو وقفت: زر إيقافها يطلع أو يختفي
+  function syncTilawa() {
+    const on = !!(window.Tilawa && Tilawa.playing());
+    if (on !== tlOn) { tlOn = on; renderRows(); }
+  }
+
   function renderStatus() {
     if (window.App && App.current && App.current !== "home") return; // الواجهة مخفية (شاشة الانتظار ظاهرة)
     const now = new Date();
     if (moment()) {
+      syncTilawa();
       renderMoment(now);
       if (mode === "day") { renderContentCard(now); renderTodayCard(now); }
       return;
@@ -560,6 +608,7 @@
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
       if (item.id === "saver") { App.show("saver"); return; }
       if (item.id === "tilawa") { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; paintFocus(); renderStatus(); }); return; }
+      if (item.id === "tilawaStop") { Tilawa.stop(); setTimeout(renderStatus, 400); return; }
       if (item.id === "timed") {
         // ذكر الوقت: اللي وقته الحين كامل (أذكار الصباح، المساء، الملك، الكهف، أدعية الجمعة)
         const secs = window.Content ? Content.timed(new Date()) : [];
@@ -588,13 +637,15 @@
         if (moment() && n < 3) { $("mHint").textContent = "السهم تحت: يومك · OK مطوّل على تطبيق: تحريك أو إخفاء"; localStorage.setItem("riwaq.hints", String(n + 1)); }
       } catch (e) { /* بدون تخزين: ما يطلع التلميح */ }
       DATA.onChange(renderStatus);
+      // وقت التلاوة نتابعها أسرع: لو وقفت يختفي زرها وسطرها على طول
+      setInterval(() => { if (tlOn && !document.hidden && window.App && App.current === "home") renderStatus(); }, 3000);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
       setInterval(() => {
         if (document.hidden || (window.App && App.current !== "home")) return;
         if (moment()) { renderMomentText(new Date()); if (mode === "day") renderContentCard(new Date()); }
         else renderContentCard(new Date());
       }, 20000);
-      const fresh = () => { contentSig = ""; renderStatus(); };
+      const fresh = () => { contentSig = ""; momentSig = ""; renderStatus(); };
       window.addEventListener("riwaq-content", fresh); // أول ما يوصل ملف المحتوى
       window.addEventListener("riwaq-remeasure", fresh); // أول ما يوصل الخط
       // رجعنا من تطبيق: يمكن تغيّرت قائمة "أكمل المشاهدة"

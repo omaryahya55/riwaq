@@ -49,7 +49,7 @@
 .tl-bar i { display: block; height: 100%; width: 0; background: var(--ink); transition: width .9s linear; margin-right: 0; }
 .tl-times { width: 860px; height: 36px; display: flex; justify-content: space-between; margin-top: 8px; font-size: 22px; color: var(--ink-2); }
 /* الواجهة وراء الشاشة تختفي، وتبقى الصورة بس */
-#stage.moment #home.tl-open .m-top, #stage.moment #home.tl-open .m-info, #stage.moment #home.tl-open .m-rows, #stage.moment #home.tl-open .m-hint { visibility: hidden; }
+#stage.moment #home.tl-open .m-top, #stage.moment #home.tl-open .m-info, #stage.moment #home.tl-open .m-text, #stage.moment #home.tl-open .m-rows, #stage.moment #home.tl-open .m-hint { visibility: hidden; }
 #home.tl-open .h-top, #home.tl-open .h-dash, #home.tl-open .h-rows { visibility: hidden; }
 .tl-ctl { display: flex; gap: 28px; margin-top: 30px; align-items: flex-start; }
 .tl-b { width: 132px; text-align: center; color: var(--ink-2); }

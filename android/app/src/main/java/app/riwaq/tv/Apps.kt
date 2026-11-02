@@ -41,7 +41,8 @@ object Apps {
                 o.put("id", pkg)
                 o.put("name", ri.loadLabel(pm).toString())
                 val hasBanner = ri.activityInfo.banner != 0 || ri.activityInfo.applicationInfo.banner != 0
-                if (hasBanner) o.put("banner", "/icons/banner/$pkg.png") else o.put("icon", "/icons/icon/$pkg.png")
+                if (hasBanner) o.put("banner", "/icons/banner/$pkg.png")
+                o.put("icon", "/icons/icon/$pkg.png") // شكل المربع والدائرة يحتاجونها حتى لو فيه بانر
                 out.put(o)
             }
         return out.toString()

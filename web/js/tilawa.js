@@ -227,7 +227,6 @@
       return s && rc ? `${s.name} · ${rc.name}` : "";
     },
     playing() { return !!state().on; },
-    toggle() { if (state().on) act("toggle"); },
     stop
   };
 })();

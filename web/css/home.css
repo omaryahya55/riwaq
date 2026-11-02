@@ -201,18 +201,27 @@
 .m-clock small { font: 500 36px var(--font-ui); color: var(--gold); margin-right: 16px; vertical-align: 40px; }
 .m-date { font-size: 30px; font-weight: 500; margin-top: 2px; }
 .m-date small { display: block; font-size: 24px; color: var(--ink-2); margin-top: 2px; font-weight: 400; }
-.m-next { color: var(--gold); font-size: 30px; font-weight: 600; margin-top: 12px; }
-.m-text { font-size: 24px; color: var(--ink-2); margin-top: 10px; }
-.m-text > div { margin-top: 4px; }
-/* الصلوات كلها في "يومك" بس */
-.m-prayers { display: none; gap: 42px; font-size: 30px; font-weight: 500; margin-top: 20px; }
+.m-next { color: var(--gold); font-size: 28px; font-weight: 600; margin-top: 12px; }
+/* نص قصير يسار: المساحة تحدد الطول، واللي ما يدخل كامل ما يطلع */
+.m-text { display: none; }
+#stage.moment #home .m-text { display: block; position: absolute; top: 136px; left: 96px; width: 700px; height: 300px; overflow: hidden; padding-right: 8px; }
+.m-text b { display: block; font-size: 22px; font-weight: 500; color: var(--ink-2); margin-bottom: 4px; }
+.m-text p { font-size: 30px; line-height: 1.75; white-space: pre-line; }
+.m-text small { display: block; font-size: 21px; line-height: 1.5; color: var(--ink-2); margin-top: 6px; }
+#stage.moment #home.day-open .m-text { display: none; }
+.m-prayers { display: none; gap: 36px; font-size: 28px; font-weight: 500; margin-top: 16px; }
+#stage.moment #home .m-prayers { display: flex; }
 .m-prayers > div { text-align: center; }
-.m-prayers label { display: block; font-size: 24px; font-weight: 400; color: var(--ink-2); }
+.m-prayers label { display: block; font-size: 22px; font-weight: 400; color: var(--ink-2); }
 .m-prayers .n, .m-prayers .n label { color: var(--gold); font-weight: 600; }
-#stage.moment #home.day-open .m-prayers { display: flex; }
 /* التطبيقات: أيقونة بدون اسم، واسم المحدد فوق الصف */
 #stage.moment #home .m-rows { display: block; position: absolute; right: 0; left: 0; bottom: 56px; }
-.m-cap { height: 52px; padding: 0 96px; font-size: 32px; font-weight: 500; white-space: nowrap; overflow: hidden; }
+.m-caprow { display: flex; justify-content: space-between; align-items: center; height: 60px; padding: 0 96px; gap: 40px; }
+.m-cap { font-size: 32px; font-weight: 500; white-space: nowrap; flex: none; max-width: 560px; overflow: hidden; }
+/* سطر خفيف فوق التطبيقات */
+.m-chips { display: flex; gap: 10px; min-width: 0; overflow: hidden; }
+.m-chip { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px 3px; border-radius: 22px; background: rgba(12,11,10,.5); font-size: 22px; color: var(--ink); white-space: nowrap; flex: none; }
+.m-chip .ic { font-size: 22px; color: var(--ink-2); flex: none; }
 .m-track { position: relative; height: 158px; }
 .m-track .h-strip { right: 96px; top: 12px; gap: 20px; }
 #stage.moment .tile { width: 236px; height: 132px; border-radius: 16px; box-shadow: none; background: none; }
@@ -223,6 +232,11 @@
 #stage.moment .tile.has-icon .app-ic { top: 30px; right: 82px; width: 72px; height: 72px; }
 /* البانرات البيضا تطغى على الصورة: تخف لين يتحدد التطبيق */
 #stage.moment .tile.has-img:not(.focus):not(.moving)::after { content: ""; position: absolute; inset: 0; background: rgba(10,9,8,.3); }
+/* شكل التطبيقات: أيقونة في مربع أو دائرة بدل البانر */
+#stage.shape-square.moment .tile:not(.all):not(.wt), #stage.shape-circle.moment .tile:not(.all):not(.wt) { width: 152px; height: 132px; }
+#stage.shape-square.moment .tile:not(.all):not(.wt) { border-radius: 26px; }
+#stage.shape-circle.moment .tile:not(.all):not(.wt) { width: 132px; margin: 0 10px; border-radius: 50%; }
+#stage.shape-square.moment .tile.has-icon .app-ic, #stage.shape-circle.moment .tile.has-icon .app-ic { top: 50%; right: auto; left: 50%; width: 84px; height: 84px; transform: translate(-50%, -50%); }
 #stage.moment .tile.focus, #stage.moment .tile.moving { transform: scale(1.06); box-shadow: 0 0 0 3px var(--ink); }
 .tile.all .name { position: static !important; display: grid; place-items: center; height: 100%; font-size: 24px !important; font-weight: 400; color: var(--ink-2); }
 #stage.moment .tile.all { width: 150px; }
@@ -249,6 +263,8 @@
 #stage.moment .h-card .label { color: var(--ink-2); }
 #stage.moment .h-card .label .ic { color: var(--ink-2); }
 #stage.moment #home.day-open .m-rows { display: none; }
+/* في "يومك" البطاقات تحت الصلوات */
+#stage.moment #home.day-open .m-text { display: none; }
 #stage.moment .quick { overflow: hidden; }
 .quick-list { transition: transform .2s ease-out; }
 #stage.moment .qk.focus { background: var(--ink); color: #15110A; }

@@ -16,10 +16,9 @@ CDN = "https://cdn.islamic.network/quran"
 UA = {"User-Agent": "Riwaq/0.3 (+https://github.com/omaryahya55/riwaq; riwaq.app1@gmail.com)"}
 # id النسخة عندهم، الاسم المعروض، النوع (s سورة كاملة، v آية آية)، جودة الصوت، وصف اختياري
 RECITERS = [
-    ("ar.abdurrahmaansudais", "عبد الرحمن السديس", "v", 64, ""),
+    ("ar.abdurrahmaansudais", "عبد الرحمن السديس", "v", 192, ""),
     ("ar.saudalshuraim", "سعود الشريم", "s", 128, ""),
     ("ar.mahermuaiqly", "ماهر المعيقلي", "v", 128, ""),
-    ("ar.alafasy", "مشاري العفاسي", "s", 128, ""),
     ("ar.yasseraldossari", "ياسر الدوسري", "s", 128, ""),
     ("ar.nasseralqatami", "ناصر القطامي", "s", 128, ""),
     ("ar.abdullahawadaljuhani", "عبد الله الجهني", "s", 128, ""),

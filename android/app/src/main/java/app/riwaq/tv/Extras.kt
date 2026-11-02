@@ -14,7 +14,10 @@ import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
+import android.media.MediaMetadata
 import android.media.MediaPlayer
+import android.media.session.MediaSession
+import android.media.session.PlaybackState
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -132,6 +135,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
     private var prepared = false
     private var lostFocus = false
     private var screenOff: BroadcastReceiver? = null
+    private var session: MediaSession? = null
     private val main = Handler(Looper.getMainLooper())
     private var ticks = 0
     private val tick = object : Runnable {
@@ -176,10 +180,38 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
             registerReceiver(screenOff, IntentFilter(Intent.ACTION_SCREEN_OFF))
         }
         Tilawa.on = true
+        startSession()
         main.removeCallbacks(tick)
         main.post(tick)
         begin(intent.getIntExtra("surah", 1), intent.getIntExtra("at", 0))
         return START_NOT_STICKY
+    }
+
+    /**
+     * جلسة وسائط: أزرار التشغيل والإيقاف في الريموت توصل للتلاوة من أي مكان، حتى وأنت داخل تطبيق ثاني.
+     * والنظام يعرف إن فيه صوت شغال ويعرضه في لوحته.
+     */
+    private fun startSession() {
+        if (session != null) return
+        session = MediaSession(this, "riwaq-tilawa").apply {
+            setCallback(object : MediaSession.Callback() {
+                override fun onPlay() { if (Tilawa.paused) toggle() }
+                override fun onPause() { if (!Tilawa.paused) toggle() }
+                override fun onStop() { finishTilawa() }
+                override fun onSkipToNext() { if (Tilawa.surah < 114) begin(Tilawa.surah + 1, 0) }
+                override fun onSkipToPrevious() { if (Tilawa.surah > 1) begin(Tilawa.surah - 1, 0) }
+            })
+            setMetadata(MediaMetadata.Builder().putString(MediaMetadata.METADATA_KEY_TITLE, "تلاوة القرآن").build())
+            isActive = true
+        }
+        publishState()
+    }
+
+    private fun publishState() {
+        val state = if (Tilawa.paused) PlaybackState.STATE_PAUSED else PlaybackState.STATE_PLAYING
+        session?.setPlaybackState(PlaybackState.Builder()
+            .setActions(PlaybackState.ACTION_PLAY or PlaybackState.ACTION_PAUSE or PlaybackState.ACTION_PLAY_PAUSE or PlaybackState.ACTION_STOP or PlaybackState.ACTION_SKIP_TO_NEXT or PlaybackState.ACTION_SKIP_TO_PREVIOUS)
+            .setState(state, PlaybackState.PLAYBACK_POSITION_UNKNOWN, 1f).build())
     }
 
     /** يبدأ سورة: كاملة من موضع (ملي ثانية)، أو آية آية من رقم آية */
@@ -187,6 +219,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
         releasePlayers()
         Tilawa.surah = n
         Tilawa.paused = false
+        publishState()
         Tilawa.loading = true
         Tilawa.pos = 0
         Tilawa.dur = 0
@@ -273,9 +306,10 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
 
     private fun toggle() {
         val p = player ?: return
-        if (!prepared) { Tilawa.paused = !Tilawa.paused; return }
+        if (!prepared) { Tilawa.paused = !Tilawa.paused; publishState(); return }
         if (p.isPlaying) { p.pause(); Tilawa.paused = true; Tilawa.remember(this, currentAt()) }
         else { p.start(); Tilawa.paused = false; lostFocus = false }
+        publishState()
     }
 
     /** تقديم وترجيع: ٣٠ ثانية، أو آية لو التلاوة آية آية */
@@ -332,6 +366,8 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
         Tilawa.paused = false
         Tilawa.loading = false
         releasePlayers()
+        session?.let { it.isActive = false; it.release() }
+        session = null
         val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         focus?.let { am.abandonAudioFocusRequest(it) }
         focus = null
