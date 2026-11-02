@@ -20,9 +20,19 @@ android {
         applicationId = "app.riwaq.tv"
         minSdk = 24
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.2.1"
+        versionCode = 4
+        versionName = "0.2.2"
     }
+
+    // نسختين من نفس التطبيق (نفس الاسم والتوقيع):
+    //  lite = بدون خدمة إمكانية الوصول، فتتركّب من Downloader بدون ما تحظرها Play Protect (الافتراضي للناس)
+    //  full = مع الضغطة المطوّلة وأزرار الريموت (تتركّب بـ ADB، أو بعد إيقاف حماية Play Protect)
+    flavorDimensions += "edition"
+    productFlavors {
+        create("lite") { dimension = "edition"; buildConfigField("boolean", "HAS_KEYS", "false") }
+        create("full") { dimension = "edition"; buildConfigField("boolean", "HAS_KEYS", "true") }
+    }
+    buildFeatures { buildConfig = true }
 
     signingConfigs {
         // التوقيع للإصدارات: المفتاح يجي من أسرار GitHub Actions، ما ينحفظ في المستودع أبداً

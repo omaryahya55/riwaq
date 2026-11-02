@@ -77,13 +77,13 @@ Say "متصل: $model (أندرويد API $sdk)"
 
 # ===== ٢. التركيب =====
 if (-not $Apk) {
-  # أحدث نسخة موقعة في dist (riwaq-<الإصدار>.apk)
-  $latest = Get-ChildItem (Join-Path $PSScriptRoot "..\dist") -Filter "riwaq-*.apk" -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -match '^riwaq-(\d+)\.(\d+)\.(\d+)\.apk$' } |
-    Sort-Object { [version]($_.BaseName -replace '^riwaq-', '') } -Descending | Select-Object -First 1
+  # أحدث نسخة كاملة (full: فيها الضغطة المطوّلة وأزرار الريموت) في dist: riwaq-full-<الإصدار>.apk
+  $latest = Get-ChildItem (Join-Path $PSScriptRoot "..\dist") -Filter "riwaq-full-*.apk" -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -match '^riwaq-full-(\d+)\.(\d+)\.(\d+)\.apk$' } |
+    Sort-Object { [version]($_.BaseName -replace '^riwaq-full-', '') } -Descending | Select-Object -First 1
   $Apk = if ($latest) { $latest.FullName } else { "" }
-  if (-not $Apk -or -not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\release\app-release.apk" }
-  if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\debug\app-debug.apk" }
+  if (-not $Apk -or -not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\full\release\app-full-release.apk" }
+  if (-not (Test-Path $Apk)) { $Apk = Join-Path $PSScriptRoot "..\android\app\build\outputs\apk\full\debug\app-full-debug.apk" }
 }
 if (-not (Test-Path $Apk)) { Fail "ما لقينا ملف التطبيق (APK). حمّله من صفحة الإصدارات وحط مساره بعد -Apk" }
 Say "نركّب التطبيق ..."

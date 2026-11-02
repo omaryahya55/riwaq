@@ -101,8 +101,9 @@ class SetupActivity : Activity() {
         var firstFocus: View? = null
         val homeOk = isHome(this)
         val a11yOk = a11yOn(this)
+        val hasKeys = BuildConfig.HAS_KEYS
         val alarmOk = alarmOk(this)
-        val ready = homeOk && a11yOk && alarmOk
+        val ready = homeOk && (a11yOk || !hasKeys) && alarmOk
 
         add(text("إعداد رِواق", 0.05f, gold, true), 0f)
         add(text(if (ready) "كل شي جاهز ✓" else "ثلاث خطوات سريعة بالريموت (كل خطوة تفتح صفحتها، وترجع هنا بزر الرجوع).", 0.024f, if (ready) ok else ink2))
@@ -115,7 +116,11 @@ class SetupActivity : Activity() {
             add(button("اجعل رواق الواجهة الرئيسية") { becomeHome() }.also { if (firstFocus == null) firstFocus = it })
         }
 
-        // ٢. الضغطة المطوّلة وأزرار الريموت
+        // ٢. الضغطة المطوّلة وأزرار الريموت (النسخة الكاملة بس)
+        if (!hasKeys) {
+            add(text("٢. الضغطة المطوّلة وأزرار الريموت", 0.032f, ink, true), 0.03f)
+            add(text("مو موجودة في هذي النسخة الخفيفة (قوقل تحظر تركيبها من خارج المتجر). تحتاج النسخة الكاملة، وشرحها في صفحة رواق على GitHub.", 0.022f, ink2))
+        } else {
         add(text("٢. فعّل الضغطة المطوّلة وأزرار الريموت", 0.032f, ink, true), 0.03f)
         if (a11yOk) add(text("✓ شغّالة (البيت المطوّل يفتح اللوحة السريعة، وأزرار نتفلكس ويوتيوب تفتح تطبيقاتها)", 0.024f, ok))
         else {
@@ -125,6 +130,8 @@ class SetupActivity : Activity() {
                 add(text("لو الخيار رمادي ومكتوب «إعداد مقيّد»: افتح معلومات رواق ← ⋮ ← «السماح بالإعدادات المقيّدة»، وارجع.", 0.02f, warn))
                 add(button("افتح معلومات تطبيق رواق") { openAppDetails() })
             }
+        }
+
         }
 
         // ٣. الأذان
@@ -208,7 +215,7 @@ class SetupActivity : Activity() {
 
         /** أول تشغيل: نفتح المعالج لو فيه خطوة ناقصة (مرة وحدة، لين المستخدم يضغط "ابدأ" أو "تخطّى") */
         fun maybeLaunch(act: Activity) {
-            if (isDone(act) || (isHome(act) && a11yOn(act) && alarmOk(act))) return
+            if (isDone(act) || (isHome(act) && (a11yOn(act) || !BuildConfig.HAS_KEYS) && alarmOk(act))) return
             act.startActivity(Intent(act, SetupActivity::class.java))
         }
     }
