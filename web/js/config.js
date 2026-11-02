@@ -17,13 +17,20 @@
     sideCard: "leagues",     // البطاقة اللي جنب الساعة: leagues | none
     newsFeeds: [],           // روابط RSS يختارها المستخدم من القائمة الجاهزة أو يضيفها (قرار ٩)، لين ٦
     icalUrl: "",             // العنوان السري لتقويم قوقل (iCal). سرّي: على الجهاز بس، وما يمر على السيرفر الوسيط
-    showSalary: true,        // الراتب وحساب المواطن (يطلعون للسعودية بس)
+    showSalary: false,       // الراتب وحساب المواطن: مطفيين افتراضياً، وينشغلون من الإعدادات (للسعودية بس)
+    homeLayout: "moment",    // الواجهة: moment = لوحة اللحظة (عنصر حي واحد)، classic = البطاقات الثلاث
+    roshn: false,            // دوري روشن من TheSportsDB: مطفي لين يردون علينا بخصوص المفتاح المجاني (docs/requests)
+    continueRow: true,       // صف "أكمل المشاهدة": اسم وأيقونة بدون صور
+    prayerAdjust: {},        // تعديل وقت كل صلاة لمسجد الحي (±١٠ دقايق)
+    iqama: {},               // دقايق الإقامة بعد الأذان لكل صلاة (فاضي = التقريبي)
+    inputNames: {},          // أسماء المداخل: { رقم المدخل: "الرسيفر" }
+    kids: { on: false, apps: [] }, // وضع الأطفال: يطلع التطبيقات المسموحة بس، والخروج بالرمز. ترتيب، مو حماية كاملة
     pinned: null,            // ترتيب التطبيقات في الواجهة (null = الافتراضي)
     lock: { pin: "", apps: [] }, // قفل التطبيقات للأطفال: رمز من ٤ أرقام (على الجهاز بس) والتطبيقات المقفلة
     nightClock: true,        // بالليل: شاشة الانتظار تصير ساعة بسيطة خافتة (مثل Nest Hub و Echo Show)
     motion: true,            // الخلفية المرسومة تتحرك بهدوء (غيوم)
     bgStyle: "photo",        // الخلفية: photo = صور حقيقية لكل فترة، drawn = رسمة
-    density: "calm",         // كثافة شاشة الانتظار: calm = الساعة والصلاة وبطاقة وحدة (هادئة)، full = مع الطقس والأسعار والدوريات والأخبار
+    density: "calm",         // كثافة شاشة الانتظار: calm = الساعة والصلوات ونص واحد، frame = صورة وساعة صغيرة، full = مع الطقس والأسعار والدوريات والأخبار
     hifz: [],                // "راجع محفوظك": أرقام السور اللي يحفظها المستخدم
     sunnahDaily: true,       // "سنّة نعيشها" بين محتوى اليوم
     placeDaily: true,        // "حكاية مكان": صورة ونبذة (أول جملة من ويكيبيديا)
@@ -65,7 +72,20 @@
     o.sideCard = c.sideCard === "none" ? "none" : "leagues";
     o.newsFeeds = (Array.isArray(c.newsFeeds) ? c.newsFeeds : []).map((u) => https(u)).filter(Boolean).slice(0, 6);
     o.icalUrl = https(c.icalUrl, 1000);
-    o.showSalary = bool(c.showSalary, d.showSalary);
+    // إعدادات محفوظة قبل ٠٫٣: الراتب كان شغال افتراضياً، والواجهة الجديدة هي الافتراضية الحين
+    const legacy = !(+c.v >= 3);
+    o.v = 3;
+    o.showSalary = legacy ? false : bool(c.showSalary, d.showSalary);
+    o.homeLayout = !legacy && c.homeLayout === "classic" ? "classic" : "moment";
+    o.roshn = bool(c.roshn, d.roshn);
+    o.continueRow = bool(c.continueRow, d.continueRow);
+    const mins = (v, lo, hi) => { const out = {}; if (v && typeof v === "object") for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) { const n = +v[k]; if (Number.isInteger(n) && n >= lo && n <= hi && n !== 0) out[k] = n; } return out; };
+    o.prayerAdjust = mins(c.prayerAdjust, -10, 10);
+    o.iqama = mins(c.iqama, 1, 60);
+    o.inputNames = {};
+    if (c.inputNames && typeof c.inputNames === "object") Object.keys(c.inputNames).slice(0, 12).forEach((k) => { const n = str(c.inputNames[k], 20).trim(); if (k.length <= 200 && n) o.inputNames[k] = n; });
+    const kids = c.kids && typeof c.kids === "object" ? c.kids : {};
+    o.kids = { on: bool(kids.on, false), apps: (Array.isArray(kids.apps) ? kids.apps : []).map(String).filter((x) => PKG.test(x)).slice(0, 40) };
     o.reminders = bool(c.reminders, true);
     o.pinned = Array.isArray(c.pinned) ? c.pinned.map(String).filter((x) => PKG.test(x)).slice(0, 60) : null;
     const lock = c.lock && typeof c.lock === "object" ? c.lock : {};
@@ -73,7 +93,7 @@
     o.nightClock = bool(c.nightClock, d.nightClock);
     o.motion = bool(c.motion, d.motion);
     o.bgStyle = c.bgStyle === "drawn" ? "drawn" : "photo";
-    o.density = c.density === "full" ? "full" : "calm";
+    o.density = c.density === "full" || c.density === "frame" ? c.density : "calm";
     o.hifz = (Array.isArray(c.hifz) ? c.hifz : []).map(Number).filter((s) => Number.isInteger(s) && s >= 1 && s <= 114).slice(0, 114);
     o.sunnahDaily = bool(c.sunnahDaily, d.sunnahDaily);
     o.placeDaily = bool(c.placeDaily, d.placeDaily);

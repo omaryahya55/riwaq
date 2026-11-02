@@ -81,13 +81,22 @@ object Apps {
         return bos.toByteArray()
     }
 
-    /** التطبيق مقفل برمز الأهل؟ (نفس شرط الواجهة: رمز من ٤ أرقام والتطبيق في قائمة المقفل) */
+    /** التطبيق مقفل برمز الأهل؟ (نفس شرط الواجهة: رمز من ٤ أرقام، والتطبيق في قائمة المقفل، أو وضع الأطفال وهو مو من المسموح) */
     fun isLocked(ctx: Context, pkg: String): Boolean = try {
-        val lock = JSONObject(ConfigStore.get(ctx)).optJSONObject("lock")
+        val cfg = JSONObject(ConfigStore.get(ctx))
+        val lock = cfg.optJSONObject("lock")
         val apps = lock?.optJSONArray("apps")
-        lock != null && Regex("^[0-9]{4}$").matches(lock.optString("pin", "")) &&
-            (0 until (apps?.length() ?: 0)).any { apps!!.optString(it) == pkg }
+        val kids = cfg.optJSONObject("kids")
+        val allowed = kids?.optJSONArray("apps")
+        lock != null && Regex("^[0-9]{4}$").matches(lock.optString("pin", "")) && (
+            (0 until (apps?.length() ?: 0)).any { apps!!.optString(it) == pkg } ||
+            (kids?.optBoolean("on") == true && (0 until (allowed?.length() ?: 0)).none { allowed!!.optString(it) == pkg }))
     } catch (e: Exception) { false }
+
+    fun launchIntent(ctx: Context, pkg: String): Intent? {
+        val pm = ctx.packageManager
+        return pm.getLeanbackLaunchIntentForPackage(pkg) ?: pm.getLaunchIntentForPackage(pkg)
+    }
 
     /** فتح تطبيق من خارج الصفحة (أزرار الريموت): المقفل يمر على رمز الواجهة، وغيره يفتح على طول */
     fun open(ctx: Context, pkg: String): Boolean {

@@ -18,10 +18,10 @@ android {
 
     defaultConfig {
         applicationId = "app.riwaq.tv"
-        minSdk = 24
+        minSdk = 26 // onRenderProcessGone يبدأ من ٢٦، وأقدم تلفزيون نعرفه أندرويد ٩
         targetSdk = 35
-        versionCode = 4
-        versionName = "0.2.2"
+        versionCode = 5
+        versionName = "0.3.0"
     }
 
     // نسختين من نفس التطبيق (نفس الاسم والتوقيع):

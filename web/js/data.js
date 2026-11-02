@@ -13,10 +13,11 @@
     weather: { every: 30 * MIN, maxAge: 3 * HOUR },
     forecast: { every: 30 * MIN, maxAge: 24 * HOUR },
     dust: { every: 60 * MIN, maxAge: 3 * HOUR },
-    metals: { every: 10 * MIN, maxAge: 2 * HOUR },
+    metals: { every: 30 * MIN, maxAge: 2 * HOUR },
     fx: { every: 6 * HOUR, maxAge: 4 * 24 * HOUR },     // البنوك المركزية ما تنشر في الإجازات
     table: { every: 6 * HOUR, maxAge: 3 * 24 * HOUR },
-    team: { every: 60 * MIN, maxAge: 12 * HOUR },
+    team: { every: 60 * MIN, maxAge: 7 * 24 * HOUR },
+    ofLeague: { every: 12 * HOUR, maxAge: 7 * 24 * HOUR },
     news: { every: 20 * MIN, maxAge: 6 * HOUR },
     color: { every: 30 * 24 * HOUR, maxAge: 120 * 24 * HOUR },
     calendar: { every: 15 * MIN, maxAge: 6 * HOUR },
@@ -73,11 +74,11 @@
     const c = CONFIG.city; if (!c) return;
     const key = `wx.${c.lat.toFixed(2)},${c.lon.toFixed(2)}`;
     if (!due(key, "weather")) return;
-    const q = `latitude=${c.lat.toFixed(4)}&longitude=${c.lon.toFixed(4)}&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(c.tz)}&forecast_days=6`;
+    const q = `latitude=${c.lat.toFixed(4)}&longitude=${c.lon.toFixed(4)}&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(c.tz)}&forecast_days=6`;
     const j = await get(proxied("/weather?" + q, "https://api.open-meteo.com/v1/forecast?" + q), "open-meteo");
     if (!j || !j.current || !j.daily) return;
     write(key, {
-      now: { temp: j.current.temperature_2m, code: j.current.weather_code, humidity: j.current.relative_humidity_2m, wind: j.current.wind_speed_10m, time: j.current.time },
+      now: { temp: j.current.temperature_2m, code: j.current.weather_code, humidity: j.current.relative_humidity_2m, wind: j.current.wind_speed_10m, visibility: j.current.visibility, time: j.current.time },
       days: j.daily.time.map((d, i) => ({ date: d, code: j.daily.weather_code[i], max: j.daily.temperature_2m_max[i], min: j.daily.temperature_2m_min[i] }))
     });
   }
@@ -92,7 +93,7 @@
   }
 
   async function loadMetals() {
-    if (!due("metals", "metals")) return;
+    if (CONFIG.density !== "full" || !due("metals", "metals")) return; // الأسعار تطلع في الكثافة الكاملة بس
     const out = {};
     for (const s of ["XAU", "XAG", "BTC", "ETH"]) {
       const j = await get(proxied("/price/" + s, "https://api.gold-api.com/price/" + s), "gold-api");
@@ -102,7 +103,7 @@
   }
 
   async function loadFx() {
-    if (!due("fx", "fx")) return;
+    if (CONFIG.density !== "full" || !due("fx", "fx")) return;
     const j = await get(proxied("/fx?base=USD&quotes=SAR,EUR,GBP,AED,KWD", "https://api.frankfurter.dev/v2/rates?base=USD&quotes=SAR,EUR,GBP,AED,KWD"), "frankfurter");
     if (!Array.isArray(j)) return;
     const rates = {}; let date = "";
@@ -125,8 +126,8 @@
   const score = (v) => (v === null || v === undefined || v === "" || !isFinite(+v) ? null : Math.max(0, Math.round(+v)));
 
   async function loadTables() {
-    if (CONFIG.sideCard !== "leagues") return;
-    for (const id of CONFIG.leagues.filter((x) => ID.test(String(x)))) {
+    if (CONFIG.sideCard !== "leagues" || CONFIG.density !== "full") return;
+    for (const id of CONFIG.leagues.filter((x) => String(x) === ROSHN && CONFIG.roshn)) {
       const key = "table." + id;
       if (!due(key, "table")) continue;
       const path = `/lookuptable.php?l=${id}&s=${season()}`;
@@ -138,7 +139,7 @@
   }
 
   async function loadTeams() {
-    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)))) {
+    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)) && isRoshn(x.id) && CONFIG.roshn)) {
       const key = "team." + t.id;
       if (!due(key, "team")) continue;
       const pn = `/eventsnext.php?id=${t.id}`, pl = `/eventslast.php?id=${t.id}`;
@@ -155,7 +156,7 @@
   }
 
   async function loadTeamColors() {
-    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)))) {
+    for (const t of CONFIG.teams.filter((x) => ID.test(String(x.id)) && isRoshn(x.id) && CONFIG.roshn)) {
       const key = "color." + t.id;
       if (!due(key, "color")) continue;
       const p = `/lookupteam.php?id=${t.id}`;
@@ -164,6 +165,78 @@
       const c = team && /^#[0-9a-f]{6}$/i.test(team.strColour1 || "") ? team.strColour1 : "";
       write(key, { color: c });
       await sleep(4000);
+    }
+  }
+
+  /*
+   * الدوريات الأوروبية الخمسة من openfootball (ملكية عامة، بدون مفتاح). ملف واحد لكل دوري، مرة كل ١٢ ساعة.
+   * المواعيد بتوقيت بلد الدوري، فنحوّلها بنفسنا. والترتيب نحسبه من النتائج، بس ما نعرضه إلا لو آخر نتيجة
+   * خلال ١٠ أيام: المصدر يتأخر أحياناً، وترتيب قديم يخالف القرار ٨ (ما نعرض قديم كأنه جديد).
+   * نحفظ بنفس شكل TheSportsDB (table.<id> و team.<id>) عشان باقي الشاشة ما تتغير.
+   */
+  const ROSHN = "4668";
+  const isRoshn = (id) => { const l = (window.LEAGUES || []).find((x) => x.id === ROSHN); return !!(l && l.teams[id]); };
+  const OPENFOOTBALL = { 4328: ["en.1", "Europe/London"], 4335: ["es.1", "Europe/Madrid"], 4332: ["it.1", "Europe/Rome"], 4331: ["de.1", "Europe/Berlin"], 4334: ["fr.1", "Europe/Paris"] };
+  const OF_FRESH_DAYS = 10;
+
+  // "2026-08-21" + "20:00" في منطقة زمنية ← وقت عالمي (مرتين عشان التوقيت الصيفي)
+  function zonedToUtc(date, time, zone) {
+    const [y, m, d] = date.split("-").map(Number), [H, M] = String(time || "12:00").split(":").map(Number);
+    let t = Date.UTC(y, m - 1, d, H, M);
+    for (let k = 0; k < 2; k++) {
+      const p = {};
+      new Intl.DateTimeFormat("en-US", { timeZone: zone, hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric" })
+        .formatToParts(new Date(t)).forEach((x) => (p[x.type] = x.value));
+      t += Date.UTC(y, m - 1, d, H, M) - Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
+    }
+    return t;
+  }
+
+  function ofStandings(matches, now) {
+    const done = matches.filter((m) => m.score && Array.isArray(m.score.ft));
+    if (!done.length) return null;
+    const lastAt = Math.max(...done.map((m) => Date.parse(m.date + "T12:00:00Z")));
+    if (now - lastAt > OF_FRESH_DAYS * 86400000) return null; // المصدر متأخر: نخفي الترتيب بدل ما نعرضه قديم
+    const t = {};
+    const row = (n) => (t[n] = t[n] || { name: n, pts: 0, played: 0, gd: 0, gf: 0 });
+    for (const m of done) {
+      const [a, b] = m.score.ft, A = row(m.team1), B = row(m.team2);
+      A.played++; B.played++; A.gf += a; B.gf += b; A.gd += a - b; B.gd += b - a;
+      if (a > b) A.pts += 3; else if (b > a) B.pts += 3; else { A.pts++; B.pts++; }
+    }
+    return Object.values(t).sort((x, y) => y.pts - x.pts || y.gd - x.gd || y.gf - x.gf || x.name.localeCompare(y.name));
+  }
+
+  async function loadOpenFootball() {
+    const names = window.OF_TEAMS || {};
+    for (const id of Object.keys(OPENFOOTBALL)) {
+      const league = (window.LEAGUES || []).find((x) => x.id === id);
+      const inLeague = CONFIG.teams.filter((t) => league && league.teams[t.id]);
+      const wantTable = CONFIG.density === "full" && CONFIG.sideCard === "leagues" && CONFIG.leagues.includes(id);
+      if (!wantTable && !inLeague.length) continue;
+      if (!due("of." + id, "ofLeague")) continue;
+      const [file, zone] = OPENFOOTBALL[id];
+      const y = season(); // "2026-2027" ← مجلد "2026-27"
+      const j = await get(`https://raw.githubusercontent.com/openfootball/football.json/master/${y.slice(0, 4)}-${y.slice(7)}/${file}.json`, "openfootball");
+      const matches = (j && Array.isArray(j.matches) ? j.matches : []).filter((m) => m && /^\d{4}-\d\d-\d\d$/.test(m.date || "") && typeof m.team1 === "string" && typeof m.team2 === "string");
+      if (!matches.length) continue;
+      const now = Date.now();
+      write("of." + id, { n: matches.length });
+      const st = ofStandings(matches, now);
+      if (st) write("table." + id, st.slice(0, 5).map((r) => ({ id: String(names[r.name] || ""), name: r.name, pts: r.pts, played: r.played })));
+      else { try { localStorage.removeItem("riwaq.cache.table." + id); } catch (e) { /* بدون تخزين */ } }
+      const ev = (m) => {
+        const ft = m.score && Array.isArray(m.score.ft) ? m.score.ft : null;
+        return { home: m.team1, away: m.team2, homeId: String(names[m.team1] || ""), awayId: String(names[m.team2] || ""),
+          at: new Date(zonedToUtc(m.date, /^\d\d:\d\d/.test(m.time || "") ? m.time.slice(0, 5) : "12:00", zone)).toISOString(),
+          hs: ft ? score(ft[0]) : null, as: ft ? score(ft[1]) : null, status: ft ? "FT" : "", league: String(j.name || ""), leagueId: id };
+      };
+      for (const t of inLeague) {
+        const mine = matches.filter((m) => String(names[m.team1]) === String(t.id) || String(names[m.team2]) === String(t.id)).map(ev);
+        const next = mine.filter((e) => e.hs === null && Date.parse(e.at) > now - 3 * HOUR).sort((a, b) => Date.parse(a.at) - Date.parse(b.at))[0] || null;
+        const last = mine.filter((e) => e.hs !== null).sort((a, b) => Date.parse(b.at) - Date.parse(a.at))[0] || null;
+        write("team." + t.id, { next, last });
+      }
     }
   }
 
@@ -261,9 +334,10 @@
   let running = false;
   async function refresh() {
     if (running) return; // تحديث واحد بس في نفس الوقت، عشان ما نطلب نفس المصدر مرتين
+    if (document.hidden) return; // الصفحة ورا تطبيق ثاني: صفر طلبات. نرجع نحدّث أول ما تظهر
     running = true;
     try {
-      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTasks, loadTables, loadTeams, loadTeamColors];
+      const jobs = [loadWeather, loadDust, loadMetals, loadFx, loadNews, loadCalendar, loadTasks, loadOpenFootball, loadTables, loadTeams, loadTeamColors];
       for (const job of jobs) {
         try { await job(); } catch (e) { /* نجرب المرة الجاية. البيانات القديمة تنحكم بحدها */ }
       }
@@ -279,6 +353,7 @@
     start() {
       refresh();
       setInterval(refresh, 5 * MIN);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
     },
     refresh,
     weather() { const c = CONFIG.city; return c ? fresh(`wx.${c.lat.toFixed(2)},${c.lon.toFixed(2)}`, "weather") : null; },
@@ -293,6 +368,12 @@
       return days.length ? days : null;
     },
     dust() { const c = CONFIG.city; const v = c && fresh(`dust.${c.lat.toFixed(2)},${c.lon.toFixed(2)}`, "dust"); return v ? v.data.dust : null; },
+    // تنبيه الغبار يحتاج دليلين: النموذج (الغبار عالي) والرؤية فعلاً ضعيفة. الدليل الواحد كان يطلّع غبار والسماء صافية
+    dustAlert() {
+      const d = this.dust(), w = this.weather(), vis = w && w.data.now && w.data.now.visibility;
+      return d !== null && d >= 300 && typeof vis === "number" && vis < 5000;
+    },
+    clean,
     metals() { return fresh("metals", "metals"); },
     fx() { return fresh("fx", "fx"); },
     table(id) { return fresh("table." + id, "table"); },
@@ -329,6 +410,7 @@
     },
     teamColor(id) { const v = fresh("color." + id, "color"); return v && v.data.color ? v.data.color : null; },
     season,
-    RULES
+    RULES,
+    _test: { zonedToUtc, ofStandings }
   };
 })();

@@ -144,3 +144,7 @@
 #stage.nightclock .s-bottom .s-cell { border: 0; padding: 0; }
 #stage.nightclock .s-bottom .s-cell:not(:first-child) { display: none; }
 #stage.nightclock .s-bottom .label { justify-content: center; }
+
+/* الهادئة: النص ما يكبر عن المساحة (القياس في saver.js يختار نص كامل يدخل، وما يقص أبداً). وصف الصلوات الجديد ما يطلع إلا مع لوحة اللحظة */
+#stage.calm .s-hadith { max-height: 400px; overflow: hidden; }
+.s-mprayers, .s-mnext { display: none; }

@@ -208,6 +208,17 @@ class SetupActivity : Activity() {
             return on.split(':').any { it.equals("${ctx.packageName}/${ctx.packageName}.HomeKeyService", true) }
         }
 
+        /**
+         * أندرويد ممكن يوقف خدمة الأزرار بعد تحديث التطبيق: كانت شغالة والحين لا.
+         * ما نقدر نشغلها بدون المستخدم، فالواجهة تنبّه وتفتح هذا المعالج.
+         */
+        fun keysLost(ctx: Context): Boolean {
+            if (!BuildConfig.HAS_KEYS) return false
+            val p = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            if (a11yOn(ctx)) { p.edit().putBoolean("keysWereOn", true).apply(); return false }
+            return p.getBoolean("keysWereOn", false)
+        }
+
         fun alarmOk(ctx: Context): Boolean {
             if (Build.VERSION.SDK_INT < 31) return true
             return (ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()

@@ -23,7 +23,7 @@ import org.json.JSONObject
 
 /**
  * صوت الأذان وقت الصلاة (اختيار صاحب المشروع: دايماً والتلفزيون شغال، كل الصلوات إلا الفجر).
- * - الصفحة تحسب أوقات الصلاة (adhan-js) لثلاث أيام وترسلها هنا (RiwaqBridge.scheduleAdhan)
+ * - الصفحة تحسب أوقات الصلاة (adhan-js) لثلاثين يوم وترسلها هنا (RiwaqBridge.scheduleAdhan)
  * - أندرويد يحط منبّه لأقرب أذان، ويرجع يحطه بعد إعادة تشغيل الجهاز
  * - وقت الأذان: لو الشاشة شغالة، يشتغل الأذان والبرامج الثانية توقف لين يخلص. زر الرجوع يوقفه
  * - لو التلفزيون مطفي (نايم): ما يطلع صوت
@@ -32,25 +32,38 @@ object AdhanScheduler {
     private const val PREFS = "riwaq.adhan"
     private const val KEY = "schedule"
     const val ACTION_ADHAN = "app.riwaq.tv.ADHAN"
-    private val NAMES = setOf("الفجر", "الظهر", "العصر", "المغرب", "العشاء")
+    private val NAMES = setOf("الفجر", "الظهر", "الجمعة", "العصر", "المغرب", "العشاء")
+    private const val MAX_DAYS = 31
+    private const val MAX_ITEMS = 160
+    // جهاز بدون بطارية ساعة ممكن يقلع بوقت قديم قبل النت: جدول من هذا الوقت غلط، وما نحفظه
+    private const val SANE_NOW = 1_767_225_600_000L // 2026-01-01
 
     /** يقبل قائمة [{at: وقت بالملّي ثانية, name: اسم الصلاة}] من الصفحة، بعد ما يتأكد منها */
     fun save(ctx: Context, json: String): Boolean {
-        if (json.length > 8_000) return false
+        if (json.length > 16_000) return false
         val arr = try { JSONArray(json) } catch (e: Exception) { return false }
         val now = System.currentTimeMillis()
+        if (now < SANE_NOW) return false
         val clean = JSONArray()
-        for (i in 0 until minOf(arr.length(), 20)) {
+        for (i in 0 until minOf(arr.length(), MAX_ITEMS)) {
             val o = arr.optJSONObject(i) ?: continue
             val at = o.optLong("at", 0)
             val name = o.optString("name", "")
-            // بس أوقات خلال الأيام الأربع الجاية، وأسماء الصلوات المعروفة
-            if (at <= now || at > now + 4 * 86_400_000L || name !in NAMES) continue
+            // بس أوقات خلال الشهر الجاي، وأسماء الصلوات المعروفة
+            if (at <= now || at > now + MAX_DAYS * 86_400_000L || name !in NAMES) continue
             clean.put(JSONObject().put("at", at).put("name", name))
         }
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, clean.toString()).apply()
         scheduleNext(ctx)
         return true
+    }
+
+    /** كم يوم باقي في الجدول المحفوظ (يطلع تنبيه في قائمة التحكم لو أقل من أسبوع) */
+    fun daysLeft(ctx: Context): Int {
+        val arr = try { JSONArray(ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "[]")) } catch (e: Exception) { JSONArray() }
+        var last = 0L
+        for (i in 0 until arr.length()) last = maxOf(last, arr.optJSONObject(i)?.optLong("at", 0) ?: 0)
+        return ((last - System.currentTimeMillis()) / 86_400_000L).toInt().coerceAtLeast(0)
     }
 
     fun scheduleNext(ctx: Context) {
@@ -125,7 +138,9 @@ class AdhanReceiver : BroadcastReceiver() {
 /** بعد إعادة تشغيل الجهاز: نرجع نحط منبّه الأذان الجاي (بس هذا، ما يشغّل أذان) */
 class AdhanBootReceiver : BroadcastReceiver() {
     override fun onReceive(ctx: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_MY_PACKAGE_REPLACED) AdhanScheduler.scheduleNext(ctx)
+        when (intent.action) {
+            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED, Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED -> AdhanScheduler.scheduleNext(ctx)
+        }
     }
 }
 

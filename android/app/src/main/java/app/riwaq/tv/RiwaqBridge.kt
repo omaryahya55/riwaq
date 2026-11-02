@@ -16,10 +16,43 @@ import java.util.concurrent.Executors
  * الجسر بين الصفحة وأندرويد: الصفحة تناديه باسم window.Riwaq.
  * كل دالة هنا تقبل مدخلات من الصفحة، فنتحقق منها ولا نثق فيها.
  */
-class RiwaqBridge(private val ctx: Context, private val web: WebView) {
+class RiwaqBridge(private val ctx: Context, private val web: WebView, private val onReady: () -> Unit = {}) {
 
     private val main = Handler(Looper.getMainLooper())
     private val io = Executors.newFixedThreadPool(2)
+
+    /** لازم ينادى لما يتدمر WebView: كل جسر له خيوطه، وإلا تتراكم مع كل شاشة توقف */
+    fun close() { io.shutdownNow() }
+
+    /** الصفحة خلصت أول رسم: نكتب سطر يقراه سكربت التركيب، وننفذ الأوامر المعلقة */
+    @JavascriptInterface fun ready() {
+        android.util.Log.i("RiwaqReady", "ok")
+        main.post { onReady() }
+    }
+
+    @JavascriptInterface fun jsError(msg: String) { ReportActivity.saveError(ctx, msg) }
+
+    // أكمل المشاهدة: اسم وأيقونة بس (WatchNext.kt)
+    @JavascriptInterface fun getWatchNext(): String = WatchNext.listJson(ctx)
+    @JavascriptInterface fun openWatch(i: Int) { main.post { WatchNext.open(ctx, i) } }
+
+    private fun openActivity(c: Class<*>) {
+        main.post {
+            val i = Intent(ctx, c)
+            if (ctx !is Activity) i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            ctx.startActivity(i)
+        }
+    }
+    @JavascriptInterface fun openMajlis() = openActivity(MajlisActivity::class.java)
+    @JavascriptInterface fun openUpdate() = openActivity(UpdateActivity::class.java)
+    @JavascriptInterface fun openReport() = openActivity(ReportActivity::class.java)
+    @JavascriptInterface fun openSetup() = openActivity(SetupActivity::class.java)
+    /** رقم نسخة أحدث لو فيه (فاضي = عندك الأخيرة) */
+    @JavascriptInterface fun updateAvailable(): String = Update.available(ctx)
+    /** النسخة الكاملة وخدمة الأزرار توقفت (يصير بعد تحديث التطبيق أحياناً): الواجهة تنبّه */
+    @JavascriptInterface fun keysOff(): Boolean = SetupActivity.keysLost(ctx)
+    /** الأذان ما بقى له جدول يكفي أسبوع */
+    @JavascriptInterface fun adhanDaysLeft(): Int = AdhanScheduler.daysLeft(ctx)
 
     @JavascriptInterface fun getConfig(): String = ConfigStore.get(ctx)
     @JavascriptInterface fun setConfig(json: String) { ConfigStore.set(ctx, json, external = false) }

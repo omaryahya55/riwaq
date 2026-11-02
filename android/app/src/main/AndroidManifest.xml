@@ -10,6 +10,11 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- تحديث رواق من صفحة إصداراته بزر (النظام يطلب موافقة مرة، وتأكيد كل مرة) -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- أكمل المشاهدة: اسم وتقدم بس، بدون أعمدة الصور (ينطلب مرة، وبدونه الصف ما يطلع) -->
+    <uses-permission android:name="android.permission.READ_TV_LISTINGS" />
+    <uses-permission android:name="com.android.providers.tv.permission.READ_EPG_DATA" />
 
     <!-- تطبيق تلفزيون: بدون شاشة لمس، والريموت هو الأساس -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
@@ -85,6 +90,12 @@
             android:name=".SetupActivity"
             android:exported="false" />
 
+        <!-- التحديث بزر، وباركود الضيوف، والإبلاغ عن مشكلة، وشاشة WebView القديم -->
+        <activity android:name=".UpdateActivity" android:exported="false" android:launchMode="singleTop" />
+        <activity android:name=".MajlisActivity" android:exported="false" />
+        <activity android:name=".ReportActivity" android:exported="false" />
+        <activity android:name=".WebViewOutdatedActivity" android:exported="false" />
+
         <!-- الإعدادات: باركود تصوّره بجوالك -->
         <activity
             android:name=".SettingsActivity"
@@ -98,6 +109,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
         <service

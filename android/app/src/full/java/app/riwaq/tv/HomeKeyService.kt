@@ -67,7 +67,6 @@ class HomeKeyService : AccessibilityService() {
 
     /** خطوة وحدة من الضغطة المستمرة. false = ما نقدر نكرر هالزر هنا */
     private fun repeatStep(k: Int): Boolean {
-        android.util.Log.d("RiwaqKeys", "repeatStep ${KeyEvent.keyCodeToString(k)} sdk=${Build.VERSION.SDK_INT}")
         if (k in VOLUME_KEYS) {
             audio.adjustSuggestedStreamVolume(
                 if (k == KeyEvent.KEYCODE_VOLUME_UP) AudioManager.ADJUST_RAISE else AudioManager.ADJUST_LOWER,
@@ -87,7 +86,6 @@ class HomeKeyService : AccessibilityService() {
     }
 
     override fun onKeyEvent(event: KeyEvent): Boolean {
-        android.util.Log.d("RiwaqKeys", "key=${KeyEvent.keyCodeToString(event.keyCode)} act=${event.action} rc=${event.repeatCount} dev=${event.deviceId} flags=${event.flags} held=$heldKey")
         // الأسهم اللي نرسلها إحنا (الضغطة المستمرة): تمر على طول. نعرفها بإنها من غير الريموت الممسوك،
         // أو من الجهاز الافتراضي، أو معلّمة إنها من خدمة إمكانية الوصول (0x800 في أندرويد)
         if (event.deviceId == KeyCharacterMap.VIRTUAL_KEYBOARD || (event.flags and 0x800) != 0 ||

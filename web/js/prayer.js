@@ -38,18 +38,34 @@
     const day = cityDay(now, plusDays);
     // رمضان مع أم القرى: العشاء +٣٠
     if (id === "UmmAlQura" && F.hijriParts(new Date(day.getTime() + 12 * 3600000)).m === 9) params.adjustments.isha = 30;
+    // تعديل المستخدم لوقت مسجده (±١٠ دقايق، Config.sanitize). يضاف فوق عشاء رمضان، ما يبدله
+    const adj = CONFIG.prayerAdjust || {};
+    for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) if (adj[k]) params.adjustments[k] = (params.adjustments[k] || 0) + adj[k];
     const pt = new adhan.PrayerTimes(new adhan.Coordinates(CONFIG.city.lat, CONFIG.city.lon), day, params);
-    return ORDER.map((o) => Object.assign({ at: pt[o.id] }, o));
+    const friday = day.getDay() === 5;
+    return ORDER.map((o) => Object.assign({ at: pt[o.id] }, o, friday && o.id === "dhuhr" ? { name: "الجمعة" } : null));
   }
 
   function next(now) {
     const today = timesFor(now, 0);
     if (!today) return null;
     for (const p of today) if (!p.notPrayer && p.at > now) return { p, mins: (p.at - now) / 60000, today };
+    // بعد العشاء: الصف يعرض أوقات بكرة، عشان ما يتميز فجر اليوم اللي راح
     const tomorrow = timesFor(now, 1);
     const fajr = tomorrow[0];
-    return { p: fajr, mins: (fajr.at - now) / 60000, today };
+    return { p: fajr, mins: (fajr.at - now) / 60000, today: tomorrow, tomorrow: true };
   }
 
-  window.Prayer = { timesFor, next, methodId, METHOD_NAMES, BY_COUNTRY };
+  // رمضان: الإفطار قبل المغرب، والإمساك قبل الفجر وبعد المغرب. برا رمضان null
+  function ramadan(now) {
+    if (F.hijriParts(now).m !== 9) return null;
+    const t = timesFor(now, 0);
+    if (!t) return null;
+    const maghrib = t.find((p) => p.id === "maghrib").at, fajr = t[0].at;
+    if (now < fajr) return { label: "الإمساك", mins: (fajr - now) / 60000 };
+    if (now < maghrib) return { label: "الإفطار", mins: (maghrib - now) / 60000 };
+    return { label: "الإمساك", mins: (timesFor(now, 1)[0].at - now) / 60000 };
+  }
+
+  window.Prayer = { timesFor, next, ramadan, methodId, METHOD_NAMES, BY_COUNTRY };
 })();

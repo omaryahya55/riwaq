@@ -36,7 +36,6 @@
   }
 
   const fmtDate = (d) => new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" }).format(d);
-  const daysWord = (n) => (n >= 3 && n <= 10 ? "أيام" : "يوم");
   const isSaudi = () => CONFIG.city && CONFIG.city.country === "SA";
 
   // اسم الفريق بالعربي إذا موجود في الجدول، وإلا الاسم الإنقليزي
@@ -70,6 +69,8 @@
         <div class="s-clock-wrap">
           <div class="s-clock" data-k="clock"></div>
           <div class="s-clock-city" data-k="city"></div>
+          <div class="m-prayers s-mprayers" data-k="mprayers"></div>
+          <div class="m-next s-mnext" data-k="mnext"></div>
           <div class="s-chips" data-k="chips"></div>
         </div>
         <div class="s-side card" data-k="side">
@@ -114,7 +115,7 @@
     const w = DATA.weather(), days = DATA.forecast();
     const nowEl = $(root, "now");
     if (w) {
-      const g = F.weather(w.data.now.code);
+      const g = F.sky(w.data.now.code, new Date());
       const today = days && days[0];
       nowEl.innerHTML = `${icon(g[1])}<div class="s-now-temp">${F.num(w.data.now.temp)}°</div>
         <div class="s-now-desc">${g[0]}${today ? `<small>العظمى ${F.num(today.max)}° · الصغرى ${F.num(today.min)}°</small>` : ""}</div>`;
@@ -133,9 +134,8 @@
 
   function renderChips(root, now) {
     const chips = [];
-    const dust = DATA.dust();
-    // ٣٠٠ ميكروغرام/م³ وفوق = غبار عالي جداً (حد متحفظ، ما نخوّف الناس على الفاضي)
-    if (dust !== null && dust >= 300) chips.push(`${icon("fog")}تنبيه غبار`);
+    // غبار عالي (٣٠٠ ميكروغرام/م³ وفوق) والرؤية فعلاً ضعيفة: ما نخوّف الناس على الفاضي
+    if (DATA.dustAlert()) chips.push(`${icon("fog")}تنبيه غبار`);
     // ذكر الوقت: تنبيه (والقراءة كاملة من الواجهة)
     (Content.timed ? Content.timed(now) : []).slice(0, 2).forEach((s) => chips.push(`${icon("bell")}حان وقت ${s.title}`));
     if (CONFIG.reminders !== false) {
@@ -145,8 +145,11 @@
       // ساعة الإجابة يوم الجمعة: آخر ساعة بعد العصر (حديث جابر عند أبي داود والنسائي)
       const pt = window.Prayer && Prayer.timesFor(now, 0), pat = (id) => pt && (pt.find((p) => p.id === id) || {}).at;
       if (wd === 5 && pat("asr") && now >= pat("asr") && now < pat("maghrib")) chips.push(`${icon("crescent")}ساعة الإجابة · آخر ساعة قبل المغرب`);
-      if (wd === 0 || wd === 3) chips.push(`${icon("crescent")}بكرة ${wd === 0 ? "الاثنين" : "الخميس"} · صيام`);
-      if ([13, 14, 15].includes(tomorrowH.d) && tomorrowH.m !== 9) chips.push(`${icon("crescent")}بكرة من الأيام البيض`);
+      // بكرة رمضان أو عيد أو من أيام التشريق: ما نذكّر بصيام التطوع
+      if (!F.noVoluntaryFast(tomorrowH)) {
+        if (wd === 0 || wd === 3) chips.push(`${icon("crescent")}بكرة ${wd === 0 ? "الاثنين" : "الخميس"} · صيام`);
+        if ([13, 14, 15].includes(tomorrowH.d)) chips.push(`${icon("crescent")}بكرة من الأيام البيض`);
+      }
       if (tomorrowH.m === 12 && tomorrowH.d === 9) chips.push(`${icon("crescent")}بكرة يوم عرفة · صيام`);
       if (tomorrowH.m === 1 && (tomorrowH.d === 9 || tomorrowH.d === 10)) chips.push(`${icon("crescent")}بكرة ${tomorrowH.d === 9 ? "تاسوعاء" : "عاشوراء"} · صيام`);
     }
@@ -232,7 +235,7 @@
         t.data.map((r, i) => `<div class="s-row ${mine.has(String(r.id)) ? "mine" : ""}"${mine.has(String(r.id)) ? ` style="color:${teamColor(r.id)}"` : ""}><span class="rk">${F.digits(i + 1)}</span><span class="clip"><bdi>${esc(teamName(r.id, r.name))}</bdi></span><span class="pl">${F.num(r.played)}</span><span class="pt">${F.num(r.pts)}</span></div>`).join("");
       dots();
       const at = new Date(t.at);
-      $(root, "sideSrc").textContent = `البيانات: TheSportsDB · ${F.clock(at).h}:${F.clock(at).m} ${F.clock(at).ampm}`;
+      $(root, "sideSrc").textContent = `البيانات: ${id === "4668" ? "TheSportsDB" : "openfootball"} · ${F.clock(at).h}:${F.clock(at).m} ${F.clock(at).ampm}`;
       table.classList.remove("fade");
     };
     if (!animate) return paint();
@@ -245,8 +248,31 @@
    * ١) نصغّر الخط على مراحل ٢) نخفي بطاقة طقس الأيام مؤقتاً ٣) ناخذ البديل اللي بعده
    * العمود اليسار لازم ما ينزل على شريط الأخبار والخانات اللي تحت.
    */
+  let hadithSig = "";
   function renderHadith(root, now) {
     const el = $(root, "hadith"), col = root.querySelector(".s-col"), week = $(root, "week");
+    // نفس المحتوى اللي معروض: ما نعيد القياس (أسوأ حالة كانت ٧٢ إعادة رسم كل ٢٠ ثانية)
+    const first = window.Content && Content.current(now, 0);
+    const sig = (first ? (first.item.sourceId || first.item.text.slice(0, 40)) + "|" + first.title : "") + "|" + CONFIG.density + "|" + (DATA.forecast() ? 1 : 0);
+    if (sig === hadithSig) return;
+    hadithSig = sig;
+    if (CONFIG.density === "frame") { show(el, false); return; }
+    if (CONFIG.density === "calm") {
+      for (let offset = 0; offset < 12; offset++) {
+        const c = window.Content && Content.current(now, offset);
+        if (!c) break;
+        const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
+        const cr = Content.credit(c.item, false);
+        el.innerHTML = `<div class="s-card-title">${esc(c.title)}</div><p class="s-hadith-text ${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(cr.source)}</small>`;
+        show(el, true);
+        if (el.scrollHeight <= el.clientHeight + 1) return;
+      }
+      // ما فيه نص قصير يدخل: نقول وقته بدل ما نقص أي نص
+      const tm = Content.timed ? Content.timed(now) : [];
+      if (tm.length) { el.innerHTML = `<div class="s-card-title">${esc("حان وقت " + tm.map((s) => s.title).join(" و"))}</div>`; show(el, true); }
+      else show(el, false);
+      return;
+    }
     const ticker = $(root, "ticker");
     col.style.maxHeight = (ticker.style.display === "none" ? 590 : 512) + "px";
     const weekHas = !!DATA.forecast();
@@ -294,8 +320,9 @@
     return np;
   }
 
-  function cell(ic, label, main, sub) {
-    return `<div class="s-cell"><div class="label">${icon(ic)}${label}</div><div class="s-cell-main">${main}</div><div class="s-cell-sub">${sub}</div></div>`;
+  // now=true: يبقى في الكثافة الهادئة كمان (شي يخص الحين: السحور والإفطار، ومباراة قريبة، واللي شغّله المستخدم)
+  function cell(ic, label, main, sub, now) {
+    return `<div class="s-cell${now ? " now" : ""}"><div class="label">${icon(ic)}${label}</div><div class="s-cell-main">${main}</div><div class="s-cell-sub">${sub}</div></div>`;
   }
 
   function renderBottom(root, now, np) {
@@ -307,21 +334,19 @@
     // المناسبات: رمضان، وعرفة، وعاشوراء. نعرض الأقرب
     const h = F.hijriParts(now);
     if (h.m === 9 && np) {
-      const today = Prayer.timesFor(now, 0);
-      const maghrib = today.find((p) => p.id === "maghrib").at;
-      if (now < maghrib) cells.push(cell("crescent", `رمضان · اليوم ${F.digits(h.d)}`, `الإفطار بعد ${F.duration((maghrib - now) / 60000)}`, "حسب تقويم أم القرى"));
-      else { const fajr = Prayer.timesFor(now, 1)[0].at; cells.push(cell("crescent", `رمضان · اليوم ${F.digits(h.d)}`, `الإمساك بعد ${F.duration((fajr - now) / 60000)}`, "مع أذان الفجر")); }
+      const r = Prayer.ramadan(now);
+      if (r) cells.push(cell("crescent", `رمضان · اليوم ${F.digits(h.d)}`, `${r.label} بعد ${F.duration(r.mins)}`, r.label === "الإمساك" ? "مع أذان الفجر" : "حسب تقويم أم القرى", true));
     } else {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, daysToHijri(now, m, d) || { days: 9999 }))
         .sort((a, b) => a.days - b.days)[0];
-      if (occ && occ.days < 9999) cells.push(cell("crescent", occ.n + (occ.n === "رمضان" ? " " + F.digits(occ.year) : ""), occ.days === 0 ? "اليوم" : `باقي ${F.digits(occ.days)} <small>${daysWord(occ.days)}</small>`, "حسب تقويم أم القرى"));
+      if (occ && occ.days < 9999) cells.push(cell("crescent", occ.n + (occ.n === "رمضان" ? " " + F.digits(occ.year) : ""), occ.days === 0 ? "اليوم" : `باقي ${F.days(occ.days)}`, "حسب تقويم أم القرى", occ.days === 0));
     }
     // الراتب وحساب المواطن (السعودية بس): الأقرب منهم
     if (isSaudi() && CONFIG.showSalary) {
       const s = nextMonthly(now, 27, "salary"), ca = nextMonthly(now, 10, "citizen");
       const pick = ca.days < s.days ? ["حساب المواطن", ca] : ["الراتب", s];
-      cells.push(cell("wallet", pick[0], pick[1].days === 0 ? "اليوم" : `باقي ${F.digits(pick[1].days)} <small>${daysWord(pick[1].days)}</small>`, fmtDate(pick[1].date) + " · متوقع"));
+      cells.push(cell("wallet", pick[0], pick[1].days === 0 ? "اليوم" : `باقي ${F.days(pick[1].days)}`, fmtDate(pick[1].date) + " · متوقع", true));
     }
     // مباراة الفريق: النتيجة تبقى ٢٤ ساعة بعد المباراة، وبعدها المباراة الجاية
     const fm = DATA.featuredMatch(now);
@@ -336,11 +361,11 @@
       };
       if (fm.kind === "last") {
         const L = fm.ev;
-        cells.push(cell("ball", `نتيجة ${esc(teamName(team.id, team.name))}`, `${nm(L, "h")} <small>${F.num(L.hs)} - ${F.num(L.as)}</small> ${nm(L, "a")}`, L.status === "FT" ? "انتهت" : "جارية"));
+        cells.push(cell("ball", `نتيجة ${esc(teamName(team.id, team.name))}`, `${nm(L, "h")} <small>${F.num(L.hs)} - ${F.num(L.as)}</small> ${nm(L, "a")}`, L.status === "FT" ? "انتهت" : "جارية", true));
       } else {
         const N = fm.ev, at = fm.at;
         const when = new Intl.DateTimeFormat("ar-SA-u-ca-gregory-nu-arab", { timeZone: F.TZ, weekday: "long", hour: "numeric", minute: "2-digit" }).format(at);
-        cells.push(cell("ball", `مباراة ${esc(teamName(team.id, team.name))} الجاية`, `${nm(N, "h")} <small>×</small> ${nm(N, "a")}`, when));
+        cells.push(cell("ball", `مباراة ${esc(teamName(team.id, team.name))} الجاية`, `${nm(N, "h")} <small>×</small> ${nm(N, "a")}`, when, at - now < 6 * 3600000));
       }
     }
     const el = $(root, "bottom");
@@ -373,10 +398,10 @@
   }
 
   function renderCredit(root) {
-    const parts = [Scene.credit ? "الصورة: " + Scene.credit + " · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
+    const parts = [Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
     if (DATA.weather()) parts.push("الطقس: Open-Meteo.com");
-    if (DATA.metals()) parts.push("الأسعار: gold-api.com");
-    if (DATA.fx()) parts.push("العملات: Frankfurter");
+    if (CONFIG.density === "full" && DATA.metals()) parts.push("الأسعار: gold-api.com");
+    if (CONFIG.density === "full" && DATA.fx()) parts.push("العملات: Frankfurter");
     $(root, "credit").textContent = parts.join(" · ");
   }
 
@@ -412,6 +437,12 @@
       renderPrices(root);
       renderLeague(root, false);
       const np = renderPrayers(root, now);
+      // الهادئة: الصلوات تحت الساعة بدون صناديق، وسطر الصلاة القادمة (أو الإفطار والإمساك في رمضان)
+      if (np) {
+        $(root, "mprayers").innerHTML = np.today.filter((p) => !p.notPrayer).map((p) => `<div class="${p.id === np.p.id ? "n" : ""}"><label>${p.name}</label>${F.clock(p.at).h}:${F.clock(p.at).m}</div>`).join("");
+        const r = Prayer.ramadan(now);
+        $(root, "mnext").textContent = r ? `${r.label} بعد ${F.duration(r.mins)}` : `${np.p.name}${np.tomorrow ? " بكرة" : ""} بعد ${F.duration(np.mins)}`;
+      }
       renderBottom(root, now, np);
       renderNews(root);
       renderHadith(root, now); // بعد الأخبار والطقس: يقيس المساحة الباقية

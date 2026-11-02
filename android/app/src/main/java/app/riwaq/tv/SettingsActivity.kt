@@ -1,7 +1,6 @@
 package app.riwaq.tv
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,10 +10,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.EncodeHintType
-import com.google.zxing.qrcode.QRCodeWriter
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
@@ -65,7 +60,7 @@ class SettingsActivity : Activity() {
             text.addView(tv(getString(R.string.settings_scan), 28f, ink))
             text.addView(tv(getString(R.string.settings_hint), 20f, ink2))
             text.addView(tv("http://$ip:${srv.port}", 20f, ink2).apply { textDirection = View.TEXT_DIRECTION_LTR })
-            qr.setImageBitmap(qrBitmap(url, dp(380)))
+            qr.setImageBitmap(TvUi.qr(url, dp(380)))
             root.addView(qr, LinearLayout.LayoutParams(dp(380), dp(380)).apply { marginEnd = dp(56) })
         }
         text.addView(status)
@@ -87,14 +82,6 @@ class SettingsActivity : Activity() {
     }
 
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
-
-    private fun qrBitmap(content: String, size: Int): Bitmap {
-        val hints = mapOf(EncodeHintType.MARGIN to 2, EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M)
-        val m = QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, size, size, hints)
-        val px = IntArray(size * size)
-        for (y in 0 until size) for (x in 0 until size) px[y * size + x] = if (m[x, y]) Color.BLACK else Color.WHITE
-        return Bitmap.createBitmap(px, size, size, Bitmap.Config.ARGB_8888)
-    }
 
     /** عنوان التلفزيون على شبكة البيت (IPv4 خاص) */
     private fun localIp(): String? = try {

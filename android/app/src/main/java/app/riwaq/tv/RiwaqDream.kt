@@ -11,6 +11,7 @@ import android.webkit.WebView
 class RiwaqDream : DreamService() {
 
     private var web: WebView? = null
+    private var bridge: RiwaqBridge? = null
 
     @SuppressLint("AddJavascriptInterface")
     override fun onAttachedToWindow() {
@@ -18,14 +19,19 @@ class RiwaqDream : DreamService() {
         isInteractive = false
         isFullscreen = true
         isScreenBright = true
-        val w = WebHost.create(this)
-        w.addJavascriptInterface(RiwaqBridge(this, w), "Riwaq")
+        if (WebHost.tooOld()) { finish(); return } // WebView قديم: نرجع لشاشة النظام بدل شاشة سوداء
+        val w = WebHost.create(this) { finish() }
+        val b = RiwaqBridge(this, w)
+        bridge = b
+        w.addJavascriptInterface(b, "Riwaq")
         setContentView(w)
         w.loadUrl(WebHost.PAGE + "#screen=saver")
         web = w
     }
 
     override fun onDetachedFromWindow() {
+        bridge?.close()
+        bridge = null
         web?.destroy()
         web = null
         super.onDetachedFromWindow()

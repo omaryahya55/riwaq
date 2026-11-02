@@ -44,3 +44,29 @@ window.TEAM_COLORS = {
   136018: "#F5C400", // الاتحاد: أصفر
   137721: "#0F8A43"  // الأهلي: أخضر
 };
+
+/*
+ * أسماء الأندية في openfootball ← نفس أرقام الأندية فوق (البيانات الأوروبية ملكية عامة، tests تتأكد من الجدول).
+ */
+window.OF_TEAMS = {
+  "AFC Bournemouth": 134301, "Arsenal FC": 133604, "Aston Villa FC": 133601, "Brentford FC": 134355, "Brighton & Hove Albion FC": 133619,
+  "Chelsea FC": 133610, "Coventry City FC": 133625, "Crystal Palace FC": 133632, "Everton FC": 133615, "Fulham FC": 133600,
+  "Hull City AFC": 133617, "Ipswich Town FC": 133622, "Leeds United FC": 133635, "Liverpool FC": 133602, "Manchester City FC": 133613,
+  "Manchester United FC": 133612, "Newcastle United FC": 134777, "Nottingham Forest FC": 133720, "Sunderland AFC": 133603, "Tottenham Hotspur FC": 133616,
+  "Athletic Club": 133727, "CA Osasuna": 133730, "Club Atlético de Madrid": 133729, "Deportivo Alavés": 134221, "Elche CF": 134384,
+  "FC Barcelona": 133739, "Getafe CF": 133731, "Levante UD": 133732, "Málaga CF": 133736, "RC Celta de Vigo": 133937,
+  "RC Deportivo La Coruña": 133816, "RCD Espanyol de Barcelona": 133734, "Rayo Vallecano de Madrid": 133728, "Real Betis Balompié": 133722,
+  "Real Madrid CF": 133738, "Real Racing Club de Santander": 133726, "Real Sociedad de Fútbol": 133724, "Sevilla FC": 133735, "Valencia CF": 133725, "Villarreal CF": 133740,
+  "AC Milan": 133667, "AC Monza": 134270, "ACF Fiorentina": 133674, "AS Roma": 133682, "Atalanta BC": 134782, "Bologna FC 1909": 134781,
+  "Cagliari Calcio": 134783, "Como 1907": 134243, "FC Internazionale Milano": 133681, "Frosinone Calcio": 133818, "Genoa CFC": 133675,
+  "Juventus FC": 133676, "Parma Calcio 1913": 135728, "SS Lazio": 133668, "SSC Napoli": 133670, "Torino FC": 133687, "US Lecce": 133678,
+  "US Sassuolo Calcio": 133701, "Udinese Calcio": 133679, "Venezia FC": 134234,
+  "1. FC Köln": 133654, "1. FC Union Berlin": 134690, "1. FSV Mainz 05": 133665, "Bayer 04 Leverkusen": 133666, "Borussia Dortmund": 133650,
+  "Borussia Mönchengladbach": 134779, "Eintracht Frankfurt": 133814, "FC Augsburg": 133652, "FC Bayern München": 133664, "FC Schalke 04": 133661,
+  "Hamburger SV": 133651, "RB Leipzig": 134695, "SC Freiburg": 133653, "SC Paderborn 07": 134551, "SV 07 Elversberg": 138411,
+  "SV Werder Bremen": 133662, "TSG 1899 Hoffenheim": 133657, "VfB Stuttgart": 133660,
+  "AJ Auxerre": 134788, "AS Monaco FC": 133823, "Angers SCO": 134709, "ES Troyes AC": 134789, "FC Lorient": 133715, "Le Havre AC": 133862,
+  "Le Mans FC": 133848, "Lille OSC": 133711, "OGC Nice": 133712, "Olympique Lyonnais": 133713, "Olympique de Marseille": 133707, "Paris FC": 135465,
+  "Paris Saint-Germain FC": 133714, "RC Strasbourg Alsace": 133882, "Racing Club de Lens": 133822, "Stade Brestois 29": 133704,
+  "Stade Rennais FC 1901": 133719, "Toulouse FC": 133703
+};

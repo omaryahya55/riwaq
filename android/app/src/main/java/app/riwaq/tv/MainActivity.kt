@@ -14,16 +14,16 @@ import android.webkit.WebView
 /**
  * الواجهة الرئيسية. صفحة رواق كاملة داخل WebView، والتطبيقات تنفتح عن طريق الجسر.
  * زر الرجوع: يروح للصفحة (تقفل القوائم). في الواجهة نفسها ما يسوي شي، مثل أي واجهة تلفزيون.
+ * الأوامر اللي تجي قبل ما تجهز الصفحة تنتظر في طابور لين الصفحة تقول إنها جاهزة (Riwaq.ready)،
+ * فما تضيع: مثل زر تطبيق مقفل، أو "الرجوع للواجهة الأصلية".
  */
 class MainActivity : Activity() {
 
-    private lateinit var web: WebView
+    private var web: WebView? = null
+    private var bridge: RiwaqBridge? = null
     private var loadedVersion = -1L
-    private var pendingQuick = false
-    private var pendingSaver = false
-    private var pendingSettings = false
-    private var pendingRestore = false
-    private var pendingLaunchJs: String? = null
+    private var pageReady = false
+    private val pending = ArrayList<String>()
 
     /** تطبيق مقفل من زر ريموت: الصفحة تطلب الرمز وبعدها تفتحه. نتحقق من اسم الحزمة قبل ما ندخله في JS */
     private fun launchJs(i: Intent?): String? {
@@ -34,27 +34,58 @@ class MainActivity : Activity() {
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
-        override fun onReceive(c: Context, i: Intent) {
-            web.evaluateJavascript("window.Home&&Home.appsChanged()", null)
-        }
+        override fun onReceive(c: Context, i: Intent) { runJs("window.Home&&Home.appsChanged()") }
+    }
+
+    /** ينفذ أمر في الصفحة، أو يخليه ينتظر لين تجهز */
+    private fun runJs(js: String) {
+        val w = web
+        if (w != null && pageReady) w.evaluateJavascript(js, null) else pending += js
+    }
+
+    private fun onPageReady() {
+        pageReady = true
+        val list = ArrayList(pending)
+        pending.clear()
+        list.forEach { web?.evaluateJavascript(it, null) }
     }
 
     @SuppressLint("AddJavascriptInterface")
+    private fun buildWeb() {
+        val w = WebHost.create(this) { rebuild() }
+        val b = RiwaqBridge(this, w) { onPageReady() }
+        w.addJavascriptInterface(b, "Riwaq")
+        web = w
+        bridge = b
+        setContentView(w)
+        load()
+    }
+
+    /** محرك الصفحة مات (الذاكرة خلصت): نبني واحد جديد، وخدمة الأزرار والأذان ما يتأثرون */
+    private fun rebuild() {
+        bridge?.close()
+        try { web?.destroy() } catch (e: Exception) { }
+        web = null
+        bridge = null
+        pageReady = false
+        buildWeb()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // ما نحط FLAG_KEEP_SCREEN_ON: نبي أندرويد يشغّل شاشة التوقف لحاله لما يكون التلفزيون خامل
-        web = WebHost.create(this)
-        web.addJavascriptInterface(RiwaqBridge(this, web), "Riwaq")
-        setContentView(web)
-        load()
-        if (savedInstanceState == null && intent?.action == Intent.ACTION_MAIN) SetupActivity.maybeLaunch(this)
-        if (intent?.action == ACTION_QUICK || intent?.action == Intent.ACTION_ALL_APPS) {
-            // أول تشغيل: ننتظر الصفحة تحمّل، وبعدها نفتح اللوحة (إذا ما انفتحت)
-            web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
+        // WebView قديم: الصفحة تطلع سوداء، فنفتح شاشة أصلية فيها التحديث والرجوع للواجهة الأصلية
+        if (WebHost.tooOld()) {
+            startActivity(Intent(this, WebViewOutdatedActivity::class.java))
+            finish()
+            return
         }
-        if (intent?.action == ACTION_LAUNCH) launchJs(intent)?.let { js -> web.postDelayed({ web.evaluateJavascript(js, null) }, 2500) }
-        if (intent?.action == ACTION_SETTINGS) web.postDelayed({ web.evaluateJavascript(SETTINGS_JS, null) }, 2500)
-        if (intent?.action == ACTION_RESTORE) web.postDelayed({ web.evaluateJavascript(RESTORE_JS, null) }, 2500)
+        // ما نحط FLAG_KEEP_SCREEN_ON: نبي أندرويد يشغّل شاشة التوقف لحاله لما يكون التلفزيون خامل
+        buildWeb()
+        if (savedInstanceState == null && intent?.action == Intent.ACTION_MAIN) SetupActivity.maybeLaunch(this)
+        if (intent?.action == ACTION_QUICK || intent?.action == Intent.ACTION_ALL_APPS) runJs("document.querySelector('[data-k=quick].on')||($QUICK_JS)")
+        if (intent?.action == ACTION_LAUNCH) launchJs(intent)?.let { runJs(it) }
+        if (intent?.action == ACTION_SETTINGS) runJs(SETTINGS_JS)
+        if (intent?.action == ACTION_RESTORE) runJs(RESTORE_JS)
 
         val f = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
@@ -64,64 +95,65 @@ class MainActivity : Activity() {
         }
         if (Build.VERSION.SDK_INT >= 33) registerReceiver(pkgReceiver, f, Context.RECEIVER_NOT_EXPORTED)
         else @Suppress("UnspecifiedRegisterReceiverFlag") registerReceiver(pkgReceiver, f)
+        askWatchNextOnce()
+    }
+
+    /** أكمل المشاهدة يحتاج إذن مرة وحدة. لو رفض المستخدم الصف ما يطلع، وما نسأل مرة ثانية */
+    private fun askWatchNextOnce() {
+        val p = getSharedPreferences("riwaq.setup", Context.MODE_PRIVATE)
+        if (p.getBoolean("watchAsked", false) || WatchNext.allowed(this)) return
+        p.edit().putBoolean("watchAsked", true).apply()
+        try { requestPermissions(arrayOf("android.permission.READ_TV_LISTINGS"), 21) } catch (e: Exception) { }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 21) runJs("window.Home&&Home.appsChanged()")
     }
 
     private fun load() {
         loadedVersion = ConfigStore.version
-        web.loadUrl(WebHost.PAGE)
-        web.requestFocus()
+        pageReady = false
+        web?.loadUrl(WebHost.PAGE)
+        web?.requestFocus()
     }
 
     override fun onResume() {
         super.onResume()
-        // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
-        if (ConfigStore.version != loadedVersion) load()
-        else if (pendingLaunchJs != null) web.evaluateJavascript(pendingLaunchJs!!, null)
-        else if (pendingSettings) web.evaluateJavascript(SETTINGS_JS, null)
-        else if (pendingRestore) web.evaluateJavascript(RESTORE_JS, null)
-        else if (pendingSaver) web.evaluateJavascript("window.App&&App.show('saver')", null)
-        else if (pendingQuick) web.evaluateJavascript(QUICK_JS, null)
-        else web.evaluateJavascript("window.App&&App.show('home')", null)
-        pendingQuick = false
-        pendingSaver = false
-        pendingSettings = false
-        pendingRestore = false
-        pendingLaunchJs = null
-        web.onResume()
+        // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق. الأوامر المعلقة تنتظر الصفحة الجديدة
+        if (web != null && ConfigStore.version != loadedVersion) load()
+        // الأمر المعلق من onNewIntent، وإلا نرجع للواجهة
+        if (pendingAction != null) { runJs(pendingAction!!); pendingAction = null }
+        else runJs("window.App&&App.show('home')")
+        web?.onResume()
+        Update.checkDaily(this)
     }
 
     override fun onPause() {
-        web.onPause()
+        web?.onPause()
         super.onPause()
     }
 
+    private var pendingAction: String? = null
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (intent.action == ACTION_LAUNCH) { launchJs(intent)?.let { pendingLaunchJs = it }; return } // يتنفذ في onResume
-        if (intent.action == ACTION_RESTORE) { pendingRestore = true; return }
-        if (intent.action == ACTION_SETTINGS) {
-            pendingSettings = true // إعدادات رواق من اللوحة السريعة: تمر على رمز القفل (لو فيه)
-            return
+        when (intent.action) {
+            ACTION_LAUNCH -> launchJs(intent)?.let { pendingAction = it }
+            ACTION_RESTORE -> pendingAction = RESTORE_JS
+            ACTION_SETTINGS -> pendingAction = SETTINGS_JS // تمر على رمز القفل (لو فيه)
+            ACTION_SAVER -> pendingAction = "window.App&&App.show('saver')"
+            // ضغطة البيت المطوّلة: أندرويد يوقف الواجهة قبل ما يوصلها الطلب، فنفتح اللوحة في onResume
+            Intent.ACTION_ALL_APPS, ACTION_QUICK -> pendingAction = QUICK_JS
+            // ضغط زر البيت وهو مفتوح: نرجع للواجهة ونقفل أي قائمة
+            else -> runJs("window.App&&App.show('home')")
         }
-        if (intent.action == ACTION_SAVER) {
-            pendingSaver = true // نفتحها في onResume (بعد ما ترجع الواجهة)
-            return
-        }
-        if (intent.action == Intent.ACTION_ALL_APPS || intent.action == ACTION_QUICK) {
-            // ضغطة البيت المطوّلة (من HomeKeyService، أو بعض الأجهزة ترسلها كطلب "كل التطبيقات")
-            // أندرويد يوقف الواجهة قبل ما يوصلها الطلب، فنفتح اللوحة في onResume (بعد ما ترجع)
-            pendingQuick = true
-            web.evaluateJavascript(QUICK_JS, null)
-            return
-        }
-        // ضغط زر البيت وهو مفتوح: نرجع للواجهة ونقفل أي قائمة
-        web.evaluateJavascript("window.App&&App.show('home')", null)
     }
 
     @Deprecated("زر الرجوع في أندرويد التلفزيون")
     override fun onBackPressed() {
         if (AdhanService.playing) { AdhanService.stop(this); return } // الأذان شغال: الرجوع يوقفه
-        web.evaluateJavascript("window.RiwaqBack&&window.RiwaqBack()", null)
+        runJs("window.RiwaqBack&&window.RiwaqBack()")
         // ما ننادي super: الواجهة الرئيسية ما تتسكر بزر الرجوع
     }
 
@@ -135,7 +167,9 @@ class MainActivity : Activity() {
 
     override fun onDestroy() {
         try { unregisterReceiver(pkgReceiver) } catch (e: Exception) { }
-        web.destroy()
+        bridge?.close()
+        web?.destroy()
+        web = null
         super.onDestroy()
     }
 

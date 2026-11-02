@@ -16,7 +16,7 @@
     fetch(file).then((r) => (r.ok ? r.json() : null)).then((j) => {
       if (!j || !Array.isArray(j.items)) return;
       meta = { source: j.source || "" };
-      items = j.items.filter((x) => x && x.approved === true && x.text && x.source);
+      items = j.items.filter((x) => x && x.approved === true && x.text && x.source && (!window.Rules || Rules.displayable(x)));
       if (window.Saver && Saver.ready) Saver.tick(true);
       if (typeof Event === "function" && window.dispatchEvent) window.dispatchEvent(new Event("riwaq-content"));
     }).catch(() => { /* ما فيه ملف = ما فيه محتوى، والخانة مخفية */ });
@@ -45,12 +45,15 @@
   const titleOf = (x, fallback) => x.title || HADITH_TITLE[ctxOf(x)] || fallback;
 
   // إقامة الصلاة تقريباً (المعمول به في مساجد السعودية) عشان نعرف وقت "قبل الصلاة" و"بعد السلام"
-  const IQAMA = { fajr: 25, dhuhr: 20, asr: 20, maghrib: 10, isha: 20 };
+  const IQAMA_DEFAULT = { fajr: 25, dhuhr: 20, asr: 20, maghrib: 10, isha: 20 };
+  const iqamaOf = (id) => (CONFIG.iqama && CONFIG.iqama[id]) || IQAMA_DEFAULT[id];
 
   // أيام الصيام المسنونة: رمضان، الإثنين والخميس، الأيام البيض، عرفة، تاسوعاء وعاشوراء
   function fastingDay(now) {
     const h = F.hijriParts(now), wd = F.parts(now, { weekday: "short" }).weekday;
-    return h.m === 9 || wd === "Mon" || wd === "Thu" || (h.d >= 13 && h.d <= 15 && h.m !== 12)
+    if (h.m === 9) return true;
+    if (F.noVoluntaryFast(h)) return false; // العيد والتشريق: ما فيه دعاء إفطار ولا أحاديث صيام
+    return wd === "Mon" || wd === "Thu" || (h.d >= 13 && h.d <= 15 && h.m !== 12)
       || (h.m === 12 && h.d === 9) || (h.m === 1 && (h.d === 9 || h.d === 10));
   }
 
@@ -68,7 +71,7 @@
     if (t) {
       const at = (id) => (t.find((p) => p.id === id) || {}).at;
       for (const id of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) {
-        const iq = IQAMA[id];
+        const iq = iqamaOf(id);
         if (near(at(id), -2, 6)) out.push({ ctx: ["adhan"], exclusive: true });
         else if (near(at(id), 6, iq - 1)) out.push({ ctx: ["mosque", "prayer"], exclusive: true });
         else if (near(at(id), iq + 8, iq + 30)) out.push({ ctx: ["afterPrayer"], exclusive: true });
@@ -92,8 +95,7 @@
     const wx = window.DATA && DATA.weather && DATA.weather();
     const code = wx && wx.data && wx.data.now && wx.data.now.code;
     if ([51, 53, 55, 61, 63, 65, 80, 81, 82, 95, 96, 99].includes(code)) out.push({ ctx: ["rain"], w: 3 });
-    const dust = window.DATA && DATA.dust && DATA.dust();
-    if (typeof dust === "number" && dust >= 300) out.push({ ctx: ["wind"], w: 2 });
+    if (window.DATA && DATA.dustAlert && DATA.dustAlert()) out.push({ ctx: ["wind"], w: 2 });
     // مواسم: الجمعة (من مغرب الخميس)، الصيام، العشر الأواخر، عشر ذي الحجة
     const h = F.hijriParts(now), wd = F.parts(now, { weekday: "short" }).weekday;
     if (wd === "Fri" || (wd === "Thu" && mod >= 18 * 60)) out.push({ ctx: ["friday"], w: 1 });
@@ -163,28 +165,9 @@
    * والكتاب ورقمه من سطر التخريج. والأرقام بنفس الطبعات اللي في المكتبة الشاملة
    * (البخاري ط السلطانية، ومسلم ت عبد الباقي): جربناها على الشاملة 2026-10-30 وطابقت الجزء والصفحة والرقم.
    */
-  const bare = (s) => String(s || "").replace(/[ً-ٰٟـ​-‏]/g, "");
-  function narrator(x) {
-    if (x.type !== "hadith") return "";
-    const m = bare(x.text).trim().match(/^و?عن\s+(.+?)(?:\s+(?:رضي|رحمه|قال|قالت|أن|أنه|أنها|أنهما|عن|سمع|سمعت|يقول)(?=[\s،,:؛]|$)|\s*[،,:؛«"(\-])/);
-    if (!m) return "";
-    const words = m[1].trim().split(/\s+/);
-    if (words.length > 8) return "";
-    // «عن أبي هريرة» ← الراوي: أبو هريرة (أول الاسم بس، مو «سعد بن أبي وقاص»)
-    return words.map((w, i) => (i === 0 && w === "أبي" ? "أبو" : w === "وأبي" ? "وأبو" : w)).join(" ");
-  }
-  const BOOKS = ["صحيح البخاري", "صحيح مسلم", "سنن أبي داود", "سنن الترمذي", "سنن النسائي", "سنن ابن ماجه", "مسند أحمد", "موطأ مالك", "سنن الدارمي"];
+  const narrator = (x) => Rules.narrator(x);
+  const books = (x) => Rules.books(x);
   const arNum = (s) => String(s).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
-  function books(x) {
-    const out = [];
-    for (const line of String(x.reference || "").split("\n")) {
-      const l = line.replace(/^[\s\d\-–.]+/, "").trim();
-      const name = BOOKS.find((b) => l.startsWith(b));
-      const num = name && l.slice(name.length).match(/^\s*(?:\(\s*\d+\s*\/\s*\d+\s*\)\s*)?\(\s*(\d+)\s*\)/);
-      if (num && !out.some((o) => o.startsWith(name))) out.push(name + " (" + arNum(num[1]) + ")");
-    }
-    return out.slice(0, 3);
-  }
 
   /*
    * من المكتبة الشاملة (tools/apply-shamela.py): الراوي والتخريج والدرجة جاهزة في العنصر نفسه.
@@ -204,11 +187,11 @@
         reference: full ? [takhrijLine(x), x.edition ? "المصدر: " + x.edition : ""].filter(Boolean).join(" · ") : ""
       };
     }
-    if (x.type === "hadith") {
+    if (x.type === "hadith" || x.type === "sahabi") {
       const n = narrator(x);
       const b = books(x);
       return {
-        source: [n && "الراوي: " + n, x.attribution, x.grade].filter(Boolean).join(" · "),
+        source: [n && "الراوي: " + n, x.attribution, x.grade && x.grade + (x.edition === "HadeethEnc.com" ? " (الموسوعة الحديثية)" : "")].filter(Boolean).join(" · "),
         reference: full ? [b.length ? b.join("، ") : "", x.edition ? "المصدر: " + x.edition : ""].filter(Boolean).join(" · ") : ""
       };
     }
@@ -292,8 +275,8 @@
       const t = window.Prayer && Prayer.timesFor(now, 0);
       if (!t) return null;
       for (const p of t) {
-        if (!IQAMA[p.id]) continue;
-        const iq = new Date(p.at.getTime() + IQAMA[p.id] * MIN);
+        if (!IQAMA_DEFAULT[p.id]) continue;
+        const iq = new Date(p.at.getTime() + iqamaOf(p.id) * MIN);
         if (now >= new Date(p.at.getTime() - MIN) && now < new Date(iq.getTime() + 15 * MIN)) return { id: p.id, name: p.name, iqama: iq, before: now < iq };
       }
       return null;

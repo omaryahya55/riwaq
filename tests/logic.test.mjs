@@ -35,7 +35,7 @@ test("الأرقام العربية والفواصل", () => {
 });
 
 test("مواعيد الراتب تطابق جدول وزارة المالية 2026 (أيام الجمعة والسبت)", () => {
-  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/rules.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
   const { nextMonthly } = w.Saver._test;
   const iso = (d) => d.toISOString().slice(0, 10);
   // من الجدول الرسمي (قسم ٣ب في البريف): فبراير ٢٦ (الجمعة←الخميس)، مارس ٢٦، يونيو ٢٨ (السبت←الأحد)، أكتوبر ٢٧، نوفمبر ٢٦، ديسمبر ٢٧
@@ -49,7 +49,7 @@ test("مواعيد الراتب تطابق جدول وزارة المالية 20
 });
 
 test("العد لرمضان ١٤٤٨ من ٢٤ أكتوبر ٢٠٢٦ = ١٠٧ يوم (أم القرى)", () => {
-  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/rules.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
   const r = w.Saver._test.daysToHijri(new Date("2026-10-24T09:00:00+03:00"), 9, 1);
   assert.equal(r.days, 107);
   assert.equal(r.year, 1448);
@@ -90,7 +90,7 @@ test("الطريقة حسب الدولة", () => {
 });
 
 test("لون الفريق الغامق يتفتّح لين ينقرا", () => {
-  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/teams-ar.js", "js/prayer.js", "js/rules.js", "js/data.js", "js/content.js", "js/saver.js"], { city: RIYADH });
   const out = w.Saver._test.readable("#081c4e");
   const [r, g, b] = out.match(/\d+/g).map(Number);
   assert.ok(r + g + b > 300, out);

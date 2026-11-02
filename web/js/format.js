@@ -78,9 +78,20 @@
   function duration(mins) {
     mins = Math.max(0, Math.round(mins));
     const h = Math.floor(mins / 60), m = mins % 60;
-    if (h === 0) return digits(m) + " " + (m >= 3 && m <= 10 ? "دقايق" : "دقيقة");
-    if (m === 0) return digits(h) + " " + (h >= 3 && h <= 10 ? "ساعات" : "ساعة");
+    if (h === 0) return m === 1 ? "دقيقة" : m === 2 ? "دقيقتين" : digits(m) + " " + (m >= 3 && m <= 10 ? "دقايق" : "دقيقة");
+    if (m === 0) return h === 1 ? "ساعة" : h === 2 ? "ساعتين" : digits(h) + " " + (h >= 3 && h <= 10 ? "ساعات" : "ساعة");
     return digits(h) + " س " + digits(m) + " د";
+  }
+
+  // عدد الأيام بصيغته العربية: يوم، يومين، ٣ أيام، ١١ يوم
+  function days(n) {
+    return n === 1 ? "يوم" : n === 2 ? "يومين" : digits(n) + " " + (n >= 3 && n <= 10 ? "أيام" : "يوم");
+  }
+
+  // أيام ما نذكّر فيها بصيام التطوع (قرار صاحب المشروع): رمضان، وعيد الفطر، وعيد الأضحى وأيام التشريق.
+  // ما هو حكم شرعي منا: نسكت بس عن التذكير في هذي الأيام
+  function noVoluntaryFast(h) {
+    return h.m === 9 || (h.m === 10 && h.d === 1) || (h.m === 12 && h.d >= 10 && h.d <= 13);
   }
 
   // رموز الطقس WMO → وصف عربي + اسم الأيقونة
@@ -93,6 +104,14 @@
     95: ["عاصفة رعدية", "storm"], 96: ["عاصفة رعدية", "storm"], 99: ["عاصفة رعدية", "storm"]
   };
   function weather(code) { return WMO[code] || ["—", "cloud"]; }
+  // حالة الطقس الحين: السماء الصافية بالليل قمر مو شمس (من الشروق والمغرب المحسوبة على الجهاز)
+  function sky(code, now) {
+    const g = weather(code), n = now || new Date();
+    const t = window.Prayer && Prayer.timesFor(n, 0);
+    if (!t || (g[1] !== "sun" && g[1] !== "partly")) return g;
+    const at = (id) => t.find((p) => p.id === id).at;
+    return n < at("sunrise") || n >= at("maghrib") ? [g[0], g[1] === "sun" ? "moon" : "cloud"] : g;
+  }
 
-  window.F = { digits, num, clock, minutesOfDay, hhmm, hijri, hijriParts, gregorian, weekday, duration, weather, parts, get TZ() { return tz(); } };
+  window.F = { digits, num, clock, minutesOfDay, hhmm, hijri, hijriParts, gregorian, weekday, duration, days, noVoluntaryFast, weather, sky, parts, get TZ() { return tz(); } };
 })();

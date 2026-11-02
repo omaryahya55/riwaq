@@ -6,7 +6,7 @@
  */
 (function () {
   const P = {
-    night:  { sky: ["#05070F", "#0B1226", "#1A2140"], glow: "#3A4A7A", glowA: 0.35, sun: null, moon: [1180, 44],
+    night:  { sky: ["#05070F", "#0B1226", "#1A2140"], glow: "#3A4A7A", glowA: 0.35, sun: null, moon: [1180, 104],
               dunes: ["#1B2340", "#141B33", "#0E1427", "#090E1C"], stars: 1, clouds: 0.06 },
     fajr:   { sky: ["#141836", "#3D3560", "#B87566"], glow: "#F0A07A", glowA: 0.55, sun: null, moon: null,
               dunes: ["#5A4560", "#3F3150", "#2A2140", "#1A1530"], stars: 0.35, clouds: 0.3 },

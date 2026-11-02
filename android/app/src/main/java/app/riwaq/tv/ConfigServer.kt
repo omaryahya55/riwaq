@@ -36,6 +36,7 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
         "/js/config.js" to "application/javascript; charset=utf-8",
         "/js/teams-ar.js" to "application/javascript; charset=utf-8",
         "/js/settings.js" to "application/javascript; charset=utf-8",
+        "/js/rules.js" to "application/javascript; charset=utf-8",
         "/js/quran-meta.js" to "application/javascript; charset=utf-8",
         "/js/news-sources.js" to "application/javascript; charset=utf-8",
         "/js/demo-data.js" to "application/javascript; charset=utf-8",
@@ -102,6 +103,27 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
                     if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
                     return send(out, 200, "application/json; charset=utf-8", Apps.listJson(ctx).toByteArray())
+                }
+                if (path == "/api/inputs") {
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
+                    return send(out, 200, "application/json; charset=utf-8", Apps.inputsJson(ctx).toByteArray())
+                }
+                // شاشة المجلس: كلمة الواي فاي تنحفظ لحالها، وما ترجع للجوال أبداً
+                if (path == "/api/majlis") {
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    when (method) {
+                        "GET" -> return send(out, 200, "application/json; charset=utf-8", org.json.JSONObject().put("ssid", Majlis.ssid(ctx)).toString().toByteArray())
+                        "DELETE" -> { Majlis.clear(ctx); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                        "POST" -> {
+                            val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
+                            if (len <= 0 || len > 1024) return send(out, 413, "text/plain", "too large".toByteArray())
+                            val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
+                            if (!Majlis.save(ctx, String(body, Charsets.UTF_8))) return send(out, 400, "text/plain", "invalid".toByteArray())
+                            return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
+                        }
+                        else -> return send(out, 405, "text/plain", "method".toByteArray())
+                    }
                 }
                 // صوت أذان من عند المستخدم (مثل أذان الحرم): يرفعه من جواله. رواق نفسه ما يوزّع تسجيل له حقوق
                 if (path == "/api/adhan" || path == "/api/adhan/test") {

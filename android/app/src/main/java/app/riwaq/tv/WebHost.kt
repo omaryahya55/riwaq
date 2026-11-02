@@ -22,9 +22,15 @@ import java.io.ByteArrayInputStream
 object WebHost {
     const val ORIGIN = "https://appassets.androidplatform.net"
     const val PAGE = "$ORIGIN/assets/web/index.html"
+    /** أقدم نسخة تشتغل فيها الصفحة (inset و gap في flex). أقل منها: شاشة سوداء، فنعرض شاشة أصلية بدلها */
+    const val MIN_WEBVIEW = 87
 
+    fun webViewMajor(): Int = WebView.getCurrentWebViewPackage()?.versionName?.substringBefore('.')?.toIntOrNull() ?: 0
+    fun tooOld(): Boolean = webViewMajor().let { it in 1 until MIN_WEBVIEW }
+
+    /** onGone: محرك الصفحة مات (ذاكرة الجهاز خلصت). نرجع true عشان التطبيق كله وخدمة الأزرار ما يموتون معه */
     @SuppressLint("SetJavaScriptEnabled")
-    fun create(ctx: Context): WebView {
+    fun create(ctx: Context, onGone: () -> Unit = {}): WebView {
         val web = WebView(ctx)
         web.setBackgroundColor(Color.BLACK)
         web.isFocusable = true
@@ -58,6 +64,11 @@ object WebHost {
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
                 !isOurs(request.url)
+
+            override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail): Boolean {
+                onGone()
+                return true
+            }
         }
         return web
     }

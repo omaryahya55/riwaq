@@ -35,15 +35,22 @@
     const pm = prayerMinutes(now);
     const period = forcedPeriod || Scene.periodAt(min, pm);
     if (period !== stage.dataset.period) {
+      const first = !stage.dataset.period;
       stage.dataset.period = period;
-      Scene.render(document.getElementById("scene"), period);
+      const el = document.getElementById("scene");
+      // تعتيم، تبديل، ظهور: ما تجتمع صورتين بحجم الشاشة، وما فيه قطع مفاجئ
+      if (first) Scene.render(el, period);
+      else { el.style.opacity = 0; setTimeout(() => { Scene.render(el, period); el.style.opacity = 1; }, 450); }
     }
     // التعتيم الليلي وساعة الليل: من ١:٣٠ بالليل لين قبل الفجر بنص ساعة (اختيار صاحب المشروع)
     const start = 90, fajr = pm.fajr - 30;
-    const night = forcedNight !== null ? forcedNight : (min >= start && min < fajr);
+    // رمضان: بدون تعتيم وقت السحور، والإمساك ظاهر (قرار صاحب المشروع)
+    const night = forcedNight !== null ? forcedNight : (min >= start && min < fajr && F.hijriParts(now).m !== 9);
     stage.classList.toggle("night", night && App.current === "saver");
     stage.classList.toggle("motion", CONFIG.motion !== false);
     stage.classList.toggle("calm", CONFIG.density !== "full");
+    stage.classList.toggle("frame", CONFIG.density === "frame");
+    stage.classList.toggle("moment", CONFIG.homeLayout !== "classic");
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
@@ -59,7 +66,8 @@
 
   function resetIdle() {
     clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => show("saver"), IDLE_MS);
+    // ما تقطع شاشة الانتظار القراءة أو الرمز أو أي قائمة مفتوحة
+    idleTimer = setTimeout(() => { if (window.Home && Home.busy && Home.busy()) resetIdle(); else show("saver"); }, IDLE_MS);
   }
 
   // ===== الأزرار =====
@@ -135,13 +143,16 @@
   if (!params.has("kiosk") && !window.Riwaq) bar.classList.remove("hidden");
 
   window.App = { current: "home", toast, show };
+  // آخر خطأ في الصفحة: يطلع في تقرير المشكلة بس، وما يروح لأي مكان لحاله
+  window.addEventListener("error", (e) => { try { if (window.Riwaq && Riwaq.jsError) Riwaq.jsError(String(e.message).slice(0, 200) + " @" + String(e.filename).split("/").pop() + ":" + e.lineno); } catch (x) { /* لا شي */ } });
 
   // ===== تشغيل =====
-  Home.init(document.getElementById("home"));
+  // داخل شاشة توقف أندرويد ما نبني الواجهة أصلاً: بدون قائمة تطبيقات وبنرات وجلب محتوى زيادة
+  if (!MODE_SAVER_ONLY) Home.init(document.getElementById("home"));
   Saver.init(document.getElementById("saver"));
   DATA.start();
   if (window.PhoneMsg) PhoneMsg.start();
-  if (window.AdhanSchedule) AdhanSchedule.start();
+  if (window.AdhanSchedule && !MODE_SAVER_ONLY) AdhanSchedule.start();
   fit();
   window.addEventListener("resize", fit);
   window.addEventListener("load", fit);
@@ -150,7 +161,11 @@
   const start = params.get("screen") || (location.hash.match(/screen=(\w+)/) || [])[1];
   show(start === "saver" ? "saver" : "home");
   if (!MODE_SAVER_ONLY) resetIdle();
-  setInterval(() => { Saver.tick(); Home.tick(); updateScene(); }, 1000 * 15);
+  // الصفحة ورا تطبيق ثاني: ما نحسب ولا نرسم شي
+  setInterval(() => { if (document.hidden) return; Saver.tick(); Home.tick(); updateScene(); }, 1000 * 15);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) { Saver.tick(true); Home.tick(); updateScene(); } });
   // الخطوط توصل متأخر شوي: نعيد الرسم بعدها
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { Saver.tick(true); Home.tick(); });
+  // أندرويد ينتظر هذي الإشارة قبل ما ينفذ أي أمر معلّق (بدل انتظار ثابت)، وسكربت التركيب يتأكد منها إن الصفحة انرسمت
+  if (window.Riwaq && Riwaq.ready) Riwaq.ready();
 })();
