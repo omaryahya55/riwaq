@@ -419,6 +419,12 @@
       setInterval(() => { if (!window.App || App.current === "home") renderContentCard(new Date()); }, 20000);
       window.addEventListener("riwaq-content", () => { contentSig = ""; renderContentCard(new Date()); }); // أول ما يوصل ملف المحتوى
     },
+    // زر تطبيق في الريموت (أو اختيار تطبيق له) على تطبيق مقفل: أندرويد يمرره هنا عشان يطلب الرمز مثل البطاقة
+    launchApp(pkg) {
+      if (!/^[A-Za-z0-9_.]{1,200}$/.test(String(pkg))) return;
+      if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; }
+      open({ type: "app", id: pkg, name: (appById[pkg] || {}).name || pkg });
+    },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
     openRestore() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openRestore(); },
     openSettings() { if (mode !== "nav") { $("picker").classList.remove("on"); $("reader").classList.remove("on"); $("quick").classList.remove("on"); mode = "nav"; } openSettings(); },

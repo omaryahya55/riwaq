@@ -133,6 +133,8 @@
 .s-side-title [data-k="sideIcon"] { display: inline-flex; }
 
 /* ===== ساعة الليل: الوقت والتاريخ والصلاة الجاية بس، في النص ===== */
+/* كثافة هادئة (الافتراضي): الساعة والصلاة وبطاقة محتوى، بدون الأسعار والدوريات والطقس الأسبوعي وشريط الأخبار */
+#stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-ticker { display: none !important; }
 #stage.nightclock .s-prices, #stage.nightclock .s-side, #stage.nightclock .s-col, #stage.nightclock .s-ticker,
 #stage.nightclock .s-chips, #stage.nightclock .s-now, #stage.nightclock .credit, #stage.nightclock .s-clock-city { display: none !important; }
 #stage.nightclock .s-date { right: 0; left: 0; top: 150px; text-align: center; }

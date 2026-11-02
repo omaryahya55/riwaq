@@ -23,6 +23,7 @@
     nightClock: true,        // بالليل: شاشة الانتظار تصير ساعة بسيطة خافتة (مثل Nest Hub و Echo Show)
     motion: true,            // الخلفية المرسومة تتحرك بهدوء (غيوم)
     bgStyle: "photo",        // الخلفية: photo = صور حقيقية لكل فترة، drawn = رسمة
+    density: "calm",         // كثافة شاشة الانتظار: calm = الساعة والصلاة وبطاقة وحدة (هادئة)، full = مع الطقس والأسعار والدوريات والأخبار
     hifz: [],                // "راجع محفوظك": أرقام السور اللي يحفظها المستخدم
     sunnahDaily: true,       // "سنّة نعيشها" بين محتوى اليوم
     placeDaily: true,        // "حكاية مكان": صورة ونبذة (أول جملة من ويكيبيديا)
@@ -72,6 +73,7 @@
     o.nightClock = bool(c.nightClock, d.nightClock);
     o.motion = bool(c.motion, d.motion);
     o.bgStyle = c.bgStyle === "drawn" ? "drawn" : "photo";
+    o.density = c.density === "full" ? "full" : "calm";
     o.hifz = (Array.isArray(c.hifz) ? c.hifz : []).map(Number).filter((s) => Number.isInteger(s) && s >= 1 && s <= 114).slice(0, 114);
     o.sunnahDaily = bool(c.sunnahDaily, d.sunnahDaily);
     o.placeDaily = bool(c.placeDaily, d.placeDaily);

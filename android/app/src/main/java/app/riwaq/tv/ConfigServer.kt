@@ -128,12 +128,13 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                 if (path == "/api/config") {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
                     when (method) {
-                        "GET" -> return send(out, 200, "application/json; charset=utf-8", ConfigStore.get(ctx).toByteArray())
+                        "GET" -> return send(out, 200, "application/json; charset=utf-8", ConfigStore.redacted(ctx).toByteArray())
                         "POST" -> {
                             val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
                             if (len <= 0 || len > MAX_BODY) return send(out, 413, "text/plain", "too large".toByteArray())
                             val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
-                            if (!ConfigStore.set(ctx, String(body, Charsets.UTF_8))) return send(out, 400, "text/plain", "invalid".toByteArray())
+                            val merged = ConfigStore.merge(ctx, String(body, Charsets.UTF_8)) ?: return send(out, 400, "text/plain", "invalid".toByteArray())
+                            if (!ConfigStore.set(ctx, merged)) return send(out, 400, "text/plain", "invalid".toByteArray())
                             onSaved()
                             return send(out, 200, "application/json", "{\"ok\":true}".toByteArray())
                         }

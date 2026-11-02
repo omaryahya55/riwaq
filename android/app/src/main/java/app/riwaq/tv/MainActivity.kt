@@ -23,6 +23,14 @@ class MainActivity : Activity() {
     private var pendingSaver = false
     private var pendingSettings = false
     private var pendingRestore = false
+    private var pendingLaunchJs: String? = null
+
+    /** تطبيق مقفل من زر ريموت: الصفحة تطلب الرمز وبعدها تفتحه. نتحقق من اسم الحزمة قبل ما ندخله في JS */
+    private fun launchJs(i: Intent?): String? {
+        val pkg = i?.getStringExtra("pkg") ?: return null
+        if (!Regex("^[A-Za-z0-9_.]{1,200}$").matches(pkg)) return null
+        return "window.App&&App.show('home'),window.Home&&Home.launchApp('$pkg')"
+    }
 
     // تطبيق انركّب أو انحذف: نحدّث صف التطبيقات
     private val pkgReceiver = object : BroadcastReceiver() {
@@ -44,6 +52,7 @@ class MainActivity : Activity() {
             // أول تشغيل: ننتظر الصفحة تحمّل، وبعدها نفتح اللوحة (إذا ما انفتحت)
             web.postDelayed({ web.evaluateJavascript("document.querySelector('[data-k=quick].on')||($QUICK_JS)", null) }, 2500)
         }
+        if (intent?.action == ACTION_LAUNCH) launchJs(intent)?.let { js -> web.postDelayed({ web.evaluateJavascript(js, null) }, 2500) }
         if (intent?.action == ACTION_SETTINGS) web.postDelayed({ web.evaluateJavascript(SETTINGS_JS, null) }, 2500)
         if (intent?.action == ACTION_RESTORE) web.postDelayed({ web.evaluateJavascript(RESTORE_JS, null) }, 2500)
 
@@ -67,6 +76,7 @@ class MainActivity : Activity() {
         super.onResume()
         // الإعدادات تغيرت من الجوال: نعيد التحميل عشان تطبق
         if (ConfigStore.version != loadedVersion) load()
+        else if (pendingLaunchJs != null) web.evaluateJavascript(pendingLaunchJs!!, null)
         else if (pendingSettings) web.evaluateJavascript(SETTINGS_JS, null)
         else if (pendingRestore) web.evaluateJavascript(RESTORE_JS, null)
         else if (pendingSaver) web.evaluateJavascript("window.App&&App.show('saver')", null)
@@ -76,6 +86,7 @@ class MainActivity : Activity() {
         pendingSaver = false
         pendingSettings = false
         pendingRestore = false
+        pendingLaunchJs = null
         web.onResume()
     }
 
@@ -86,6 +97,7 @@ class MainActivity : Activity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (intent.action == ACTION_LAUNCH) { launchJs(intent)?.let { pendingLaunchJs = it }; return } // يتنفذ في onResume
         if (intent.action == ACTION_RESTORE) { pendingRestore = true; return }
         if (intent.action == ACTION_SETTINGS) {
             pendingSettings = true // إعدادات رواق من اللوحة السريعة: تمر على رمز القفل (لو فيه)
@@ -137,6 +149,8 @@ class MainActivity : Activity() {
         private const val SETTINGS_JS = "window.App&&App.show('home'),window.Home&&Home.openSettings()"
         /** "الرجوع للواجهة الأصلية" من اللوحة السريعة: تمر على رمز القفل */
         const val ACTION_RESTORE = "app.riwaq.tv.RESTORE"
+        /** فتح تطبيق مقفل من زر ريموت: تمر على رمز القفل */
+        const val ACTION_LAUNCH = "app.riwaq.tv.LAUNCH"
         private const val RESTORE_JS = "window.App&&App.show('home'),window.Home&&Home.openRestore()"
         private const val QUICK_JS = "window.App&&App.show('home'),window.Home&&Home.openQuick()"
     }

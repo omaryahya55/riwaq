@@ -56,6 +56,9 @@ if ($backup -and $backup.screensaver_components -and $backup.screensaver_compone
 } else {
   Adb shell settings delete secure screensaver_components | Out-Null
 }
+if ($backup -and $backup.screensaver_enabled -and $backup.screensaver_enabled -ne "null") {
+  Adb shell settings put secure screensaver_enabled $backup.screensaver_enabled | Out-Null
+}
 Say "رجعت شاشة التوقف الأصلية"
 
 # نطفي خدمة ضغطة البيت المطوّلة، ونخلي أي خدمة ثانية كانت شغالة زي ما هي

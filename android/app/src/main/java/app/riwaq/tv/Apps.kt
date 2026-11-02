@@ -81,6 +81,22 @@ object Apps {
         return bos.toByteArray()
     }
 
+    /** التطبيق مقفل برمز الأهل؟ (نفس شرط الواجهة: رمز من ٤ أرقام والتطبيق في قائمة المقفل) */
+    fun isLocked(ctx: Context, pkg: String): Boolean = try {
+        val lock = JSONObject(ConfigStore.get(ctx)).optJSONObject("lock")
+        val apps = lock?.optJSONArray("apps")
+        lock != null && Regex("^[0-9]{4}$").matches(lock.optString("pin", "")) &&
+            (0 until (apps?.length() ?: 0)).any { apps!!.optString(it) == pkg }
+    } catch (e: Exception) { false }
+
+    /** فتح تطبيق من خارج الصفحة (أزرار الريموت): المقفل يمر على رمز الواجهة، وغيره يفتح على طول */
+    fun open(ctx: Context, pkg: String): Boolean {
+        if (!isLocked(ctx, pkg)) return launch(ctx, pkg)
+        val i = Intent(ctx, MainActivity::class.java).setAction(MainActivity.ACTION_LAUNCH).putExtra("pkg", pkg)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        return try { ctx.startActivity(i); true } catch (e: Exception) { false }
+    }
+
     fun launch(ctx: Context, pkg: String): Boolean {
         val pm = ctx.packageManager
         val i = pm.getLeanbackLaunchIntentForPackage(pkg) ?: pm.getLaunchIntentForPackage(pkg) ?: return false

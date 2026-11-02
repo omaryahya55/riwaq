@@ -27,7 +27,28 @@
   async function loadRemote() {
     const r = await fetch("/api/config?token=" + encodeURIComponent(token));
     if (!r.ok) throw new Error(r.status === 403 ? "الرابط انتهى. صوّر الباركود من التلفزيون مرة ثانية." : "ما قدرنا نوصل للتلفزيون");
-    cfg = Config.sanitize(Object.assign({}, Config.DEFAULTS, await r.json())); // نفس فحص التلفزيون
+    const raw = await r.json();
+    secretsSet = (raw && raw._secrets) || {}; // الأسرار ما ترجع من التلفزيون: بس نعرف أيّها محفوظ
+    cfg = Config.sanitize(Object.assign({}, Config.DEFAULTS, raw)); // نفس فحص التلفزيون
+  }
+
+  // الأسرار (الرمز، ومفتاح البوت، وTodoist، ورابط التقويم) ما تنعرض: الحقل فاضي، وفاضي = يبقى المحفوظ.
+  // الحذف بزر صريح بجنب الحقل (يرسل _clear للتلفزيون)
+  let secretsSet = {};
+  const clearSecrets = {};
+  const SECRET_FIELDS = [["lockPin", "pin"], ["icalUrl", "icalUrl"], ["todoistToken", "todoistToken"], ["tgToken", "tgToken"]];
+  function paintSecrets() {
+    for (const [id, key] of SECRET_FIELDS) {
+      const input = $(id);
+      if (!input || !secretsSet[key]) continue;
+      input.placeholder = clearSecrets[key] ? "سيُحذف عند الحفظ" : "محفوظ على التلفزيون (اتركه فاضي للإبقاء عليه)";
+      if (!input.parentNode.querySelector(`[data-clear="${key}"]`)) {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "btn"; b.dataset.clear = key; b.textContent = "حذف المحفوظ";
+        b.addEventListener("click", () => { clearSecrets[key] = true; input.value = ""; input.placeholder = "سيُحذف عند الحفظ"; status("اضغط حفظ عشان يتطبق"); });
+        input.after(b);
+      }
+    }
   }
 
   // ===== المدينة =====
@@ -179,6 +200,7 @@
     cfg.placeDaily = $("placeDaily").checked;
     cfg.motion = $("motion").checked;
     cfg.bgStyle = $("bgStyle").value === "drawn" ? "drawn" : "photo";
+    cfg.density = $("density").value === "full" ? "full" : "calm";
   }
 
   // ===== رسالة من الجوال (تيليقرام) =====
@@ -216,8 +238,10 @@
     $("placeDaily").checked = cfg.placeDaily !== false;
     $("motion").checked = cfg.motion !== false;
     $("bgStyle").value = cfg.bgStyle === "drawn" ? "drawn" : "photo";
+    $("density").value = cfg.density === "full" ? "full" : "calm";
     $("nightClock").checked = cfg.nightClock !== false;
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
+    paintSecrets();
     loadLockApps();
     $("teamLeague").innerHTML = LEAGUES.map((l) => `<option value="${l.id}">${l.name}</option>`).join("");
     $("leagues").innerHTML = LEAGUES.map((l) => `<label><input type="checkbox" value="${l.id}" ${cfg.leagues.includes(l.id) ? "checked" : ""}>${l.name.replace(" السعودي", "")}</label>`).join("");
@@ -257,7 +281,7 @@
           const now = await (await fetch("/api/config?token=" + encodeURIComponent(token))).json();
           if (!tgCleared && now.telegram && Array.isArray(now.telegram.allowed)) cfg.telegram.allowed = now.telegram.allowed;
         } catch (e) { /* نحفظ اللي عندنا */ }
-        const r = await fetch("/api/config?token=" + encodeURIComponent(token), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cfg) });
+        const r = await fetch("/api/config?token=" + encodeURIComponent(token), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({}, cfg, { _clear: Object.keys(clearSecrets) })) });
         if (!r.ok) throw new Error(r.status === 403 ? "الرابط انتهى. صوّر الباركود مرة ثانية." : "ما انحفظ. جرّب مرة ثانية.");
       } else {
         Config.save(cfg);

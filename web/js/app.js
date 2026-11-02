@@ -43,6 +43,7 @@
     const night = forcedNight !== null ? forcedNight : (min >= start && min < fajr);
     stage.classList.toggle("night", night && App.current === "saver");
     stage.classList.toggle("motion", CONFIG.motion !== false);
+    stage.classList.toggle("calm", CONFIG.density !== "full");
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
