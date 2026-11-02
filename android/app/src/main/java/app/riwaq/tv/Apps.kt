@@ -41,8 +41,10 @@ object Apps {
                 o.put("id", pkg)
                 o.put("name", ri.loadLabel(pm).toString())
                 val hasBanner = ri.activityInfo.banner != 0 || ri.activityInfo.applicationInfo.banner != 0
-                if (hasBanner) o.put("banner", "/icons/banner/$pkg.png")
-                o.put("icon", "/icons/icon/$pkg.png") // شكل المربع والدائرة يحتاجونها حتى لو فيه بانر
+                val custom = AppImages.file(ctx, pkg)
+                // صورة رفعها صاحب البيت تاخذ مكان بانر التطبيق. الرقم عشان ما تبقى النسخة القديمة في الذاكرة
+                if (custom != null && custom.exists()) { o.put("banner", "/appimg/$pkg.jpg?v=${custom.lastModified() / 1000}"); o.put("custom", true) }
+                else if (hasBanner) o.put("banner", "/icons/banner/$pkg.png") else o.put("icon", "/icons/icon/$pkg.png")
                 out.put(o)
             }
         return out.toString()

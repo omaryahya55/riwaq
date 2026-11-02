@@ -232,11 +232,6 @@
 #stage.moment .tile.has-icon .app-ic { top: 30px; right: 82px; width: 72px; height: 72px; }
 /* البانرات البيضا تطغى على الصورة: تخف لين يتحدد التطبيق */
 #stage.moment .tile.has-img:not(.focus):not(.moving)::after { content: ""; position: absolute; inset: 0; background: rgba(10,9,8,.3); }
-/* شكل التطبيقات: أيقونة في مربع أو دائرة بدل البانر */
-#stage.shape-square.moment .tile:not(.all):not(.wt), #stage.shape-circle.moment .tile:not(.all):not(.wt) { width: 152px; height: 132px; }
-#stage.shape-square.moment .tile:not(.all):not(.wt) { border-radius: 26px; }
-#stage.shape-circle.moment .tile:not(.all):not(.wt) { width: 132px; margin: 0 10px; border-radius: 50%; }
-#stage.shape-square.moment .tile.has-icon .app-ic, #stage.shape-circle.moment .tile.has-icon .app-ic { top: 50%; right: auto; left: 50%; width: 84px; height: 84px; transform: translate(-50%, -50%); }
 #stage.moment .tile.focus, #stage.moment .tile.moving { transform: scale(1.06); box-shadow: 0 0 0 3px var(--ink); }
 .tile.all .name { position: static !important; display: grid; place-items: center; height: 100%; font-size: 24px !important; font-weight: 400; color: var(--ink-2); }
 #stage.moment .tile.all { width: 150px; }

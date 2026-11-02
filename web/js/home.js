@@ -142,8 +142,7 @@
       const a = appById[item.id];
       // البانر فيه اسم التطبيق أصلاً: اسمنا يطلع بس لما يتحدد
       const lockBadge = isLocked(a.id) ? `<span class="lock-badge">${icon("lock")}</span>` : "";
-      const shaped = moment() && a.icon && (CONFIG.appShape === "square" || CONFIG.appShape === "circle");
-      if (a.banner && !shaped) return `<div class="tile has-img" data-r="${r}" data-c="${c}">${lockBadge}<img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
+      if (a.banner) return `<div class="tile has-img" data-r="${r}" data-c="${c}">${lockBadge}<img src="${a.banner}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
       if (a.icon) return `<div class="tile has-icon" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.04)};--c2:${shade(a.tint, -0.55)}">${lockBadge}<div class="bg"></div><img class="app-ic" src="${a.icon}" alt=""><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
       const mono = /^[A-Za-z]/.test(a.name) ? a.name[0] : a.name.replace(/^ال/, "")[0];
       return `<div class="tile" data-r="${r}" data-c="${c}" style="--c1:${shade(a.tint, 0.08)};--c2:${shade(a.tint, -0.45)}">${lockBadge}<div class="bg"></div><div class="mono">${esc(mono)}</div><div class="name clip"><bdi>${esc(a.name)}</bdi></div></div>`;
@@ -273,8 +272,7 @@
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
       const m = moment();
-      const small = CONFIG.appShape === "square" || CONFIG.appShape === "circle";
-      const strip = rowEl(row), w = m ? (row === 1 ? (small ? 152 : 236) : 344) : (row === 1 ? 300 : 220), pitch = m ? w + 20 : (row === 1 ? 328 : 248);
+      const strip = rowEl(row), pitch = m ? (row === 1 ? 256 : 364) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 236 : 344) : (row === 1 ? 300 : 220);
       if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - (m ? 1728 : 1736) + 60)}px)`;
     }
     // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع

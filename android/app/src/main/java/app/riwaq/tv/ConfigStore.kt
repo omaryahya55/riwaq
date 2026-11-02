@@ -16,6 +16,9 @@ object ConfigStore {
     @Volatile var version = 0L
         private set
 
+    /** شي غير الإعدادات تغيّر (صورة تطبيق مثلاً): الصفحة تنعاد لما نرجع لها */
+    fun touch() { version++ }
+
     fun get(ctx: Context): String =
         ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "{}") ?: "{}"
 

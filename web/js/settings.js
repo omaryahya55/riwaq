@@ -290,6 +290,60 @@
     loadAlbum();
   }
 
+  // ===== صورة من عندك للتطبيق =====
+  // نقص الوسط لنسبة ١٦:٩ ونرسم من جديد: يشيل الموقع والتاريخ وكل بيانات الصورة قبل ما تطلع من الجوال
+  function cropBanner(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const W = 640, H = 360, k = Math.max(W / img.width, H / img.height), w = W / k, h = H / k;
+        const c = document.createElement("canvas");
+        c.width = W; c.height = H;
+        c.getContext("2d").drawImage(img, (img.width - w) / 2, (img.height - h) / 2, w, h, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error())), "image/jpeg", 0.88);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error()); };
+      img.src = url;
+    });
+  }
+  const appImgUrl = (pkg) => `/api/appimage/${encodeURIComponent(pkg)}?token=${encodeURIComponent(token)}`;
+  let appImgList = [];
+  function paintAppImg() {
+    const it = appImgList.find((a) => a.id === $("appImgApp").value);
+    const on = !!(it && it.custom);
+    $("appImgReset").style.display = on ? "" : "none";
+    $("appImgNow").hidden = !on;
+    if (on) $("appImgNow").src = appImgUrl(it.id) + "&t=" + Date.now(); else $("appImgNow").removeAttribute("src");
+  }
+  async function loadAppImages() {
+    if (!remote) return;
+    try {
+      const keep = $("appImgApp").value;
+      appImgList = await (await fetch("/api/apps?token=" + encodeURIComponent(token))).json();
+      $("appImgApp").innerHTML = appImgList.map((a) => `<option value="${esc(a.id)}">${esc(a.name)}${a.custom ? " ✓" : ""}</option>`).join("");
+      if (keep) $("appImgApp").value = keep;
+      $("appImgCard").hidden = false;
+      paintAppImg();
+    } catch (e) { /* التلفزيون ما رد */ }
+  }
+  async function uploadAppImage() {
+    const f = $("appImgFile").files[0];
+    if (!f) { status("اختر صورة من جوالك أول", true); return; }
+    status("نرفع الصورة…");
+    try {
+      const r = await fetch(appImgUrl($("appImgApp").value), { method: "POST", body: await cropBanner(f) });
+      if (!r.ok) throw new Error();
+      $("appImgFile").value = "";
+      await loadAppImages();
+      status("انحفظت الصورة ✓ تطلع لما ترجع للواجهة");
+    } catch (e) { status("الصورة ما انرفعت. جرّب صورة ثانية", true); }
+  }
+  async function resetAppImage() {
+    try { await fetch(appImgUrl($("appImgApp").value), { method: "DELETE" }); await loadAppImages(); status("رجع شكله الأصلي ✓"); }
+    catch (e) { status("ما قدرنا نوصل للتلفزيون", true); }
+  }
+
   // ===== أسماء المداخل، وشاشة المجلس (مع التلفزيون بس) =====
   async function loadInputs() {
     if (!remote) return;
@@ -346,7 +400,6 @@
     cfg.density = ["full", "frame"].includes($("density").value) ? $("density").value : "calm";
     cfg.homeLayout = $("homeLayout").value === "classic" ? "classic" : "moment";
     cfg.clockFont = $("clockFont").value;
-    cfg.appShape = $("appShape").value;
     cfg.albumMode = $("albumMode").value;
     cfg.continueRow = $("continueRow").checked;
     cfg.roshn = $("roshn").checked;
@@ -381,9 +434,9 @@
     $("showSalary").checked = cfg.showSalary === true;
     $("homeLayout").value = cfg.homeLayout === "classic" ? "classic" : "moment";
     $("clockFont").value = cfg.clockFont || "amiri";
-    $("appShape").value = cfg.appShape || "banner";
     $("albumMode").value = cfg.albumMode || "off";
     loadAlbum();
+    loadAppImages();
     $("continueRow").checked = cfg.continueRow !== false;
     $("roshn").checked = cfg.roshn === true;
     $("kidsOn").checked = !!(cfg.kids && cfg.kids.on);
@@ -506,6 +559,9 @@
   $("fajrTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل أذان الفجر على التلفزيون الحين", true));
   $("fajrReset").addEventListener("click", () => adhanCall("/api/adhan", "DELETE", "انحذف صوت الفجر ✓", true));
   $("albumUpload").addEventListener("click", uploadAlbum);
+  $("appImgUpload").addEventListener("click", uploadAppImage);
+  $("appImgReset").addEventListener("click", resetAppImage);
+  $("appImgApp").addEventListener("change", paintAppImg);
   $("exportCfg").addEventListener("click", exportCfg);
   $("importCfg").addEventListener("change", importCfg);
   if ($("adhanTest")) $("adhanTest").addEventListener("click", () => adhanCall("/api/adhan/test", "POST", "يشتغل الأذان على التلفزيون الحين (رجوع يوقفه)"));

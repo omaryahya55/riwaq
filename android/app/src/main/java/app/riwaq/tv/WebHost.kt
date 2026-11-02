@@ -56,6 +56,12 @@ object WebHost {
                 val file = Album.file(ctx, m.groupValues[1])
                 if (file.exists()) WebResourceResponse("image/jpeg", null, file.inputStream()) else null
             }
+            .addPathHandler("/appimg/") { path ->
+                // صورة التطبيق اللي رفعها صاحب البيت
+                val pkg = path.removeSuffix(".jpg")
+                val file = if (path.endsWith(".jpg")) AppImages.file(ctx, pkg) else null
+                if (file != null && file.exists()) WebResourceResponse("image/jpeg", null, file.inputStream()) else null
+            }
             .addPathHandler("/icons/") { path ->
                 // path = "banner/<pkg>.png" أو "icon/<pkg>.png"
                 val m = ICON.matchEntire(path) ?: return@addPathHandler null

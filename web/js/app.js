@@ -69,8 +69,6 @@
     stage.classList.toggle("calm", CONFIG.density !== "full");
     stage.classList.toggle("frame", CONFIG.density === "frame");
     stage.classList.toggle("moment", CONFIG.homeLayout !== "classic");
-    stage.classList.toggle("shape-square", CONFIG.appShape === "square");
-    stage.classList.toggle("shape-circle", CONFIG.appShape === "circle");
     // ساعة الليل (مثل Nest Hub و Echo Show): بالليل نخلي الوقت والتاريخ والصلاة الجاية بس
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }

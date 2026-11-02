@@ -65,6 +65,35 @@ object Album {
 }
 
 /**
+ * صورة من عند صاحب البيت لتطبيق يختاره: تاخذ مكان بانر التطبيق في الواجهة، وتنحفظ في مجلد التطبيق الخاص بس.
+ * الجوال يقصها لنسبة البانر وينظفها، وهنا نتأكد إنها JPEG بحدود صغيرة.
+ */
+object AppImages {
+    const val MAX_BYTES = 600 * 1024
+    private const val MAX_COUNT = 60
+    private val PKG = Regex("^[A-Za-z0-9_.]{1,200}$")
+    private fun dir(ctx: Context) = File(ctx.filesDir, "appimg").also { it.mkdirs() }
+
+    fun valid(pkg: String) = PKG.matches(pkg)
+
+    fun file(ctx: Context, pkg: String): File? = if (valid(pkg)) File(dir(ctx), "$pkg.jpg") else null
+
+    @Synchronized fun save(ctx: Context, pkg: String, bytes: ByteArray): Int {
+        val target = file(ctx, pkg) ?: return Album.BAD
+        if (bytes.size < 512 || bytes[0] != 0xFF.toByte() || bytes[1] != 0xD8.toByte() || bytes[2] != 0xFF.toByte()) return Album.BAD
+        val o = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, o)
+        if (o.outWidth !in 1..1280 || o.outHeight !in 1..720) return Album.BAD
+        if (!target.exists() && (dir(ctx).list()?.size ?: 0) >= MAX_COUNT) return Album.FULL
+        val tmp = File(dir(ctx), "$pkg.tmp")
+        tmp.writeBytes(bytes)
+        return if (tmp.renameTo(target)) Album.OK else Album.BAD
+    }
+
+    @Synchronized fun delete(ctx: Context, pkg: String) { file(ctx, pkg)?.delete() }
+}
+
+/**
  * تلاوة القرآن: تختار الشيخ والسورة من الصفحة، والصوت يشتغل مباشرة من شبكة Islamic Network وما ينحفظ عندنا.
  * خدمة أصلية مستقلة عن الصفحة، فتكمل لو انعادت الصفحة. الأذان يوقفها مؤقتاً (تركيز الصوت) وترجع بعده،
  * وتوقف لو انطفت الشاشة عشان ما يبقى صوت في بيت نايم. الرابط يتركب هنا من قيم مفحوصة، مو من الصفحة.

@@ -93,8 +93,6 @@
         <select id="homeLayout"><option value="moment">هادئة: الساعة والصلوات ونص قصير والتطبيقات، والتفاصيل بالسهم تحت (الافتراضي)</option><option value="classic">الكلاسيكية: ثلاث بطاقات وأزرار أكثر</option></select></div>
       <div class="field"><span>كثافة شاشة الانتظار</span>
         <select id="density"><option value="calm">هادئة: الساعة والصلوات ونص واحد (الافتراضي)</option><option value="frame">إطار: صورة كاملة وساعة صغيرة بس</option><option value="full">كاملة: مع الطقس والأسعار والدوريات والأخبار</option></select></div>
-      <div class="field"><span>شكل التطبيقات</span>
-        <select id="appShape"><option value="banner">بانر التطبيق (الافتراضي)</option><option value="square">أيقونة في مربع</option><option value="circle">أيقونة في دائرة</option></select></div>
       <div class="field"><span>خط الساعة</span>
         <select id="clockFont"><option value="amiri">أميري (الافتراضي)</option><option value="alyamama">اليمامة</option><option value="readex">ريدكس</option><option value="fustat">الفسطاط</option></select></div>
       <div class="field"><span>الخلفية</span>
@@ -158,6 +156,18 @@
       </div>
       <div class="thumbs" id="albumList"></div>
       <p class="tiny">الرفع على شبكة البيت بدون تشفير، فلا ترفع صور خاصة وأنت على شبكة مشتركة.</p>
+    </section>
+
+    <section class="card" id="appImgCard" hidden>
+      <h2>صورة للتطبيق</h2>
+      <p class="muted">اختر تطبيق وصورة من جوالك، وتطلع مكان شكله في الواجهة. الجوال يقصها لنسبة البانر ويشيل منها بياناتها.</p>
+      <div class="field"><span>التطبيق</span><select id="appImgApp"></select></div>
+      <div class="search">
+        <input id="appImgFile" type="file" accept="image/*" aria-label="صورة التطبيق">
+        <button class="btn" id="appImgUpload" type="button">رفع</button>
+      </div>
+      <div class="search" style="margin-top:8px"><button class="btn ghost" id="appImgReset" type="button">رجّع شكله الأصلي</button></div>
+      <img id="appImgNow" alt="الصورة الحالية للتطبيق" hidden style="display:block;width:100%;max-width:320px;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin-top:10px">
     </section>
 
     <section class="card">

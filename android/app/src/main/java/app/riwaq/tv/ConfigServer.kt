@@ -110,6 +110,31 @@ class ConfigServer(private val ctx: Context, private val onSaved: () -> Unit) {
                     if (method != "GET") return send(out, 405, "text/plain", "method".toByteArray())
                     return send(out, 200, "application/json; charset=utf-8", Apps.inputsJson(ctx).toByteArray())
                 }
+                // صورة من عندك لتطبيق: الجوال يقصها وينظفها
+                if (path.startsWith("/api/appimage/")) {
+                    if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
+                    val pkg = path.removePrefix("/api/appimage/")
+                    if (!AppImages.valid(pkg)) return send(out, 400, "text/plain", "bad app".toByteArray())
+                    when (method) {
+                        "GET" -> {
+                            val f = AppImages.file(ctx, pkg)
+                            return if (f != null && f.exists()) send(out, 200, "image/jpeg", f.readBytes()) else send(out, 404, "text/plain", "not found".toByteArray())
+                        }
+                        "DELETE" -> { AppImages.delete(ctx, pkg); ConfigStore.touch(); return send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                        "POST" -> {
+                            val len = headers["content-length"]?.toIntOrNull() ?: return send(out, 411, "text/plain", "length required".toByteArray())
+                            if (len <= 0 || len > AppImages.MAX_BYTES) return send(out, 413, "text/plain", "too large".toByteArray())
+                            sock.soTimeout = 60000
+                            val body = readBody(input, len) ?: return send(out, 400, "text/plain", "bad body".toByteArray())
+                            return when (AppImages.save(ctx, pkg, body)) {
+                                Album.OK -> { ConfigStore.touch(); send(out, 200, "application/json", "{\"ok\":true}".toByteArray()) }
+                                Album.FULL -> send(out, 409, "text/plain", "full".toByteArray())
+                                else -> send(out, 415, "text/plain", "not jpeg".toByteArray())
+                            }
+                        }
+                        else -> return send(out, 405, "text/plain", "method".toByteArray())
+                    }
+                }
                 // ألبوم البيت: الجوال يصغّر الصورة وينظفها، والتلفزيون يتأكد إنها JPEG بحدود معقولة
                 if (path == "/api/album" || path.startsWith("/api/album/")) {
                     if (!tokenOk(query)) return send(out, 403, "text/plain", "forbidden".toByteArray())
