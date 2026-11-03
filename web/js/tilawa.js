@@ -67,15 +67,21 @@
   const $ = (k) => box.querySelector(`[data-t="${k}"]`);
 
   function renderReciters() {
-    const list = rows();
-    $("rs").innerHTML = list.map((r, i) => {
-      if (r.resume) {
-        const l = resumeItem(), s = surah(l.surah), rc = reciter(l.edition);
-        return `<div class="tl-r tl-resume ${i === rIdx ? "on" : ""}"><b>أكمل ${esc(s.name)}</b><small>${esc(fullName(rc))}</small></div>`;
-      }
-      return `<div class="tl-r ${i === rIdx ? "on" : ""}"><b>${esc(r.name)}</b>${r.style ? `<small>${esc(r.style)}</small>` : ""}</div>`;
-    }).join("");
-    $("rs").style.transform = `translateY(${-Math.max(0, Math.min(rIdx * ROW_H - LIST_H / 2 + ROW_H, list.length * ROW_H - LIST_H))}px)`;
+    const list = rows(), box = $("rs");
+    const l = resumeItem(), sig = list.length + "|" + (l ? l.edition + l.surah : "");
+    if (box.__sig !== sig) {
+      box.__sig = sig;
+      box.innerHTML = list.map((r) => {
+        if (r.resume) {
+          const s = surah(l.surah), rc = reciter(l.edition);
+          return `<div class="tl-r tl-resume"><b>أكمل ${esc(s.name)}</b><small>${esc(fullName(rc))}</small></div>`;
+        }
+        return `<div class="tl-r"><b>${esc(r.name)}</b>${r.style ? `<small>${esc(r.style)}</small>` : ""}</div>`;
+      }).join("");
+    }
+    for (let i = 0; i < box.children.length; i++) box.children[i].classList.toggle("on", i === rIdx);
+    if (view === "r") Dock.apply(box.children, rIdx, { axis: "y", dir: 1, size: 84, scale: [1.05, 1.015] }); else Dock.clear(box.children);
+    box.style.transform = `translateY(${-Math.max(0, Math.min(rIdx * ROW_H - LIST_H / 2 + ROW_H, list.length * ROW_H - LIST_H))}px)`;
   }
   function renderSurahs(paintAll) {
     if (paintAll) {
@@ -119,8 +125,15 @@
     $("pb").style.width = Math.min(100, pct) + "%";
     $("pa").textContent = st.verse || !st.dur ? "" : clock(st.pos);
     $("pd").textContent = st.verse || !st.dur ? "" : clock(st.dur);
-    const h = CONTROLS().map((c, i) => `<div class="tl-b ${i === ctl ? "on" : ""}" ${c.id === "toggle" ? 'data-main="1"' : ""}>${icon(c.ic)}<span>${c.name}</span></div>`).join("");
-    if ($("pc").__h !== h) { $("pc").innerHTML = h; $("pc").__h = h; }
+    // الأزرار ثابتة، ويتغير اللي تغيّر بس: مثل الـ Dock، المحدد يكبر وجيرانه يبتعدون
+    const C = CONTROLS(), pc = $("pc");
+    if (pc.children.length !== C.length) pc.innerHTML = C.map(() => `<div class="tl-b"></div>`).join("");
+    C.forEach((c, i) => {
+      const e = pc.children[i], h = icon(c.ic) + `<span>${c.name}</span>`;
+      if (e.__h !== h) { e.innerHTML = h; e.__h = h; }
+      e.classList.toggle("on", i === ctl);
+    });
+    Dock.apply(pc.children, ctl, { dir: 1, size: 150, scale: [1.2, 1.08] });
   }
   function renderAll() {
     renderReciters(); renderSurahs(false); paintStep(); renderPlayer();

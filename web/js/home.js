@@ -271,23 +271,18 @@
     paintFocus();
   }
 
-  // مثل Dock الماك: المحدد أكبر شي، وجيرانه يكبرون بتدرج ويبتعدون عنه، والصف يرتفع من تحت.
-  // بدل تغيير العرض (يعيد تخطيط الصف كله في كل إطار) نحسب التكبير والإزاحة بـ transform بس
-  const DOCK_SCALE = [1.16, 1.06, 1.02], DOCK_SHIFT = [0, 35, 48, 51]; // الإزاحة = مجموع نص الزيادة في العرض لين هذا البعد
-  const setT = (e, v) => { if (e.__t !== v) { e.style.transform = v; e.__t = v; } };
+  // مثل Dock الماك: كل صف يبرز ويتحرك مع المحدد (dock.js). الصف اللي مو عليه التركيز يرتاح في مكانه
+  const DOCK = {
+    0: { size: 170, scale: [1.1, 1.03] },
+    1: { size: 320, scale: [1.16, 1.06, 1.02] },
+    2: { size: 400, scale: [1.06, 1.02] }
+  };
   function dockRow(shown) {
-    const strip = $("m1");
-    if (!strip) return;
-    const on = shown && row === 1;
-    const up = mode === "move" ? " translateY(-14px)" : "";
-    const kids = strip.children;
-    for (let i = 0; i < kids.length; i++) {
-      if (!on) { setT(kids[i], ""); kids[i].classList.remove("near"); continue; }
-      const d = Math.abs(i - col), side = i > col ? -1 : 1; // من اليمين لليسار: اللي بعد المحدد يسار
-      const scale = DOCK_SCALE[d] || 1, shift = d ? side * DOCK_SHIFT[Math.min(d, 3)] : 0;
-      setT(kids[i], `translateX(${shift}px) scale(${scale})` + (d === 0 ? up : ""));
-      kids[i].classList.toggle("near", d === 1);
-    }
+    [$("mNav"), $("m1"), $("m2")].forEach((el, r) => {
+      if (!el) return;
+      if (shown && row === r) Dock.apply(el.children, col, Object.assign({ dir: -1, lift: r === 1 && mode === "move" ? 14 : 0 }, DOCK[r]));
+      else Dock.clear(el.children);
+    });
   }
 
   // لون خفيف ورا الرف من لون التطبيق المحدد. ينحسب مرة وحدة لكل تطبيق، وما يتغير إلا لما توقف عليه (مو وقت المشي)
@@ -395,9 +390,12 @@
 
   function renderPicker() {
     $("count").textContent = `مختار ${F.digits(pinned.length)} من ${F.digits(apps.length)}.`;
-    $("plist").innerHTML = apps.map((a, i) => `<div class="pk ${pinned.includes(a.id) ? "on" : ""} ${i === pickIdx ? "focus" : ""}" style="--tint:${a.tint}">${a.icon ? `<img class="sw-img" src="${a.icon}" alt="">` : `<span class="sw"></span>`}<span class="nm"><bdi>${esc(a.name)}</bdi></span><span class="ck">${icon("check")}</span></div>`).join("");
+    const box = $("plist");
+    if (box.children.length !== apps.length) box.innerHTML = apps.map((a) => `<div class="pk" style="--tint:${a.tint}">${a.icon ? `<img class="sw-img" src="${a.icon}" alt="">` : `<span class="sw"></span>`}<span class="nm"><bdi>${esc(a.name)}</bdi></span><span class="ck">${icon("check")}</span></div>`).join("");
+    apps.forEach((a, i) => { const e = box.children[i]; e.classList.toggle("on", pinned.includes(a.id)); e.classList.toggle("focus", i === pickIdx); });
+    Dock.apply(box.children, pickIdx, { axis: "y", dir: 1, size: 74, scale: [1.05, 1.015] });
     const shift = Math.max(0, pickIdx * 74 - 760 + 74 * 2);
-    $("plist").style.transform = `translateY(${-Math.min(shift, Math.max(0, apps.length * 74 - 760))}px)`;
+    box.style.transform = `translateY(${-Math.min(shift, Math.max(0, apps.length * 74 - 760))}px)`;
   }
 
   // ===== البطاقات =====
@@ -687,7 +685,14 @@
 
   function renderQuick() {
     const box = $("qlist");
-    box.innerHTML = quickList.map((q, i) => `<div class="qk ${i === quickIdx ? "focus" : ""}">${icon(q.ic)}<span><bdi>${esc(q.name)}</bdi></span></div>`).join("");
+    if (box.__list !== quickList) {
+      box.__list = quickList; box.__f = null;
+      box.innerHTML = quickList.map((q) => `<div class="qk">${icon(q.ic)}<span><bdi>${esc(q.name)}</bdi></span></div>`).join("");
+    }
+    if (box.__f) box.__f.classList.remove("focus");
+    box.__f = box.children[quickIdx];
+    if (box.__f) box.__f.classList.add("focus");
+    Dock.apply(box.children, quickIdx, { axis: "y", dir: 1, size: 86, scale: [1.05, 1.015] });
     // القائمة أطول من الشاشة: تمشي مع التحديد
     box.style.transform = `translateY(${-Math.max(0, quickIdx * 86 - 560)}px)`;
   }
@@ -821,7 +826,14 @@
       if (item.id === "reader") {
         const secs = window.Content ? Content.sections(new Date()) : [];
         if (!secs.length) { App.toast("ما فيه محتوى للحين"); return; }
-        openList("الأذكار", "crescent", secs.map((x) => ({ section: x, name: x.title + (x.hint ? " · " + x.hint : ""), ic: x.now ? "bell" : "crescent" })));
+        counts = loadCounts();
+        openList("الأذكار", "crescent", secs.map((x) => {
+          // كم ذكر خلص عدده اليوم في هذا الباب
+          const id = (it) => x.id + ":" + it.item.sourceId;
+          const need = x.counted ? x.items.filter((it) => countOf(it) > 1) : [];
+          const done = need.filter((it) => (counts.c[id(it)] || 0) >= countOf(it)).length;
+          return { section: x, name: x.title + (x.hint ? " · " + x.hint : "") + (done ? ` · ${F.digits(done)} من ${F.digits(need.length)}` : ""), ic: x.now ? "bell" : "crescent" };
+        }));
         return;
       }
       if (item.id === "settings") { openSettings(); return; }

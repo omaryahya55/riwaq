@@ -56,7 +56,17 @@
 .tl-b .ic { display: block; width: 76px; height: 76px; margin: 0 auto; padding: 21px; border-radius: 50%; background: rgba(255,255,255,.1); color: var(--ink); font-size: 34px; transition: transform .12s ease-out, background .12s, color .12s; box-sizing: border-box; }
 .tl-b span { display: block; margin-top: 10px; font-size: 22px; opacity: 0; transition: opacity .12s; white-space: nowrap; }
 .tl-b.on { color: var(--ink); }
-.tl-b.on .ic { background: var(--ink); color: #15110A; transform: scale(1.1); }
+.tl-b.on .ic { background: var(--ink); color: #15110A; }
 .tl-b.on span { opacity: 1; }
 .tl-b span { font-size: 24px; }
 .tl-b { width: 150px; }
+
+/* مثل الـ Dock: الشيوخ والسور والأزرار تبرز مع المحدد، بنفس منحنى الواجهة */
+.tl-rs .tl-r { transform-origin: 100% 50%; transition: transform .24s var(--dock-ease); }
+.tl-rs .tl-r:not(.on):not(.near) { opacity: .82; }
+.tl-rs, .tl-ss { transition: transform .24s var(--dock-ease); }
+.tl-ss .tl-s { transition: transform .22s var(--dock-ease); }
+.tl-ss .tl-s.on { transform: scale(1.07); z-index: 2; }
+.tl-b { transform-origin: 50% 38px; transition: transform .24s var(--dock-ease); }
+.tl-b.near .ic { background: rgba(255,255,255,.18); }
+@media (prefers-reduced-motion: reduce) { .tl-rs .tl-r, .tl-ss .tl-s, .tl-b { transition: none; } }

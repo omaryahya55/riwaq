@@ -287,9 +287,8 @@
 
 #stage.moment #home .m-top { top: 46px; left: 80px; }
 #stage.moment .m-nav { gap: 4px; padding: 0; border-radius: 34px; background: rgba(12,11,10,.34); }
-#stage.moment .nav-pill { height: 68px; padding: 0 28px 4px; font-size: 28px; border-radius: 34px; transition: transform .2s var(--focus-ease); }
+#stage.moment .nav-pill { height: 68px; padding: 0 28px 4px; font-size: 28px; border-radius: 34px; will-change: transform; transition: transform .26s var(--dock-ease); }
 #stage.moment .nav-pill .ic { font-size: 28px; }
-#stage.moment .nav-pill.focus { transform: scale(1.06); }
 #stage.moment #home .m-info { top: 46px; right: 80px; }
 #stage.moment #home .m-text { top: 138px; left: 80px; width: 740px; height: 330px; }
 .m-text b { font-size: 26px; }
@@ -347,7 +346,10 @@
 .m-credit { font-size: 22px; }
 
 .quick { transition-timing-function: var(--focus-ease); }
-.quick-list, .picker-scroll { transition: transform .28s var(--focus-ease); }
+.quick-list, .picker-scroll { transition: transform .24s var(--dock-ease); }
+/* اللوحات مثل الـ Dock: تتمدد من طرفها اليمين */
+.quick-list .qk, .picker-scroll .pk { transform-origin: 100% 50%; transition: transform .24s var(--dock-ease); }
+#stage.moment .qk:not(.focus):not(.near) { opacity: .82; }
 .quick-list { contain: layout; }
 
 /* عدّاد الأذكار */
@@ -398,3 +400,11 @@
 #stage.moment #home .m-amb.on { opacity: 1; }
 #stage.moment #home.day-open .m-amb, #stage.moment #home.tl-open .m-amb { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { #stage.moment #home .m-amb { transition: none; } }
+
+/* القارئ يطلع من تحت بنعومة بدل ما يظهر فجأة */
+.reader-box { transform: translateY(18px) scale(.985); transition: transform .3s var(--dock-ease); }
+.reader.on .reader-box { transform: none; }
+/* المشغّل الصغير: الزر المحدد يبرز */
+.mm-btn { transition: transform .2s var(--dock-ease); }
+.mm-btn.on { transform: scale(1.14); }
+@media (prefers-reduced-motion: reduce) { .reader-box, .mm-btn, .quick-list .qk, .picker-scroll .pk { transition: none; } }
