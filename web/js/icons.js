@@ -29,6 +29,7 @@
     tpause: `<path fill="currentColor" d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z"/>`,
     tnext: `<path fill="currentColor" d="M5 5.5v13L14 12zM15.5 5.5h3v13h-3z"/>`,
     tprev: `<path fill="currentColor" d="M19 5.5v13L10 12zM5.5 5.5h3v13h-3z"/>`,
+    tclose: `<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>`,
     tstop: `<path fill="currentColor" d="M6.5 6.5h11v11h-11z"/>`,
     bell: `<path ${S} d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path ${S} d="M10 20.5a2 2 0 0 0 4 0"/>`
   };

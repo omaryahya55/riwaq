@@ -227,6 +227,15 @@
       return s && rc ? `${s.name} · ${rc.name}` : "";
     },
     playing() { return !!state().on; },
+    toggle() { if (state().on) act("toggle"); },
+    // للمشغّل الصغير في الواجهة
+    info() {
+      const st = state();
+      if (!st.on) return null;
+      const s = surah(st.surah), rc = reciter(st.edition);
+      const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
+      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct) };
+    },
     stop
   };
 })();

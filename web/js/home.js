@@ -39,14 +39,7 @@
   const moment = () => CONFIG.homeLayout !== "classic";
   // وضع الأطفال يحتاج رمز (الخروج منه بالرمز)، وهو ترتيب مو حماية كاملة
   const kids = () => !!(CONFIG.kids && CONFIG.kids.on && CONFIG.lock && /^[0-9]{4}$/.test(CONFIG.lock.pin || ""));
-  // وقت التلاوة يطلع زر إيقافها جنب "القرآن"، فما تحتاج تفتح شاشتها
-  let tlOn = false;
-  const navItems = () => {
-    if (!moment()) return NAV;
-    const out = NAV_MOMENT.filter((n) => n.id !== "inputs" || inputs.length);
-    if (tlOn) out.splice(1, 0, { type: "nav", id: "tilawaStop", name: "وقّف التلاوة", ic: "tstop" });
-    return out;
-  };
+  const navItems = () => (moment() ? NAV_MOMENT.filter((n) => n.id !== "inputs" || inputs.length) : NAV);
   const inputName = (i) => (CONFIG.inputNames && CONFIG.inputNames[i.id]) || i.name;
   // اللوحة السريعة (بدل لوحة Google TV اللي كانت تطلع بضغطة البيت المطوّلة)
   const QUICK = [
@@ -161,6 +154,12 @@
         <div class="m-next" data-k="mNext"></div>
       </div>
       <div class="m-text soft-shadow" data-k="mText"></div>
+      <div class="m-mini" data-k="mMini">
+        <div class="mm-info" data-m="0"><b data-k="mmName"></b><small data-k="mmSub"></small></div>
+        <div class="mm-btn" data-m="1" data-k="mmToggle"></div>
+        <div class="mm-btn" data-m="2">${icon("tclose")}</div>
+        <div class="mm-bar"><i data-k="mmBar"></i></div>
+      </div>
       <div class="m-rows">
         <div class="m-caprow">
           <div class="m-cap soft-shadow" data-k="mCap"></div>
@@ -268,7 +267,7 @@
   function paintFocus() {
     root.querySelectorAll(".tile, .nav-pill").forEach((t) => t.classList.remove("focus", "moving"));
     const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
-    if (t && !["picker", "reader", "quick", "pin", "day", "tilawa"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
+    if (t && !["picker", "reader", "quick", "pin", "day", "tilawa", "mini"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
     // صف طويل: نزحلقه عشان التطبيق المختار يبان
     if (row > 0) {
       const m = moment();
@@ -277,7 +276,7 @@
     }
     // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع
     if (moment()) {
-      const it = row > 0 && mode !== "day" ? (rows()[row] || [])[col] : null;
+      const it = row > 0 && mode !== "day" && mode !== "mini" ? (rows()[row] || [])[col] : null;
       setHTML($("mCap"), it ? `<bdi>${esc(it.name)}</bdi>` : "");
     }
     const menu = $("menu");
@@ -320,8 +319,6 @@
   // سطر خفيف فوق التطبيقات: التلاوة، وذكر الوقت، والطقس، والمباراة، وأقرب مناسبة. أربعة بالكثير
   function renderChips(now) {
     const out = [];
-    const tl = window.Tilawa && Tilawa.nowLine();
-    if (tl) out.push(["book", esc(tl)]);
     const tm = window.Content && Content.timed ? Content.timed(now) : [];
     if (tm.length) out.push(["bell", "حان وقت " + esc(tm.map((s) => s.title).join(" و"))]);
     const w = DATA.weather();
@@ -449,17 +446,43 @@
     while (lines.length > 1 && el.scrollHeight > el.clientHeight + 1) { lines.pop(); paint(); }
   }
 
-  // التلاوة بدأت أو وقفت: زر إيقافها يطلع أو يختفي
-  function syncTilawa() {
-    const on = !!(window.Tilawa && Tilawa.playing());
-    if (on !== tlOn) { tlOn = on; renderRows(); }
+  // المشغّل الصغير: يتبعك في الواجهة وقت التلاوة. تنزل له بالأسهم (فوق التطبيقات وتحت الأزرار)
+  let tlOn = false, miniIdx = 1;
+  function renderMini() {
+    if (!moment() || !root) return;
+    const info = window.Tilawa ? Tilawa.info() : null;
+    tlOn = !!info;
+    root.classList.toggle("has-mini", tlOn);
+    if (!tlOn) {
+      if (mode === "mini") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; paintFocus(); }
+      return;
+    }
+    setHTML($("mmName"), esc(info.name));
+    setHTML($("mmSub"), info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.paused ? " · متوقفة" : ""));
+    setHTML($("mmToggle"), icon(info.paused ? "tplay" : "tpause"));
+    $("mmBar").style.width = info.pct + "%";
+    root.querySelectorAll("[data-m]").forEach((e) => e.classList.toggle("on", mode === "mini" && +e.dataset.m === miniIdx));
+  }
+  function miniKey(k) {
+    if (k === "left") miniIdx = Math.min(2, miniIdx + 1); // من اليمين لليسار: اليسار = اللي بعده
+    if (k === "right") miniIdx = Math.max(0, miniIdx - 1);
+    if (k === "up") { mode = "nav"; row = 0; col = 0; }
+    if (k === "down" || k === "back") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; }
+    if (k === "ok") {
+      if (miniIdx === 0) { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; row = 1; col = 0; paintFocus(); renderStatus(); }); return true; }
+      if (miniIdx === 1) Tilawa.toggle();
+      if (miniIdx === 2) Tilawa.stop();
+      setTimeout(renderMini, 300);
+    }
+    paintFocus(); renderMini();
+    return true;
   }
 
   function renderStatus() {
     if (window.App && App.current && App.current !== "home") return; // الواجهة مخفية (شاشة الانتظار ظاهرة)
     const now = new Date();
     if (moment()) {
-      syncTilawa();
+      renderMini();
       renderMoment(now);
       if (mode === "day") { renderContentCard(now); renderTodayCard(now); }
       return;
@@ -606,7 +629,6 @@
       if (item.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
       if (item.id === "saver") { App.show("saver"); return; }
       if (item.id === "tilawa") { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; paintFocus(); renderStatus(); }); return; }
-      if (item.id === "tilawaStop") { Tilawa.stop(); setTimeout(renderStatus, 400); return; }
       if (item.id === "timed") {
         // ذكر الوقت: اللي وقته الحين كامل (أذكار الصباح، المساء، الملك، الكهف، أدعية الجمعة)
         const secs = window.Content ? Content.timed(new Date()) : [];
@@ -635,14 +657,15 @@
         if (moment() && n < 3) { $("mHint").textContent = "السهم تحت: يومك · OK مطوّل على تطبيق: تحريك أو إخفاء"; localStorage.setItem("riwaq.hints", String(n + 1)); }
       } catch (e) { /* بدون تخزين: ما يطلع التلميح */ }
       DATA.onChange(renderStatus);
-      // وقت التلاوة نتابعها أسرع: لو وقفت يختفي زرها وسطرها على طول
-      setInterval(() => { if (tlOn && !document.hidden && window.App && App.current === "home") renderStatus(); }, 3000);
+      // وقت التلاوة نحدّث المشغّل الصغير كل ثانية. وبدونها ما نلمس الجسر
+      setInterval(() => { if (tlOn && !document.hidden && window.App && App.current === "home") renderMini(); }, 1000);
       // خانة الأذكار تتبدل كل ٤٠ ثانية تقريباً
       setInterval(() => {
         if (document.hidden || (window.App && App.current !== "home")) return;
         if (moment()) { renderMomentText(new Date()); if (mode === "day") renderContentCard(new Date()); }
         else renderContentCard(new Date());
       }, 20000);
+      setTimeout(renderMini, 500);
       const fresh = () => { contentSig = ""; momentSig = ""; renderStatus(); };
       window.addEventListener("riwaq-content", fresh); // أول ما يوصل ملف المحتوى
       window.addEventListener("riwaq-remeasure", fresh); // أول ما يوصل الخط
@@ -655,7 +678,7 @@
       });
     },
     // فيه قارئ أو رمز أو قائمة مفتوحة: شاشة الانتظار تنتظر
-    busy() { return mode !== "nav"; },
+    busy() { return mode !== "nav" && mode !== "mini"; },
     // زر تطبيق في الريموت (أو اختيار تطبيق له) على تطبيق مقفل: أندرويد يمرره هنا عشان يطلب الرمز مثل البطاقة
     launchApp(pkg) {
       if (!/^[A-Za-z0-9_.]{1,200}$/.test(String(pkg))) return;
@@ -672,6 +695,9 @@
     key(k) {
       const R = rows();
       if (mode === "tilawa") return Tilawa.key(k);
+      if (mode === "mini") return miniKey(k);
+      // المشغّل بين الأزرار فوق وصف التطبيقات
+      if (mode === "nav" && tlOn && moment() && ((k === "up" && row === 1) || (k === "down" && row === 0))) { mode = "mini"; miniIdx = 1; paintFocus(); renderMini(); return true; }
       if (mode === "pin") {
         if (/^d[0-9]$/.test(k)) {
           pinDigits[pinPos] = +k[1];
