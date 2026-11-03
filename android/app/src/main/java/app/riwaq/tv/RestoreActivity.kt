@@ -131,6 +131,7 @@ class RestoreActivity : Activity() {
                 if (on) add(text("✓ $name شغالة", 0.024f, ok))
                 else add(button("افتح صفحة «$name» واضغط «تفعيل»") { openAppDetails(pkg) }.also { if (firstFocus == null) firstFocus = it })
             }
+            if (!anyStockOn) add(button("شغّلها لي تلقائياً (لو تصحيح الأخطاء شغال)") { autoRestore() })
             // ٢. شاشة التوقف
             add(text("٢. اختر شاشة التوقف الأصلية (اختياري)", 0.032f, ink, true), 0.03f)
             add(button("افتح إعدادات شاشة التوقف") { openDreamSettings() }.also { if (firstFocus == null && anyStockOn) firstFocus = it })
@@ -155,6 +156,16 @@ class RestoreActivity : Activity() {
                 Toast.makeText(this, "من إعدادات التلفزيون ← التطبيقات ← تطبيقات النظام", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun autoRestore() {
+        Thread {
+            val r = HomeLock.restoreStock(this)
+            runOnUiThread {
+                if (r !is HomeLock.Outcome.Done) Toast.makeText(this, "تصحيح الأخطاء مطفي. افتح صفحة الواجهة واضغط «تفعيل»", Toast.LENGTH_LONG).show()
+                render()
+            }
+        }.start()
     }
 
     private fun openDreamSettings() {

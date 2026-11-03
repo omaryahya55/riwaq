@@ -77,6 +77,7 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     /** النسخة الكاملة وخدمة الأزرار توقفت (يصير بعد تحديث التطبيق أحياناً): الواجهة تنبّه */
     @JavascriptInterface fun keysOff(): Boolean = SetupActivity.keysLost(ctx)
     /** الأذان ما بقى له جدول يكفي أسبوع */
+    @JavascriptInterface fun testAdhan() { AdhanService.test(ctx, false) }
     @JavascriptInterface fun adhanDaysLeft(): Int = AdhanScheduler.daysLeft(ctx)
 
     @JavascriptInterface fun getConfig(): String = ConfigStore.get(ctx)

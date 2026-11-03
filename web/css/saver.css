@@ -125,7 +125,7 @@
 .adhan-alert .ic { font-size: 22px; }
 #stage.alert .adhan-alert { opacity: 1; transform: none; }
 
-.credit { position: absolute; bottom: 28px; left: 96px; font-size: 20px; color: var(--ink-3); }
+.credit { position: absolute; bottom: 60px; left: 80px; font-size: 22px; color: var(--ink-2); }
 
 /* صفحة المواعيد في البطاقة الجانبية */
 .s-row.s-cal { grid-template-columns: 1fr auto; gap: 14px; font-size: 24px; }
@@ -133,24 +133,50 @@
 .s-side-title [data-k="sideIcon"] { display: inline-flex; }
 
 /* ===== ساعة الليل: الوقت والتاريخ والصلاة الجاية بس، في النص ===== */
-/* كثافة هادئة (الافتراضي): الساعة والصلاة وبطاقة محتوى، بدون الأسعار والدوريات والطقس الأسبوعي وشريط الأخبار */
+/* الهادئة (الافتراضي): نفس معلومات شاشة الانتظار (الساعة، التاريخين، الصلوات، النص ومصدره، الطقس، المباراة، المناسبة)
+   على الصورة مباشرة بدون صناديق، وأكبر عشان تنقرا من الكنبة. الأسعار والدوريات والأخبار في الكاملة بس */
 #stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-ticker, #stage.calm .s-now, #stage.calm .s-prayers, #stage.calm .s-clock-city { display: none !important; }
-#stage.calm:not(.nightclock) .s-mprayers { display: flex; margin-top: 8px; justify-content: flex-start; }
-#stage.calm:not(.nightclock) .s-mnext { display: block; margin-top: 20px; }
-#stage.calm .s-clock-wrap { top: 250px; right: 96px; }
-#stage.calm .s-date { top: 56px; right: 96px; }
-#stage.calm .s-hijri { font-size: 38px; }
-#stage.calm .s-col { top: 270px; left: 96px; width: 720px; }
-#stage.calm .s-chips, #stage.calm .s-greg { display: none !important; }
-#stage.calm .s-clock .d { font-size: 196px; }
-#stage.calm .s-clock .colon { font-size: 166px; }
+#stage.calm:not(.nightclock) .s-mprayers { display: flex; margin-top: 10px; justify-content: flex-start; }
+#stage.calm:not(.nightclock) .s-mnext { display: block; margin-top: 16px; font-size: 34px; }
+#stage.calm .s-date { top: 60px; right: 80px; }
+#stage.calm .s-hijri { font-size: 40px; font-weight: 500; }
+#stage.calm .s-greg { font-size: 28px; color: var(--ink); opacity: .86; }
+#stage.calm .s-clock-wrap { top: 200px; right: 80px; width: 780px; }
+#stage.calm .s-clock .d { font-size: 190px; }
+#stage.calm .s-clock .colon { font-size: 160px; }
 #stage.calm .s-clock .ampm { font-size: 44px; margin-top: 28px; }
+#stage.calm .s-mprayers { font-size: 32px; gap: 40px; }
+#stage.calm .s-mprayers label { font-size: 28px; color: var(--ink); opacity: .86; }
+#stage.calm .s-chips { margin-top: 14px; max-width: 780px; }
+#stage.calm .s-chip { background: none; border: 0; padding: 0; font-size: 28px; color: var(--ink); }
+#stage.calm .s-chip .ic { color: var(--gold); font-size: 28px; }
+#stage.calm .s-chip:nth-child(n+3) { display: none; }
 /* مسافة يمين: حرف الواو والألف يطلعون شوي عن حد السطر، وبدونها ينقصون */
-#stage.calm .s-hadith { background: none; border: 0; padding: 0 8px 0 0; }
-#stage.calm .s-card-title { font-size: 24px; color: var(--ink-2); font-weight: 500; }
-#stage.calm .s-hadith p { font-size: 32px; line-height: 1.75; color: var(--ink); }
-#stage.calm .s-hadith small { font-size: 22px; color: var(--ink-2); }
-#stage.calm:not(.nightclock) .s-cell:not(.now) { display: none; }
+#stage.calm .s-col { top: 76px; left: 80px; width: 800px; padding: 8px 10px 0 0; }
+#stage.calm .s-hadith { background: none; border: 0; padding: 0 8px 0 0; max-height: 620px; overflow: hidden; }
+#stage.calm .s-card-title { font-size: 28px; color: var(--ink); opacity: .86; font-weight: 500; }
+#stage.calm .s-hadith p { font-size: 38px; line-height: 1.7; color: var(--ink); }
+#stage.calm .s-hadith small { font-size: 26px; color: var(--ink); margin-top: 10px; }
+#stage.calm:not(.nightclock):not(.frame) .s-bottom { top: auto; bottom: 102px; right: 80px; left: 80px; display: flex; gap: 0; }
+#stage.calm:not(.nightclock) .s-cell.np { display: none; }
+#stage.calm:not(.nightclock) .s-cell { flex: 0 1 auto; max-width: 620px; padding: 0 0 0 44px; margin-left: 44px; border-inline-start: 0; border-left: 1px solid rgba(255,255,255,.28); }
+#stage.calm:not(.nightclock) .s-cell:last-child { border-left: 0; margin-left: 0; padding-left: 0; }
+#stage.calm .s-cell .label { font-size: 24px; color: var(--ink); opacity: .86; }
+#stage.calm .s-cell .label .ic { font-size: 26px; color: var(--ink); }
+#stage.calm .s-cell-main { font-size: 40px; }
+#stage.calm .s-cell-main small { font-size: 30px; color: var(--ink); }
+#stage.calm .s-cell-sub { font-size: 24px; color: var(--ink); opacity: .86; }
+#stage.calm .saver-shade {
+  background:
+    radial-gradient(ellipse 1000px 460px at 480px 240px, rgba(10,9,8,.55), rgba(10,9,8,0)),
+    linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.34) 26%, transparent 46%),
+    linear-gradient(to left, rgba(0,0,0,.44) 0%, rgba(0,0,0,.08) 44%, rgba(0,0,0,.08) 56%, rgba(0,0,0,.44) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.34) 0%, transparent 26%);
+}
+#saver .saver-content { text-shadow: 0 1px 3px rgba(0,0,0,.55), 0 2px 22px rgba(0,0,0,.4); }
+/* بدون صناديق في كل الكثافات: الكاملة كمان على الصورة، مع تغميق يكفي للجداول */
+#saver .card, #stage[data-period="day"] #saver .card { background: none; border: 0; border-radius: 0; }
+#stage:not(.calm) .saver-shade { background: rgba(0,0,0,.46); }
 /* إطار الهدوء: الصورة كاملة وساعة صغيرة بس */
 #stage.frame .s-col, #stage.frame .s-date, #stage.frame .s-bottom, #stage.frame .s-chips, #stage.frame .s-mprayers, #stage.frame .s-mnext { display: none !important; }
 #stage.frame .s-clock-wrap { top: auto; bottom: 64px; right: 96px; width: auto; }
@@ -167,8 +193,4 @@
 #stage.nightclock .s-bottom .s-cell:not(.np) { display: none; }
 #stage.nightclock .s-bottom .label { justify-content: center; }
 
-/* الهادئة: النص ما يكبر عن المساحة (القياس في saver.js يختار نص كامل يدخل، وما يقص أبداً). وصف الصلوات الجديد ما يطلع إلا مع لوحة اللحظة */
-#stage.calm .s-hadith { max-height: 400px; overflow: hidden; }
 .s-mprayers, .s-mnext { display: none; }
-/* الحافة قصّت همزة أول حرف في العنوان */
-#stage.calm .s-col { padding: 8px 10px 0 0; }

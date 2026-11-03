@@ -330,6 +330,12 @@
 
   function renderBottom(root, now, np) {
     const cells = [];
+    // الهادئة: الطقس خانة من خانات السطر السفلي (في الكاملة له مكانه فوق)
+    const wx = DATA.weather();
+    if (wx && CONFIG.density !== "full") {
+      const g = F.sky(wx.data.now.code, now), d = (DATA.forecast() || [])[0];
+      cells.push(cell(g[1], "الطقس", `${F.num(wx.data.now.temp)}° <small>${g[0]}</small>`, d ? `العظمى ${F.num(d.max)}° · الصغرى ${F.num(d.min)}°` : "", true));
+    }
     if (np) {
       const c = F.clock(np.p.at);
       cells.push(cell("bell", "الصلاة القادمة", `${np.p.name} <small>${c.h}:${c.m} ${c.ampm}</small>`, "بعد " + F.duration(np.mins)).replace('class="s-cell', 'class="s-cell np'));
@@ -373,8 +379,7 @@
       }
     }
     const el = $(root, "bottom");
-    const shown = CONFIG.density === "calm" ? cells.filter((x) => x.includes(" now")).length : cells.length;
-    el.style.gridTemplateColumns = `repeat(${Math.max(shown, 1)}, 1fr)`;
+    el.style.gridTemplateColumns = `repeat(${Math.max(cells.length, 1)}, 1fr)`;
     el.innerHTML = cells.join("");
     // كل سطر يصغر خطه لين يدخل عرض خانته
     el.querySelectorAll(".label, .s-cell-main, .s-cell-sub").forEach((x) => {
@@ -405,7 +410,7 @@
   function renderCredit(root) {
     const tl = window.Tilawa && Tilawa.nowLine();
     const parts = [tl ? "تلاوة: " + tl : "", Scene.own ? "الصورة: ألبوم البيت" : Scene.credit ? "الصورة: " + Scene.credit + " · معدّلة · ويكيميديا كومنز" : "الخلفية: رسم رواق"];
-    if (CONFIG.density === "full" && DATA.weather()) parts.push("الطقس: Open-Meteo.com");
+    if (DATA.weather()) parts.push("الطقس: Open-Meteo.com");
     if (CONFIG.density === "full" && DATA.metals()) parts.push("الأسعار: gold-api.com");
     if (CONFIG.density === "full" && DATA.fx()) parts.push("العملات: Frankfurter");
     $(root, "credit").textContent = parts.filter(Boolean).join(" · ");

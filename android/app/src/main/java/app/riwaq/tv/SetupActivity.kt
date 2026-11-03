@@ -28,7 +28,7 @@ import android.widget.Toast
 /**
  * معالج الإعداد (أول تشغيل، ومن اللوحة السريعة): يمشّي المستخدم بالريموت على اللي يحتاجه رواق من النظام،
  * بدون كمبيوتر ولا عنوان IP:
- *  ١. الواجهة الرئيسية: زر البيت يفتح رواق
+ *  ١. الواجهة الرئيسية: زر البيت يفتح رواق، وما فيه طريق للقديمة إلا صفحة الرجوع (HomeLock)
  *  ٢. خدمة الضغطة المطوّلة وأزرار التطبيقات (إمكانية الوصول): أندرويد ما يسمح لتطبيق يفعّلها بنفسه،
  *     فنفتح صفحتها والمستخدم يضغط "تشغيل"
  *  ٣. الأذان في وقته: صلاحية المنبّه الدقيق (أندرويد ١٢ بس، وغيره تلقائي)
@@ -100,7 +100,7 @@ class SetupActivity : Activity() {
     private fun render() {
         list.removeAllViews()
         var firstFocus: View? = null
-        val homeOk = isHome(this)
+        val homeOk = HomeLock.locked(this)
         val a11yOk = a11yOn(this)
         val hasKeys = BuildConfig.HAS_KEYS
         val alarmOk = alarmOk(this)
@@ -112,10 +112,19 @@ class SetupActivity : Activity() {
 
         // ١. الواجهة الرئيسية
         add(text("١. خله الواجهة الرئيسية", 0.03f, ink, true), 0.016f)
-        if (homeOk) add(text("✓ زر البيت يفتح رواق", 0.024f, ok))
-        else {
-            add(text("عشان زر البيت يفتح رواق بدل واجهة الشركة.", 0.022f, ink2))
-            add(button("اجعل رواق الواجهة الرئيسية") { becomeHome() }.also { if (firstFocus == null) firstFocus = it })
+        if (homeOk) {
+            add(text("✓ زر البيت يفتح رواق. الرجوع للقديمة من «التحكم» ← «الرجوع للواجهة الأصلية» بس", 0.024f, ok))
+            if (adbMaybeOn()) add(button("طفّ تصحيح الأخطاء (أأمن، ما عاد نحتاجه)") { closeDebugging() })
+        } else {
+            if (!isHome(this)) add(button("اجعل رواق الواجهة الافتراضية") { becomeHome() }.also { if (firstFocus == null) firstFocus = it })
+            add(text("التلفزيون يرجّع زر البيت لواجهة الشركة. عشان نقفله على رواق بدون كمبيوتر:", 0.022f, ink2))
+            add(text("أ) من «معلومات الجهاز» اضغط OK سبع مرات على رقم الإصدار (مرة وحدة بس)", 0.022f, ink2))
+            add(button("افتح معلومات الجهاز") { openSystem(Settings.ACTION_DEVICE_INFO_SETTINGS) }.also { if (firstFocus == null) firstFocus = it })
+            add(text("ب) من «خيارات المطور» شغّل «تصحيح أخطاء USB»", 0.022f, ink2))
+            add(button("افتح خيارات المطور") { openSystem(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS) })
+            add(text("ج) اضغط الزر، وفي النافذة اختر «السماح دائماً»", 0.022f, ink2))
+            add(button(if (locking) "ننتظر موافقتك على النافذة…" else "اقفل زر البيت على رواق") { lockHome() })
+            lockNote?.let { add(text(it, 0.022f, warn)) }
         }
 
         // ٢. الضغطة المطوّلة وأزرار الريموت (النسخة الكاملة بس)
@@ -174,6 +183,41 @@ class SetupActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         @Suppress("DEPRECATION") super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 7) render()
+    }
+
+    private var locking = false
+    private var lockNote: String? = null
+
+    private fun openSystem(action: String) {
+        try { startActivity(Intent(action)) } catch (e: Exception) {
+            try { startActivity(Intent(Settings.ACTION_SETTINGS)) } catch (e2: Exception) { }
+            Toast.makeText(this, "من إعدادات التلفزيون ← النظام ← حول", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun adbMaybeOn() = try { Settings.Global.getInt(contentResolver, Settings.Global.ADB_ENABLED, 0) == 1 } catch (e: Exception) { false }
+
+    private fun lockHome() {
+        if (locking) return
+        locking = true; lockNote = null; render()
+        Thread {
+            val r = HomeLock.lock(this)
+            runOnUiThread {
+                locking = false
+                lockNote = when (r) {
+                    is HomeLock.Outcome.Done -> null
+                    is HomeLock.Outcome.NoAdb -> "تصحيح الأخطاء مطفي، أو هذا الجهاز ما يفتحه على الشبكة. تأكد من الخطوة ب وجرّب مرة ثانية."
+                    is HomeLock.Outcome.NotAllowed -> "ما وصلتنا الموافقة. اضغط الزر مرة ثانية واختر «السماح دائماً»."
+                    is HomeLock.Outcome.Failed -> r.why
+                }
+                if (r is HomeLock.Outcome.Done) Toast.makeText(this, "زر البيت صار يفتح رواق ✓", Toast.LENGTH_LONG).show()
+                render()
+            }
+        }.start()
+    }
+
+    private fun closeDebugging() {
+        Thread { HomeLock.closeAdb(this); runOnUiThread { render() } }.start()
     }
 
     private fun openAccessibility() {
@@ -246,7 +290,7 @@ class SetupActivity : Activity() {
 
         /** أول تشغيل: نفتح المعالج لو فيه خطوة ناقصة (مرة وحدة، لين المستخدم يضغط "ابدأ" أو "تخطّى") */
         fun maybeLaunch(act: Activity) {
-            if (isDone(act) || (isHome(act) && (a11yOn(act) || !BuildConfig.HAS_KEYS) && alarmOk(act) && cityName(act).isNotEmpty())) return
+            if (isDone(act) || (HomeLock.locked(act) && (a11yOn(act) || !BuildConfig.HAS_KEYS) && alarmOk(act) && cityName(act).isNotEmpty())) return
             act.startActivity(Intent(act, SetupActivity::class.java))
         }
     }

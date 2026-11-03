@@ -27,6 +27,8 @@
     calendar: `<rect x="3.5" y="5" width="17" height="15.5" rx="2.4" ${S}/><path ${S} d="M3.5 10h17M8 3v4M16 3v4"/>`,
     tplay: `<path fill="currentColor" d="M7 5.5v13L17.5 12z"/>`,
     tpause: `<path fill="currentColor" d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z"/>`,
+    tback10: `<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 1 0 2.4-5.5M6.9 3v3.7h3.7"/><text x="12" y="15.6" font-size="7.6" font-weight="600" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">١٠</text>`,
+    tfwd10: `<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19.5 12a7.5 7.5 0 1 1-2.4-5.5M17.1 3v3.7h-3.7"/><text x="12" y="15.6" font-size="7.6" font-weight="600" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">١٠</text>`,
     tnext: `<path fill="currentColor" d="M5 5.5v13L14 12zM15.5 5.5h3v13h-3z"/>`,
     tprev: `<path fill="currentColor" d="M19 5.5v13L10 12zM5.5 5.5h3v13h-3z"/>`,
     tclose: `<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>`,

@@ -435,7 +435,7 @@
     $("showSalary").checked = cfg.showSalary === true;
     $("homeLayout").value = cfg.homeLayout === "classic" ? "classic" : "moment";
     $("clockFont").value = cfg.clockFont || "amiri";
-    $("adhanVolume").value = String(cfg.adhanVolume || 0);
+    $("adhanVolume").value = String(cfg.adhanVolume === undefined ? 40 : cfg.adhanVolume);
     $("albumMode").value = cfg.albumMode || "off";
     loadAlbum();
     loadAppImages();

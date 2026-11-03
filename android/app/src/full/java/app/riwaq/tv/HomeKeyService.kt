@@ -25,7 +25,7 @@ import android.view.accessibility.AccessibilityEvent
  *  - ضغطة مطوّلة: تفتح اللوحة السريعة فوق التطبيق المفتوح (QuickPanel)، بدون ما تطلعك منه
  *  - زر الإعدادات (⚙) وأزرار التطبيقات (نتفلكس، يوتيوب…): كانت واجهة الشركة هي اللي تشغّلها (RemoteKeys)
  * ما نقرا ولا نحفظ أي شي ثاني: باقي الأزرار تمر بدون ما نلمسها (إلا واللوحة مفتوحة: نتحكم فيها
- * بالأسهم)، وما نستقبل أحداث الشاشة.
+ * بالأسهم). ومن أحداث الشاشة نستقبل حدث واحد بس: إن واجهة الشركة ظهرت، عشان نرد بدالها (بدون محتوى الشاشة).
  * تنشغل من سكربت التركيب (tools/setup-tv.ps1) وتنطفي من سكربت الرجوع.
  * ملاحظة للاختبار: أوامر "adb shell input keyevent" ما تمر على هذي الخدمة، لازم الريموت الحقيقي
  * (تأكدنا على Xiaomi TV Box S: أزرار الريموت كلها توصل، ومنها البيت).
@@ -129,7 +129,7 @@ class HomeKeyService : AccessibilityService() {
                 handler.removeCallbacks(longPress)
                 if (down && !longFired && !event.isCanceled) {
                     panel.hide()
-                    performGlobalAction(GLOBAL_ACTION_HOME)
+                    if (HomeLock.riwaqIsHome(this)) goRiwaq() else performGlobalAction(GLOBAL_ACTION_HOME)
                 }
                 down = false
             }
@@ -190,6 +190,7 @@ class HomeKeyService : AccessibilityService() {
     override fun onServiceConnected() {
         instance = this
         panel.onClosed = { refreshFilter() }
+        watchStock()
         audio.registerAudioPlaybackCallback(playback, handler)
         registerReceiver(volumeChanged, IntentFilter("android.media.VOLUME_CHANGED_ACTION"))
         refreshFilter()
@@ -214,7 +215,24 @@ class HomeKeyService : AccessibilityService() {
         if (!want) { handler.removeCallbacks(repeatTick); heldKey = 0 }
     }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
+    // واجهة الشركة ما تطلع والمستخدم ما رجّعها من صفحة الرجوع: مهما كان الطريق اللي فتحها (زر، أو خروج من تطبيق)
+    private fun watchStock() {
+        val info = serviceInfo ?: return
+        info.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+        info.packageNames = HomeLock.STOCK.toTypedArray()
+        serviceInfo = info
+    }
+
+    private var lastBounce = 0L
+    private fun goRiwaq() {
+        lastBounce = SystemClock.uptimeMillis()
+        startActivity(Intent(Intent.ACTION_MAIN).setClass(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || event.packageName?.toString() !in HomeLock.STOCK) return
+        if (HomeLock.riwaqIsHome(this) && SystemClock.uptimeMillis() - lastBounce > 800) goRiwaq()
+    }
 
     override fun onInterrupt() {
         handler.removeCallbacks(longPress)

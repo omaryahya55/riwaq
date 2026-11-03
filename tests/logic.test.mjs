@@ -367,21 +367,40 @@ test("القرآن: جدول الآيات في أندرويد يطابق بيا�
   for (const r of T.reciters) assert.match(r.id, /^[a-z0-9.-]{3,60}(\/r\d{1,2})?$/);
 });
 
-test("الأذكار: ما فيها سور منفردة، وفيها الأدعية المأثورة بسندها", async () => {
+test("الأذكار: أبواب بدون سور منفردة، والعدد من نص الكتاب", async () => {
   const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/rules.js", "js/content.js"]);
   Object.assign(w.CONFIG, { city: RIYADH });
   const json = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8"));
   w.fetch = async () => ({ ok: true, json: async () => json });
   w.Content.load();
   await new Promise((r) => setTimeout(r, 20));
-  const list = w.Content.readerItems(new Date("2026-11-03T10:00:00+03:00"));
-  assert.ok(list.length > 300);
-  assert.equal(list.filter((x) => x.item.type === "quran").length, 0);
-  const maathur = list.filter((x) => x.title === "من الأدعية المأثورة");
-  assert.ok(maathur.length >= 20, "الأدعية المأثورة " + maathur.length);
-  for (const x of maathur) assert.ok(x.item.source && x.item.attribution && x.item.grade, "كل دعاء بمصدره ودرجته");
-  for (let i = 0; i < 30; i++) {
-    const c = w.Content.current(new Date(Date.UTC(2026, 10, 3, 8, 0, i * 40)), 0);
-    assert.notEqual(c.item.type, "quran");
-  }
+  const when = new Date("2026-11-03T10:00:00+03:00");
+  const secs = w.Content.sections(when);
+  assert.equal(secs[0].id, "morning", "اللي وقته الحين أول");
+  assert.ok(secs[0].now);
+  for (const s of secs) assert.equal(s.items.filter((x) => x.item.type === "quran").length, 0, "بدون سور: " + s.id);
+  const list = (id) => secs.find((s) => s.id === id).items.map((x) => x.item);
+  const num = (id) => list(id).map((x) => x.number);
+  // (إذا أصبح) في الصباح بس، و(إذا أمسى) في المساء بس
+  assert.ok(num("morning").includes(93) && !num("evening").includes(93));
+  assert.ok(num("evening").includes(97) && !num("morning").includes(97));
+  const rep = (id, n) => w.Content.repeatOf(list(id).find((x) => x.number === n));
+  assert.equal(rep("morning", 76), 3);
+  assert.equal(rep("morning", 80), 4);
+  assert.equal(rep("morning", 83), 7);
+  assert.equal(rep("morning", 92), 10);
+  assert.equal(rep("morning", 91), 100);
+  assert.equal(rep("morning", 75), 1, "آية الكرسي مرة");
+  const hisn = (n) => w.Content.repeatOf(list("hisn").find((x) => x.number === n));
+  assert.equal(hisn(41), 3, "سبحان ربي الأعلى");
+  assert.equal(hisn(33), 3, "سبحان ربي العظيم");
+  assert.equal(hisn(69), 33, "التسبيح بعد الصلاة");
+  assert.equal(hisn(72), 10);
+  assert.equal(hisn(66), 1, "العدد لجزء من الذكر: بدون عداد");
+  assert.equal(hisn(106), 1, "أكثر من عدد: بدون عداد");
+  // الحديث ما عليه عداد
+  assert.equal(w.Content.repeatOf(list("hadith")[0]), 1);
+  assert.ok(list("maathur").length >= 20);
+  for (const x of list("maathur")) assert.ok(x.source && x.attribution && x.grade, "كل دعاء بمصدره ودرجته");
+  for (let i = 0; i < 30; i++) assert.notEqual(w.Content.current(new Date(Date.UTC(2026, 10, 3, 8, 0, i * 40)), 0).item.type, "quran");
 });

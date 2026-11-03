@@ -214,32 +214,74 @@
     const mod = F.minutesOfDay(now);
     const wd = F.parts(now, { weekday: "short" }).weekday;
     const out = [];
-    const morning = items.filter((x) => x.type === "adhkar");
+    const adhkar = items.filter((x) => x.type === "adhkar");
     if (wd === "Fri" && mod >= 600 && at("asr") && now < at("asr")) out.push({ id: "kahf", title: "سورة الكهف", hint: "يوم الجمعة", surah: 18, items: [] });
     if (wd === "Fri" && at("asr") && at("maghrib") && now >= at("asr") && now < at("maghrib")) {
       const d = byCtx("maathur");
       if (d.length) out.push({ id: "maathur", title: "أدعية مأثورة", hint: "ساعة الإجابة يوم الجمعة", items: d });
     }
-    if (at("fajr") && at("dhuhr") && now >= at("fajr") && now < at("dhuhr") && morning.length)
-      out.push({ id: "morning", title: "أذكار الصباح", hint: "", items: morning });
-    if (at("asr") && at("isha") && now >= at("asr") && now < at("isha") && morning.length)
-      out.push({ id: "evening", title: "أذكار المساء", hint: "", items: morning });
+    if (at("fajr") && at("dhuhr") && now >= at("fajr") && now < at("dhuhr") && adhkar.length)
+      out.push({ id: "morning", title: "أذكار الصباح", hint: "", items: adhkar.filter((x) => forPart(x, "morning")) });
+    if (at("asr") && at("isha") && now >= at("asr") && now < at("isha") && adhkar.length)
+      out.push({ id: "evening", title: "أذكار المساء", hint: "", items: adhkar.filter((x) => forPart(x, "evening")) });
     if ((at("isha") && now >= at("isha")) || mod < 60) out.push({ id: "mulk", title: "سورة الملك", hint: "قبل النوم", surah: 67, items: [] });
     return out;
   }
 
-  // عدد التكرار من نص الذكر نفسه: «(ثلاثَ مرَّاتٍ)». لو فيه أكثر من عدد (أو، إذا أصبح) ما نعدّ، عشان ما نخمّن
-  const NUMS = [["ثلاث", 3], ["اربع", 4], ["خمس", 5], ["سبع", 7], ["عشر", 10], ["ماي?ه|مائه|مئه", 100]];
+  // العدد من نص الكتاب: يجي بعد ما يخلص الذكر، مثل ((سبحان ربي الأعلى)) ثلاث مرات، أو ﴿...﴾ (ثلاث مرات).
+  // ولو العدد لجزء من الذكر (أستغفر الله ثلاثاً ثم الدعاء) أو فيه أكثر من عدد (٣٣ و٣٤) ما نحط عداد، عشان ما نخمّن.
+  const plain = (t) => String(t).replace(/[ً-ْٰـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
+  const COUNT_WORD = { "ثلاث": 3, "اربع": 4, "سبع": 7, "عشر": 10, "مائه": 100, "مايه": 100, "مئه": 100 };
+  const END_COUNT = /(?:\)\)|﴾|\)|\])\.?\s*\(?(?:يفعل ذلك )?(ثلاث|اربع|سبع|عشر|مائه|مايه|مئه) مر[^()]*\)?(?:\s*،?\s*او\s*\([^()]*\))?$/;
+  const isHisn = (x) => String(x.sourceId).startsWith("hisn-") || x.type === "adhkar";
   function repeatOf(x) {
-    if (x.type !== "adhkar") return 1;
-    const t = String(x.text).replace(/[\u064B-\u0652\u0670\u0640]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي");
-    const found = new Set();
-    for (const [re, n] of NUMS) if (new RegExp("\\((?:[^()]*\\s)?(?:" + re + ")\\S*\\s*مر", "").test(t)) found.add(n);
-    return found.size === 1 ? [...found][0] : 1;
+    if (!isHisn(x)) return 1;
+    const t = plain(x.text).replace(/\[[^\]]*\]?\s*$/, "").replace(/[.،\s]+$/, "");
+    if ((t.match(/\(ثلاثا وثلاثين\)/g) || []).length === 1 && !t.includes("اربعا وثلاثين")) return 33;
+    const m = t.match(END_COUNT);
+    return m ? COUNT_WORD[m[1]] : 1;
+  }
+  // الذكر الخاص بوقت: الكتاب يقول في آخره (إذا أصبح) أو (إذا أمسى)
+  function forPart(x, part) {
+    const t = plain(x.text);
+    if (/\([^()]*اذا اصبح\)/.test(t)) return part === "morning";
+    if (/\([^()]*اذا امسي\)/.test(t)) return part === "evening";
+    return true;
+  }
+  const hisnBy = (ctx, titleHas) => items.filter((x) => isHisn(x) && ctxOf(x) === ctx && (!titleHas || plain(x.title || "").includes(titleHas)));
+
+  /*
+   * أبواب "الأذكار": اللي وقته الحين أول، وبعدها الباقي بترتيب ثابت. كل باب: { id, title, hint, now, counted, items:[{title,item}] }
+   */
+  function sections(now) {
+    const wrap = (list, title) => list.map((x) => ({ title: title || titleOf(x, ""), item: x }));
+    const tm = timed(now).map((s) => s.id);
+    const adhkar = items.filter((x) => x.type === "adhkar");
+    const sec = [
+      { id: "morning", title: "أذكار الصباح", counted: true, list: adhkar.filter((x) => forPart(x, "morning")), label: "من أذكار الصباح" },
+      { id: "evening", title: "أذكار المساء", counted: true, list: adhkar.filter((x) => forPart(x, "evening")), label: "من أذكار المساء" },
+      { id: "afterPrayer", title: "بعد الصلاة", counted: true, list: byCtx("afterPrayer").filter(isHisn) },
+      { id: "sleep", title: "أذكار النوم", counted: true, list: hisnBy("sleep") },
+      { id: "wake", title: "عند الاستيقاظ", list: hisnBy("wake") },
+      { id: "prayerDua", title: "في الصلاة", counted: true, list: byCtx("prayer").filter(isHisn) },
+      { id: "maathur", title: "أدعية مأثورة", list: byCtx("maathur") },
+      { id: "sunnah", title: "سنّة نعيشها", list: items.filter((x) => Array.isArray(x.tags) && x.tags.includes("sunnah")) },
+      { id: "hadith", title: "من الأحاديث", list: byCtx("general", "hadith") },
+      { id: "sahabi", title: "في فضل الصحابة", list: items.filter((x) => x.type === "sahabi") },
+      { id: "hisn", title: "حصن المسلم كامل", counted: true, list: items.filter((x) => String(x.sourceId).startsWith("hisn-")) }
+    ].filter((s) => s.list.length);
+    const day = dayNumber(now);
+    const rotate = (l, id) => (["sunnah", "hadith", "sahabi", "maathur"].includes(id) && l.length ? l.slice(day % l.length).concat(l.slice(0, day % l.length)) : l);
+    const out = sec.map((s) => ({
+      id: s.id, title: s.title, counted: !!s.counted, now: tm.includes(s.id), hint: tm.includes(s.id) ? "حان وقتها" : "",
+      items: wrap(rotate(s.list, s.id), s.label)
+    }));
+    return out.filter((s) => s.now).concat(out.filter((s) => !s.now));
   }
 
   window.Content = {
     repeatOf,
+    sections,
     load,
     current,
     credit,

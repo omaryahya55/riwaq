@@ -153,6 +153,7 @@ class AdhanService : Service() {
     private var player: MediaPlayer? = null
     private var focus: AudioFocusRequest? = null
     private var savedVolume = -1
+    private var setVolume = -1
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -170,11 +171,20 @@ class AdhanService : Service() {
         } else {
             @Suppress("DEPRECATION") am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
         }
-        // مستوى صوت الأذان من إعدادات صاحب الشاشة (٠ = بدون تغيير). نرجّع مستواه بعد الأذان
-        val want = try { org.json.JSONObject(ConfigStore.get(this)).optInt("adhanVolume", 0) } catch (e: Exception) { 0 }
+        // مستوى صوت الأذان من إعدادات صاحب الشاشة (٠ = بدون تغيير). ينزل أو يرتفع قبل ما يبدأ، ويرجع بعده
+        val want = try { org.json.JSONObject(ConfigStore.get(this)).optInt("adhanVolume", DEFAULT_VOLUME) } catch (e: Exception) { DEFAULT_VOLUME }
+        var playerGain = 1f
         if (want in 1..100) {
-            savedVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, Math.round(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * want / 100f).coerceAtLeast(1), 0)
+            if (am.isVolumeFixed) playerGain = want / 100f // الصوت يتحكم فيه التلفزيون (HDMI): نقدر نخفض داخل الملف بس
+            else {
+                val level = Math.round(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * want / 100f).coerceAtLeast(1)
+                val before = am.getStreamVolume(AudioManager.STREAM_MUSIC)
+                if (before != level) {
+                    savedVolume = before; setVolume = level
+                    getSharedPreferences(VOLUME_PREFS, MODE_PRIVATE).edit().putInt("saved", before).putInt("set", level).apply()
+                    am.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0)
+                }
+            }
         }
         // صوت المستخدم لو رفع واحد (وإلا أو لو خرب: الافتراضي)
         player = (AdhanAudio.customPath(this, name == "الفجر")?.let { path ->
@@ -183,6 +193,7 @@ class AdhanService : Service() {
             } catch (e: Exception) { null }
         } ?: MediaPlayer.create(this, R.raw.adhan, attrs, am.generateAudioSessionId()))?.apply {
             setOnCompletionListener { stopAdhan() }
+            setVolume(playerGain, playerGain)
             start()
         }
         if (player == null) { stopAdhan(); return START_NOT_STICKY }
@@ -212,7 +223,8 @@ class AdhanService : Service() {
         player?.let { try { it.stop() } catch (e: Exception) { }; it.release() }
         player = null
         val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        if (savedVolume >= 0) { try { am.setStreamVolume(AudioManager.STREAM_MUSIC, savedVolume, 0) } catch (e: Exception) { }; savedVolume = -1 }
+        restoreVolume(this, am, savedVolume, setVolume)
+        savedVolume = -1; setVolume = -1
         if (Build.VERSION.SDK_INT >= 26) focus?.let { am.abandonAudioFocusRequest(it) }
         else @Suppress("DEPRECATION") am.abandonAudioFocus(null)
         focus = null
@@ -227,6 +239,25 @@ class AdhanService : Service() {
 
     companion object {
         const val ACTION_STOP = "app.riwaq.tv.ADHAN_STOP"
+        const val DEFAULT_VOLUME = 40
+        private const val VOLUME_PREFS = "riwaq.adhanVolume"
+
+        // نرجّع مستواه، إلا لو غيّره بنفسه وقت الأذان (اختياره يبقى)
+        private fun restoreVolume(ctx: Context, am: AudioManager, saved: Int, set: Int) {
+            if (saved >= 0 && am.getStreamVolume(AudioManager.STREAM_MUSIC) == set) {
+                try { am.setStreamVolume(AudioManager.STREAM_MUSIC, saved, 0) } catch (e: Exception) { }
+            }
+            ctx.getSharedPreferences(VOLUME_PREFS, MODE_PRIVATE).edit().clear().apply()
+        }
+
+        /** الخدمة انقتلت في نص الأذان: الصوت بقى على مستوى الأذان. نرجّعه أول ما يشتغل رواق */
+        fun recoverVolume(ctx: Context) {
+            if (playing) return
+            val p = ctx.getSharedPreferences(VOLUME_PREFS, MODE_PRIVATE)
+            val saved = p.getInt("saved", -1)
+            if (saved >= 0) restoreVolume(ctx, ctx.getSystemService(Context.AUDIO_SERVICE) as AudioManager, saved, p.getInt("set", -1))
+        }
+
         private const val CHANNEL = "adhan"
         private const val NOTIFY_ID = 21
         @Volatile var playing = false

@@ -237,15 +237,11 @@
 .m-chip .ic { font-size: 22px; color: var(--ink-2); flex: none; }
 .m-track { position: relative; height: 158px; }
 .m-track .h-strip { right: 96px; top: 12px; gap: 20px; }
-#stage.moment .tile { width: 236px; height: 132px; border-radius: 16px; box-shadow: none; background: none; }
 #stage.moment .tile .bg { background: rgba(14,13,12,.55); }
 #stage.moment .tile .bg::after { display: none; }
 #stage.moment .tile:not(.all):not(.wt) .name { display: none; }
 #stage.moment .tile .mono { top: 0; right: 0; left: 0; bottom: 0; display: grid; place-items: center; font-size: 46px; font-weight: 500; }
 #stage.moment .tile.has-icon .app-ic { top: 30px; right: 82px; width: 72px; height: 72px; }
-/* البانرات البيضا تطغى على الصورة: تخف لين يتحدد التطبيق */
-#stage.moment .tile.has-img:not(.focus):not(.moving)::after { content: ""; position: absolute; inset: 0; background: rgba(10,9,8,.3); }
-#stage.moment .tile.focus, #stage.moment .tile.moving { transform: scale(1.06); box-shadow: 0 0 0 3px var(--ink); }
 .tile.all .name { position: static !important; display: grid; place-items: center; height: 100%; font-size: 24px !important; font-weight: 400; color: var(--ink-2); }
 #stage.moment .tile.all { width: 150px; }
 /* أكمل المشاهدة: سطر خفيف بدون بطاقات ثقيلة */
@@ -259,18 +255,17 @@
 .wt-p i { display: block; height: 100%; background: var(--ink); }
 /* المصادر والتلميح */
 .m-credit { color: var(--ink-3); font-size: 20px; }
-#stage.moment #home.day-open .m-credit { display: block; position: absolute; left: 96px; bottom: 28px; }
+#stage.moment #home.day-open .m-credit { display: block; position: absolute; left: 80px; bottom: 60px; }
 #stage.moment #home .m-hint { display: block; position: absolute; right: 96px; bottom: 18px; font-size: 20px; color: var(--ink-3); }
 #stage.moment #home.day-open .m-hint { display: none; }
 /* يومك: طبقة تطلع بالسهم تحت. زجاج بدون تمويه حي: نسخة مموهة من الخلفية وفوقها تغميق، موضعها يطابق مكان البطاقة */
-#stage.moment .h-dash { top: 590px; right: 96px; left: 96px; height: 360px; grid-template-columns: 1fr 520px; opacity: 0; visibility: hidden; transform: translateY(30px); transition: opacity .28s var(--ease), transform .28s var(--ease), visibility 0s .28s; z-index: 5; }
+#stage.moment .h-dash { top: 590px; right: 80px; left: 80px; height: 360px; gap: 40px; grid-template-columns: 1fr 680px; opacity: 0; visibility: hidden; transform: translateY(30px); transition: opacity .28s var(--ease), transform .28s var(--ease), visibility 0s .28s; z-index: 5; }
 #stage.moment .day-open .h-dash { opacity: 1; visibility: visible; transform: none; transition: opacity .28s var(--ease), transform .28s var(--ease); }
 #stage.moment .h-card { background-color: rgb(14,13,12); background-image: linear-gradient(rgba(12,11,10,.66), rgba(12,11,10,.66)), var(--glass, none); background-size: auto, 1920px 1080px; border-color: rgba(255,255,255,.12); }
-#stage.moment .h-today { background-position: 0 0, -96px -590px; }
-#stage.moment .h-content { background-position: 0 0, -640px -590px; }
+#stage.moment .h-today { background-position: 0 0, -80px -590px; }
+#stage.moment .h-content { background-position: 0 0, -800px -590px; }
 #stage.moment .h-card .label { color: var(--ink-2); }
 #stage.moment .h-card .label .ic { color: var(--ink-2); }
-#stage.moment #home.day-open .m-rows { display: none; }
 /* في "يومك" البطاقات تحت الصلوات */
 #stage.moment #home.day-open .m-text { display: none; }
 #stage.moment .quick { overflow: hidden; }
@@ -283,32 +278,123 @@
 #stage.moment .reader-box { background: rgb(18,17,15); }
 #stage.moment .reader-head { color: var(--ink-2); }
 
-/* ===== حركة ناعمة (مبادئ إرشادات أبل للتلفزيون): ارتفاع خفيف عند التركيز، ونبضة نابضة قصيرة، والحلقة تظهر بنعومة ===== */
-.soft-shadow { text-shadow: 0 2px 10px rgba(0, 0, 0, .4); }
-:root { --spring: cubic-bezier(.2, .9, .3, 1.15); }
-#stage.moment .tile { transition: transform .3s var(--spring), opacity .3s; will-change: transform; }
-#stage.moment .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 3px rgba(247, 242, 232, 0); transition: box-shadow .25s ease-out, background .25s ease-out; }
-#stage.moment .tile.focus::after, #stage.moment .tile.moving::after { box-shadow: inset 0 0 0 3px var(--ink); background: transparent; }
-#stage.moment .tile.focus, #stage.moment .tile.moving { box-shadow: none; transform: scale(1.08); }
-#stage.moment .tile.moving { transform: scale(1.08) translateY(-14px); }
-#stage.moment .tile.has-img:not(.focus):not(.moving)::after { background: rgba(10, 9, 8, .3); }
-#stage.moment .nav-pill { transition: background .25s ease-out, color .25s ease-out; }
-.h-strip, .quick-list, .picker-scroll { transition-duration: .42s; transition-timing-function: var(--ease); }
-.quick, .picker { transition-duration: .5s; }
-.m-mini, .mm-info, .mm-btn { transition: background .22s ease-out, color .22s ease-out; }
+/* ===== الرفوف والتركيز (إرشادات أبل للتلفزيون) =====
+   الهوامش ٨٠ من الجوانب و٦٠ فوق وتحت. الشريط العلوي ٤٦ من فوق بارتفاع ٦٨. خمسة أعمدة: ٣٢٠ وفاصل ٤٠ (نفس مقاس بانر أندرويد).
+   التركيز يكبّر ١٫١ بدون ارتداد: الارتداد للحركات اللي فيها اندفاع، والزر ما فيه اندفاع.
+   الحركة كلها transform و opacity (ما تعيد رسم شي، وتنقطع وترجع من مكانها لو ضغطت زر ثاني). */
+:root { --focus-ease: cubic-bezier(.2, .8, .2, 1); }
+.soft-shadow { text-shadow: 0 1px 3px rgba(0,0,0,.45), 0 2px 18px rgba(0,0,0,.3); }
 
-/* ===== دمج ب وج: التطبيق المحدد يكبر ويبرز، والباقي يصغر ويخف حواليه، وفوقه شريط اسمه وعنوان الرف =====
-   الحركة: نبضة حرجة التخميد تقريباً (بدون ارتداد) وتنقطع وترجع من قيمتها الحالية (transition يعيد التوجيه من الحالي) */
-:root { --settle: cubic-bezier(.25, .85, .3, 1); }
-#stage.moment .m-track .tile { transition: transform .32s var(--settle), opacity .32s ease-out; transform: scale(.94); opacity: .8; }
-#stage.moment .m-track .tile.focus, #stage.moment .m-track .tile.moving { transform: scale(1.2); opacity: 1; z-index: 3; }
-#stage.moment .m-track .tile.moving { transform: scale(1.2) translateY(-14px); }
-#stage.moment .m-track .tile.wt, #stage.moment .m-track .tile.all { transform: none; opacity: .85; }
-#stage.moment .m-track .tile.wt.focus { transform: scale(1.06); opacity: 1; }
-.m-cap { position: relative; padding-bottom: 4px; transition: opacity .25s; }
-.m-cap bdi { display: inline-block; padding: 0 22px 6px; border-radius: 16px; background: rgba(12, 11, 10, .55); font-size: 34px; }
-.m-cap:empty { opacity: 0; }
+#stage.moment #home .m-top { top: 46px; left: 80px; }
+#stage.moment .m-nav { gap: 4px; padding: 0; border-radius: 34px; background: rgba(12,11,10,.34); }
+#stage.moment .nav-pill { height: 68px; padding: 0 28px 4px; font-size: 28px; border-radius: 34px; transition: transform .2s var(--focus-ease); }
+#stage.moment .nav-pill .ic { font-size: 28px; }
+#stage.moment .nav-pill.focus { transform: scale(1.06); }
+#stage.moment #home .m-info { top: 46px; right: 80px; }
+#stage.moment #home .m-text { top: 138px; left: 80px; width: 740px; height: 330px; }
+.m-text b { font-size: 26px; }
+.m-text p { font-size: 32px; }
+.m-text small { font-size: 24px; }
+.m-date small, .m-prayers label { font-size: 26px; }
+.m-next, .m-prayers { font-size: 30px; }
+#stage.moment #home.has-mini .m-mini { top: 462px; right: 80px; }
+
+/* الرفوف تحت: مكان الشي ثابت، والمحدد يكبر، والباقي يخف حواليه لين يرجع التركيز */
+#stage.moment #home .m-rows { bottom: 104px; transition: opacity .22s linear, transform .28s var(--focus-ease); }
+#stage.moment #home.day-open .m-rows { opacity: 0; transform: translateY(-28px); visibility: hidden; transition: opacity .22s linear, transform .28s var(--focus-ease), visibility 0s .22s; }
+.m-caprow { height: 72px; padding: 0 80px; }
+.m-cap { font-size: 36px; line-height: 1.3; max-width: 900px; contain: layout paint; will-change: transform; transition: transform .22s var(--focus-ease); }
+.m-chips { transition: opacity .16s linear; }
+#stage.moment #home.cap-wide .m-chips { opacity: 0; }
+.m-cap small { display: inline-block; margin-right: 22px; font-size: 28px; font-weight: 400; color: var(--ink-2); }
+.m-chip { height: 48px; font-size: 26px; background: rgba(12,11,10,.42); }
+.m-chip .ic { font-size: 26px; }
+.m-track { height: 204px; margin-top: 18px; }
+.m-track .h-strip { right: 80px; top: 12px; gap: 40px; transition: transform .22s var(--focus-ease); }
+
+#stage.moment .tile { width: 320px; height: 180px; border-radius: 20px; box-shadow: none; background: none; }
+/* منحنى الـ Dock: يبدأ بسرعة ويهدأ على مهله، وينقطع ويرجع من مكانه لو ضغطت زر ثاني */
+:root { --dock-ease: cubic-bezier(.16, 1, .3, 1); }
+#stage.moment .m-track .tile { will-change: transform; contain: layout paint; transform-origin: 50% 100%; transition: transform .26s var(--dock-ease), opacity .16s linear; }
+#stage.moment .m-track .has-focus .tile { opacity: .82; }
+#stage.moment .m-track .has-focus .tile.near { opacity: .94; }
+#stage.moment .m-track .tile.focus, #stage.moment .m-track .tile.moving { opacity: 1; z-index: 3; box-shadow: 0 0 0 4px var(--ink), 0 12px 24px rgba(0,0,0,.45); }
+#stage.moment .tile .mono { font-size: 60px; }
+#stage.moment .tile.has-icon .app-ic { top: 45px; right: 115px; width: 90px; height: 90px; }
+#stage.moment .tile.all { width: 180px; background: rgba(14,13,12,.7); }
+/* التطبيق بدون بانر: خلفية صلبة تبان على أي صورة */
+#stage.moment .tile .bg { background: #26231f; }
+#stage.moment .tile.focus .bg { background: #3a352f; }
+.tile.all .name { font-size: 26px !important; color: var(--ink) !important; }
+
+.m-track-title { padding: 0 80px; height: 40px; font-size: 26px; }
+.wt-track { height: 116px; margin-top: 2px; }
+.wt-track .h-strip { top: 44px; }
+#stage.moment .tile.wt { width: 400px; height: 66px; border-radius: 14px; background: rgba(14,13,12,.46); }
+#stage.moment .m-track .tile.wt { transform-origin: 50% 50%; }
+#stage.moment .m-track .tile.wt.focus { transform: scale(1.05); box-shadow: 0 0 0 3px var(--ink); }
+.wt-t { font-size: 26px; }
+.wt-ic { width: 40px; height: 40px; }
+
+/* أسفل الشاشة: وين أقدر أروح. السهم تحت يفتح يومك */
+.m-peek { display: none; }
+#stage.moment #home .m-peek { display: flex; align-items: center; gap: 10px; position: absolute; right: 80px; bottom: 60px; height: 38px; font-size: 24px; color: var(--ink-2); }
+.m-peek .ic { font-size: 24px; }
+.m-peek .pk-back { display: none; }
+#stage.moment #home.day-open .m-peek .pk-back { display: inline; }
+#stage.moment #home.day-open .m-peek .pk-day { display: none; }
+#stage.moment #home .m-hint { right: auto; left: 80px; bottom: 60px; font-size: 24px; color: var(--ink-2); }
+.m-credit { font-size: 22px; }
+
+.quick { transition-timing-function: var(--focus-ease); }
+.quick-list, .picker-scroll { transition: transform .28s var(--focus-ease); }
+.quick-list { contain: layout; }
+
+/* عدّاد الأذكار */
+.reader-count-box { display: none; align-items: center; gap: 26px; margin-top: auto; padding-top: 12px; }
+.reader.has-count .reader-count-box { display: flex; }
+.reader.has-count .reader-text { max-height: 470px; }
+.rc-num { flex: none; font-size: 48px; line-height: 1.15; font-weight: 600; min-width: 200px; transition: transform .16s var(--focus-ease); }
+.rc-num small { font-size: 28px; font-weight: 400; color: var(--ink-2); margin-right: 10px; }
+.rc-num.bump { transform: scale(1.12); }
+.rc-bar { flex: 1; height: 10px; border-radius: 5px; background: rgba(255,255,255,.14); overflow: hidden; }
+.rc-bar i { display: block; height: 100%; width: 100%; background: var(--ink); transform-origin: right; transform: scaleX(0); transition: transform .2s var(--focus-ease); }
+.reader.count-done .rc-num { color: var(--gold); }
+.reader.count-done .rc-bar i { background: var(--gold); }
+.reader-text { font-size: 44px; }
+.reader-src { font-size: 26px; }
+.reader-ref { font-size: 24px; }
+.reader-hint { font-size: 24px; color: var(--ink-2); }
+.reader-head { font-size: 28px; }
+
 @media (prefers-reduced-motion: reduce) {
-  #stage.moment .m-track .tile, #stage.moment .tile { transition: opacity .2s; }
-  #stage.moment .m-track .tile.focus { transform: none; }
+  #stage.moment .m-track .tile, #stage.moment .nav-pill, .m-track .h-strip, #stage.moment #home .m-rows { transition: opacity .15s linear; }
 }
+
+.ht-line { font-size: 26px; }
+.ht-wx { font-size: 28px; }
+.ht-wx small, .ht-line small { font-size: 22px; color: var(--ink-2); }
+#stage.moment .h-card .label { font-size: 26px; }
+
+/* القارئ ثابت المكان: ما يقفز بين ذكر وذكر، والتلميح تحت دايماً */
+#stage.moment .reader { align-items: start; padding-top: 90px; }
+.reader-box { height: 900px; max-height: 900px; display: flex; flex-direction: column; }
+.reader-text { flex: 0 1 auto; }
+.reader-hint { margin-top: auto; padding-top: 14px; }
+.reader.has-count .reader-hint { margin-top: 8px; padding-top: 0; }
+
+/* تمسك السهم: كل تكرار كان يعيد المنحنى من أوله فينبض الصف. نمشي بسرعة ثابتة، بدون تكبير ولا ظل، لين تشيل إصبعك */
+#stage.moment #home.rapid .m-track .h-strip { transition: transform .12s linear; }
+#stage.moment #home.rapid .m-cap { transition: transform .12s linear; }
+#stage.moment #home.rapid .m-track .tile { transition: transform .1s linear; opacity: 1; }
+#stage.moment #home.rapid .m-track .tile.focus { box-shadow: 0 0 0 4px var(--ink); }
+
+/* النص فوق الصورة: تغميق ثابت تحته بس، عشان سطر المصدر ينقرا على الرمل الفاتح */
+#stage.moment .home-shade { background-image: radial-gradient(ellipse 1000px 420px at 460px 240px, rgba(10,9,8,.5), rgba(10,9,8,0)), linear-gradient(to top, rgba(4,4,8,.86) 0%, rgba(4,4,8,.55) 42%, rgba(4,4,8,.1) 70%, rgba(4,4,8,.25) 100%); }
+
+/* لون التطبيق المحدد ورا الرف: طبقتين ثابتتين تتبدلان بالشفافية بس */
+.m-amb { display: none; }
+#stage.moment #home .m-amb { display: block; position: absolute; right: 0; left: 0; bottom: 0; height: 640px; pointer-events: none; opacity: 0; transition: opacity .45s linear; background: radial-gradient(ellipse 1300px 560px at 50% 100%, rgba(var(--amb, 0,0,0), .26), rgba(var(--amb, 0,0,0), 0) 72%); }
+#stage.moment #home .m-amb.on { opacity: 1; }
+#stage.moment #home.day-open .m-amb, #stage.moment #home.tl-open .m-amb { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { #stage.moment #home .m-amb { transition: none; } }

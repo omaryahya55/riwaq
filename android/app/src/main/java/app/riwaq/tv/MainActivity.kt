@@ -126,6 +126,7 @@ class MainActivity : Activity() {
         else runJs("window.App&&App.show('home')")
         web?.onResume()
         Update.checkDaily(this)
+        AdhanService.recoverVolume(this)
         // بعد ما يخلص المعالج، عشان السؤال ما يطلع فوقه
         if (SetupActivity.isDone(this)) askWatchNextOnce()
     }

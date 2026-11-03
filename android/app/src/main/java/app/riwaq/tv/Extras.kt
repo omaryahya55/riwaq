@@ -232,6 +232,8 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
                 override fun onStop() { finishTilawa() }
                 override fun onSkipToNext() { if (Tilawa.surah < 114) begin(Tilawa.surah + 1, 0) }
                 override fun onSkipToPrevious() { if (Tilawa.surah > 1) begin(Tilawa.surah - 1, 0) }
+                override fun onFastForward() { seek(1) }
+                override fun onRewind() { seek(-1) }
             })
             setMetadata(MediaMetadata.Builder().putString(MediaMetadata.METADATA_KEY_TITLE, "تلاوة القرآن").build())
             isActive = true
@@ -242,7 +244,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
     private fun publishState() {
         val state = if (Tilawa.paused) PlaybackState.STATE_PAUSED else PlaybackState.STATE_PLAYING
         session?.setPlaybackState(PlaybackState.Builder()
-            .setActions(PlaybackState.ACTION_PLAY or PlaybackState.ACTION_PAUSE or PlaybackState.ACTION_PLAY_PAUSE or PlaybackState.ACTION_STOP or PlaybackState.ACTION_SKIP_TO_NEXT or PlaybackState.ACTION_SKIP_TO_PREVIOUS)
+            .setActions(PlaybackState.ACTION_FAST_FORWARD or PlaybackState.ACTION_REWIND or PlaybackState.ACTION_PLAY or PlaybackState.ACTION_PAUSE or PlaybackState.ACTION_PLAY_PAUSE or PlaybackState.ACTION_STOP or PlaybackState.ACTION_SKIP_TO_NEXT or PlaybackState.ACTION_SKIP_TO_PREVIOUS)
             .setState(state, PlaybackState.PLAYBACK_POSITION_UNKNOWN, 1f).build())
     }
 
@@ -353,7 +355,9 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
             return
         }
         val p = player ?: return
-        p.seekTo((p.currentPosition + dir * 10000).coerceIn(0, p.duration.coerceAtLeast(0)))
+        val to = (p.currentPosition + dir * SEEK_MS).coerceIn(0, p.duration.coerceAtLeast(0))
+        p.seekTo(to)
+        Tilawa.pos = to // الشريط يتحرك مع الضغطة، بدون انتظار التحديث الدوري
     }
 
     override fun onAudioFocusChange(change: Int) {
@@ -415,6 +419,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
     }
 
     companion object {
+        const val SEEK_MS = 10000
         const val ACTION_STOP = "app.riwaq.tv.TILAWA_STOP"
         const val ACTION_TOGGLE = "app.riwaq.tv.TILAWA_TOGGLE"
         const val ACTION_SEEK = "app.riwaq.tv.TILAWA_SEEK"

@@ -11,7 +11,7 @@
   const KEY = "riwaq.tilawa";
 
   let box, onClose = null, view = "r"; // r الشيوخ، s السور، p التشغيل
-  let rIdx = 0, sIdx = 0, ctl = 1, timer = null, lastKey = 0;
+  let rIdx = 0, sIdx = 0, ctl = 2, timer = null, lastKey = 0;
   let demo = { on: false, paused: false, edition: "", surah: 0, verse: false, pos: 0, dur: 0, ayah: 0, ayahs: 0, loading: false };
 
   const data = () => window.TILAWA || { reciters: [], surahs: [] };
@@ -99,7 +99,9 @@
     const st = state();
     return [
       { id: "prev", ic: "tprev", name: "السورة السابقة" },
+      { id: "back", ic: "tback10", name: st.verse ? "آية قبل" : "١٠ ثواني قبل" },
       { id: "toggle", ic: st.paused ? "tplay" : "tpause", name: st.paused ? "تشغيل" : "إيقاف مؤقت" },
+      { id: "fwd", ic: "tfwd10", name: st.verse ? "آية بعد" : "١٠ ثواني بعد" },
       { id: "next", ic: "tnext", name: "السورة التالية" },
       { id: "stop", ic: "tstop", name: "إنهاء" }
     ];
@@ -129,7 +131,7 @@
     if (native()) { pending = { edition: rc.id, surah: n, verse: !!rc.verse, at: Date.now() }; Riwaq.tilawaPlay(rc.id, n, !!rc.verse, rc.rate, at || 0); }
     else demo = { on: true, paused: false, edition: rc.id, surah: n, verse: !!rc.verse, pos: 62000, dur: 7200000, ayah: 12, ayahs: surah(n).ayahs, loading: false };
     try { localStorage.setItem(KEY, rc.id); } catch (e) { /* بدون تخزين: يبدأ من أول شيخ */ }
-    view = "p"; ctl = 1;
+    view = "p"; ctl = 2;
     renderAll();
   }
   function stop() {
@@ -139,6 +141,12 @@
   function act(id) {
     const st = state(), rc = reciter(st.edition);
     if (id === "toggle") { if (native()) Riwaq.tilawaToggle(); else demo.paused = !demo.paused; setTimeout(renderPlayer, 150); return; }
+    if (id === "back" || id === "fwd") {
+      const dir = id === "fwd" ? 1 : -1;
+      if (native()) Riwaq.tilawaSeek(dir); else demo.pos = Math.max(0, demo.pos + dir * 10000);
+      setTimeout(renderPlayer, 120);
+      return;
+    }
     if (id === "stop") { stop(); view = "r"; rIdx = 0; setTimeout(renderAll, 300); return; }
     if (!rc) return;
     if (id === "next" && st.surah < 114) play(rc, st.surah + 1, 0);
@@ -162,7 +170,7 @@
       let saved = ""; try { saved = localStorage.getItem(KEY) || ""; } catch (e) { saved = ""; }
       rIdx = 0;
       if (!list[0] || !list[0].resume) rIdx = Math.max(0, list.findIndex((r) => r.id === (st.on ? st.edition : saved)));
-      view = st.on ? "p" : "r"; ctl = 1;
+      view = st.on ? "p" : "r"; ctl = 2;
       if (st.on) sIdx = Math.max(0, st.surah - 1);
       box.classList.add("on");
       document.getElementById("home").classList.add("tl-open");
@@ -185,8 +193,8 @@
         if (k === "right") ctl = Math.min(C.length - 1, ctl + 1);
         if (k === "ok") { act(C[ctl].id); return true; }
         const st = state();
-        // فوق وتحت: تقديم وترجيع (٣٠ ثانية، أو آية في التلاوة آية آية)
-        if ((k === "up" || k === "down") && st.on && native()) Riwaq.tilawaSeek(k === "up" ? 1 : -1);
+        // فوق وتحت: اختصار لنفس الزرين (١٠ ثواني، أو آية في التلاوة آية آية)
+        if ((k === "up" || k === "down") && st.on) act(k === "up" ? "fwd" : "back");
         if (k === "back" || k === "menu") { view = "s"; renderAll(); return true; }
         renderPlayer(); return true;
       }

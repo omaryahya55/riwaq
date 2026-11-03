@@ -17,7 +17,7 @@
   let watch = [], quickList = [];
   let menuIdx = 0, pickIdx = 0, readIdx = 0, readList = [], quickIdx = 0;
   let pinDigits = [0, 0, 0, 0], pinPos = 0, pinThen = null, pinTries = 0;
-  let root;
+  let root, focusEl = null;
 
   const TINTS = ["#C8463D", "#2F9C7A", "#1F5FA8", "#5B3FA6", "#9E6B2B", "#2E6F5E", "#6A2C91", "#1E6F9F", "#8A3B5C", "#3F5A2E"];
   const NAV = [
@@ -47,6 +47,8 @@
     { id: "wifi", name: "الواي فاي والشبكة", ic: "wifi" },
     { id: "bluetooth", name: "البلوتوث والريموت", ic: "bt" },
     { id: "sound", name: "الصوت", ic: "sound" },
+    { id: "adhanVol", name: "صوت الأذان", ic: "bell" },
+    { id: "adhanTest", name: "جرّب صوت الأذان", ic: "bell" },
     { id: "display", name: "الشاشة والصورة", ic: "tv" },
     { id: "riwaq", name: "إعدادات رواق (بالجوال)", ic: "grid" },
     { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" },
@@ -59,6 +61,7 @@
   ];
   function controlItems() {
     const out = QUICK.filter((q) => !(q.kidsHide && kids())).map((q) => {
+      if (q.id === "adhanVol") return Object.assign({}, q, { name: adhanVolName() });
       const v = q.id === "update" && native() && Riwaq.updateAvailable ? Riwaq.updateAvailable() : "";
       return v ? Object.assign({}, q, { name: "تحديث رواق · نسخة جديدة " + F.digits(v) }) : q;
     });
@@ -145,6 +148,7 @@
 
   function build(el) {
     el.innerHTML = `
+      <div class="m-amb" data-k="amb0"></div><div class="m-amb" data-k="amb1"></div>
       <div class="shade home-shade"></div>
       <div class="m-top soft-shadow"><nav class="m-nav" data-k="mNav"></nav></div>
       <div class="m-info soft-shadow">
@@ -170,6 +174,7 @@
       </div>
       <div class="m-credit" data-k="mCredit"></div>
       <div class="m-hint" data-k="mHint"></div>
+      <div class="m-peek">${icon("calendar")}<span class="pk-day">يومك: السهم تحت</span><span class="pk-back">رجوع: الواجهة</span></div>
       <div class="h-top soft-shadow">
         <div class="h-date" data-k="date"></div>
         <div class="h-center">
@@ -227,6 +232,7 @@
           <p class="reader-text" data-k="rText"></p>
           <div class="reader-src" data-k="rSrc"></div>
           <div class="reader-ref" data-k="rRef"></div>
+          <div class="reader-count-box"><div class="rc-num" data-k="rcNum"></div><div class="rc-bar"><i data-k="rcBar"></i></div></div>
           <div class="reader-hint" data-k="rHint"></div>
         </div>
       </div>`;
@@ -241,6 +247,7 @@
   const rowEl = (r) => $((moment() ? "m" : "r") + r);
   function renderRows() {
     const R = rows();
+    focusEl = null;
     const nav = R[0].map((n, c) => `<div class="nav-pill" data-r="0" data-c="${c}">${icon(n.ic)}<span>${n.name}</span></div>`).join("");
     $("mNav").innerHTML = moment() ? nav : "";
     $("hNav").innerHTML = moment() ? "" : nav;
@@ -264,20 +271,117 @@
     paintFocus();
   }
 
-  function paintFocus() {
-    root.querySelectorAll(".tile, .nav-pill").forEach((t) => t.classList.remove("focus", "moving"));
-    const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
-    if (t && !["picker", "reader", "quick", "pin", "day", "tilawa", "mini"].includes(mode)) t.classList.add(mode === "move" ? "moving" : "focus");
-    // صف طويل: نزحلقه عشان التطبيق المختار يبان
-    if (row > 0) {
-      const m = moment();
-      const strip = rowEl(row), pitch = m ? (row === 1 ? 256 : 364) : (row === 1 ? 328 : 248), w = m ? (row === 1 ? 236 : 344) : (row === 1 ? 300 : 220);
-      if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - (m ? 1728 : 1736) + 60)}px)`;
+  // مثل Dock الماك: المحدد أكبر شي، وجيرانه يكبرون بتدرج ويبتعدون عنه، والصف يرتفع من تحت.
+  // بدل تغيير العرض (يعيد تخطيط الصف كله في كل إطار) نحسب التكبير والإزاحة بـ transform بس
+  const DOCK_SCALE = [1.16, 1.06, 1.02], DOCK_SHIFT = [0, 35, 48, 51]; // الإزاحة = مجموع نص الزيادة في العرض لين هذا البعد
+  const setT = (e, v) => { if (e.__t !== v) { e.style.transform = v; e.__t = v; } };
+  function dockRow(shown) {
+    const strip = $("m1");
+    if (!strip) return;
+    const on = shown && row === 1;
+    const up = mode === "move" ? " translateY(-14px)" : "";
+    const kids = strip.children;
+    for (let i = 0; i < kids.length; i++) {
+      if (!on) { setT(kids[i], ""); kids[i].classList.remove("near"); continue; }
+      const d = Math.abs(i - col), side = i > col ? -1 : 1; // من اليمين لليسار: اللي بعد المحدد يسار
+      const scale = DOCK_SCALE[d] || 1, shift = d ? side * DOCK_SHIFT[Math.min(d, 3)] : 0;
+      setT(kids[i], `translateX(${shift}px) scale(${scale})` + (d === 0 ? up : ""));
+      kids[i].classList.toggle("near", d === 1);
     }
-    // اسم المحدد فوق الصف: كبير وواحد، بدل اسم على كل مربع
+  }
+
+  // لون خفيف ورا الرف من لون التطبيق المحدد. ينحسب مرة وحدة لكل تطبيق، وما يتغير إلا لما توقف عليه (مو وقت المشي)
+  const ambCache = {};
+  let ambSide = 0, ambTimer = null, ambNow = "";
+  function ambColor(it) {
+    if (!it || it.type !== "app") return "";
+    if (it.id in ambCache) return ambCache[it.id];
+    let out = "";
+    const img = focusEl && focusEl.querySelector("img");
+    if (img && img.complete && img.naturalWidth) {
+      try {
+        const c = document.createElement("canvas"); c.width = c.height = 8;
+        const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(img, 0, 0, 8, 8);
+        const d = g.getImageData(0, 0, 8, 8).data;
+        // أكثر لون مشبّع في البانر: المتوسط يطلع رمادي، والأبيض والأسود ما ينفعون خلفية
+        let best = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]), sat = mx ? (mx - mn) / mx : 0;
+          if (d[i + 3] > 200 && sat > .35 && mx > 60 && sat * mx > best) { best = sat * mx; out = `${d[i]},${d[i + 1]},${d[i + 2]}`; }
+        }
+      } catch (e) { out = ""; }
+    } else if (!img) {
+      const a = appById[it.id];
+      if (a && a.tint) { const n = parseInt(a.tint.slice(1), 16); out = `${n >> 16},${(n >> 8) & 255},${n & 255}`; }
+    }
+    if (img && !img.complete) return "";
+    ambCache[it.id] = out;
+    return out;
+  }
+  function setAmbient(rgb) {
+    if (rgb === ambNow) return;
+    ambNow = rgb;
+    const next = $("amb" + (1 - ambSide)), cur = $("amb" + ambSide);
+    if (rgb) { next.style.setProperty("--amb", rgb); next.classList.add("on"); ambSide = 1 - ambSide; }
+    cur.classList.remove("on");
+  }
+  function queueAmbient() {
+    clearTimeout(ambTimer);
+    ambTimer = setTimeout(() => {
+      if (root.classList.contains("rapid")) return queueAmbient();
+      setAmbient(mode === "nav" && row === 1 ? ambColor((rows()[1] || [])[col]) : "");
+    }, 180);
+  }
+
+  // فوق الرف: اسم المحدد، وجنبه لو له شي تكمله (مثل الرف العلوي في أبل)
+  function capHTML() {
+    const it = row > 0 && mode !== "day" && mode !== "mini" ? (rows()[row] || [])[col] : null;
+    if (!it) return "";
+    let sub = "";
+    if (it.type === "app") {
+      const w = watch.find((x) => String(x.icon || "").includes("/" + it.id + "."));
+      if (w) sub = "أكمل: " + w.title;
+    }
+    return `<bdi>${esc(it.name)}</bdi>${sub ? `<small><bdi>${esc(sub)}</bdi></small>` : ""}`;
+  }
+
+  // الاسم يمشي مع المحدد: العين ما تقطع الشاشة عشان تعرف وش محدد. ويخفي السطر الخفيف لو يتقاطع معه
+  function placeCap() {
+    const cap = $("mCap"), h = capHTML();
+    setHTML(cap, h);
+    if (!h) { cap.style.transform = ""; root.classList.remove("cap-wide"); return; }
+    const pitch = row === 1 ? 360 : 440, strip = rowEl(row);
+    const tx = strip ? parseFloat((strip.style.transform.match(/-?[\d.]+/) || [0])[0]) : 0;
+    const off = col * pitch - tx;
+    cap.style.transform = `translateX(${-off}px)`;
+    cap.style.maxWidth = Math.min(900, 1760 - off) + "px";
+    root.classList.toggle("cap-wide", off > 360 || h.includes("<small>"));
+  }
+
+  function paintFocus() {
+    // كل ضغطة تغيّر عنصرين بس (السابق والجديد)، عشان ما ينعاد حساب شكل الصف كله
+    if (focusEl) focusEl.classList.remove("focus", "moving");
+    const t = root.querySelector(`[data-r="${row}"][data-c="${col}"]`);
+    const shown = t && !["picker", "reader", "quick", "pin", "day", "tilawa", "mini"].includes(mode);
+    if (shown) t.classList.add(mode === "move" ? "moving" : "focus");
+    focusEl = shown ? t : null;
+    if (moment()) { dockRow(shown); queueAmbient(); }
     if (moment()) {
-      const it = row > 0 && mode !== "day" && mode !== "mini" ? (rows()[row] || [])[col] : null;
-      setHTML($("mCap"), it ? `<bdi>${esc(it.name)}</bdi>` : "");
+      // المحدد يبرز والباقي يخف حواليه، بس والتركيز في الصف نفسه
+      [1, 2].forEach((r) => { const e = rowEl(r); if (e) e.classList.toggle("has-focus", !!shown && row === r); });
+      // صف طويل: المحدد يبقى في الخانة الثانية، والصف يمشي تحته (ما يطلع بره الشاشة، وعينك ما تلاحقه)
+      if (row > 0) {
+        const strip = rowEl(row), pitch = row === 1 ? 360 : 440;
+        if (strip) {
+          const room = (R0, i) => R0.length * pitch - 40 - 1760 - (row === 1 && R0[R0.length - 1] && R0[R0.length - 1].type === "all" ? 140 : 0);
+          const list = rows()[row] || [];
+          strip.style.transform = `translateX(${Math.max(0, Math.min((col - 1) * pitch, room(list)))}px)`;
+        }
+      }
+      placeCap();
+    } else if (row > 0) {
+      const strip = rowEl(row), pitch = row === 1 ? 328 : 248, w = row === 1 ? 300 : 220;
+      if (strip) strip.style.transform = `translateX(${Math.max(0, col * pitch + w - 1736 + 60)}px)`;
     }
     const menu = $("menu");
     menu.classList.toggle("on", mode === "menu");
@@ -516,14 +620,70 @@
     tx.scrollTop = 0;
     for (const px of [44, 38, 33, 29]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; }
     readScroll = tx.scrollHeight > tx.clientHeight + 1;
-    const need = countOf(it);
-    $("rSrc").textContent += need > 1 ? ` · العدّاد: ${F.digits(counts[readIdx] || 0)} من ${F.digits(need)} (OK: عدّ)` : "";
-    $("rHint").textContent = need > 1 ? "OK: عدّ · يمين ويسار: التالي والسابق · رجوع: إغلاق" : readScroll ? "تحت وفوق: باقي النص · يمين ويسار: التالي والسابق · رجوع: إغلاق" : "الأسهم: التالي والسابق · رجوع: إغلاق";
+    renderCounter(it);
   }
   let readScroll = false;
-  // عداد الأذكار: OK يعدّ، ولما يكمل ينتقل للتالي. العدد من نص الذكر نفسه
-  let counts = {};
+
+  // ===== عدّاد الأذكار: OK يعدّ، ولما يكمل العدد ينتقل للي بعده. العدد من نص الكتاب نفسه، ويبقى محفوظ طول اليوم =====
+  const COUNT_KEY = "riwaq.dhikrCount";
+  let readSection = null, readBack = null, countTimer = null;
   const countOf = (it) => (window.Content && Content.repeatOf ? Content.repeatOf(it.item) : 1);
+  const dayKey = () => F.hijri(new Date());
+  function loadCounts() {
+    try { const j = JSON.parse(localStorage.getItem(COUNT_KEY) || "{}"); return j.day === dayKey() ? j : { day: dayKey(), c: {} }; }
+    catch (e) { return { day: dayKey(), c: {} }; }
+  }
+  let counts = { day: "", c: {} };
+  const countId = (it) => (readSection ? readSection.id : "") + ":" + it.item.sourceId;
+  const countNow = (it) => counts.c[countId(it)] || 0;
+  function saveCounts() { try { localStorage.setItem(COUNT_KEY, JSON.stringify(counts)); } catch (e) { /* بدون تخزين: العد يبقى لين تقفل */ } }
+
+  function renderCounter(it) {
+    const box = $("reader"), need = countOf(it), now = Math.min(countNow(it), need);
+    box.classList.toggle("has-count", need > 1);
+    box.classList.toggle("count-done", need > 1 && now >= need);
+    if (need > 1) {
+      $("rcNum").innerHTML = `${F.digits(now)}<small>من ${F.digits(need)}</small>`;
+      $("rcBar").style.transform = `scaleX(${now / need})`;
+    }
+    // النص مساحته تتغير مع العداد: نقيس قبل ما نكتب التلميح
+    const tx = $("rText");
+    if (need > 1) { for (const px of [44, 38, 33, 29]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; } readScroll = tx.scrollHeight > tx.clientHeight + 1; }
+    const more = readScroll ? "تحت وفوق: باقي النص · " : "";
+    $("rHint").textContent = need > 1 ? (now >= need ? `✓ تمّ العدد · ${more}OK: التالي · رجوع: إغلاق` : `OK: عدّ · ${more}يمين ويسار: التالي والسابق · رجوع: إغلاق`)
+      : readScroll ? "تحت وفوق: باقي النص · OK: التالي · رجوع: إغلاق" : "OK: التالي · يمين ويسار: التالي والسابق · رجوع: إغلاق";
+  }
+  function nextRead() {
+    if (readIdx < readList.length - 1) { readIdx++; renderReader(); return; }
+    closeReader();
+    App.toast(readSection ? `خلصت ${readSection.title}` : "خلصت");
+  }
+  function countPress() {
+    const it = readList[readIdx], need = countOf(it);
+    if (countNow(it) >= need) { nextRead(); return; }
+    counts.c[countId(it)] = countNow(it) + 1; saveCounts();
+    renderCounter(it);
+    const n = $("rcNum"); n.classList.add("bump"); setTimeout(() => n.classList.remove("bump"), 120);
+    clearTimeout(countTimer);
+    // اكتمل: وقفة قصيرة تشوف العدد، وبعدها التالي. أي زر قبلها يلغيها
+    if (countNow(it) >= need) countTimer = setTimeout(() => { if (mode === "reader") nextRead(); }, 700);
+  }
+  function openSection(sec) {
+    counts = loadCounts();
+    readSection = sec; readBack = quickIdx; readList = sec.items;
+    // يكمل من آخر ذكر عدّ فيه اليوم، وإذا خلص عدده من اللي بعده
+    let last = -1;
+    readList.forEach((it, i) => { if (countNow(it) > 0) last = i; });
+    readIdx = last < 0 ? 0 : countNow(readList[last]) >= countOf(readList[last]) ? Math.min(last + 1, readList.length - 1) : last;
+    mode = "reader"; $("reader").classList.add("on"); renderReader(); paintFocus();
+  }
+  function closeReader() {
+    clearTimeout(countTimer);
+    mode = "nav"; $("reader").classList.remove("on", "has-count", "count-done");
+    readSection = null;
+    if (readBack !== null) { const i = readBack; readBack = null; open({ type: "nav", id: "reader" }); quickIdx = i; renderQuick(); return; }
+    paintFocus();
+  }
 
   function renderQuick() {
     const box = $("qlist");
@@ -539,9 +699,20 @@
   function openQuick() { openList(moment() ? "التحكم" : "التلفزيون", moment() ? "gear" : "tv", controlItems()); }
   function openInputs() { openList("المداخل", "hdmi", inputs.map((i) => ({ input: i, name: inputName(i), ic: i.icon || "hdmi" }))); }
   function closeQuick() { mode = "nav"; $("quick").classList.remove("on"); paintFocus(); }
+  // صوت الأذان من التلفزيون نفسه: كل ضغطة تنقل للمستوى اللي بعده
+  const ADHAN_LEVELS = [0, 15, 30, 40, 50, 60, 75, 100];
+  const adhanVolName = () => (CONFIG.adhanVolume ? "صوت الأذان: " + F.digits(CONFIG.adhanVolume) + "٪" : "صوت الأذان: بدون تغيير");
+  function stepAdhanVolume() {
+    const i = ADHAN_LEVELS.indexOf(CONFIG.adhanVolume);
+    Config.save({ adhanVolume: ADHAN_LEVELS[(i + 1) % ADHAN_LEVELS.length] });
+    openQuick();
+    quickIdx = quickList.findIndex((x) => x.id === "adhanVol");
+    renderQuick();
+  }
   // يقفل أي طبقة مفتوحة (من زر ريموت أو أمر من أندرويد)، عشان الأزرار ما تحرك شي مخفي
   function closeLayers() {
     ["picker", "reader", "quick", "pin"].forEach((k) => $(k).classList.remove("on"));
+    readBack = null; readSection = null; clearTimeout(countTimer);
     if (mode === "tilawa" && window.Tilawa) Tilawa.close();
     root.classList.remove("day-open");
     mode = "nav"; pinThen = null;
@@ -551,6 +722,9 @@
   function runQuick(q) {
     closeQuick();
     if (q.input) return launchItem({ type: "input", id: q.input.id, name: q.name });
+    if (q.section) return openSection(q.section);
+    if (q.id === "adhanVol") return stepAdhanVolume();
+    if (q.id === "adhanTest") return native() && Riwaq.testAdhan ? Riwaq.testAdhan() : App.toast("التجربة على التلفزيون بس");
     if (q.id === "saver") return App.show("saver");
     if (q.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
     if (q.id === "majlis") return guarded(() => (native() && Riwaq.openMajlis ? Riwaq.openMajlis() : App.toast("شاشة المجلس على التلفزيون بس")), "شاشة المجلس");
@@ -641,16 +815,30 @@
         if (!readList.length) readList = [{ title: "ذكر الوقت", item: { type: "info", source: "", text:
           ["ما فيه ذكر له وقت محدد الحين.", "", "أذكار الصباح: من الفجر لين الظهر", "أذكار المساء: من العصر لين العشاء",
            "سورة الملك: من العشاء لين ١ بالليل", "يوم الجمعة: سورة الكهف من ١٠ الصبح لين العصر، وأدعية مأثورة من العصر لين المغرب"].join("\n") } }];
+        counts = loadCounts(); readBack = null; readSection = null;
         mode = "reader"; readIdx = 0; $("reader").classList.add("on"); renderReader(); paintFocus(); return;
       }
       if (item.id === "reader") {
-        readList = window.Content ? Content.readerItems(new Date()) : [];
-        if (!readList.length) { App.toast("ما فيه محتوى للحين"); return; }
-        mode = "reader"; readIdx = 0; $("reader").classList.add("on"); renderReader(); paintFocus(); return;
+        const secs = window.Content ? Content.sections(new Date()) : [];
+        if (!secs.length) { App.toast("ما فيه محتوى للحين"); return; }
+        openList("الأذكار", "crescent", secs.map((x) => ({ section: x, name: x.title + (x.hint ? " · " + x.hint : ""), ic: x.now ? "bell" : "crescent" })));
+        return;
       }
       if (item.id === "settings") { openSettings(); return; }
     }
     launchItem(item);
+  }
+
+  // تكرار السهم: نعرفه من الوقت (يجي من الريموت أو من خدمة الأزرار، وما يوصل مع الزر علامة موحدة)
+  let lastArrow = 0, rapidTimer = null;
+  function trackRapid() {
+    const now = performance.now();
+    if (now - lastArrow < 170) {
+      root.classList.add("rapid");
+      clearTimeout(rapidTimer);
+      rapidTimer = setTimeout(() => root.classList.remove("rapid"), 200);
+    }
+    lastArrow = now;
   }
 
   window.Home = {
@@ -659,7 +847,7 @@
       // تلميح أول ٣ مرات تفتح فيها الواجهة بس، بدل سطر دايم
       try {
         const n = +localStorage.getItem("riwaq.hints") || 0;
-        if (moment() && n < 3) { $("mHint").textContent = "السهم تحت: يومك · OK مطوّل على تطبيق: تحريك أو إخفاء"; localStorage.setItem("riwaq.hints", String(n + 1)); }
+        if (moment() && n < 3) { $("mHint").textContent = "OK مطوّل على تطبيق: تحريك أو إخفاء"; localStorage.setItem("riwaq.hints", String(n + 1)); }
       } catch (e) { /* بدون تخزين: ما يطلع التلميح */ }
       DATA.onChange(renderStatus);
       // وقت التلاوة نحدّث المشغّل الصغير كل ثانية. وبدونها ما نلمس الجسر
@@ -698,6 +886,7 @@
     appsChanged() { loadApps(); renderRows(); },
     tick() { if (root) renderStatus(); },
     key(k) {
+      if (k === "left" || k === "right" || k === "up" || k === "down") trackRapid();
       const R = rows();
       if (mode === "tilawa") return Tilawa.key(k);
       if (mode === "mini") return miniKey(k);
@@ -733,17 +922,15 @@
         const tx = $("rText");
         if (readScroll && k === "down" && tx.scrollTop + tx.clientHeight < tx.scrollHeight - 1) { tx.scrollTop += tx.clientHeight * 0.8; return true; }
         if (readScroll && k === "up" && tx.scrollTop > 0) { tx.scrollTop -= tx.clientHeight * 0.8; return true; }
+        clearTimeout(countTimer);
+        if (k === "ok" && readList[readIdx] && countOf(readList[readIdx]) > 1) { countPress(); return true; }
+        // OK مطوّل: يصفّر عدّ هذا الذكر لو غلطت
+        if (k === "menu" && readList[readIdx] && countOf(readList[readIdx]) > 1) { delete counts.c[countId(readList[readIdx])]; saveCounts(); renderCounter(readList[readIdx]); return true; }
         // من اليمين لليسار: السهم اليسار = التالي
         if (k === "left" || k === "down") readIdx = Math.min(readList.length - 1, readIdx + 1);
         if (k === "right" || k === "up") readIdx = Math.max(0, readIdx - 1);
-        if (k === "ok" && readList[readIdx] && countOf(readList[readIdx]) > 1) {
-          const need = countOf(readList[readIdx]);
-          counts[readIdx] = (counts[readIdx] || 0) + 1;
-          renderReader();
-          if (counts[readIdx] >= need && readIdx < readList.length - 1) setTimeout(() => { if (mode === "reader") { readIdx++; renderReader(); } }, 500);
-          return true;
-        }
-        if (k === "back" || k === "ok" || k === "menu") { counts = {}; mode = "nav"; $("reader").classList.remove("on"); paintFocus(); return true; }
+        if (k === "ok") { nextRead(); return true; }
+        if (k === "back" || k === "menu") { closeReader(); return true; }
         renderReader(); return true;
       }
       if (mode === "picker") {
