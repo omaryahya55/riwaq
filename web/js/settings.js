@@ -400,6 +400,7 @@
     cfg.density = ["full", "frame"].includes($("density").value) ? $("density").value : "calm";
     cfg.homeLayout = $("homeLayout").value === "classic" ? "classic" : "moment";
     cfg.clockFont = $("clockFont").value;
+    cfg.adhanVolume = +$("adhanVolume").value || 0;
     cfg.albumMode = $("albumMode").value;
     cfg.continueRow = $("continueRow").checked;
     cfg.roshn = $("roshn").checked;
@@ -434,6 +435,7 @@
     $("showSalary").checked = cfg.showSalary === true;
     $("homeLayout").value = cfg.homeLayout === "classic" ? "classic" : "moment";
     $("clockFont").value = cfg.clockFont || "amiri";
+    $("adhanVolume").value = String(cfg.adhanVolume || 0);
     $("albumMode").value = cfg.albumMode || "off";
     loadAlbum();
     loadAppImages();

@@ -228,7 +228,18 @@
     return out;
   }
 
+  // عدد التكرار من نص الذكر نفسه: «(ثلاثَ مرَّاتٍ)». لو فيه أكثر من عدد (أو، إذا أصبح) ما نعدّ، عشان ما نخمّن
+  const NUMS = [["ثلاث", 3], ["اربع", 4], ["خمس", 5], ["سبع", 7], ["عشر", 10], ["ماي?ه|مائه|مئه", 100]];
+  function repeatOf(x) {
+    if (x.type !== "adhkar") return 1;
+    const t = String(x.text).replace(/[\u064B-\u0652\u0670\u0640]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي");
+    const found = new Set();
+    for (const [re, n] of NUMS) if (new RegExp("\\((?:[^()]*\\s)?(?:" + re + ")\\S*\\s*مر", "").test(t)) found.add(n);
+    return found.size === 1 ? [...found][0] : 1;
+  }
+
   window.Content = {
+    repeatOf,
     load,
     current,
     credit,

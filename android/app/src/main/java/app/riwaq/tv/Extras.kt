@@ -353,7 +353,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
             return
         }
         val p = player ?: return
-        p.seekTo((p.currentPosition + dir * 30000).coerceIn(0, p.duration.coerceAtLeast(0)))
+        p.seekTo((p.currentPosition + dir * 10000).coerceIn(0, p.duration.coerceAtLeast(0)))
     }
 
     override fun onAudioFocusChange(change: Int) {

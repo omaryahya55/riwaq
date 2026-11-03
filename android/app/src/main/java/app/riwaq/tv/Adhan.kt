@@ -152,6 +152,7 @@ class AdhanBootReceiver : BroadcastReceiver() {
 class AdhanService : Service() {
     private var player: MediaPlayer? = null
     private var focus: AudioFocusRequest? = null
+    private var savedVolume = -1
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -168,6 +169,12 @@ class AdhanService : Service() {
             am.requestAudioFocus(focus!!)
         } else {
             @Suppress("DEPRECATION") am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+        }
+        // مستوى صوت الأذان من إعدادات صاحب الشاشة (٠ = بدون تغيير). نرجّع مستواه بعد الأذان
+        val want = try { org.json.JSONObject(ConfigStore.get(this)).optInt("adhanVolume", 0) } catch (e: Exception) { 0 }
+        if (want in 1..100) {
+            savedVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, Math.round(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * want / 100f).coerceAtLeast(1), 0)
         }
         // صوت المستخدم لو رفع واحد (وإلا أو لو خرب: الافتراضي)
         player = (AdhanAudio.customPath(this, name == "الفجر")?.let { path ->
@@ -205,6 +212,7 @@ class AdhanService : Service() {
         player?.let { try { it.stop() } catch (e: Exception) { }; it.release() }
         player = null
         val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (savedVolume >= 0) { try { am.setStreamVolume(AudioManager.STREAM_MUSIC, savedVolume, 0) } catch (e: Exception) { }; savedVolume = -1 }
         if (Build.VERSION.SDK_INT >= 26) focus?.let { am.abandonAudioFocusRequest(it) }
         else @Suppress("DEPRECATION") am.abandonAudioFocus(null)
         focus = null

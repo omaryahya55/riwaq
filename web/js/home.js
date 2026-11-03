@@ -516,9 +516,14 @@
     tx.scrollTop = 0;
     for (const px of [44, 38, 33, 29]) { tx.style.fontSize = px + "px"; if (tx.scrollHeight <= tx.clientHeight + 1) break; }
     readScroll = tx.scrollHeight > tx.clientHeight + 1;
-    $("rHint").textContent = readScroll ? "تحت وفوق: باقي النص · يمين ويسار: التالي والسابق · رجوع: إغلاق" : "الأسهم: التالي والسابق · رجوع: إغلاق";
+    const need = countOf(it);
+    $("rSrc").textContent += need > 1 ? ` · العدّاد: ${F.digits(counts[readIdx] || 0)} من ${F.digits(need)} (OK: عدّ)` : "";
+    $("rHint").textContent = need > 1 ? "OK: عدّ · يمين ويسار: التالي والسابق · رجوع: إغلاق" : readScroll ? "تحت وفوق: باقي النص · يمين ويسار: التالي والسابق · رجوع: إغلاق" : "الأسهم: التالي والسابق · رجوع: إغلاق";
   }
   let readScroll = false;
+  // عداد الأذكار: OK يعدّ، ولما يكمل ينتقل للتالي. العدد من نص الذكر نفسه
+  let counts = {};
+  const countOf = (it) => (window.Content && Content.repeatOf ? Content.repeatOf(it.item) : 1);
 
   function renderQuick() {
     const box = $("qlist");
@@ -731,7 +736,14 @@
         // من اليمين لليسار: السهم اليسار = التالي
         if (k === "left" || k === "down") readIdx = Math.min(readList.length - 1, readIdx + 1);
         if (k === "right" || k === "up") readIdx = Math.max(0, readIdx - 1);
-        if (k === "back" || k === "ok" || k === "menu") { mode = "nav"; $("reader").classList.remove("on"); paintFocus(); return true; }
+        if (k === "ok" && readList[readIdx] && countOf(readList[readIdx]) > 1) {
+          const need = countOf(readList[readIdx]);
+          counts[readIdx] = (counts[readIdx] || 0) + 1;
+          renderReader();
+          if (counts[readIdx] >= need && readIdx < readList.length - 1) setTimeout(() => { if (mode === "reader") { readIdx++; renderReader(); } }, 500);
+          return true;
+        }
+        if (k === "back" || k === "ok" || k === "menu") { counts = {}; mode = "nav"; $("reader").classList.remove("on"); paintFocus(); return true; }
         renderReader(); return true;
       }
       if (mode === "picker") {
