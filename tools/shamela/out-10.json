@@ -1,0 +1,794 @@
+[
+ {
+  "sourceId": "5469",
+  "status": "found",
+  "text": "أَنّ النَّبِيَّ ﷺ دَخَلَ عَلَى سَعْدٍ يَعُودُهُ بِمَكَّةَ. فَبَكَى. قَالَ (مَا يُبْكِيكَ؟) فَقَالَ: قَدْ خَشِيتُ أَنْ أَمُوتَ بِالْأَرْضِ الَّتِي هَاجَرْتُ مِنْهَا. كَمَا مَاتَ سَعْدُ بْنُ خَوْلَةَ. فَقَالَ النَّبِيُّ ﷺ (اللَّهُمَّ! اشْفِ سَعْدًا. اللَّهُمَّ! اشْفِ سعد) ثَلَاثَ مِرَارٍ. قَالَ: يَا رَسُولَ اللَّهِ! إِنَّ لِي مَالًا كَثِيرًا. وَإِنَّمَا يَرِثُنِي ابْنَتِي. أَفَأُوصِي بِمَالِي كُلِّهِ؟ قَالَ (لَا) قَالَ: فَبِالثُّلُثَيْنِ؟ قَالَ (لَا) قَالَ: فَالنِّصْفُ؟ قَالَ (لَا) قَالَ: فَالثُّلُثُ؟ قَالَ (الثُّلُثُ. وَالثُّلُثُ كَثِيرٌ. إِنَّ صَدَقَتَكَ مِنْ مَالِكَ صَدَقَةٌ. وَإِنَّ نَفَقَتَكَ عَلَى عِيَالِكَ صَدَقَةٌ وإن تَأْكُلُ امْرَأَتُكَ مِنْ مَالِكَ صَدَقَةٌ. وَإِنَّكَ أَنْ تَدَعَ أَهْلَكَ بِخَيْرٍ (أَوَ قَالَ بِعَيْشٍ)، خَيْرٌ مِنْ أَنْ تَدَعَهُمْ يَتَكَفَّفُونَ النَّاسَ) وَقَالَ بِيَدِهِ.",
+  "narrator": "سعد بن أبي وقاص",
+  "attribution": "متفق عليه واللفظ بنحوه لمسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4154,
+   "printed_page": "3/ 1253",
+   "number": "1628"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1253",
+    "number": "1628"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 1628 (8): chain is three of Sa'd's sons narrating from their father (printed «عَنْ أَبِيهِ»); the text starts at «أَنّ النَّبِيَّ ﷺ دَخَلَ عَلَى سَعْدٍ يَعُودُهُ». Prayer «اللهم اشف سعدا» three times matches the input, but the input's first-person «عادني» is a paraphrase; the printed wording is third-person. Bukhari/Muslim 'عادني' versions (e.g. Muslim 3/ 1250, Bukhari 8/ 80) carry «اللهم اشف سعدا وأتمم له هجرته» once, not three times. Printed text has «اشْفِ سعد» (no diacritics) and «وإن تَأْكُلُ», copied as is."
+ },
+ {
+  "sourceId": "3142",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ قَالَ: «كَانَ رَسُولُ اللهِ ﷺ يُكْثِرُ أَنْ يَقُولَ: يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ.» فَقُلْتُ: يَا رَسُولَ اللهِ آمَنَّا بِكَ وَبِمَا جِئْتَ بِهِ، فَهَلْ تَخَافُ عَلَيْنَا؟ قَالَ: نَعَمْ، إِنَّ الْقُلُوبَ بَيْنَ أُصْبُعَيْنِ مِنْ أَصَابِعِ اللهِ يُقَلِّبُهَا كَيْفَ يَشَاءُ.",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "حسن",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 3757,
+   "printed_page": "4/ 19",
+   "number": "2140"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 19",
+    "number": "2140"
+   }
+  ],
+  "verified": true,
+  "note": "Printed grade after the hadith is Tirmidhi's «هَذَا حَدِيثٌ حَسَنٌ» (and he says the Anas route is أصح than Jabir's); the input says صحيح, so the book's own grade is recorded. Chain prints «عَنْ أَنَسٍ» only. Ahmad not looked up."
+ },
+ {
+  "sourceId": "3057",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ، عَنِ النَّبِيِّ ﷺ؛ أنه كان يقول \"اللهم! إني أسألك الهدى والتقى، والعفاف والغنى\".",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6838,
+   "printed_page": "4/ 2087",
+   "number": "2721"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2087",
+    "number": "2721"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2721 (72). The printed chain says only «عَنْ عَبْدِ اللَّهِ» (identified as Ibn Mas'ud by the input); text copied exactly, no diacritics on most words as printed."
+ },
+ {
+  "sourceId": "2932",
+  "status": "found",
+  "text": "عَنِ الْعَبَّاسِ بْنِ عَبْدِ الْمُطَّلِبِ قَالَ: «قُلْتُ: يَا رَسُولَ اللهِ، عَلِّمْنِي شَيْئًا أَسْأَلُهُ اللهَ ﷿، قَالَ: سَلِ اللهَ الْعَافِيَةَ». فَمَكَثْتُ أَيَّامًا ثُمَّ جِئْتُ، فَقُلْتُ: يَا رَسُولَ اللهِ، عَلِّمْنِي شَيْئًا أَسْأَلُهُ اللهَ، فَقَالَ لِي: يَا عَبَّاسُ، يَا عَمَّ رَسُولِ اللهِ، سَلِ اللهَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ.",
+  "narrator": "العباس بن عبد المطلب",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 5956,
+   "printed_page": "5/ 491",
+   "number": "3514"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "5/ 491",
+    "number": "3514"
+   }
+  ],
+  "verified": true,
+  "note": "Printed grade after the hadith is Tirmidhi's «هَذَا حَدِيثٌ صَحِيحٌ»; the input says «صحيح لغيره» which does not appear in this edition (no footnote on the page). Ahmad not looked up."
+ },
+ {
+  "sourceId": "5482",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ. قال: كان رسول الله ﷺ يقول \"اللهم! أصلح لي ديني الذي هو عصمة أمري. وأصلح لي دنياي التي فيها معاشي. وأصلح لي آخرتي التي فيها معادي. واجعل الحياة زيادة لي في كل خير. واجعل الموت راحة لي من كل شر\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6837,
+   "printed_page": "4/ 2087",
+   "number": "2720"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2087",
+    "number": "2720"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2720 (71)."
+ },
+ {
+  "sourceId": "5488",
+  "status": "found",
+  "text": "عَنْ عَبْدِ الله بن عمر، قال: كان من دعاء رَسُولُ اللَّهِ ﷺ \"اللَّهُمَّ! إني أعوذ بك من زوال نعمتك، وتحول عافيتك، وفجاءة نقمتك، وجميع سخطك\".",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6877,
+   "printed_page": "4/ 2097",
+   "number": "2739"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2097",
+    "number": "2739"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2739 (96). Printed «رَسُولُ اللَّهِ» (nominative) after «دعاء» copied as is."
+ },
+ {
+  "sourceId": "5489",
+  "status": "found",
+  "text": "عن عبد الله بن عَمرو بن العاص، أنَّ رسولَ الله ﷺ كان يدعو بهؤلاء الكلمات: \"اللهمَّ إنِّي أعوذُ بِكَ من غَلَبَةِ الدَّين، وغَلَبَةِ العَدوِّ، وشَماتةِ الأعداء\"",
+  "narrator": "عبد الله بن عمرو بن العاص",
+  "attribution": "رواه النسائي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الألباني (صحيح سنن النسائي: صحيح)",
+  "primary": {
+   "book": "سنن النسائي - ط الرسالة",
+   "book_id": 1339,
+   "page_id": 3887,
+   "printed_page": "8/ 479",
+   "number": "5475"
+  },
+  "takhrij": [
+   {
+    "book": "سنن النسائي - ط الرسالة",
+    "printed_page": "8/ 479",
+    "number": "5475"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "6618"
+   }
+  ],
+  "verified": true,
+  "note": "Text from Risala edition (the Masriya edition has the same hadith at 8/ 265). Grade: Albani in صحيح سنن النسائي (3/ 1113) prints «(صحيح)»; the Risala editor (Arnaut) says «إسناده حسن» (footnote, Hayy ibn Abdullah saduq). Ahmad number 6618 is taken from the Arnaut footnote, Ahmad itself not opened."
+ },
+ {
+  "sourceId": "5502",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ قَالَ: «كَانَ أَكْثَرُ دُعَاءِ النَّبِيِّ ﷺ: اللَّهُمَّ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً، وَفِي الْآخِرَةِ حَسَنَةً، وَقِنَا عَذَابَ النَّارِ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9587,
+   "printed_page": "8/ 83",
+   "number": "6389"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 83",
+    "number": "6389"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 6389. Muslim page/number not looked up."
+ },
+ {
+  "sourceId": "5915",
+  "status": "found",
+  "text": "عن علي، قَالَ: قَالَ لِي رَسُولُ اللَّهِ ﷺ \"قل: اللهم! اهدني وسددني. واذكر، بالهدى، هدايتك الطريق. والسداد، سداد السهم\".",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6845,
+   "printed_page": "4/ 2090",
+   "number": "2725"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2090",
+    "number": "2725"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2725 (78). Printed chain says «عن علي»."
+ },
+ {
+  "sourceId": "6047",
+  "status": "found",
+  "text": "عن أنس، أن النبي ﷺ كان يقول: \"اللهم إني أعوذُ بكَ مِن البَرَصِ والجُنون، والجُذامِ، ومِن سيئ الأسقَام\"",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه أبو داود والنسائي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده صحيح",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 1271,
+   "printed_page": "2/ 650",
+   "number": "1554"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "2/ 650",
+    "number": "1554"
+   },
+   {
+    "book": "السنن الكبرى للنسائي",
+    "number": "7876"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "13004"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the editor's footnote «إسناده صحيح» (a ruling on the isnad, not Abu Dawud's). Nasai Kubra 7876 and Ahmad 13004 come from the footnote, not opened. Printed matn has no grade by Abu Dawud."
+ },
+ {
+  "sourceId": "6163",
+  "status": "found",
+  "text": "عن أبيه - في حديث أبي أحمد: شَكَلِ بن حُميد - قال: قلت: يا رسول الله، علمني دُعاءً، قال: \"قل: اللهُم إني أعوذُ بكَ مِن شَرِّ سمْعي ومِن شَرِّ بصري، ومِن شَرِّ لساني، ومِن شَر قلبي، ومِن شَر مَنيي\"",
+  "narrator": "شكل بن حميد",
+  "attribution": "رواه أبو داود والترمذي والنسائي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده صحيح",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 1270,
+   "printed_page": "2/ 649",
+   "number": "1551"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "2/ 649",
+    "number": "1551"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "3798"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "15541"
+   }
+  ],
+  "verified": true,
+  "note": "Hadith 1551 begins on page 2/ 648 (chain via Shutayr ibn Shakal) and the quoted matn starts at the top of 2/ 649 (page_id 1270). Grade is the editor's footnote «إسناده صحيح» (an isnad ruling); the same footnote quotes Tirmidhi as «حسن غريب». Printed «مَنيي» as is. Tirmidhi 3798 and Ahmad 15541 are taken from that footnote and were not opened."
+ },
+ {
+  "sourceId": "11206",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ قَالَتْ: «دَخَلَتْ عَلَيَّ عَجُوزَانِ مِنْ عُجُزِ يَهُودِ الْمَدِينَةِ، فَقَالَتَا لِي: إِنَّ أَهْلَ الْقُبُورِ يُعَذَّبُونَ فِي قُبُورِهِمْ، فَكَذَّبْتُهُمَا وَلَمْ أُنْعِمْ أَنْ أُصَدِّقَهُمَا، فَخَرَجَتَا وَدَخَلَ عَلَيَّ النَّبِيُّ ﷺ فَقُلْتُ لَهُ: يَا رَسُولَ اللهِ، إِنَّ عَجُوزَيْنِ وَذَكَرْتُ لَهُ، فَقَالَ: صَدَقَتَا، إِنَّهُمْ يُعَذَّبُونَ عَذَابًا تَسْمَعُهُ الْبَهَائِمُ كُلُّهَا، فَمَا رَأَيْتُهُ بَعْدُ فِي صَلَاةٍ إِلَّا تَعَوَّذَ مِنْ عَذَابِ الْقَبْرِ.»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9548,
+   "printed_page": "8/ 78",
+   "number": "6366"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 78",
+    "number": "6366"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 411"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 6366. The page break marker ⦗٧٩⦘ falls between «أَنْ» and «أُصَدِّقَهُمَا» and is not part of the text; verify_quote returned verbatim on each half separately (the joined text returned partial only because of that marker). Muslim 1/ 411 has the same hadith but with different wording («فَقَالَتَا» without «لِي»); its number not looked up."
+ },
+ {
+  "sourceId": "3167",
+  "status": "notfound",
+  "reason": "narrator mismatch: the input is Anas's narration, but the printed Anas route (Tirmidhi 3525, 5/ 498, via Mu'ammal from Hammad from Humayd) is called by Tirmidhi «غريب وليس بمحفوظ» and he says Mu'ammal erred and the Hasan route is أصح; the input's own note says the hadith in Nasai and Ahmad is from Rabi'a ibn Amir, a different Companion. No sound grade for the Anas text found in the book.",
+  "text": "",
+  "narrator": "",
+  "attribution": "ملاحظة: رواية النسائي وأحمد عن ربيعة بن عامر",
+  "grade": "",
+  "gradeBy": "",
+  "primary": {},
+  "takhrij": [],
+  "verified": false,
+  "note": "Tirmidhi 3524 (م) / 3525 in سنن الترمذي - ت بشار, book_id 7895, page_id 5976 (printed 5/ 498), checked."
+ },
+ {
+  "sourceId": "5329",
+  "status": "found",
+  "text": "عَنْ عَمِّهِ قَالَ: «كَانَ النَّبِيُّ ﷺ يَقُولُ: اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ مُنْكَرَاتِ الْأَخْلَاقِ» وَالْأَعْمَالِ وَالْأَهْوَاءِ.",
+  "narrator": "قطبة بن مالك",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن غريب",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 6096,
+   "printed_page": "5/ 544",
+   "number": "3591"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "5/ 544",
+    "number": "3591"
+   }
+  ],
+  "verified": true,
+  "note": "Chain prints «عَنْ زِيَادِ بْنِ عِلَاقَةَ، عَنْ عَمِّهِ»; Tirmidhi then says «عَمُّ زِيَادِ بْنِ عِلَاقَةَ هُوَ قُطْبَةُ بْنُ مَالِكٍ صَاحِبُ النَّبِيِّ ﷺ», so the narrator is Qutba ibn Malik. Printed grade «هَذَا حَدِيثٌ حَسَنٌ غَرِيبٌ» differs from the input's صحيح. The closing guillemet after «الْأَخْلَاقِ» is as printed."
+ },
+ {
+  "sourceId": "5491",
+  "status": "found",
+  "text": "عَنِ ابْنِ مَسْعُودٍ، أَنَّ رَسُولَ اللهِ ﷺ كَانَ يَقُولُ: \" اللهُمَّ أَحْسَنْتَ خَلْقِي، فَأَحْسِنْ خُلُقِي \"",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "رواه أحمد",
+  "grade": "حسن",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده حسن",
+  "primary": {
+   "book": "مسند أحمد - ط الرسالة",
+   "book_id": 25794,
+   "page_id": 2857,
+   "printed_page": "6/ 373",
+   "number": "3823"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد - ط الرسالة",
+    "printed_page": "6/ 373",
+    "number": "3823"
+   }
+  ],
+  "verified": true,
+  "note": "Wording differs from the input: Ahmad prints «اللهم أحسنتَ خلقي فأحسن خلقي» (كان يقول), not «كما حسنت خلقي فحسن خلقي» (قال). The input's form appears in other books (Ibn Sa'd, Hannad). Grade is the editor's footnote «إسناده حسن», not صحيح."
+ },
+ {
+  "sourceId": "5914",
+  "status": "found",
+  "text": "حَدَّثَنَا أَنَسِ بْنِ مَالِكٍ. قَالَ: كَانَ رَسُولُ اللَّهِ ﷺ يقول \"اللهم! إني أعوذ بك من العجز والكسل، والجبن والهرم، والبخل. وأعوذ بك من عذاب القبر، ومن فتنة المحيا والممات\".",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6807,
+   "printed_page": "4/ 2079",
+   "number": "2706"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2079",
+    "number": "2706"
+   },
+   {
+    "book": "صحيح البخاري"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2706 (50) has the main text exactly as in the input, including «والبخل». The extra riwaya in the input («وضلع الدين وغلبة الرجال») is not on this page and is not included. Bukhari wording (e.g. 4/ 23, 8/ 79) differs («والجبن والهرم» without «والبخل»); its number not looked up. Printed «حَدَّثَنَا أَنَسِ بْنِ مَالِكٍ» (with the odd case) as is."
+ },
+ {
+  "sourceId": "6040",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ عَنِ النَّبِيِّ ﷺ قَالَ: «تَعَوَّذُوا بِاللهِ مِنْ جَهْدِ الْبَلَاءِ، وَدَرَكِ الشَّقَاءِ، وَسُوءِ الْقَضَاءِ، وَشَمَاتَةِ الْأَعْدَاءِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9888,
+   "printed_page": "8/ 126",
+   "number": "6616"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 126",
+    "number": "6616"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 6616 has the matn without Sufyan's remark. The input's «وفي رواية قال سفيان: أشك أني زدت واحدة منها» is a different Bukhari route (8/ 75, in Kitab al-Da'awat, wording differs: «الحديث ثلاث زدت أنا واحدة») and is not included in the text. Muslim page/number not looked up."
+ },
+ {
+  "sourceId": "6072",
+  "status": "found",
+  "text": "عن عائشة: أنَّ النبي ﷺ كان يَدعُو بهؤلاء الكلمات: \"اللهمَّ إني أعوذُ بكَ مِن فِتنةِ النَار، وعذابِ النار، ومِنْ شَرَّ الغِنى والفَقر\"",
+  "narrator": "عائشة",
+  "attribution": "رواه أبو داود والترمذي وابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده صحيح",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 1265,
+   "printed_page": "2/ 644",
+   "number": "1543"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "2/ 644",
+    "number": "1543"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "3802"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "number": "3838"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the editor's footnote «إسناده صحيح» (isnad ruling). Tirmidhi 3802 and Ibn Majah 3838 are the numbers named in that footnote, not opened. The footnote also lists Bukhari 6368 and others, and Muslim after 2705, for the same route from Hisham."
+ },
+ {
+  "sourceId": "65304",
+  "status": "found",
+  "text": "عَنْ جَابِرٍ ﵁ قَالَ: «لَمَّا نَزَلَتْ هَذِهِ الْآيَةُ: ﴿قُلْ هُوَ الْقَادِرُ عَلَى أَنْ يَبْعَثَ عَلَيْكُمْ عَذَابًا مِنْ فَوْقِكُمْ﴾ قَالَ رَسُولُ اللهِ ﷺ: أَعُوذُ بِوَجْهِكَ، قَالَ: ﴿أَوْ مِنْ تَحْتِ أَرْجُلِكُمْ﴾ قَالَ: أَعُوذُ بِوَجْهِكَ، ﴿أَوْ يَلْبِسَكُمْ شِيَعًا وَيُذِيقَ بَعْضَكُمْ بَأْسَ بَعْضٍ﴾ قَالَ رَسُولُ اللهِ ﷺ: هَذَا أَهْوَنُ، أَوْ: هَذَا أَيْسَرُ.»",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 6786,
+   "printed_page": "6/ 56",
+   "number": "4628"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "6/ 56",
+    "number": "4628"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 4628 (Tafsir, Surat al-An'am). A parallel route at Bukhari 9/ 101 (7313) says «هَاتَانِ أَهْوَنُ أَوْ أَيْسَرُ», so 4628 is the one matching the input. Printed «﵁» after Jabir copied as is."
+ },
+ {
+  "sourceId": "65461",
+  "status": "found",
+  "text": "عَنْ أَبِي بَكْرٍ الصِّدِّيقِ ﵁: أَنَّهُ قَالَ لِرَسُولِ اللهِ ﷺ: «عَلِّمْنِي دُعَاءً أَدْعُو بِهِ فِي صَلَاتِي. قَالَ: قُلِ: اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ، وَارْحَمْنِي إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ.»",
+  "narrator": "أبو بكر الصديق",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1370,
+   "printed_page": "1/ 166",
+   "number": "834"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 166",
+    "number": "834"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2078"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 834 (also 8/ 72 and 9/ 118). Muslim 4/ 2078 has the same hadith with «كبيرا/كثيرا» wording; its number not looked up. Printed «﵁» copied as is."
+ },
+ {
+  "sourceId": "65873",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ عَبْدِ اللَّهِ، قَالَ: أَتَتِ النَّبِيَّ ﷺ، بَوَاكِي، فَقَالَ: «اللَّهُمَّ اسْقِنَا غَيْثًا مُغِيثًا، مَرِيئًا مَرِيعًا، نَافِعًا غَيْرَ ضَارٍّ، عَاجِلًا غَيْرَ آجِلٍ»، قَالَ: فَأَطْبَقَتْ عَلَيْهِمُ السَّمَاءُ",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه أبو داود",
+  "grade": "صحيح",
+  "gradeBy": "الألباني (صحيح سنن أبي داود: «هذا إسناد صحيح»)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 1581,
+   "printed_page": "1/ 303",
+   "number": "1169"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+    "printed_page": "1/ 303",
+    "number": "1169"
+   }
+  ],
+  "verified": true,
+  "note": "The page of this edition carries a footnote «صحيح» with no named grader; the named grading is Albani's «وهذا إسناد صحيح» in صحيح سنن أبي داود ط غراس (4/ 333, book_id 25881, page_id 1662), who also notes the established wording is «أتت النبي ﷺ بواكي». I did not open the Arnaut edition page for this hadith (its text search did not match)."
+ },
+ {
+  "sourceId": "65914",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «اسْتَعِيذُوا بِاللهِ مِنْ عَذَابِ جَهَنَّمَ»، وَاسْتَعِيذُوا بِاللهِ مِنْ عَذَابِ الْقَبْرِ، اسْتَعِيذُوا بِاللهِ مِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ، وَاسْتَعِيذُوا بِاللهِ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ.",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه الترمذي",
+  "grade": "صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 6113,
+   "printed_page": "5/ 554",
+   "number": "3604"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "5/ 554",
+    "number": "3604"
+   }
+  ],
+  "verified": true,
+  "note": "Printed grade after the hadith (on the next printed page 5/ 555): «هَذَا حَدِيثٌ صَحِيحٌ». The closing guillemet after «جَهَنَّمَ» is as printed; the page marker ⦗٥٥٥⦘ comes after the matn, not inside it."
+ },
+ {
+  "sourceId": "65915",
+  "status": "found",
+  "text": "عن أنس بن مالك قال: قال رسولُ الله ﷺ: \"مَنْ سألَ الله الجنَّةَ ثلاثَ مرَّات، قالتِ الجنَّةُ: اللهمَّ أدخِلْه الجنَّةَ، وَمَنِ استجارَ من النَّارِ ثلاثَ مرَّات، قالتِ النَّارُ: اللهمَّ أجِرْه من النَّار\"",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه الترمذي والنسائي وابن ماجه",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده صحيح",
+  "primary": {
+   "book": "سنن النسائي - ط الرسالة",
+   "book_id": 1339,
+   "page_id": 3910,
+   "printed_page": "8/ 502",
+   "number": "5521"
+  },
+  "takhrij": [
+   {
+    "book": "سنن النسائي - ط الرسالة",
+    "printed_page": "8/ 502",
+    "number": "5521"
+   },
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 328",
+    "number": "2572"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "number": "4340"
+   }
+  ],
+  "verified": true,
+  "note": "Text and grade are from Nasai (Risala). Tirmidhi 2572 (book_id 7895, page_id 4495) has the same matn (with «،» after «الجنة») but prints no grade and only notes a mawquf variant. Ibn Majah 4340 is the number named in Arnaut's footnote, not opened."
+ },
+ {
+  "sourceId": "10410",
+  "status": "found",
+  "text": "عن ابن عباس، قال: كان النبي ﷺ يَدعُو: \"رَبِّ أعنِّي ولا تُعِنْ علىَّ، وانصُرْني ولا تَنصُر عليَّ، وامكُر لي ولا تَمكُر عليَّ، واهْدِني ويَسر هُدَايَ إليَّ، وانصُرني على من بَغَى علي، اللهم اجعلْني لكَ شَاكراً، لَكَ ذاكراً، لك رَاهباً، لك مِطواعاً، إليك مُخبِتاً - أو مُنيباً - رَبِّ تَقبَّل توبتي، واغسِلْ حوْبتي، وأجِبْ دَعوتي، وثبّتْ حُجتي، واهْدِ قلبي، وسَددْ لساني، واسلُل سَخِيمَةَ قلبي\"",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "رواه أبو داود والترمذي وابن ماجه  وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (محقق ط الرسالة): إسناده صحيح",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 1243,
+   "printed_page": "2/ 622",
+   "number": "1510"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "2/ 622",
+    "number": "1510"
+   },
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "5/ 517",
+    "number": "3551"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "number": "3830"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "1997"
+   }
+  ],
+  "verified": true,
+  "note": "Wording of Abu Dawud matches the input. Tirmidhi 3551 (opened, page_id 6027) differs («شَكَّارًا ... ذَكَّارًا ... رَهَّابًا», «إِلَيْكَ أَوَّاهًا مُنِيبًا», «وَاسْلُلْ سَخِيمَةَ صَدْرِي») and prints «هَذَا حَدِيثٌ حَسَنٌ صَحِيحٌ». Ibn Majah 3830 and Ahmad 1997 are from the Arnaut footnote, not opened. Printed «علىَّ» and «حوْبتي» as is."
+ },
+ {
+  "sourceId": "3598",
+  "status": "found",
+  "text": "عن ابن عباس؛ أن رسول الله ﷺ كان يقول \"اللَّهُمَّ! لَكَ أَسْلَمْتُ. وَبِكَ آمَنْتُ. وَعَلَيْكَ تَوَكَّلْتُ. وإليك أنبت. وبك خاصمت. اللهم! إني أعوذ بعزتك، لا إله إلا أنت، أن تضلني. أنت الحي الذي لا يموت. والجن والإنس يموتون\".",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6833,
+   "printed_page": "4/ 2086",
+   "number": "2717"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2086",
+    "number": "2717"
+   },
+   {
+    "book": "صحيح البخاري"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2717 (67). The full wording (including the last two sentences) is Muslim's; Bukhari's abridged versions were not located by search in the downloaded text, so no Bukhari number is given. Duplicate of sourceId 3056 (same hadith, same text here)."
+ },
+ {
+  "sourceId": "3056",
+  "status": "found",
+  "text": "عن ابن عباس؛ أن رسول الله ﷺ كان يقول \"اللَّهُمَّ! لَكَ أَسْلَمْتُ. وَبِكَ آمَنْتُ. وَعَلَيْكَ تَوَكَّلْتُ. وإليك أنبت. وبك خاصمت. اللهم! إني أعوذ بعزتك، لا إله إلا أنت، أن تضلني. أنت الحي الذي لا يموت. والجن والإنس يموتون\".",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "متفق عليه، وهذا لفظ مسلم ورواه البخاري مختصرًا",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6833,
+   "printed_page": "4/ 2086",
+   "number": "2717"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2086",
+    "number": "2717"
+   },
+   {
+    "book": "صحيح البخاري"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2717 (67). Same hadith as sourceId 3598. Bukhari's abridged version was not located by search, so no Bukhari number is given."
+ },
+ {
+  "sourceId": "3596",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ، عَنِ النَّبِيِّ ﷺ؛ أنه كان يقول \"اللهم! إني أسألك الهدى والتقى، والعفاف والغنى\".",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6838,
+   "printed_page": "4/ 2087",
+   "number": "2721"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2087",
+    "number": "2721"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2721 (72). Same hadith and same text as sourceId 3057. The printed chain says only «عَنْ عَبْدِ اللَّهِ» (identified as Ibn Mas'ud by the input)."
+ },
+ {
+  "sourceId": "6331",
+  "status": "found",
+  "text": "عَبْدَ اللَّهِ بْنَ عَمْرِو بْنِ العاص يقول؛ أَنَّهُ سَمِعَ رَسُولَ اللَّهِ ﷺ يقول \"إن قلوب بني آدم كلها بين إصبعين من أصابع الرحمن. كقلب واحد. يصرفه حيث يشاء\". ثُمَّ قَالَ رَسُولُ اللَّهِ ﷺ \"اللهم! مصرف القلوب! صرف قلوبنا على طاعتك\".",
+  "narrator": "عبد الله بن عمرو بن العاص",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6685,
+   "printed_page": "4/ 2045",
+   "number": "2654"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2045",
+    "number": "2654"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim 2654 (17). The text starts at the Companion's name inside the chain «أَنَّهُ سَمِعَ عَبْدَ اللَّهِ بْنَ عَمْرِو بْنِ العاص يقول»."
+ },
+ {
+  "sourceId": "65188",
+  "status": "found",
+  "text": "عن عبادةَ بن الصّامتِ، أنَّ رسولَ اللهِ ﷺ قال: \"في الجَنّةِ مِئةُ دَرَجةٍ ما بينَ كُلِّ دَرَجَتيْنِ كما بينَ السَّماءِ والأرْضِ، والفِرْدَوْسُ أعلاها دَرجَةً، ومنها تَفَجَّرُ أنهارُ الجَنّةِ الأرْبعةُ، ومن فَوْقِها يكونُ العَرْشُ، فإذا سألْتُم اللهَ، فَسلُوهُ الفِرْدوسَ\"",
+  "narrator": "عبادة بن الصامت",
+  "attribution": "رواه الترمذي",
+  "grade": "صحيح",
+  "gradeBy": "محققو سنن الترمذي ط الرسالة (حاشية: صحيح)",
+  "primary": {
+   "book": "سنن الترمذي - ط الرسالة",
+   "book_id": 1363,
+   "page_id": 2386,
+   "printed_page": "4/ 501",
+   "number": "2702"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ط الرسالة",
+    "printed_page": "4/ 501",
+    "number": "2702"
+   },
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 297",
+    "number": "2531"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the footnote «صحيح» of the Risala edition (editors, no individual named); the Bashar edition (7895, page_id 4423) prints the same matn without a grade."
+ }
+]
