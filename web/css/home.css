@@ -282,3 +282,17 @@
 #stage.moment .reader { background: rgba(5,5,8,.94); }
 #stage.moment .reader-box { background: rgb(18,17,15); }
 #stage.moment .reader-head { color: var(--ink-2); }
+
+/* ===== حركة ناعمة (مبادئ إرشادات أبل للتلفزيون): ارتفاع خفيف عند التركيز، ونبضة نابضة قصيرة، والحلقة تظهر بنعومة ===== */
+.soft-shadow { text-shadow: 0 2px 10px rgba(0, 0, 0, .4); }
+:root { --spring: cubic-bezier(.2, .9, .3, 1.15); }
+#stage.moment .tile { transition: transform .3s var(--spring), opacity .3s; will-change: transform; }
+#stage.moment .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 3px rgba(247, 242, 232, 0); transition: box-shadow .25s ease-out, background .25s ease-out; }
+#stage.moment .tile.focus::after, #stage.moment .tile.moving::after { box-shadow: inset 0 0 0 3px var(--ink); background: transparent; }
+#stage.moment .tile.focus, #stage.moment .tile.moving { box-shadow: none; transform: scale(1.08); }
+#stage.moment .tile.moving { transform: scale(1.08) translateY(-14px); }
+#stage.moment .tile.has-img:not(.focus):not(.moving)::after { background: rgba(10, 9, 8, .3); }
+#stage.moment .nav-pill { transition: background .25s ease-out, color .25s ease-out; }
+.h-strip, .quick-list, .picker-scroll { transition-duration: .42s; transition-timing-function: var(--ease); }
+.quick, .picker { transition-duration: .5s; }
+.m-mini, .mm-info, .mm-btn { transition: background .22s ease-out, color .22s ease-out; }
