@@ -28,22 +28,6 @@ import org.json.JSONObject
 import java.io.File
 
 /**
- * مسك زر الصوت: خدمة الأزرار تفلتر الريموت، وأندرويد يوقف تكرار الزر الممسوك وقت الفلترة، فالمسك يرفع خطوة وحدة.
- * هذا الخيار يطفي الفلتر. الثمن: أزرار التطبيقات في الريموت والضغطة المطوّلة ما تشتغل لين يرجّعها.
- */
-object KeysMode {
-    private const val PREFS = "riwaq.keys"
-    private const val HOLD = "holdVolume"
-
-    fun holdVolume(ctx: Context) = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(HOLD, false)
-
-    fun set(ctx: Context, hold: Boolean) {
-        ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(HOLD, hold).apply()
-        HomeKeyService.instance?.setFilter(!hold)
-    }
-}
-
-/**
  * ألبوم البيت: صور صاحب البيت في شاشة الانتظار. تنحفظ في مجلد التطبيق الخاص بس، وتنحذف مع التطبيق.
  * الجوال يصغّر الصورة وينظفها، وهنا نتأكد إنها JPEG فعلاً وبحدود معقولة (الذاكرة والتخزين).
  */

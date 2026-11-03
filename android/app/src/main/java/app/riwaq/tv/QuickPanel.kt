@@ -44,6 +44,8 @@ class QuickPanel(private val svc: AccessibilityService) {
     private var scroll: ScrollView? = null
 
     val isShowing get() = root != null
+    /** تقفلت: الخدمة تعيد حساب فلتر الأزرار */
+    var onClosed: (() -> Unit)? = null
 
     // نفس خطوط الشاشة (داخل التطبيق)، ولو ما انقرت نرجع لخط النظام
     private fun font(path: String): Typeface = try { Typeface.createFromAsset(svc.assets, path) } catch (e: Exception) { Typeface.DEFAULT }
@@ -196,6 +198,7 @@ class QuickPanel(private val svc: AccessibilityService) {
         val v = root ?: return
         root = null
         try { wm.removeView(v) } catch (e: Exception) { }
+        onClosed?.invoke()
     }
 
     companion object {

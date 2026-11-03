@@ -69,10 +69,6 @@
       const v = q.id === "update" && native() && Riwaq.updateAvailable ? Riwaq.updateAvailable() : "";
       return v ? Object.assign({}, q, { name: "تحديث رواق · نسخة جديدة " + F.digits(v) }) : q;
     });
-    if (native() && Riwaq.keysHoldAvailable && Riwaq.keysHoldAvailable()) {
-      const hold = Riwaq.keysHold();
-      out.splice(out.findIndex((q) => q.id === "sound") + 1, 0, { id: "keysHold", hold, ic: "sound", name: hold ? "رجّع أزرار التطبيقات (مسك الصوت يصير خطوة)" : "شغّل مسك الصوت (يوقف أزرار التطبيقات)" });
-    }
     if (window.Tilawa && Tilawa.playing()) out.unshift({ id: "tilawaStop", name: "وقّف التلاوة", ic: "book" });
     if (native() && Riwaq.keysOff && Riwaq.keysOff()) out.unshift({ id: "setup", name: "خدمة الأزرار توقفت: شغّلها", ic: "bell" });
     if (native() && moment() && CONFIG.continueRow !== false && Riwaq.watchAllowed && !Riwaq.watchAllowed()) out.push({ id: "askWatch", name: "اسمح بصف أكمل المشاهدة", ic: "grid" });
@@ -532,10 +528,6 @@
     if (q.id === "majlis") return guarded(() => (native() && Riwaq.openMajlis ? Riwaq.openMajlis() : App.toast("شاشة المجلس على التلفزيون بس")), "شاشة المجلس");
     if (q.id === "search") return native() && Riwaq.openSearch ? Riwaq.openSearch() : App.toast("البحث على التلفزيون بس");
     if (q.id === "tilawaStop") return window.Tilawa && Tilawa.stop();
-    if (q.id === "keysHold") {
-      Riwaq.keysHoldSet(!q.hold);
-      return App.toast(q.hold ? "رجعت أزرار التطبيقات والضغطة المطوّلة" : "مسك زر الصوت شغال. أزرار التطبيقات تنتظر لين ترجّعها من هنا");
-    }
     if (q.id === "update") return native() && Riwaq.openUpdate ? Riwaq.openUpdate() : App.toast("التحديث على التلفزيون بس");
     if (q.id === "report") return native() && Riwaq.openReport ? Riwaq.openReport() : App.toast("الإبلاغ على التلفزيون بس");
     if (q.id === "setup") return native() && Riwaq.openSetup ? Riwaq.openSetup() : undefined;
