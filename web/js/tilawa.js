@@ -52,7 +52,7 @@
         <header class="tl-head"><h2>القرآن الكريم</h2><p class="tl-step" data-t="step"></p></header>
         <div class="tl-reciters"><div class="tl-rs" data-t="rs"></div></div>
         <div class="tl-surahs"><div class="tl-ss" data-t="ss"></div></div>
-        <div class="tl-src">التلاوات من Islamic Network · alquran.cloud</div>
+        <div class="tl-src">التلاوات من mp3quran.net</div>
       </div>
       <div class="tl-player">
         <div class="tl-reciter" data-t="pr"></div>

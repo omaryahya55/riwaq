@@ -362,5 +362,5 @@ test("القرآن: جدول الآيات في أندرويد يطابق بيا�
   assert.equal(T.surahs.length, 114);
   assert.equal(JSON.stringify(nums), JSON.stringify(T.surahs.map((s) => s.ayahs)));
   assert.equal(nums.reduce((a, b) => a + b, 0), 6236);
-  for (const r of T.reciters) assert.match(r.id, /^[a-z0-9.-]{3,60}$/);
+  for (const r of T.reciters) assert.match(r.id, /^[a-z0-9.-]{3,60}(\/r\d{1,2})?$/);
 });
