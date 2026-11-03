@@ -296,3 +296,19 @@
 .h-strip, .quick-list, .picker-scroll { transition-duration: .42s; transition-timing-function: var(--ease); }
 .quick, .picker { transition-duration: .5s; }
 .m-mini, .mm-info, .mm-btn { transition: background .22s ease-out, color .22s ease-out; }
+
+/* ===== دمج ب وج: التطبيق المحدد يكبر ويبرز، والباقي يصغر ويخف حواليه، وفوقه شريط اسمه وعنوان الرف =====
+   الحركة: نبضة حرجة التخميد تقريباً (بدون ارتداد) وتنقطع وترجع من قيمتها الحالية (transition يعيد التوجيه من الحالي) */
+:root { --settle: cubic-bezier(.25, .85, .3, 1); }
+#stage.moment .m-track .tile { transition: transform .32s var(--settle), opacity .32s ease-out; transform: scale(.94); opacity: .8; }
+#stage.moment .m-track .tile.focus, #stage.moment .m-track .tile.moving { transform: scale(1.2); opacity: 1; z-index: 3; }
+#stage.moment .m-track .tile.moving { transform: scale(1.2) translateY(-14px); }
+#stage.moment .m-track .tile.wt, #stage.moment .m-track .tile.all { transform: none; opacity: .85; }
+#stage.moment .m-track .tile.wt.focus { transform: scale(1.06); opacity: 1; }
+.m-cap { position: relative; padding-bottom: 4px; transition: opacity .25s; }
+.m-cap bdi { display: inline-block; padding: 0 22px 6px; border-radius: 16px; background: rgba(12, 11, 10, .55); font-size: 34px; }
+.m-cap:empty { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  #stage.moment .m-track .tile, #stage.moment .tile { transition: opacity .2s; }
+  #stage.moment .m-track .tile.focus { transform: none; }
+}
