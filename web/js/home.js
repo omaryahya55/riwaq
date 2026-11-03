@@ -427,7 +427,7 @@
     }
     // ذكر الوقت: أول سطر (أهم شي الحين)
     const tm = window.Content && Content.timed ? Content.timed(now) : [];
-    if (tm.length) lines.unshift(`<div class="ht-line ht-timed">${icon("bell")}<span>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}<small>افتحها كاملة من ${moment() ? "«الأذكار»" : "«ذكر الوقت»"} فوق</small></span></div>`);
+    if (tm.length) lines.unshift(`<div class="ht-line ht-timed">${icon("bell")}<span>حان وقت ${esc(tm.map((s) => s.title).join(" و"))}<small>${tm.every((t) => t.surah) ? "شغّلها من «القرآن» فوق" : `افتحها كاملة من ${moment() ? "«الأذكار»" : "«ذكر الوقت»"} فوق`}</small></span></div>`);
     if (H) {
       const occ = [["رمضان", 9, 1], ["يوم عرفة", 12, 9], ["عاشوراء", 1, 10]]
         .map(([n, m, d]) => Object.assign({ n }, H.daysToHijri(now, m, d) || { days: 9999 })).sort((a, b) => a.days - b.days)[0];

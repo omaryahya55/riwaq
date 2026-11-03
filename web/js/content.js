@@ -129,7 +129,8 @@
       if (!list.length) continue;
       for (let k = 0; k < (w.w || 1); k++) cycle.push({ list, label: w.part === "morning" ? "من أذكار الصباح" : w.part === "evening" ? "من أذكار المساء" : "" });
     }
-    const daily = [["quran", null, "من القرآن الكريم"], ["hadith", "general", "حديث اليوم"], ["sahabi", null, "في فضل الصحابة"], ["dua", "general", "دعاء اليوم"]];
+    // السور مكانها شاشة القرآن (طلب صاحب المشروع 2026-11-03)، وبدالها دعاء مأثور بسنده
+    const daily = [["hadith", "maathur", "من الأدعية المأثورة"], ["hadith", "general", "حديث اليوم"], ["sahabi", null, "في فضل الصحابة"], ["dua", "general", "دعاء اليوم"]];
     for (const [type, ctx, label] of daily) {
       const x = pick(type, now, 0, ctx);
       if (x) cycle.push({ list: [x], label, fixed: true });
@@ -156,7 +157,7 @@
   }
 
   function pickAlt(x, now, offset) {
-    return pick(x.type, now, offset, x.type === "sahabi" || x.type === "quran" ? null : ctxOf(x)) || x;
+    return pick(x.type, now, offset, x.type === "sahabi" ? null : ctxOf(x)) || x;
   }
 
   /*
@@ -203,6 +204,7 @@
    * ذكر الوقت: اللي له وقت محدد، كامل (قائمة "ذكر الوقت" فوق، وتنبيه في الواجهة وشاشة الانتظار):
    * - كل يوم: أذكار الصباح (الفجر ← الظهر)، وأذكار المساء (العصر ← العشاء)، وسورة الملك (العشاء ← ١ بالليل)
    * - الجمعة: سورة الكهف (١٠ الصبح ← العصر)، والأدعية المأثورة (العصر ← المغرب، ساعة الإجابة)
+   * السورتين تذكير بس (items فاضية): تشغيلها من شاشة القرآن.
    * المواعيد حسب صاحب المشروع (2026-10-24).
    */
   function timed(now) {
@@ -211,13 +213,9 @@
     const at = (id) => (t.find((p) => p.id === id) || {}).at;
     const mod = F.minutesOfDay(now);
     const wd = F.parts(now, { weekday: "short" }).weekday;
-    const Q = window.QuranTools;
     const out = [];
     const morning = items.filter((x) => x.type === "adhkar");
-    if (wd === "Fri" && mod >= 600 && at("asr") && now < at("asr")) {
-      const k = Q && Q.surahItem(18, "سورة الكهف");
-      if (k) out.push({ id: "kahf", title: "سورة الكهف", hint: "يوم الجمعة", items: [k] });
-    }
+    if (wd === "Fri" && mod >= 600 && at("asr") && now < at("asr")) out.push({ id: "kahf", title: "سورة الكهف", hint: "يوم الجمعة", surah: 18, items: [] });
     if (wd === "Fri" && at("asr") && at("maghrib") && now >= at("asr") && now < at("maghrib")) {
       const d = byCtx("maathur");
       if (d.length) out.push({ id: "maathur", title: "أدعية مأثورة", hint: "ساعة الإجابة يوم الجمعة", items: d });
@@ -226,14 +224,7 @@
       out.push({ id: "morning", title: "أذكار الصباح", hint: "", items: morning });
     if (at("asr") && at("isha") && now >= at("asr") && now < at("isha") && morning.length)
       out.push({ id: "evening", title: "أذكار المساء", hint: "", items: morning });
-    const mulkTime = (at("isha") && now >= at("isha")) || mod < 60;
-    if (mulkTime) {
-      const m = Q && Q.surahItem(67, "سورة الملك");
-      if (m) out.push({ id: "mulk", title: "سورة الملك", hint: "قبل النوم", items: [m] });
-    }
-    // برا وقت الكهف والملك: نفضّي المصحف من الذاكرة (يرجع يتحمل وقت ما نحتاجه)
-    const kahfTime = wd === "Fri" && mod >= 600 && at("asr") && now < at("asr");
-    if (!mulkTime && !kahfTime && Q && Q.release) Q.release();
+    if ((at("isha") && now >= at("isha")) || mod < 60) out.push({ id: "mulk", title: "سورة الملك", hint: "قبل النوم", surah: 67, items: [] });
     return out;
   }
 
@@ -261,14 +252,15 @@
       if (sn) add(sn, "سنّة نعيشها");
       const pl = pick("place", now, 0);
       if (pl) add(pl, "حكاية مكان");
-      rotate(of("quran")).forEach((x) => add(x, "من القرآن الكريم"));
-      rotate(of("hadith")).slice(0, 15).forEach((x, i) => add(x, i === 0 ? "حديث اليوم" : titleOf(x, "من الأحاديث")));
+      // الأدعية المأثورة عن النبي ﷺ بسندها، بدل السور (السور مكانها شاشة القرآن)
+      rotate(byCtx("maathur")).forEach((x) => add(x, "من الأدعية المأثورة"));
+      rotate(byCtx("general", "hadith")).slice(0, 15).forEach((x, i) => add(x, i === 0 ? "حديث اليوم" : titleOf(x, "من الأحاديث")));
       rotate(of("sahabi")).slice(0, 8).forEach((x) => add(x, "في فضل الصحابة"));
       items.filter((x) => String(x.sourceId).startsWith("hisn-")).forEach((x) => add(x, x.title));
       return out;
     },
     // لصفحة الإعدادات: عناصر اليوم مع روابط التحقق
-    today(now) { return ["quran", "hadith", "sahabi", "dua"].map((t) => pick(t, now, 0, t === "hadith" || t === "dua" ? "general" : null)).filter(Boolean); },
+    today(now) { return ["hadith", "sahabi", "dua"].map((t) => pick(t, now, 0, t === "hadith" || t === "dua" ? "general" : null)).filter(Boolean); },
     // "صمت له معنى": من دقيقة قبل الأذان لين ربع ساعة بعد الإقامة (التقريبية)
     timed,
     prayerPhase(now) {

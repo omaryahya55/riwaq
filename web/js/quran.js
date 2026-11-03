@@ -1,7 +1,6 @@
 /*
  * القرآن الكريم من مصحف Tanzil كامل (content/quran.json، حرفياً):
  * - راجع محفوظك: يختار السور اللي يحفظها، وكل يوم يطلع له مقطع منها بالترتيب (آيات كاملة، ما ينقطع نص الآية)
- * - ذكر الوقت: السورة كاملة في وقتها (الكهف يوم الجمعة، والملك بالليل)
  * الحساب كله على الجهاز، وتقسيم المقاطع بقاعدة ثابتة (طول النص)، مو اختيار من أحد.
  */
 (function () {
@@ -72,18 +71,6 @@
     return passage(s, a, b, "راجع محفوظك");
   }
 
-  // سورة كاملة للقارئ (ذكر الوقت): الكهف والملك
-  function surahItem(s, title) {
-    if (!Q) { load(); return null; }
-    return passage(s, 1, Q.suras[s - 1].length, title);
-  }
-
-  // المصحف كامل (١٫٣ ميجا) ما يبقى في الذاكرة إلا وقت ما نحتاجه: الجهاز ذاكرته محدودة
-  function release() {
-    if (!Q || hifz().length) return;
-    Q = null; cacheKey = ""; cacheList = [];
-  }
-
-  window.QuranTools = { load, review, surahItem, release, get ready() { return !!Q; }, _test: { chunks, passage, setData(j) { Q = j; cacheKey = ""; } } };
+  window.QuranTools = { load, review, get ready() { return !!Q; }, _test: { chunks, passage, setData(j) { Q = j; cacheKey = ""; } } };
   if (hifz().length) load();
 })();

@@ -152,7 +152,7 @@ test("توزيع الأذكار والأحاديث على أوقاتها (حصن
   // من القرآن الكريم: مقاطع كاملة من Tanzil، ومعها اسم السورة ورابط التحقق
   const q = json.items.filter((x) => x.type === "quran");
   assert.ok(q.length >= 20 && q.every((x) => x.source.startsWith("سورة") && x.verifyUrl.startsWith("https://tanzil.net/")));
-  assert.ok(w.Content.today(at("2026-10-27T10:00:00")).some((x) => x.type === "quran"));
+  assert.ok(!w.Content.today(at("2026-10-27T10:00:00")).some((x) => x.type === "quran"), "السور مكانها شاشة القرآن");
 });
 
 test("رسالة الجوال: مفتاح البوت لازم يكون بالشكل الصحيح", () => {
@@ -186,8 +186,10 @@ test("راجع محفوظك وذكر الوقت: المقاطع آيات كام�
   assert.equal(ids("2026-10-27T23:30:00"), "mulk");             // الملك بعد العشاء
   assert.equal(ids("2026-10-28T00:30:00"), "mulk");             // لين ١ بالليل
   assert.equal(ids("2026-10-28T01:30:00"), "");
-  const k = w.Content.timed(at("2026-10-30T13:00:00"))[0].items[0];
-  assert.ok(k.source === "سورة الكهف" && k.text.includes("﴿١١٠﴾"), "الكهف كاملة");
+  // السورتين تذكير بس: تشغيلهم من شاشة القرآن، وما ينعرض نصهم في الأذكار
+  const k = w.Content.timed(at("2026-10-30T13:00:00"))[0];
+  assert.equal(k.surah, 18);
+  assert.equal(k.items.length, 0);
 });
 
 test("صمت له معنى: من دقيقة قبل الأذان لين ربع ساعة بعد الإقامة", async () => {
@@ -363,4 +365,23 @@ test("القرآن: جدول الآيات في أندرويد يطابق بيا�
   assert.equal(JSON.stringify(nums), JSON.stringify(T.surahs.map((s) => s.ayahs)));
   assert.equal(nums.reduce((a, b) => a + b, 0), 6236);
   for (const r of T.reciters) assert.match(r.id, /^[a-z0-9.-]{3,60}(\/r\d{1,2})?$/);
+});
+
+test("الأذكار: ما فيها سور منفردة، وفيها الأدعية المأثورة بسندها", async () => {
+  const w = load(["vendor/adhan/adhan.umd.min.js", "js/config.js", "js/format.js", "js/prayer.js", "js/rules.js", "js/content.js"]);
+  Object.assign(w.CONFIG, { city: RIYADH });
+  const json = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8"));
+  w.fetch = async () => ({ ok: true, json: async () => json });
+  w.Content.load();
+  await new Promise((r) => setTimeout(r, 20));
+  const list = w.Content.readerItems(new Date("2026-11-03T10:00:00+03:00"));
+  assert.ok(list.length > 300);
+  assert.equal(list.filter((x) => x.item.type === "quran").length, 0);
+  const maathur = list.filter((x) => x.title === "من الأدعية المأثورة");
+  assert.ok(maathur.length >= 20, "الأدعية المأثورة " + maathur.length);
+  for (const x of maathur) assert.ok(x.item.source && x.item.attribution && x.item.grade, "كل دعاء بمصدره ودرجته");
+  for (let i = 0; i < 30; i++) {
+    const c = w.Content.current(new Date(Date.UTC(2026, 10, 3, 8, 0, i * 40)), 0);
+    assert.notEqual(c.item.type, "quran");
+  }
 });
