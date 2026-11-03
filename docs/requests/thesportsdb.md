@@ -1,4 +1,4 @@
-**To:** TheSportsDB (contact form on thesportsdb.com)
+**To:** thedatadb@gmail.com
 **Subject:** Free key in a free open-source Android TV app, outside app stores
 
 Hello,
