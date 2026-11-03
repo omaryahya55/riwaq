@@ -1,6 +1,7 @@
 package app.riwaq.tv
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.media.AudioManager
 import android.os.Build
 import android.os.Handler
@@ -41,6 +42,8 @@ class HomeKeyService : AccessibilityService() {
      * تفلتر الأزرار (مثل هذي)، فكانت تنزل خطوة وحدة بس. فنكررها إحنا لين تشيل إصبعك:
      * الأسهم بأمر النظام (أندرويد ١٣ وفوق)، والصوت من مدير الصوت (يوصل للتلفزيون بالـ HDMI مثل الريموت).
      * ولو الجهاز يكرر بنفسه (يجينا تكرار من الريموت)، نوقف تكرارنا عشان ما يصير مرتين.
+     * انتبه: في Xiaomi TV Box S النظام يستهلك أزرار الصوت قبل ما توصل هنا، فمسك الصوت ما يرفع إلا خطوة وحدة
+     * والفلتر شغال (تأكدنا بالقياس). الحل خيار KeysMode: يطفي الفلتر، فيرجع التكرار حق النظام.
      */
     private var heldKey = 0
     private var heldDevice = 0
@@ -158,7 +161,19 @@ class HomeKeyService : AccessibilityService() {
         panel.show("زر التطبيق", "وش يفتح هالزر؟ تختار مرة وحدة، وتقدر تغيّره بضغطة مطوّلة على نفس الزر", list)
     }
 
-    override fun onServiceConnected() { instance = this }
+    override fun onServiceConnected() {
+        instance = this
+        if (KeysMode.holdVolume(this)) setFilter(false)
+    }
+
+    /** بدون فلتر: تكرار الأزرار الممسوكة يرجع للنظام، بس أزرار التطبيقات والضغطة المطوّلة ما توصل هنا */
+    fun setFilter(on: Boolean) {
+        val info = serviceInfo ?: return
+        info.flags = if (on) info.flags or AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS
+        else info.flags and AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS.inv()
+        serviceInfo = info
+        if (!on) { panel.hide(); handler.removeCallbacks(repeatTick); heldKey = 0 }
+    }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 

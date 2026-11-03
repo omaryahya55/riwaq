@@ -76,6 +76,10 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     @JavascriptInterface fun updateAvailable(): String = Update.available(ctx)
     /** النسخة الكاملة وخدمة الأزرار توقفت (يصير بعد تحديث التطبيق أحياناً): الواجهة تنبّه */
     @JavascriptInterface fun keysOff(): Boolean = SetupActivity.keysLost(ctx)
+    /** مسك زر الصوت (النسخة الكاملة بس: الخفيفة ما فيها فلتر أصلاً) */
+    @JavascriptInterface fun keysHoldAvailable(): Boolean = BuildConfig.HAS_KEYS
+    @JavascriptInterface fun keysHold(): Boolean = KeysMode.holdVolume(ctx)
+    @JavascriptInterface fun keysHoldSet(on: Boolean) { main.post { KeysMode.set(ctx, on) } }
     /** الأذان ما بقى له جدول يكفي أسبوع */
     @JavascriptInterface fun adhanDaysLeft(): Int = AdhanScheduler.daysLeft(ctx)
 
