@@ -1,7 +1,14 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 38,
+ "count": 45,
  "items": [
+  {
+   "sourceId": "10854",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Found in Musnad al-Tayalisi 2400 (1456/2856), but the page has no editor's footnote and no grade by anyone; the only grade is HadeethEnc's own. Rule: a grade outside the two Sahihs needs a named grader.",
+   "الملف": "out-13.json",
+   "مطبّق": false
+  },
   {
    "sourceId": "10974",
    "السبب": "غير موثّق حرفياً بالأداة (يمتد على صفحتين أو فيه علامة صفحة)",
@@ -42,6 +49,13 @@
    "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
    "التفصيل": "In Sunan Abu Dawud 5200 the printed narration is mawquf on Abu Hurayra (no «قال رسول الله»); Arnaut's footnote says «المرفوع إسناده صحيح، والموقوف رجاله ثقات» (the marfu' is the previous hadith). The input presents it as marfu', so it is not matched.",
    "الملف": "out-12.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "3579",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Tirmidhi 2407: Tirmidhi says the mawquf route «أصح» and does not grade the marfu'; the Shakir footnote «حسن» names no grader; the Bashar edition (7895/4221–4222) has no footnote. No named grader for «صحيح».",
+   "الملف": "out-13.json",
    "مطبّق": false
   },
   {
@@ -93,6 +107,13 @@
    "مطبّق": true
   },
   {
+   "sourceId": "10970",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن صحيح غريب",
+   "قائلها": "الترمذي",
+   "مطبّق": true
+  },
+  {
    "sourceId": "11206",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Bukhari 6366. The page break marker ⦗٧٩⦘ falls between «أَنْ» and «أُصَدِّقَهُمَا» and is not part of the text; verify_quote returned verbatim on each half separately (the joined text returned partial only because of that marker). Muslim 1/ 411 has the same hadith but with different wording («فَقَالَتَا» without «لِي»); its number not looked up.",
@@ -105,9 +126,23 @@
    "مطبّق": true
   },
   {
+   "sourceId": "3058",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن صحيح غريب",
+   "قائلها": "الترمذي",
+   "مطبّق": true
+  },
+  {
    "sourceId": "3079",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Muslim's printed text names the Companion only as «أبيه» (father of Abdullah ibn Abi Qatada = Abu Qatada), so text starts there. Wording matches Muslim; Bukhari's wording was not found with this phrasing in book 1681.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3253",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن غريب",
+   "قائلها": "الترمذي",
    "مطبّق": true
   },
   {
@@ -202,6 +237,12 @@
    "مطبّق": true
   },
   {
+   "sourceId": "58257",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. Printed wording «إذا قاتل» where the input has «إذا ضرب»; Muslim's chapter is «باب النهي عن ضرب الوجه».",
+   "مطبّق": true
+  },
+  {
    "sourceId": "5914",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Muslim 2706 (50) has the main text exactly as in the input, including «والبخل». The extra riwaya in the input («وضلع الدين وغلبة الرجال») is not on this page and is not included. Bukhari wording (e.g. 4/ 23, 8/ 79) differs («والجبن والهرم» without «والبخل»); its number not looked up. Printed «حَدَّثَنَا أَنَسِ بْنِ مَالِكٍ» (with the odd case) as is.",
@@ -253,6 +294,12 @@
    "sourceId": "65915",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Text and grade are from Nasai (Risala). Tirmidhi 2572 (book_id 7895, page_id 4495) has the same matn (with «،» after «الجنة») but prints no grade and only notes a mawquf variant. Ibn Majah 4340 is the number named in Arnaut's footnote, not opened.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "66294",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. Muslim's wording matches the input (incl. «ثم زجر فأسرع حتى خلفها»).",
    "مطبّق": true
   },
   {

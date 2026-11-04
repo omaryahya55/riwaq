@@ -1,0 +1,849 @@
+[
+ {
+  "sourceId": "10854",
+  "status": "notfound",
+  "text": "",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "رواه أبو داود الطيالسي",
+  "grade": "",
+  "gradeBy": "",
+  "primary": {
+   "book": "مسند أبي داود الطيالسي",
+   "book_id": 1456,
+   "page_id": 2856,
+   "printed_page": "4/ 43",
+   "number": "2400"
+  },
+  "takhrij": [],
+  "verified": false,
+  "reason": "Found in Musnad al-Tayalisi 2400 (1456/2856), but the page has no editor's footnote and no grade by anyone; the only grade is HadeethEnc's own. Rule: a grade outside the two Sahihs needs a named grader."
+ },
+ {
+  "sourceId": "10970",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، قَالَ: «لَمْ يَكُنْ شَخْصٌ أَحَبَّ إِلَيْهِمْ مِنْ رَسُولِ اللَّهِ ﷺ، وَكَانُوا إِذَا رَأَوْهُ لَمْ يَقُومُوا لِمَا يَعْلَمُونَ مِنْ كَرَاهِيَتِهِ لِذَلِكَ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن صحيح غريب",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت شاكر",
+   "book_id": 1435,
+   "page_id": 4714,
+   "printed_page": "5/ 90",
+   "number": "2754"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت شاكر",
+    "printed_page": "5/ 90",
+    "number": "2754"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Tirmidhi: «هذا حديث حسن صحيح غريب من هذا الوجه» (input: صحيح)."
+ },
+ {
+  "sourceId": "58257",
+  "status": "found",
+  "text": "عن أبي هريرة، قال: قال رسول الله ﷺ \"إذا قاتل أحدكم أخاه، فليتجنب الوجه\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 6586,
+   "printed_page": "4/ 2016",
+   "number": "2612"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "4/ 2016",
+    "number": "2612"
+   },
+   {
+    "book": "صحيح البخاري"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Printed wording «إذا قاتل» where the input has «إذا ضرب»; Muslim's chapter is «باب النهي عن ضرب الوجه»."
+ },
+ {
+  "sourceId": "65055",
+  "status": "found",
+  "text": "عَنْ عُقْبَةَ بْنِ عَامِرٍ الْجُهَنِيِّ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «الْجَاهِرُ بِالْقُرْآنِ، كَالْجَاهِرِ بِالصَّدَقَةِ، وَالْمُسِرُّ بِالْقُرْآنِ، كَالْمُسِرِّ بِالصَّدَقَةِ»",
+  "narrator": "عقبة بن عامر الجهني",
+  "attribution": "رواه أبو داود والترمذي والنسائي",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (ط الرسالة)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 1802,
+   "printed_page": "2/ 38",
+   "number": "1333"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+    "printed_page": "2/ 38",
+    "number": "1333"
+   },
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "2/ 494",
+    "number": "1333"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "3146"
+   },
+   {
+    "book": "سنن النسائي",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "Text: ت محيي الدين (verify_quote verbatim 1726/1802). Grade: Arnaut's footnote in ت الأرنؤوط (117359/1115): «حديث صحيح، وهذا إسناد حسن»; he quotes Tirmidhi 3146 «حسن غريب»."
+ },
+ {
+  "sourceId": "65124",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ عَمْرٍو، أَنَّ النَّبِيَّ ﷺ قَالَ: «أَرْبَعٌ مَنْ كُنَّ فِيهِ كَانَ مُنَافِقًا خَالِصًا، وَمَنْ كَانَتْ فِيهِ خَصْلَةٌ مِنْهُنَّ، كَانَتْ فِيهِ خَصْلَةٌ مِنَ النِّفَاقِ حَتَّى يَدَعَهَا: إِذَا اؤْتُمِنَ خَانَ، وَإِذَا حَدَّثَ كَذَبَ، وَإِذَا عَاهَدَ غَدَرَ، وَإِذَا خَاصَمَ فَجَرَ.»",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 68,
+   "printed_page": "1/ 16",
+   "number": "34"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "1/ 16",
+    "number": "34"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 78",
+    "number": "58"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Bukhari has «إذا اؤتمن خان» in place of the input's «إذا وعد أخلف». Muslim ref from input."
+ },
+ {
+  "sourceId": "65810",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂ أَنَّ النَّبِيَّ ﷺ «كَانَ يُحَدِّثُ حَدِيثًا لَوْ عَدَّهُ الْعَادُّ لَأَحْصَاهُ»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 5489,
+   "printed_page": "4/ 190",
+   "number": "3567"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "4/ 190",
+    "number": "3567"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2298",
+    "number": "2493"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Muslim ref from input."
+ },
+ {
+  "sourceId": "65865",
+  "status": "found",
+  "text": "عن حذيفة قَالَ: قَامَ فِينَا رَسُولُ اللَّهِ ﷺ مقاما. ما ترك شيئا يكون في مقامه ذلك إلى قيام الساعة، إلا حدث به. حفظه من حفظه ونسيه من نسيه. قد علمه أصحابي هؤلاء. وإنه ليكون منه الشيء قد نسيته فأراه فأذكره. كما يذكر الرجل وجه الرجل إذا غاب عنه. ثم إذا رآه عرفه.",
+  "narrator": "حذيفة بن اليمان",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 7197,
+   "printed_page": "4/ 2217",
+   "number": "2891"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "4/ 2217",
+    "number": "2891"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim."
+ },
+ {
+  "sourceId": "66096",
+  "status": "found",
+  "text": "عَنْ سَهْلِ بْنِ سَعْدٍ قَالَ: «اطَّلَعَ رَجُلٌ مِنْ جُحْرٍ فِي حُجَرِ النَّبِيِّ ﷺ، وَمَعَ النَّبِيِّ ﷺ مِدْرًى يَحُكُّ بِهِ رَأْسَهُ، فَقَالَ: لَوْ أَعْلَمُ أَنَّكَ تَنْظُرُ، لَطَعَنْتُ بِهِ فِي عَيْنِكَ، إِنَّمَا جُعِلَ الِاسْتِئْذَانُ مِنْ أَجْلِ الْبَصَرِ.»",
+  "narrator": "سهل بن سعد",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9345,
+   "printed_page": "8/ 54",
+   "number": "6241"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "8/ 54",
+    "number": "6241"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1698",
+    "number": "2156"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Muslim ref from input."
+ },
+ {
+  "sourceId": "66294",
+  "status": "found",
+  "text": "أن عبد الله بن عمر قال: مررنا مَعَ رَسُولِ اللَّهِ ﷺ على الحجر. فَقَالَ لَنَا رَسُولُ اللَّهِ ﷺ \"لا تدخلوا مساكن الذين ظلموا أنفسهم، إلا أن تكونوا باكين. حذرا أن يصيبكم مثل ما أصابهم\" ثم زجر فأسرع حتى خلفها.",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 7397,
+   "printed_page": "4/ 2286",
+   "number": "2980"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "4/ 2286",
+    "number": "2980"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 149",
+    "number": "3380"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Muslim's wording matches the input (incl. «ثم زجر فأسرع حتى خلفها»)."
+ },
+ {
+  "sourceId": "2951",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ؛ إن رسول الله ﷺ اصْطَنَعَ خَاتَمًا مِنْ ذَهَبٍ. فَكَانَ يَجْعَلُ فَصَّهُ فِي بَاطِنِ كَفِّهِ إِذَا لَبِسَهُ. فَصَنَعَ النَّاسُ، ثُمَّ إِنَّهُ جَلَسَ عَلَى الْمِنْبَرِ فَنَزَعَهُ. فَقَالَ (إِنِّي كُنْتُ أَلْبَسُ هَذَا الْخَاتَمَ وَأَجْعَلُ فَصَّهُ مِنْ دَاخِلٍ) فَرَمَى بِهِ. ثُمَّ قَالَ (وَاللَّهِ! لَا أَلْبَسُهُ أَبَدًا) فَنَبَذَ النَّاسُ خَوَاتِيمَهُمْ.",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5405,
+   "printed_page": "3/ 1655",
+   "number": "2091"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "3/ 1655",
+    "number": "2091"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 133",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. «عبد الله» = ابن عمر (نافع عن عبد الله). The «في يده اليمنى» riwaya not included."
+ },
+ {
+  "sourceId": "2989",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ قَالَ: قَالَ أَبُو الْقَاسِمِ ﷺ: «لَوْ أَنَّ امْرَأً اطَّلَعَ عَلَيْكَ بِغَيْرِ إِذْنٍ فَحَذَفْتَهُ بِحَصَاةٍ فَفَقَأْتَ عَيْنَهُ، لَمْ يَكُنْ عَلَيْكَ جُنَاحٌ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 10308,
+   "printed_page": "9/ 11",
+   "number": "6902"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "9/ 11",
+    "number": "6902"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim."
+ },
+ {
+  "sourceId": "3002",
+  "status": "found",
+  "text": "«كَتَبَ إِلَيْنَا عُمَرُ وَنَحْنُ بِأَذْرَبِيجَانَ أَنَّ النَّبِيَّ ﷺ نَهَى عَنْ لُبْسِ الْحَرِيرِ إِلَّا هَكَذَا، وَصَفَّ لَنَا النَّبِيُّ ﷺ إِصْبَعَيْهِ،» وَرَفَعَ زُهَيْرٌ الْوُسْطَى وَالسَّبَّابَةَ.",
+  "narrator": "عمر بن الخطاب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 8723,
+   "printed_page": "7/ 149",
+   "number": "5829"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "7/ 149",
+    "number": "5829"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1643",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Abu Uthman al-Nahdi reports Umar's letter. The Muslim «إلا موضع أصبعين أو ثلاث أو أربع» riwaya not included."
+ },
+ {
+  "sourceId": "3058",
+  "status": "found",
+  "text": "ابْنَ عُمَرَ كَانَ يَقُولُ لِلرَّجُلِ إِذَا أَرَادَ سَفَرًا: أَنِ ادْنُ مِنِّي أُوَدِّعْكَ كَمَا كَانَ رَسُولُ اللهِ ﷺ يُوَدِّعُنَا، فَيَقُولُ: أَسْتَوْدِعُ اللهَ دِينَكَ وَأَمَانَتَكَ وَخَوَاتِيمَ عَمَلِكَ.",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "الحديث الأول: رواه أبو داود، والتَرمذي واللفظ له، وابن ماجه والنسائي في الكبرى وأحمد",
+  "grade": "حسن صحيح غريب",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 5832,
+   "printed_page": "5/ 441",
+   "number": "3443"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "5/ 441",
+    "number": "3443"
+   },
+   {
+    "book": "سنن الترمذي - ت شاكر",
+    "printed_page": "5/ 499",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (Bashar ed.; the Shakir ed. has a page marker inside). The printed isnad reads «عن سالم: «أنَّ» ابن عمر»; text starts at «ابن عمر». First hadith only (the al-Khatmi hadith in the input is not included). Tirmidhi: حسن صحيح غريب من هذا الوجه (input: صحيحان)."
+ },
+ {
+  "sourceId": "3128",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ ﵄: «أَنَّ رَسُولَ اللهِ ﷺ كَانَ يُسَبِّحُ عَلَى ظَهْرِ رَاحِلَتِهِ حَيْثُ كَانَ وَجْهُهُ، يُومِئُ بِرَأْسِهِ، وَكَانَ ابْنُ عُمَرَ يَفْعَلُهُ».",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "الروايات الثلاثة الأولى متفق عليها",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 1798,
+   "printed_page": "2/ 46",
+   "number": "1105"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "2/ 46",
+    "number": "1105"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. First riwaya only."
+ },
+ {
+  "sourceId": "3130",
+  "status": "found",
+  "text": "قَالَ سَمُرَةُ بْنُ جُنْدُبٍ: لَقَدْ كُنْتُ عَلَى عَهْدِ رَسُولِ اللَّهِ ﷺ غُلَامًا. فَكُنْتُ أَحْفَظُ عَنْهُ. فما يمنعني من القول إلا أن ههنا رِجَالًا هُمْ أَسَنُّ مِنِّي.",
+  "narrator": "سمرة بن جندب",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 2169,
+   "printed_page": "2/ 664",
+   "number": "964"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "2/ 664",
+    "number": "964"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Excerpt: the hadith continues with the funeral prayer for the woman who died in childbirth."
+ },
+ {
+  "sourceId": "3161",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ زَوْجِ النَّبِيِّ ﷺ أَنَّهَا أَخْبَرَتْنَا «أَنَّهَا سَأَلَتْ رَسُولَ اللهِ ﷺ عَنِ الطَّاعُونِ، فَأَخْبَرَهَا نَبِيُّ اللهِ ﷺ أَنَّهُ كَانَ عَذَابًا يَبْعَثُهُ اللهُ عَلَى مَنْ يَشَاءُ، فَجَعَلَهُ اللهُ رَحْمَةً لِلْمُؤْمِنِينَ، فَلَيْسَ مِنْ عَبْدٍ يَقَعُ الطَّاعُونُ فَيَمْكُثُ فِي بَلَدِهِ صَابِرًا يَعْلَمُ أَنَّهُ لَنْ يُصِيبَهُ إِلَّا مَا كَتَبَ اللهُ لَهُ، إِلَّا كَانَ لَهُ مِثْلُ أَجْرِ الشَّهِيدِ»",
+  "narrator": "عائشة",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 8578,
+   "printed_page": "7/ 131",
+   "number": "5734"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "7/ 131",
+    "number": "5734"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "3253",
+  "status": "found",
+  "text": "عَنْ جَابِرِ بْنِ سَمُرَةَ، قَالَ: «كُنَّا إِذَا أَتَيْنَا النَّبِيَّ ﷺ جَلَسَ أَحَدُنَا حَيْثُ يَنْتَهِي»",
+  "narrator": "جابر بن سمرة",
+  "attribution": "رواه أبو داود والترمذي وأحمد",
+  "grade": "حسن غريب",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت شاكر",
+   "book_id": 1435,
+   "page_id": 4666,
+   "printed_page": "5/ 73",
+   "number": "2725"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت شاكر",
+    "printed_page": "5/ 73",
+    "number": "2725"
+   },
+   {
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+    "printed_page": "4/ 258",
+    "number": "4825"
+   },
+   {
+    "book": "مسند أحمد"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Tirmidhi: «هذا حديث حسن غريب» (input: صحيح لغيره). Arnaut on Abu Dawud 4825 (117359/4086): Sharik is سيء الحفظ, and two weak witnesses «يحتمل تحسين الحديث بهما»."
+ },
+ {
+  "sourceId": "3463",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، عَنِ النَّبِيِّ ﷺ «أَنَّهُ كَانَ إِذَا تَكَلَّمَ بِكَلِمَةٍ أَعَادَهَا ثَلَاثًا حَتَّى تُفْهَمَ عَنْهُ، وَإِذَا أَتَى عَلَى قَوْمٍ فَسَلَّمَ عَلَيْهِمْ سَلَّمَ عَلَيْهِمْ ثَلَاثًا».",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 176,
+   "printed_page": "1/ 30",
+   "number": "95"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "1/ 30",
+    "number": "95"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "3556",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ عَنِ النَّبِيِّ ﷺ قَالَ: «خَلَقَ اللهُ آدَمَ عَلَى صُورَتِهِ: طُولُهُ سِتُّونَ ذِرَاعًا، فَلَمَّا خَلَقَهُ قَالَ: اذْهَبْ فَسَلِّمْ عَلَى أُولَئِكَ النَّفَرِ مِنَ الْمَلَائِكَةِ جُلُوسٍ فَاسْتَمِعْ مَا يُحَيُّونَكَ؛ فَإِنَّهَا تَحِيَّتُكَ وَتَحِيَّةُ ذُرِّيَّتِكَ، فَقَالَ: السَّلَامُ عَلَيْكُمْ، فَقَالُوا: السَّلَامُ عَلَيْكَ وَرَحْمَةُ اللهِ، فَزَادُوهُ: وَرَحْمَةُ اللهِ، فَكُلُّ مَنْ يَدْخُلُ الْجَنَّةَ عَلَى صُورَةِ آدَمَ، فَلَمْ يَزَلِ الْخَلْقُ يَنْقُصُ بَعْدُ حَتَّى الْآنَ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9322,
+   "printed_page": "8/ 50",
+   "number": "6227"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "8/ 50",
+    "number": "6227"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 131",
+    "number": ""
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "3564",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللهِ ﷺ: «إِذَا اقْتَرَبَ الزَّمَانُ لَمْ تَكَدْ تَكْذِبُ رُؤْيَا الْمُؤْمِنِ، وَرُؤْيَا الْمُؤْمِنِ جُزْءٌ مِنْ سِتَّةٍ وَأَرْبَعِينَ جُزْءًا مِنَ النُّبُوَّةِ»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 10482,
+   "printed_page": "9/ 37",
+   "number": "7017"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "9/ 37",
+    "number": "7017"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1773",
+    "number": "2263"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (isnad: «أنه سمع أبا هريرة يقول»). The «أصدقكم رؤيا» riwaya is in Muslim 2263."
+ },
+ {
+  "sourceId": "3579",
+  "status": "notfound",
+  "text": "",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه الترمذي",
+  "grade": "",
+  "gradeBy": "",
+  "primary": {
+   "book": "سنن الترمذي - ت شاكر",
+   "book_id": 1435,
+   "page_id": 4155,
+   "printed_page": "4/ 605",
+   "number": "2407"
+  },
+  "takhrij": [],
+  "verified": false,
+  "reason": "Tirmidhi 2407: Tirmidhi says the mawquf route «أصح» and does not grade the marfu'; the Shakir footnote «حسن» names no grader; the Bashar edition (7895/4221–4222) has no footnote. No named grader for «صحيح»."
+ },
+ {
+  "sourceId": "3621",
+  "status": "found",
+  "text": "عَنْ أَبِي أُمَامَةَ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «إِنَّ أَوْلَى النَّاسِ بِاللَّهِ مَنْ بَدَأَهُمْ بِالسَّلَامِ»",
+  "narrator": "أبو أمامة",
+  "attribution": "الرواية الأولى رواها أبو داود",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (ط الرسالة)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 7093,
+   "printed_page": "4/ 351",
+   "number": "5197"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+    "printed_page": "4/ 351",
+    "number": "5197"
+   },
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "7/ 493",
+    "number": "5197"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "2889"
+   }
+  ],
+  "verified": true,
+  "note": "Text: ت محيي الدين (verify_quote verbatim 1726/7093). Grade: Arnaut's footnote in ت الأرنؤوط (117359/4382): «إسناده صحيح». First riwaya only (the input's Tirmidhi riwaya not included)."
+ },
+ {
+  "sourceId": "3633",
+  "status": "found",
+  "text": "قَالَ رَسُولُ اللهِ ﷺ «إِنَّ مِنْ أَعْظَمِ الْفِرَى أَنْ يَدَّعِيَ الرَّجُلُ إِلَى غَيْرِ أَبِيهِ أَوْ يُرِيَ عَيْنَهُ مَا لَمْ تَرَ أَوْ يَقُولَ عَلَى رَسُولِ اللهِ ﷺ مَا لَمْ يَقُلْ.»",
+  "narrator": "واثلة بن الأسقع",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 5413,
+   "printed_page": "4/ 180",
+   "number": "3509"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "4/ 180",
+    "number": "3509"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (isnad: «سمعت واثلة بن الأسقع يقول»)."
+ },
+ {
+  "sourceId": "3688",
+  "status": "found",
+  "text": "أَنَّ عَائِشَةَ ﵂ أَخْبَرَتْهُ قَالَتِ: «اسْتَأْذَنَ رَجُلٌ عَلَى رَسُولِ اللهِ ﷺ، فَقَالَ: ائْذَنُوا لَهُ، بِئْسَ أَخُو الْعَشِيرَةِ أَوِ ابْنُ الْعَشِيرَةِ، فَلَمَّا دَخَلَ أَلَانَ لَهُ الْكَلَامَ، قُلْتُ: يَا رَسُولَ اللهِ، قُلْتَ الَّذِي قُلْتَ ثُمَّ أَلَنْتَ لَهُ الْكَلَامَ؟ قَالَ: أَيْ عَائِشَةُ، إِنَّ شَرَّ النَّاسِ مَنْ تَرَكَهُ النَّاسُ أَوْ وَدَعَهُ النَّاسُ اتِّقَاءَ فُحْشِهِ.»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9070,
+   "printed_page": "8/ 17",
+   "number": "6054"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "8/ 17",
+    "number": "6054"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "3757",
+  "status": "found",
+  "text": "قَالَ: فَكُنَّا نَحْتَلِبُ فَيَشْرَبُ كُلُّ إِنْسَانٍ مِنَّا نَصِيبَهُ. وَنَرْفَعُ لِلنَّبِيِّ ﷺ نَصِيبَهُ. قَالَ: فَيَجِيءُ مِنَ اللَّيْلِ فَيُسَلِّمُ تَسْلِيمًا لَا يُوقِظُ نَائِمًا. وَيُسْمِعُ الْيَقْظَانَ.",
+  "narrator": "المقداد بن الأسود",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5296,
+   "printed_page": "3/ 1625",
+   "number": "2055"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "3/ 1625",
+    "number": "2055"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Isnad on the same page: «عن المقداد. قال: أقبلت أنا وصاحبان لي…». Excerpt of a long hadith (the input says في حديثه الطويل)."
+ },
+ {
+  "sourceId": "5327",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁، عَنِ النَّبِيِّ ﷺ قَالَ: «إِذَا قَاتَلَ أَحَدُكُمْ فَلْيَجْتَنِبِ الْوَجْهَ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 4063,
+   "printed_page": "3/ 151",
+   "number": ""
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "3/ 151",
+    "number": ""
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim. Number is on the previous page (not shown on this one)."
+ },
+ {
+  "sourceId": "5338",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللَّهِ. قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ \"إِذَا كُنْتُمْ ثَلَاثَةً فَلَا يَتَنَاجَى اثْنَانِ دُونَ الْآخَرِ. حَتَّى تَخْتَلِطُوا بِالنَّاسِ. من أجل أن يحزنه\".",
+  "narrator": "عبد الله بن مسعود",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5627,
+   "printed_page": "4/ 1718",
+   "number": "2184"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "4/ 1718",
+    "number": "2184"
+   },
+   {
+    "book": "صحيح البخاري"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "5350",
+  "status": "found",
+  "text": "عن ابن عمر، عن النبي ﷺ قال \"لَا يُقِيمُ الرَّجُلُ الرَّجُلَ مِنْ مَقْعَدِهِ ثُمَّ يجلس فيه. ولكن تفسحوا وتوسعوا\".",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5615,
+   "printed_page": "4/ 1714",
+   "number": "2177"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم - ت عبد الباقي",
+    "printed_page": "4/ 1714",
+    "number": "2177"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 61",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "5352",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ عَنِ النَّبِيِّ ﷺ قَالَ: «يُسَلِّمُ الصَّغِيرُ عَلَى الْكَبِيرِ، وَالْمَارُّ عَلَى الْقَاعِدِ، وَالْقَلِيلُ عَلَى الْكَثِيرِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9329,
+   "printed_page": "8/ 52",
+   "number": "6231"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "8/ 52",
+    "number": "6231"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim."
+ },
+ {
+  "sourceId": "5404",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁، عَنِ النَّبِيِّ ﷺ قَالَ: «السَّفَرُ قِطْعَةٌ مِنَ الْعَذَابِ، يَمْنَعُ أَحَدَكُمْ طَعَامَهُ وَشَرَابَهُ وَنَوْمَهُ، فَإِذَا قَضَى نَهْمَتَهُ فَلْيُعَجِّلْ إِلَى أَهْلِهِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 2883,
+   "printed_page": "3/ 8",
+   "number": "1804"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري - ط السلطانية",
+    "printed_page": "3/ 8",
+    "number": "1804"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1526",
+    "number": "1927"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim."
+ }
+]
