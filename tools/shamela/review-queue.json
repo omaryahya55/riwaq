@@ -1,6 +1,6 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 59,
+ "count": 61,
  "items": [
   {
    "sourceId": "10854",
@@ -91,6 +91,13 @@
     "number": "12886"
    },
    "الملف": "out-11.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "8960",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Found in Abu Dawud 5101, but no clean grade: Arnaut's footnote says «رجاله ثقات رجال الشيخين» and adds that it is disputed whether it is connected or mursal («فصحح أبو حاتم والبزار وأبو نعيم وصله، وقال الدارقطني: المرسل أشبه بالصواب»). Left from HadeethEnc for review.",
+   "الملف": "out-16.json",
    "مطبّق": false
   },
   {
@@ -304,6 +311,12 @@
    "sourceId": "6268",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Text: ت محيي الدين (primary). Grade: Arnaut's footnote in ت الأرنؤوط (ط الرسالة). Text from ت محيي الدين (verify_quote verbatim 1726/5063); the Arnaut edition prints «عئ أبي هريرة» (typo), so its text was not used. Grade from Arnaut's footnote; Tirmidhi/Ibn Majah numbers from that footnote.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6386",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text: ت محيي الدين (verify_quote verbatim). Grade: Arnaut's footnote in ت الأرنؤوط (117359/2297, 4/408): «إسناده صحيح»; he cites Bukhari 3083 and Tirmidhi 1815. The input gives two wordings; this is Abu Dawud's first one (the second, «ذهبنا نتلقى رسول الله مع الصبيان إلى ثنية الوداع», is Bukhari's, page 4886) and is not included.",
    "مطبّق": true
   },
   {
