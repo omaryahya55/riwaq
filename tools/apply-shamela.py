@@ -6,9 +6,11 @@ grade, gradeBy, primary{book, book_id, page_id, printed_page, number}, takhrij[]
 - النص منقول حرفياً من صفحة الشاملة (من الصحابي لين آخر المتن)، ما نعدّل فيه ولا حرف.
 - اللي ما لقيناه في الشاملة (status != found) يبقى من الموسوعة زي ما هو، ونطبع عدده.
 - السياق (وقت العرض) والوسوم تبقى زي ما هي.
+- مصدر كل حديث (الكتاب ومؤلفه ووفاته والطبعة والمحقق) من tools/shamela/books.json (فهرس الشاملة نفسه)،
+  ويتعبّى حتى للأحاديث اللي طبّقناها قبل. المحقق اللي ما ذكره الفهرس يبقى فاضي (نكتفي باسم الطبعة).
 
 الاستخدام:
-    python tools/apply-shamela.py out-01.json out-02.json ...
+    python tools/apply-shamela.py tools/shamela/out-*.json tools/shamela/cloud-*.json
 لو رجعنا شغلنا import-hadeethenc.py (يرجّع نص الموسوعة)، نعيد تشغيل هذا بعده بنفس الملفات (tools/shamela/).
 """
 import json
@@ -17,6 +19,7 @@ import re
 import sys
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "web", "content", "approved.json")
+BOOKS = os.path.join(os.path.dirname(__file__), "shamela", "books.json")
 MARKERS = re.compile(r"\(¬[٠-٩0-9]+\)")  # علامات الحواشي لو بقت (مو من النص)
 
 
@@ -28,8 +31,16 @@ def main():
             if r.get("status") == "found" and r.get("text") and r.get("primary"):
                 found[str(r["sourceId"])] = r
     content = json.load(open(OUT, encoding="utf-8"))
+    books = json.load(open(BOOKS, encoding="utf-8"))
     done = kept = 0
     for x in content["items"]:
+        if x.get("edition") == "المكتبة الشاملة" and x.get("shamela"):
+            b = books.get(str(x["shamela"].get("book_id")))
+            if b:
+                x["sourceBook"] = b
+            else:
+                print("⚠ كتاب مو في books.json:", x["shamela"])
+            continue
         if x.get("edition") != "HadeethEnc.com":
             continue
         r = found.get(str(x.get("sourceId")))
@@ -55,6 +66,13 @@ def main():
         x["shamela"] = {"book_id": p.get("book_id"), "page_id": p.get("page_id"), "book": p["book"]}
         x["verifyUrl"] = f"https://shamela.ws/book/{p.get('book_id')}/{p.get('page_id')}"
         x["verified"] = bool(r.get("verified"))
+        if r.get("bab"):
+            x["bab"] = r["bab"]
+        b = books.get(str(p.get("book_id")))
+        if b:
+            x["sourceBook"] = b
+        else:
+            print("⚠ كتاب مو في books.json:", p.get("book_id"), p["book"])
         done += 1
     content["_readme"] = ("المحتوى الديني المعتمد. منقول حرفياً بدون تعديل: الأحاديث وفضل الصحابة من كتب السنة في المكتبة الشاملة "
                           "(صحيح البخاري ط السلطانية، صحيح مسلم ت عبد الباقي، والسنن) مع الراوي والعزو والتخريج والدرجة، "

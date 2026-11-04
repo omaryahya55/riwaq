@@ -179,13 +179,28 @@
       t.book + (t.printed_page ? " (" + arNum(t.printed_page) + ")" : "") + (t.number ? " رقم " + arNum(t.number) : "")).join("، ");
   }
 
+  /*
+   * مصدر الحديث من فهرس الشاملة (tools/shamela/books.json): الكتاب، ومؤلفه ووفاته، والطبعة ومحققها.
+   * مثل: صحيح مسلم، لمسلم (ت ٢٦١هـ)، تحقيق: عبد الباقي. والطبعة اللي ما ذكر الفهرس محققها نكتب اسمها (ط السلطانية).
+   */
+  function bookLine(b) {
+    if (!b || !b.title) return "";
+    const ed = String(b.edition || "").trim();
+    const edition = b.editor ? "تحقيق: " + b.editor : ed.startsWith("ت ") ? "تحقيق: " + ed.slice(2) : ed;
+    // لام الجر: البخاري ← للبخاري، أبو داود ← لأبي داود، مسلم ← لمسلم
+    const a = String(b.author || "");
+    const li = a.startsWith("ال") ? "ل" + a.slice(1) : a.startsWith("أبو ") ? "لأبي " + a.slice(4) : "ل" + a;
+    return [b.title, a ? li + (b.death ? " (ت " + arNum(b.death) + "هـ)" : "") : "", edition].filter(Boolean).join("، ");
+  }
+
   // سطر المصدر وتحته المرجع (تخريج الكتاب نفسه، حرفياً). full=false: المصدر بس
   function credit(x, full) {
     if (Array.isArray(x.takhrij)) {
       const g = x.grade ? x.grade + (x.gradeBy ? " (" + x.gradeBy + ")" : "") : "";
+      const src = x.sourceBook ? "المصدر: " + bookLine(x.sourceBook) + " · " + x.edition : x.edition ? "المصدر: " + x.edition : "";
       return {
         source: [x.narrator && "الراوي: " + x.narrator, x.attribution, g].filter(Boolean).join(" · "),
-        reference: full ? [takhrijLine(x), x.edition ? "المصدر: " + x.edition : ""].filter(Boolean).join(" · ") : ""
+        reference: full ? [takhrijLine(x), src].filter(Boolean).join(" · ") : ""
       };
     }
     if (x.type === "hadith" || x.type === "sahabi") {
