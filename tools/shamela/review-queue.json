@@ -1,6 +1,6 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 52,
+ "count": 59,
  "items": [
   {
    "sourceId": "10854",
@@ -70,6 +70,13 @@
    "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
    "التفصيل": "Found Muslim 947 (page_id 2130, printed 2/ 654) with matn «مَا مِنْ مَيِّتٍ تُصَلِّي عَلَيْهِ أُمَّةٌ مِنَ الْمُسْلِمِينَ يَبْلُغُونَ مِائَةً…», but this edition prints the isnad as «عَنْ عَبْدِ اللَّهِ بن يزيد رضيع عائشة، عن النبي ﷺ قَالَ» (Aisha is not named as the narrator; the page then adds a second route via أنس بن مالك). The input says narrator = Aisha, so the narrator cannot be confirmed from Shamela; decide manually.",
    "الملف": "out-03.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "66172",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Text verified verbatim (Ibn Majah 2300), but the grade is contested and has no clean named grader: the footnote ends with an unnamed «صحيح»; it also quotes al-Fath «أخرجه الطحاوي وصححه ابن حبان والحاكم», and then al-Zawa'id: «في إسناده الجريري … وقد اختلط بأخرة، ويزيد بن هارون روى عنه بعد الاختلاط». Left from HadeethEnc for review.",
+   "الملف": "out-15.json",
    "مطبّق": false
   },
   {
@@ -312,9 +319,28 @@
    "مطبّق": true
   },
   {
+   "sourceId": "65211",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text: ت محيي الدين (verify_quote verbatim). Grade: Arnaut's footnote in ت الأرنؤوط (117359/3082, 5/501): «إسناده صحيح» (he adds that al-Hakim and al-Diya' graded it sahih and al-Dhahabi hasan). Tirmidhi/Ibn Majah numbers from the input refs.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65224",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "إسناده صحيح على شرط البخاري",
+   "قائلها": "محقق الطبعة (الإحسان، ط الرسالة)",
+   "مطبّق": true
+  },
+  {
    "sourceId": "65304",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Bukhari 4628 (Tafsir, Surat al-An'am). A parallel route at Bukhari 9/ 101 (7313) says «هَاتَانِ أَهْوَنُ أَوْ أَيْسَرُ», so 4628 is the one matching the input. Printed «﵁» after Jabir copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65403",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote: the footnote markers (¬٢)(¬٣) sit inside the page text, so each half was verified verbatim separately; the markers are excluded. «عن أبيه» = Hisham b. Urwa from his father Urwa. Grade from the editor's footnote ٣ («إسناده صحيح على شرط مسلم»); the editor is not named on the page.",
    "مطبّق": true
   },
   {
@@ -330,9 +356,22 @@
    "مطبّق": true
   },
   {
+   "sourceId": "65892",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "إسناده صحيح على شرط الشيخين",
+   "قائلها": "محقق الطبعة (الإحسان، ط الرسالة)",
+   "مطبّق": true
+  },
+  {
    "sourceId": "65915",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Text and grade are from Nasai (Risala). Tirmidhi 2572 (book_id 7895, page_id 4495) has the same matn (with «،» after «الجنة») but prints no grade and only notes a mawquf variant. Ibn Majah 4340 is the number named in Arnaut's footnote, not opened.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "66242",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. This page of Muslim gives the wording as «إذا قام أحدكم» (the previous route) and, in Abu Awana's route, «من قام من مجلسه ثم رجع إليه فهو أحق به».",
    "مطبّق": true
   },
   {
@@ -353,6 +392,12 @@
    "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
    "الدرجة": "صحيح لغيره",
    "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "8961",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. The Shamela page prints the number as «(٤٥٧٥)», evidently a typo for 2575 (neighbouring hadiths in this chapter are 2568–2587); the number here is the corrected one.",
    "مطبّق": true
   }
  ]
