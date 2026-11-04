@@ -564,23 +564,26 @@
       if (mode === "mini") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; paintFocus(); }
       return;
     }
-    setHTML($("mmName"), esc(info.name));
-    setHTML($("mmSub"), info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : ""));
+    root.classList.toggle("mini-resume", !!info.resume);
+    setHTML($("mmName"), esc(info.resume ? "أكمل " + info.name : info.name));
+    setHTML($("mmSub"), info.resume ? esc(info.reciter) + (info.ayah ? " · وقفت عند " + esc(info.ayah) : "") : info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : ""));
     setHTML($("mmToggle"), icon(info.paused ? "tplay" : "tpause"));
     $("mmBar").style.width = info.pct + "%";
     root.querySelectorAll("[data-m]").forEach((e) => e.classList.toggle("on", mode === "mini" && +e.dataset.m === miniIdx));
   }
   function miniKey(k) {
-    if (k === "left") miniIdx = Math.min(4, miniIdx + 1); // من اليمين لليسار: اليسار = اللي بعده (الاسم، تقديم، تشغيل، تأخير، إغلاق)
-    if (k === "right") miniIdx = Math.max(0, miniIdx - 1);
+    const resume = !!(window.Tilawa && Tilawa.info() && Tilawa.info().resume);
+    // بطاقة «أكمل»: بس الاسم والتشغيل والإغلاق (٠ و٢ و٤)
+    if (k === "left") { miniIdx = Math.min(4, miniIdx + 1); if (resume && (miniIdx === 1 || miniIdx === 3)) miniIdx++; } // من اليمين لليسار: اليسار = اللي بعده (الاسم، تقديم، تشغيل، تأخير، إغلاق)
+    if (k === "right") { miniIdx = Math.max(0, miniIdx - 1); if (resume && (miniIdx === 1 || miniIdx === 3)) miniIdx--; }
     if (k === "up") { mode = "nav"; row = 0; col = 0; }
     if (k === "down" || k === "back") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; }
     if (k === "ok") {
       if (miniIdx === 0) { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; row = 1; col = 0; paintFocus(); renderStatus(); }); return true; }
       if (miniIdx === 1) Tilawa.seek(1);
-      if (miniIdx === 2) Tilawa.toggle();
+      if (miniIdx === 2) { if (resume) Tilawa.resume(); else Tilawa.toggle(); }
       if (miniIdx === 3) Tilawa.seek(-1);
-      if (miniIdx === 4) Tilawa.stop();
+      if (miniIdx === 4) { if (resume) Tilawa.dismiss(); else Tilawa.stopAndDismiss(); }
       setTimeout(renderMini, 300);
     }
     paintFocus(); renderMini();

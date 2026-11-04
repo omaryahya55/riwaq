@@ -296,7 +296,7 @@
 .m-text small { font-size: 24px; }
 .m-date small, .m-prayers label { font-size: 26px; }
 .m-next, .m-prayers { font-size: 30px; }
-#stage.moment #home.has-mini .m-mini { top: 462px; right: 80px; }
+#stage.moment #home.has-mini .m-mini { top: 462px; right: 80px; width: 840px; }
 
 /* الرفوف تحت: مكان الشي ثابت، والمحدد يكبر، والباقي يخف حواليه لين يرجع التركيز */
 #stage.moment #home .m-rows { bottom: 104px; transition: opacity .22s linear, transform .28s var(--focus-ease); }
@@ -421,3 +421,6 @@
 .m-mini { width: 840px; }
 .mm-ctl { display: flex; direction: ltr; gap: 10px; flex: none; align-items: center; }
 .mm-ctl .mm-btn .ic { font-size: 30px; }
+
+/* بطاقة «أكمل» في المشغّل الصغير: ما فيه تقديم وتأخير لأنه ما فيه تشغيل */
+#stage.moment #home.mini-resume .mm-btn[data-m="1"], #stage.moment #home.mini-resume .mm-btn[data-m="3"] { display: none; }

@@ -34,7 +34,7 @@
   const timing = {};
   function ayahNow(st) {
     const rc = reciter(st.edition);
-    if (!rc || !rc.t || st.verse || !st.surah || !st.on) return null;
+    if (!rc || !rc.t || st.verse || !st.surah) return null;
     const key = rc.t + ":" + st.surah;
     if (!(key in timing)) {
       timing[key] = null;
@@ -52,6 +52,16 @@
     return a > 0 ? { n: a, of: (surah(st.surah) || {}).ayahs || t.length } : null;
   }
   const ayahText = (st) => { const a = ayahNow(st); return a ? `الآية ${F.digits(a.n)} من ${F.digits(a.of)}` : ""; };
+  // من وين نكمل: آخر تلاوة وقفت في نصها
+  const DISMISS = "riwaq.tlDismiss";
+  const dismissKey = (l) => `${l.edition}|${l.surah}|${l.at}`;
+  function resumeInfo() {
+    const l = resumeItem();
+    if (!l) return null;
+    try { if (localStorage.getItem(DISMISS) === dismissKey(l)) return null; } catch (e) { /* بدون تخزين: تبقى ظاهرة */ }
+    const rc = reciter(l.edition), s = surah(l.surah);
+    return { l, rc, s, ayah: l.verse ? "" : ayahText({ edition: l.edition, surah: l.surah, pos: l.at }) };
+  }
 
   const clock = (ms) => {
     const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), z = (n) => String(n).padStart(2, "0");
@@ -91,13 +101,14 @@
 
   function renderReciters() {
     const list = rows(), box = $("rs");
-    const l = resumeItem(), sig = list.length + "|" + (l ? l.edition + l.surah : "");
+    const l = resumeItem(), sig = list.length + "|" + (l ? l.edition + l.surah + "|" + ayahText({ edition: l.edition, surah: l.surah, pos: l.at }) : "");
     if (box.__sig !== sig) {
       box.__sig = sig;
       box.innerHTML = list.map((r) => {
         if (r.resume) {
           const s = surah(l.surah), rc = reciter(l.edition);
-          return `<div class="tl-r tl-resume"><b>أكمل ${esc(s.name)}</b><small>${esc(fullName(rc))}</small></div>`;
+          const ay = ayahText({ edition: l.edition, surah: l.surah, pos: l.at });
+          return `<div class="tl-r tl-resume"><b>أكمل ${esc(s.name)}${ay ? " · " + esc(ay) : ""}</b><small>${esc(fullName(rc))}</small></div>`;
         }
         return `<div class="tl-r"><b>${esc(r.name)}</b>${r.style ? `<small>${esc(r.style)}</small>` : ""}</div>`;
       }).join("");
@@ -172,7 +183,7 @@
   }
   function stop() {
     pending = null;
-    if (native()) Riwaq.tilawaStop(); else demo = Object.assign({}, demo, { on: false });
+    if (native()) Riwaq.tilawaStop(); else demo = Object.assign({}, demo, { on: false, last: { edition: demo.edition, surah: demo.surah, verse: false, rate: 128, at: demo.pos } });
   }
   function act(id) {
     const st = state(), rc = reciter(st.edition);
@@ -273,10 +284,26 @@
     playing() { return !!state().on; },
     toggle() { if (state().on) act("toggle"); },
     seek(dir) { if (state().on && native()) Riwaq.tilawaSeek(dir); },
+    // أكمل من حيث وقفت (من الواجهة، بدون ما تدخل شاشة القرآن)
+    resume() {
+      const l = resumeItem(), rc = l && reciter(l.edition);
+      if (!rc) return;
+      if (!box) { build(); renderSurahs(true); }
+      play(rc, l.surah, l.at);
+    },
+    // إغلاق المشغّل بدون استكمال: يوقف ويخفي بطاقة «أكمل» لهذا المكان
+    dismiss() {
+      const l = resumeItem();
+      if (l) try { localStorage.setItem(DISMISS, dismissKey(l)); } catch (e) { /* بدون تخزين */ }
+    },
+    stopAndDismiss() { stop(); setTimeout(() => this.dismiss(), 700); },
     // للمشغّل الصغير في الواجهة
     info() {
       const st = state();
-      if (!st.on) return null;
+      if (!st.on) {
+        const r = resumeInfo();
+        return r && r.s && r.rc ? { resume: true, name: r.s.name, reciter: fullName(r.rc), ayah: r.ayah, paused: true, loading: false, pct: 0 } : null;
+      }
       const s = surah(st.surah), rc = reciter(st.edition);
       const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
       return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
