@@ -16,3 +16,7 @@ We have turned this data source off by default until we hear from you.
 Thank you,
 Riwaq project
 riwaq.app1@gmail.com
+
+---
+
+**الرد (2026-11-04):** صاحب المشروع أبلغنا إنهم ردّوا وسمحوا باستخدام دوري روشن. نص الرد في بريد المشروع (riwaq.app1@gmail.com)، وما نسخناه هنا. شغّلنا الدوري افتراضياً: بدون شعارات، والمصدر مكتوب على الشاشة، والطلبات متباعدة ومخزّنة.

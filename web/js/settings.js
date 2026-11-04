@@ -404,6 +404,7 @@
     cfg.albumMode = $("albumMode").value;
     cfg.continueRow = $("continueRow").checked;
     cfg.roshn = $("roshn").checked;
+    cfg.roshnAsked = true;
   }
 
   // ===== رسالة من الجوال (تيليقرام) =====

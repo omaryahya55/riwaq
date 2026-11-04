@@ -135,7 +135,7 @@
 /* ===== ساعة الليل: الوقت والتاريخ والصلاة الجاية بس، في النص ===== */
 /* الهادئة (الافتراضي): نفس معلومات شاشة الانتظار (الساعة، التاريخين، الصلوات، النص ومصدره، الطقس، المباراة، المناسبة)
    على الصورة مباشرة بدون صناديق، وأكبر عشان تنقرا من الكنبة. الأسعار والدوريات والأخبار في الكاملة بس */
-#stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-ticker, #stage.calm .s-now, #stage.calm .s-prayers, #stage.calm .s-clock-city { display: none !important; }
+#stage.calm .s-prices, #stage.calm .s-side, #stage.calm .s-week, #stage.calm .s-now, #stage.calm .s-prayers, #stage.calm .s-clock-city { display: none !important; }
 #stage.calm:not(.nightclock) .s-mprayers { display: flex; margin-top: 10px; justify-content: flex-start; }
 #stage.calm:not(.nightclock) .s-mnext { display: block; margin-top: 16px; font-size: 34px; }
 #stage.calm .s-date { top: 60px; right: 80px; }
@@ -194,3 +194,10 @@
 #stage.nightclock .s-bottom .label { justify-content: center; }
 
 .s-mprayers, .s-mnext { display: none; }
+
+/* شريط الأخبار في الهادئة: سطر واحد خفيف فوق الخانات اللي تحت، يظهر بس لو اخترت مصادر أخبار */
+#stage.calm .s-ticker { top: auto; bottom: 268px; right: 80px; left: 80px; height: 60px; border: 0; gap: 18px; }
+#stage.calm .s-ticker-label { font-size: 24px; color: var(--ink); opacity: .86; }
+#stage.calm .s-ticker-move { font-size: 30px; color: var(--ink); }
+#stage.calm .s-ticker-move span { padding: 0 40px 6px; }
+#stage.nightclock .s-ticker, #stage.frame .s-ticker { display: none !important; }

@@ -25,7 +25,7 @@
 | [gold-api.com](https://gold-api.com/terms) | الذهب والفضة وبيتكوين وإيثريوم | الاستخدام التجاري مسموح |
 | [Frankfurter](https://frankfurter.dev/) | أسعار العملات (البنوك المركزية) | مجاني للتجاري |
 | [openfootball](https://github.com/openfootball/football.json) | مواعيد ونتائج الدوريات الأوروبية الخمسة | ملكية عامة (CC0) |
-| [TheSportsDB](https://www.thesportsdb.com/docs_terms_of_use.php) | دوري روشن (مطفي افتراضياً) | المفتاح المجاني للتطوير، والنشر في المتجر يحتاج اشتراك، ونسخة GitHub سألناهم عنها (docs/requests/thesportsdb.md). لازم نذكر المصدر. **بدون شعارات الأندية** |
+| [TheSportsDB](https://www.thesportsdb.com/docs_terms_of_use.php) | دوري روشن (شغّال، بإذنهم) | المفتاح المجاني للتطوير، والنشر في المتجر يحتاج اشتراك، ونسخة GitHub سألناهم عنها (docs/requests/thesportsdb.md). لازم نذكر المصدر. **بدون شعارات الأندية** |
 
 ## المحتوى الديني
 

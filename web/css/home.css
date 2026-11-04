@@ -416,3 +416,8 @@
 /* لوحة اختيار التطبيقات فوق النص: نخفي اللي تحتها عشان ما يبان من خلالها */
 #stage.moment #home.pk-open .m-text, #stage.moment #home.pk-open .m-top, #stage.moment #home.pk-open .m-chips, #stage.moment #home.pk-open .m-cap { visibility: hidden; }
 .picker { background: linear-gradient(90deg, rgba(10,10,14,.985) 82%, rgba(10,10,14,.94)); }
+
+/* المشغّل الصغير: أزرار التشغيل من اليسار لليمين مثل كل المشغّلات (إغلاق، ١٠ قبل، تشغيل، ١٠ بعد) */
+.m-mini { width: 840px; }
+.mm-ctl { display: flex; direction: ltr; gap: 10px; flex: none; align-items: center; }
+.mm-ctl .mm-btn .ic { font-size: 30px; }

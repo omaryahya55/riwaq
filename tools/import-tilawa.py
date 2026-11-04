@@ -80,6 +80,16 @@ def main():
     missing = [(r[1], r[2]) for r, got in results if not got]
     assert not missing, f"ناقص: {missing}"
     reciters = [got for _, got in results]
+    # رقم الشيخ في توقيت الآيات (ayat_timing): من نفس مجلد الصوت. اللي ما له توقيت ما يعرض رقم آية
+    reads = get("https://www.mp3quran.net/api/v3/ayat_timing/reads")
+    by = {}
+    for rd in reads:
+        mm = re.search(r"/audio/([a-z0-9-]+/r\d{1,2})/", rd.get("folder_url", ""))
+        if mm and rd.get("soar_count", 0) >= 114:
+            by[mm[1]] = rd["id"]
+    for rc in reciters:
+        if rc["id"] in by:
+            rc["t"] = by[rc["id"]]
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "web", "js", "tilawa-data.js")
     with open(path, "w", encoding="utf-8") as f:
         f.write("/* الشيوخ (mp3quran.net) والسور (Al Quran Cloud). يتولد من tools/import-tilawa.py، لا تعدله */\n")

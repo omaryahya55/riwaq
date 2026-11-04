@@ -160,8 +160,12 @@
       <div class="m-text soft-shadow" data-k="mText"></div>
       <div class="m-mini" data-k="mMini">
         <div class="mm-info" data-m="0"><b data-k="mmName"></b><small data-k="mmSub"></small></div>
-        <div class="mm-btn" data-m="1" data-k="mmToggle"></div>
-        <div class="mm-btn" data-m="2">${icon("tclose")}</div>
+        <div class="mm-ctl">
+          <div class="mm-btn" data-m="4">${icon("tclose")}</div>
+          <div class="mm-btn" data-m="3">${icon("tback10")}</div>
+          <div class="mm-btn" data-m="2" data-k="mmToggle"></div>
+          <div class="mm-btn" data-m="1">${icon("tfwd10")}</div>
+        </div>
         <div class="mm-bar"><i data-k="mmBar"></i></div>
       </div>
       <div class="m-rows">
@@ -550,7 +554,7 @@
   }
 
   // المشغّل الصغير: يتبعك في الواجهة وقت التلاوة. تنزل له بالأسهم (فوق التطبيقات وتحت الأزرار)
-  let tlOn = false, miniIdx = 1;
+  let tlOn = false, miniIdx = 2;
   function renderMini() {
     if (!moment() || !root) return;
     const info = window.Tilawa ? Tilawa.info() : null;
@@ -561,20 +565,22 @@
       return;
     }
     setHTML($("mmName"), esc(info.name));
-    setHTML($("mmSub"), info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.paused ? " · متوقفة" : ""));
+    setHTML($("mmSub"), info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : ""));
     setHTML($("mmToggle"), icon(info.paused ? "tplay" : "tpause"));
     $("mmBar").style.width = info.pct + "%";
     root.querySelectorAll("[data-m]").forEach((e) => e.classList.toggle("on", mode === "mini" && +e.dataset.m === miniIdx));
   }
   function miniKey(k) {
-    if (k === "left") miniIdx = Math.min(2, miniIdx + 1); // من اليمين لليسار: اليسار = اللي بعده
+    if (k === "left") miniIdx = Math.min(4, miniIdx + 1); // من اليمين لليسار: اليسار = اللي بعده (الاسم، تقديم، تشغيل، تأخير، إغلاق)
     if (k === "right") miniIdx = Math.max(0, miniIdx - 1);
     if (k === "up") { mode = "nav"; row = 0; col = 0; }
     if (k === "down" || k === "back") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; }
     if (k === "ok") {
       if (miniIdx === 0) { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; row = 1; col = 0; paintFocus(); renderStatus(); }); return true; }
-      if (miniIdx === 1) Tilawa.toggle();
-      if (miniIdx === 2) Tilawa.stop();
+      if (miniIdx === 1) Tilawa.seek(1);
+      if (miniIdx === 2) Tilawa.toggle();
+      if (miniIdx === 3) Tilawa.seek(-1);
+      if (miniIdx === 4) Tilawa.stop();
       setTimeout(renderMini, 300);
     }
     paintFocus(); renderMini();
@@ -904,7 +910,7 @@
       if (mode === "tilawa") return Tilawa.key(k);
       if (mode === "mini") return miniKey(k);
       // المشغّل بين الأزرار فوق وصف التطبيقات
-      if (mode === "nav" && tlOn && moment() && ((k === "up" && row === 1) || (k === "down" && row === 0))) { mode = "mini"; miniIdx = 1; paintFocus(); renderMini(); return true; }
+      if (mode === "nav" && tlOn && moment() && ((k === "up" && row === 1) || (k === "down" && row === 0))) { mode = "mini"; miniIdx = 2; paintFocus(); renderMini(); return true; }
       if (mode === "pin") {
         if (/^d[0-9]$/.test(k)) {
           pinDigits[pinPos] = +k[1];

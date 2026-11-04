@@ -30,6 +30,29 @@
     pending = null;
     return st;
   };
+  // رقم الآية: توقيت كل آية من mp3quran (يتحمل مرة لكل سورة وشيخ، وينحفظ في الذاكرة). اللي ما له توقيت ما يطلع له رقم
+  const timing = {};
+  function ayahNow(st) {
+    const rc = reciter(st.edition);
+    if (!rc || !rc.t || st.verse || !st.surah || !st.on) return null;
+    const key = rc.t + ":" + st.surah;
+    if (!(key in timing)) {
+      timing[key] = null;
+      try {
+        fetch(`https://www.mp3quran.net/api/v3/ayat_timing?surah=${st.surah}&read=${rc.t}`).then((r) => (r.ok ? r.json() : [])).then((j) => {
+          timing[key] = Array.isArray(j) ? j.filter((x) => x && x.ayah > 0).map((x) => [+x.start_time, +x.end_time, +x.ayah]) : [];
+        }).catch(() => { timing[key] = []; });
+      } catch (e) { timing[key] = []; }
+    }
+    const t = timing[key];
+    if (!t || !t.length) return null;
+    const pos = st.pos || 0;
+    let lo = 0, hi = t.length - 1, a = 0;
+    while (lo <= hi) { const m = (lo + hi) >> 1; if (t[m][0] <= pos) { a = t[m][2]; lo = m + 1; } else hi = m - 1; }
+    return a > 0 ? { n: a, of: (surah(st.surah) || {}).ayahs || t.length } : null;
+  }
+  const ayahText = (st) => { const a = ayahNow(st); return a ? `الآية ${F.digits(a.n)} من ${F.digits(a.of)}` : ""; };
+
   const clock = (ms) => {
     const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), z = (n) => String(n).padStart(2, "0");
     return F.digits(h ? `${h}:${z(m)}:${z(s % 60)}` : `${m}:${z(s % 60)}`);
@@ -120,7 +143,7 @@
     const rc = reciter(st.edition), s = surah(st.surah);
     $("pr").textContent = fullName(rc);
     $("pn").textContent = s ? s.name : "";
-    $("pm").textContent = st.loading ? "نجهز التلاوة…" : st.paused ? "متوقفة مؤقتاً" : st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : "";
+    $("pm").textContent = st.loading ? "نجهز التلاوة…" : (st.paused ? "متوقفة مؤقتاً · " : "") + (st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st)) || (st.paused ? "متوقفة مؤقتاً" : "");
     const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
     $("pb").style.width = Math.min(100, pct) + "%";
     $("pa").textContent = st.verse || !st.dur ? "" : clock(st.pos);
@@ -249,13 +272,14 @@
     },
     playing() { return !!state().on; },
     toggle() { if (state().on) act("toggle"); },
+    seek(dir) { if (state().on && native()) Riwaq.tilawaSeek(dir); },
     // للمشغّل الصغير في الواجهة
     info() {
       const st = state();
       if (!st.on) return null;
       const s = surah(st.surah), rc = reciter(st.edition);
       const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
-      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct) };
+      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
     },
     stop
   };

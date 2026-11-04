@@ -19,7 +19,8 @@
     icalUrl: "",             // العنوان السري لتقويم قوقل (iCal). سرّي: على الجهاز بس، وما يمر على السيرفر الوسيط
     showSalary: false,       // الراتب وحساب المواطن: مطفيين افتراضياً، وينشغلون من الإعدادات (للسعودية بس)
     homeLayout: "moment",    // الواجهة: moment = لوحة اللحظة (عنصر حي واحد)، classic = البطاقات الثلاث
-    roshn: false,            // دوري روشن من TheSportsDB: مطفي لين يردون علينا بخصوص المفتاح المجاني (docs/requests)
+    roshn: true,             // دوري روشن من TheSportsDB: ردّوا علينا وسمحوا (2026-11-04، نقلها صاحب المشروع، docs/requests/thesportsdb.md)
+    roshnAsked: false,       // true = صاحب الشاشة اختار بنفسه من الإعدادات، فنحترم اختياره (قبلها كان مطفي افتراضياً)
     continueRow: true,       // صف "أكمل المشاهدة": اسم وأيقونة بدون صور
     prayerAdjust: {},        // تعديل وقت كل صلاة لمسجد الحي (±١٠ دقايق)
     iqama: {},               // دقايق الإقامة بعد الأذان لكل صلاة (فاضي = التقريبي)
@@ -80,7 +81,8 @@
     o.v = 3;
     o.showSalary = legacy ? false : bool(c.showSalary, d.showSalary);
     o.homeLayout = !legacy && c.homeLayout === "classic" ? "classic" : "moment";
-    o.roshn = bool(c.roshn, d.roshn);
+    o.roshnAsked = c.roshnAsked === true;
+    o.roshn = o.roshnAsked ? bool(c.roshn, d.roshn) : true;
     o.continueRow = bool(c.continueRow, d.continueRow);
     const mins = (v, lo, hi) => { const out = {}; if (v && typeof v === "object") for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) { const n = +v[k]; if (Number.isInteger(n) && n >= lo && n <= hi && n !== 0) out[k] = n; } return out; };
     o.prayerAdjust = mins(c.prayerAdjust, -10, 10);
