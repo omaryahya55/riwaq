@@ -1,6 +1,6 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 45,
+ "count": 52,
  "items": [
   {
    "sourceId": "10854",
@@ -231,6 +231,12 @@
    "مطبّق": true
   },
   {
+   "sourceId": "5652",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. Muslim: Hammam's sahifa «هذا ما حدثنا أبو هريرة». Bukhari 7235 has the «إما محسنا فلعله يزداد» wording.",
+   "مطبّق": true
+  },
+  {
    "sourceId": "5733",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "The printed text also states Anas's own practice before «وزعم أن النبي ﷺ كان لا يرد الطيب»; the Prophet's practice is the same as the input. Bukhari 2582 is a parallel with the same meaning.",
@@ -243,15 +249,48 @@
    "مطبّق": true
   },
   {
+   "sourceId": "5905",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim (isnad: محمد بن زياد «سمعت أبا هريرة يقول»). WORDING DIFFERS from the input: the input has «مرجل رأسه، يختال في مشيته … فهو يتجلجل في الأرض»; Bukhari 5789 reads «مرجل جمته … فهو يتجلل». The exact input wording was not found in Bukhari or Muslim (Muslim 2088 on page 5397 reads differently again).",
+   "مطبّق": true
+  },
+  {
    "sourceId": "5914",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Muslim 2706 (50) has the main text exactly as in the input, including «والبخل». The extra riwaya in the input («وضلع الدين وغلبة الرجال») is not on this page and is not included. Bukhari wording (e.g. 4/ 23, 8/ 79) differs («والجبن والهرم» without «والبخل»); its number not looked up. Printed «حَدَّثَنَا أَنَسِ بْنِ مَالِكٍ» (with the odd case) as is.",
    "مطبّق": true
   },
   {
+   "sourceId": "5961",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "verify_quote verbatim. WORDING DIFFERS from the input: the input has «الجدب … فبادروا بها نقيها … طرق الدواب» which is a different route (page_id 4893 has «فبادروا بها نقيها»); this page reads «في السنة فأسرعوا عليها في السير».",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5966",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "صحيح لغيره",
+   "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
+   "مطبّق": true
+  },
+  {
    "sourceId": "6040",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Bukhari 6616 has the matn without Sufyan's remark. The input's «وفي رواية قال سفيان: أشك أني زدت واحدة منها» is a different Bukhari route (8/ 75, in Kitab al-Da'awat, wording differs: «الحديث ثلاث زدت أنا واحدة») and is not included in the text. Muslim page/number not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6256",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن غريب",
+   "قائلها": "الترمذي",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6262",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "صحيح لغيره",
+   "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
    "مطبّق": true
   },
   {
@@ -306,6 +345,13 @@
    "sourceId": "6986",
    "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
    "الدرجة": "إسناده محتمل للتحسين",
+   "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "8944",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "صحيح لغيره",
    "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
    "مطبّق": true
   }
