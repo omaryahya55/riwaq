@@ -620,7 +620,7 @@
   "narrator": "أبو هريرة",
   "attribution": "رواه أبو داود والترمذي وابن ماجه وأحمد",
   "grade": "صحيح",
-  "gradeBy": "الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط ٥/ ٥٠٠: إسناده صحيح)",
+  "gradeBy": "شعيب الأرنؤوط (ط الرسالة)",
   "primary": {
    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
    "book_id": 1726,
@@ -630,21 +630,18 @@
   },
   "takhrij": [
    {
-    "book": "سنن أبي داود",
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
     "printed_page": "3/ 321",
     "number": "3658"
    },
    {
-    "book": "سنن الترمذي",
-    "number": "2840"
-   },
-   {
-    "book": "سنن ابن ماجه",
-    "number": "261"
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "5/ 500",
+    "number": "3658"
    }
   ],
   "verified": true,
-  "note": "Text from ت محيي الدين (verify_quote verbatim 1726/5063); the Arnaut edition prints «عئ أبي هريرة» (typo), so its text was not used. Grade from Arnaut's footnote; Tirmidhi/Ibn Majah numbers from that footnote."
+  "note": "Text: ت محيي الدين (primary). Grade: Arnaut's footnote in ت الأرنؤوط (ط الرسالة). Text from ت محيي الدين (verify_quote verbatim 1726/5063); the Arnaut edition prints «عئ أبي هريرة» (typo), so its text was not used. Grade from Arnaut's footnote; Tirmidhi/Ibn Majah numbers from that footnote."
  },
  {
   "sourceId": "6379",
@@ -683,7 +680,7 @@
   "narrator": "أبو الدرداء",
   "attribution": "رواه أبو داود",
   "grade": "إسناده محتمل للتحسين",
-  "gradeBy": "الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط ٧/ ٢٦٧)",
+  "gradeBy": "شعيب الأرنؤوط (ط الرسالة)",
   "primary": {
    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
    "book_id": 1726,
@@ -693,13 +690,18 @@
   },
   "takhrij": [
    {
-    "book": "سنن أبي داود",
+    "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
     "printed_page": "4/ 277",
+    "number": "4905"
+   },
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "7/ 267",
     "number": "4905"
    }
   ],
   "verified": true,
-  "note": "Text from ت محيي الدين (verify_quote verbatim 1726/6709); the Arnaut edition prints «أنَّ العبد». Input grade was صحيح; Arnaut: إسناده محتمل للتحسين (al-Muhyiddin footnote: حسن, unnamed)."
+  "note": "Text: ت محيي الدين (primary). Grade: Arnaut's footnote in ت الأرنؤوط (ط الرسالة). Text from ت محيي الدين (verify_quote verbatim 1726/6709); the Arnaut edition prints «أنَّ العبد». Input grade was صحيح; Arnaut: إسناده محتمل للتحسين (al-Muhyiddin footnote: حسن, unnamed)."
  },
  {
   "sourceId": "8885",
