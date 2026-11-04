@@ -408,3 +408,11 @@
 .mm-btn { transition: transform .2s var(--dock-ease); }
 .mm-btn.on { transform: scale(1.14); }
 @media (prefers-reduced-motion: reduce) { .reader-box, .mm-btn, .quick-list .qk, .picker-scroll .pk { transition: none; } }
+
+/* القوائم ما تطلع بره الإطار: التكبير يوسّع الصف للجهة اليسار (الأصل اليمين)، فنوسّع منطقة القص بقدره (البادينق ينعكس بالهامش السالب فما يتغير مكان المحتوى) */
+.picker-list { margin-inline: -36px; padding: 16px 36px; margin-top: 14px; height: 790px; }
+.tl-reciters { padding: 8px 40px; }
+.quick-list { padding: 8px 0; }
+/* لوحة اختيار التطبيقات فوق النص: نخفي اللي تحتها عشان ما يبان من خلالها */
+#stage.moment #home.pk-open .m-text, #stage.moment #home.pk-open .m-top, #stage.moment #home.pk-open .m-chips, #stage.moment #home.pk-open .m-cap { visibility: hidden; }
+.picker { background: linear-gradient(90deg, rgba(10,10,14,.985) 82%, rgba(10,10,14,.94)); }

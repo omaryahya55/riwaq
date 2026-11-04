@@ -360,6 +360,7 @@
     const shown = t && !["picker", "reader", "quick", "pin", "day", "tilawa", "mini"].includes(mode);
     if (shown) t.classList.add(mode === "move" ? "moving" : "focus");
     focusEl = shown ? t : null;
+    root.classList.toggle("pk-open", mode === "picker");
     if (moment()) { dockRow(shown); queueAmbient(); }
     if (moment()) {
       // المحدد يبرز والباقي يخف حواليه، بس والتركيز في الصف نفسه

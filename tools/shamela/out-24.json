@@ -1,0 +1,684 @@
+[
+ {
+  "sourceId": "65848",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ عُمَرَ ﵄ قَالَ: «بَعَثَ النَّبِيُّ ﷺ بَعْثًا، وَأَمَّرَ عَلَيْهِمْ أُسَامَةَ بْنَ زَيْدٍ، فَطَعَنَ بَعْضُ النَّاسِ فِي إِمَارَتِهِ، فَقَالَ النَّبِيُّ ﷺ أَنْ تَطْعُنُوا فِي إِمَارَتِهِ، فَقَدْ كُنْتُمْ تَطْعُنُونَ فِي إِمَارَةِ أَبِيهِ مِنْ قَبْلُ، وَايْمُ اللهِ إِنْ كَانَ لَخَلِيقًا لِلْإِمَارَةِ، وَإِنْ كَانَ لَمِنْ أَحَبِّ النَّاسِ إِلَيَّ، وَإِنَّ هَذَا لَمِنْ أَحَبِّ النَّاسِ إِلَيَّ بَعْدَهُ».",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5664,
+   "printed_page": "5/ 23",
+   "number": "3730"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 23",
+    "number": "3730"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text has «أَنْ تَطْعُنُوا» (typo for إِنْ) and ﵄ after the name, copied as is. Muslim not looked up."
+ },
+ {
+  "sourceId": "65859",
+  "status": "found",
+  "text": "عَنْ أَسْمَاءَ ﵂ قَالَتْ: «صَنَعْتُ سُفْرَةَ رَسُولِ اللهِ ﷺ فِي بَيْتِ أَبِي بَكْرٍ حِينَ أَرَادَ أَنْ يُهَاجِرَ إِلَى الْمَدِينَةِ قَالَتْ: فَلَمْ نَجِدْ لِسُفْرَتِهِ وَلَا لِسِقَائِهِ مَا نَرْبِطُهُمَا بِهِ فَقُلْتُ لِأَبِي بَكْرٍ: وَاللهِ مَا أَجِدُ شَيْئًا أَرْبِطُ بِهِ إِلَّا نِطَاقِي قَالَ: فَشُقِّيهِ بِاثْنَيْنِ فَارْبِطِيهِ: بِوَاحِدٍ السِّقَاءَ وَبِالْآخَرِ السُّفْرَةَ فَفَعَلْتُ فَلِذَلِكَ سُمِّيَتْ ذَاتَ النِّطَاقَيْنِ.»",
+  "narrator": "أسماء بنت أبي بكر",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 4718,
+   "printed_page": "4/ 54",
+   "number": "2979"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 54",
+    "number": "2979"
+   }
+  ],
+  "verified": true,
+  "note": "The printed text names her only as «أَسْمَاءَ»."
+ },
+ {
+  "sourceId": "66371",
+  "status": "found",
+  "text": "عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ، عَنِ النَّبِيِّ ﷺ. قَالَ \"يَأْتِي عَلَى النَّاسِ زمان. يغزو فئام من الناس. فيقال لهم: فيكم من رأى رسول الله ﷺ؟ فيقولون: نعم. فيفتح لهم. ثم يغزو فئام من الناس. فيقال لهم: فيكم من رأى من صحب رسول الله ﷺ؟ فيقولون: نعم. فيفتح لهم. ثم يغزو فئام من الناس. فيقال لهم: هل فيكم من رأى من صحب من صحب رسول الله ﷺ؟ فيقولون: نعم. فيفتح لهم\".",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6402,
+   "printed_page": "4/ 1962",
+   "number": "2532"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1962",
+    "number": "2532"
+   }
+  ],
+  "verified": true,
+  "note": "Text from Muslim (ت عبد الباقي), printed without diacritics in most words, copied as is. Bukhari wording not looked up."
+ },
+ {
+  "sourceId": "66373",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ ﵁ قَالَ: «صَعِدَ النَّبِيُّ ﷺ إِلَى أُحُدٍ، وَمَعَهُ أَبُو بَكْرٍ وَعُمَرُ وَعُثْمَانُ، فَرَجَفَ بِهِمْ فَضَرَبَهُ بِرِجْلِهِ قَالَ: اثْبُتْ أُحُدُ، فَمَا عَلَيْكَ إِلَّا نَبِيٌّ، أَوْ صِدِّيقٌ، أَوْ شَهِيدَانِ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5612,
+   "printed_page": "5/ 11",
+   "number": "3686"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 11",
+    "number": "3686"
+   }
+  ],
+  "verified": true,
+  "note": "The matn crosses a page break (5/ 11 to 5/ 12) after «نَبِيٌّ،»; the marker was removed and each half verified."
+ },
+ {
+  "sourceId": "5825",
+  "status": "found",
+  "text": "عَنْ فَضَالَةَ بْنِ عُبَيْدٍ، «أَنَّ رَسُولَ اللهِ ﷺ كَانَ إِذَا صَلَّى بِالنَّاسِ يَخِرُّ رِجَالٌ مِنْ قَامَتِهِمْ فِي الصَّلَاةِ مِنَ الْخَصَاصَةِ،» وَهُمْ أَصْحَابُ الصُّفَّةِ حَتَّى تَقُولَ الْأَعْرَابُ: هَؤُلَاءِ مَجَانِينُ أَوْ مَجَانُونَ، فَإِذَا صَلَّى رَسُولُ اللهِ ﷺ انْصَرَفَ إِلَيْهِمْ فَقَالَ: لَوْ تَعْلَمُونَ مَا لَكُمْ عِنْدَ اللهِ لَأَحْبَبْتُمْ أَنْ تَزْدَادُوا فَاقَةً وَحَاجَةً قَالَ فَضَالَةُ: وَأَنَا يَوْمَئِذٍ مَعَ رَسُولِ اللهِ ﷺ.",
+  "narrator": "فضالة بن عبيد",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 4154,
+   "printed_page": "4/ 179",
+   "number": "2368"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 179",
+    "number": "2368"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is Tirmidhi's own «هذا حديث حسن صحيح» (input said صحيح). Matn ends with an extra sentence «قال فضالة: وأنا يومئذ...» not in the input. Page break marker (180) removed; both halves verified."
+ },
+ {
+  "sourceId": "8407",
+  "status": "found",
+  "text": "سَمِعْتُ خَالِدَ بْنَ الْوَلِيدِ يَقُولُ: «لَقَدِ انْقَطَعَتْ فِي يَدِي يَوْمَ مُؤْتَةَ تِسْعَةُ أَسْيَافٍ، فَمَا بَقِيَ فِي يَدِي إِلَّا صَفِيحَةٌ يَمَانِيَةٌ.»",
+  "narrator": "خالد بن الوليد",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 6283,
+   "printed_page": "5/ 144",
+   "number": "4265"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 144",
+    "number": "4265"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at «سَمِعْتُ» (Qays bin Abi Hazim narrating)."
+ },
+ {
+  "sourceId": "11164",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «إِنَّ اللهَ جَعَلَ الْحَقَّ عَلَى لِسَانِ عُمَرَ» وَقَلْبِهِ. وَقَالَ ابْنُ عُمَرَ: مَا نَزَلَ بِالنَّاسِ أَمْرٌ قَطُّ، فَقَالُوا فِيهِ وَقَالَ فِيهِ عُمَرُ أَوْ قَالَ ابْنُ الْخَطَّابِ، فِيهِ شَكَّ خَارِجَةُ، إِلَّا نَزَلَ فِيهِ الْقُرْآنُ عَلَى نَحْوِ مَا قَالَ عُمَرُ.",
+  "narrator": "ابن عمر",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "حسن صحيح غريب من هذا الوجه",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 6262,
+   "printed_page": "6/ 57",
+   "number": "3682"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "6/ 57",
+    "number": "3682"
+   },
+   {
+    "book": "مسند أحمد"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is Tirmidhi's «حسن صحيح غريب من هذا الوجه» (input said صحيح). Printed matn has «وقلبه» outside the quote marks and the added «أو قال ابن الخطاب، فيه شك خارجة»."
+ },
+ {
+  "sourceId": "11187",
+  "status": "notfound",
+  "reason": "Tirmidhi 3763 (ط بشار 6/ 111): printed grade is «هذا حديث غريب ... وقد ضعّفه يحيى بن معين وغيره» (about Abdullah bin Jafar); no one in the book grades it صحيح, so the input grade cannot be supported."
+ },
+ {
+  "sourceId": "11194",
+  "status": "notfound",
+  "reason": "Tirmidhi 3752 (ط بشار 6/ 104): printed grade is «هذا حديث غريب، لا نعرفه إلا من حديث مجالد»; no صحيح grade from any grader in the book or footnotes."
+ },
+ {
+  "sourceId": "11199",
+  "status": "notfound",
+  "reason": "Tirmidhi 3799 (ط بشار 6/ 133): printed grade is «هذا حديث غريب، لا نعرفه إلا من هذا الوجه» with no صحيح grade; no footnote grading on the page."
+ },
+ {
+  "sourceId": "11201",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، قَالَ: قَالَ رَسُولُ اللهِ ﷺ: \" ابْنَا الْعَاصِ مُؤْمِنَانِ: عَمْرٌو وَهِشَامٌ \"",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أحمد",
+  "grade": "حسن",
+  "gradeBy": "محققو مسند أحمد - ط الرسالة (حاشية: إسناده حسن)",
+  "primary": {
+   "book": "مسند أحمد - ط الرسالة",
+   "book_id": 25794,
+   "page_id": 6500,
+   "printed_page": "13/ 409",
+   "number": "8042"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد - ط الرسالة",
+    "printed_page": "13/ 409",
+    "number": "8042"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is the muhaqqiqs' footnote «إسناده حسن» (input said صحيح); footnote also quotes Hakim «صحيح على شرط مسلم». Footnote marker (٣) removed."
+ },
+ {
+  "sourceId": "65586",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ، عَنِ النَّبِيِّ ﷺ قَالَ: \" إِنَّ لِلْقَبْرِ ضَغْطَةً، وَلَوْ كَانَ أَحَدٌ نَاجِيًا مِنْهَا، نَجَا مِنْهَا سَعْدُ بْنُ مُعَاذٍ \"",
+  "narrator": "عائشة",
+  "attribution": "رواه أحمد",
+  "grade": "صحيح",
+  "gradeBy": "محققو مسند أحمد - ط الرسالة (حاشية: حديث صحيح)",
+  "primary": {
+   "book": "مسند أحمد - ط الرسالة",
+   "book_id": 25794,
+   "page_id": 20468,
+   "printed_page": "40/ 327",
+   "number": "24283"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد - ط الرسالة",
+    "printed_page": "40/ 327",
+    "number": "24283"
+   },
+   {
+    "book": "صحيح البخاري",
+    "number": "1987"
+   }
+  ],
+  "verified": true,
+  "note": "Footnote marker (١) between «نَجَا مِنْهَا» and «سَعْدُ» removed; both halves verified. In this narration Aisha is reached via an unnamed man (عن إنسان) per Ahmad; footnote says other routes name him."
+ },
+ {
+  "sourceId": "65837",
+  "status": "found",
+  "text": "عَنْ أَبِي حُمَيْدٍ، عَنِ النَّبِيِّ ﷺ قَالَ: «إِنَّ خَيْرَ دُورِ الْأَنْصَارِ دَارُ بَنِي النَّجَّارِ، ثُمَّ عَبْدِ الْأَشْهَلِ، ثُمَّ دَارُ بَنِي الْحَارِثِ، ثُمَّ بَنِي سَاعِدَةَ، وَفِي كُلِّ دُورِ الْأَنْصَارِ خَيْرٌ فَلَحِقْنَا سَعْدَ بْنَ عُبَادَةَ، فَقَالَ أَبُو أُسَيْدٍ: أَلَمْ تَرَ أَنَّ نَبِيَّ اللهِ ﷺ خَيَّرَ الْأَنْصَارَ، فَجَعَلَنَا أَخِيرًا؟ فَأَدْرَكَ سَعْدٌ النَّبِيَّ ﷺ فَقَالَ: يَا رَسُولَ اللهِ، خُيِّرَ دُورُ الْأَنْصَارِ فَجُعِلْنَا آخِرًا، فَقَالَ: أَوَلَيْسَ بِحَسْبِكُمْ أَنْ تَكُونُوا مِنَ الْخِيَارِ».",
+  "narrator": "أبو حميد الساعدي",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5748,
+   "printed_page": "5/ 33",
+   "number": "3791"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 33",
+    "number": "3791"
+   }
+  ],
+  "verified": true,
+  "note": "Printed wording differs slightly from the input (فقال أبو أسيد ... vs فقال: أبا أسيد). Narrator printed as «أَبِي حُمَيْدٍ» only. Muslim not looked up."
+ },
+ {
+  "sourceId": "65853",
+  "status": "found",
+  "text": "عَنْ جَابِرٍ ﵁: سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ: «اهْتَزَّ الْعَرْشُ لِمَوْتِ سَعْدِ بْنِ مُعَاذٍ.» وَعَنِ الْأَعْمَشِ: حَدَّثَنَا أَبُو صَالِحٍ، عَنْ جَابِرٍ، عَنِ النَّبِيِّ ﷺ مِثْلَهُ. فَقَالَ رَجُلٌ لِجَابِرٍ: فَإِنَّ الْبَرَاءَ يَقُولُ: اهْتَزَّ السَّرِيرُ فَقَالَ: إِنَّهُ كَانَ بَيْنَ هَذَيْنِ الْحَيَّيْنِ ضَغَائِنُ، سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ: اهْتَزَّ عَرْشُ الرَّحْمَنِ لِمَوْتِ سَعْدِ بْنِ مُعَاذٍ.",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5765,
+   "printed_page": "5/ 35",
+   "number": "3803"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 35",
+    "number": "3803"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text names him only «جابر». Includes the printed sentence about the second route from al-Amash. Muslim not looked up."
+ },
+ {
+  "sourceId": "66325",
+  "status": "notfound",
+  "reason": "Muslim 2528 (ت عبد الباقي 4/ 1960, page_id 6397) prints «آخى بين أبي عبيدة بن الجراح وبين طلحة» not «أبي طلحة»; the person differs from the input so the match cannot be asserted."
+ },
+ {
+  "sourceId": "3576",
+  "status": "found",
+  "text": "أَنَسُ بْنُ مَالِكٍ : «أَنَّ أُمَّ الرُّبَيِّعِ بِنْتَ الْبَرَاءِ وَهِيَ أُمُّ حَارِثَةَ بْنِ سُرَاقَةَ أَتَتِ النَّبِيَّ ﷺ فَقَالَتْ: يَا نَبِيَّ اللهِ أَلَا تُحَدِّثُنِي عَنْ حَارِثَةَ وَكَانَ قُتِلَ يَوْمَ بَدْرٍ أَصَابَهُ سَهْمٌ غَرْبٌ فَإِنْ كَانَ فِي الْجَنَّةِ صَبَرْتُ وَإِنْ كَانَ غَيْرَ ذَلِكَ اجْتَهَدْتُ عَلَيْهِ فِي الْبُكَاءِ قَالَ: يَا أُمَّ حَارِثَةَ إِنَّهَا جِنَانٌ فِي الْجَنَّةِ وَإِنَّ ابْنَكِ أَصَابَ الْفِرْدَوْسَ الْأَعْلَى.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 4450,
+   "printed_page": "4/ 20",
+   "number": "2809"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 20",
+    "number": "2809"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text has «يا نبي الله» and adds «أصابه سهم غرب»; input differs slightly in wording."
+ },
+ {
+  "sourceId": "3024",
+  "status": "found",
+  "text": "عَنْ عُمَرَ ﵁: «أَنَّهُ جَاءَ إِلَى الْحَجَرِ الْأَسْوَدِ فَقَبَّلَهُ، فَقَالَ: إِنِّي أَعْلَمُ أَنَّكَ حَجَرٌ لَا تَضُرُّ وَلَا تَنْفَعُ، وَلَوْلَا أَنِّي رَأَيْتُ النَّبِيَّ ﷺ يُقَبِّلُكَ مَا قَبَّلْتُكَ».",
+  "narrator": "عمر بن الخطاب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2567,
+   "printed_page": "2/ 149",
+   "number": "1597"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 149",
+    "number": "1597"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim not looked up."
+ },
+ {
+  "sourceId": "4507",
+  "status": "found",
+  "text": "عَنْ عَائِشَةَ ﵂، زَوْجِ النَّبِيِّ ﷺ: «أَنَّ حَمْزَةَ بْنَ عَمْرٍو الْأَسْلَمِيَّ، قَالَ لِلنَّبِيِّ ﷺ: أَأَصُومُ فِي السَّفَرِ؟ وَكَانَ كَثِيرَ الصِّيَامِ، فَقَالَ: إِنْ شِئْتَ فَصُمْ، وَإِنْ شِئْتَ فَأَفْطِرْ.»",
+  "narrator": "عائشة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3100,
+   "printed_page": "3/ 33",
+   "number": "1943"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 33",
+    "number": "1943"
+   }
+  ],
+  "verified": true,
+  "note": "Matn crosses a page break (3/ 33 to 3/ 34) after «السَّفَرِ؟»; marker removed, both halves verified."
+ },
+ {
+  "sourceId": "11161",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ قَالَ: «قَالَ رَسُولُ اللهِ ﷺ لِأَبِي بَكْرٍ» وَعُمَرَ: هَذَانِ سَيِّدَا كُهُولِ أَهْلِ الْجَنَّةِ مِنَ الْأَوَّلِينَ وَالْآخِرِينَ إِلَّا النَّبِيِّينَ وَالْمُرْسَلِينَ.",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 6229,
+   "printed_page": "6/ 45",
+   "number": "3664"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "6/ 45",
+    "number": "3664"
+   }
+  ],
+  "verified": true,
+  "note": "Grade is Tirmidhi's «هذا حديث حسن، غريب من هذا الوجه» (input said صحيح)."
+ },
+ {
+  "sourceId": "65697",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ ﵄ قَالَ: «كُنَّا فِي زَمَنِ النَّبِيِّ ﷺ لَا نَعْدِلُ بِأَبِي بَكْرٍ أَحَدًا، ثُمَّ عُمَرَ، ثُمَّ عُثْمَانَ، ثُمَّ نَتْرُكُ أَصْحَابَ النَّبِيِّ ﷺ لَا نُفَاضِلُ بَيْنَهُمْ».",
+  "narrator": "ابن عمر",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5624,
+   "printed_page": "5/ 14",
+   "number": "3697"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 14",
+    "number": "3697"
+   }
+  ],
+  "verified": true,
+  "note": "Page marker (15) falls inside the sanad before the matn; matn is whole on the page."
+ },
+ {
+  "sourceId": "3030",
+  "status": "found",
+  "text": "أَنَسَ بْنَ مَالِكٍ يَقُولُ: كَانَ رَسُولُ اللَّهِ ﷺ يَدْخُلُ الْخَلَاءَ. فَأَحْمِلُ أَنَا، وَغُلَامٌ نَحْوِي، إِدَاوَةً من ماء. وعنزة. فيستنجي بالماء.",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 566,
+   "printed_page": "1/ 227",
+   "number": "271"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 227",
+    "number": "271"
+   }
+  ],
+  "verified": true,
+  "note": "Text from Muslim (ت عبد الباقي) because the input wording (غلام نحوي) matches it; Bukhari's wording not looked up. Printed with partial diacritics, copied as is."
+ },
+ {
+  "sourceId": "3039",
+  "status": "found",
+  "text": "أَنَسُ بْنُ سِيرِينَ قَالَ «اسْتَقْبَلْنَا أَنَسًا حِينَ قَدِمَ مِنَ الشَّأْمِ، فَلَقِينَاهُ بِعَيْنِ التَّمْرِ، فَرَأَيْتُهُ يُصَلِّي عَلَى حِمَارٍ وَوَجْهُهُ مِنْ ذَا الْجَانِبِ، يَعْنِي عَنْ يَسَارِ الْقِبْلَةِ، فَقُلْتُ: رَأَيْتُكَ تُصَلِّي لِغَيْرِ الْقِبْلَةِ؟ فَقَالَ: لَوْلَا أَنِّي رَأَيْتُ رَسُولَ اللهِ ﷺ فَعَلَهُ لَمْ أَفْعَلْهُ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 1792,
+   "printed_page": "2/ 45",
+   "number": "1100"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 45",
+    "number": "1100"
+   }
+  ],
+  "verified": true,
+  "note": "Narrator is Anas bin Malik; the text opens with the reporter Anas bin Sirin. Printed ending is «فعله لم أفعله» (input: «يفعله ما فعلته»); Muslim has a similar wording, 1/ 488. Wording of input differs slightly."
+ },
+ {
+  "sourceId": "3043",
+  "status": "found",
+  "text": "عَنْ أَنَسِ بْنِ مَالِكٍ. قال: خرجت مع جرير بن عبد الله البجلي في سفر. فكان يخدمني. فقلت له: لا تفعل. فقال: إني قد رأيت الأنصار تصنع برسول الله ﷺ شيئا، آليت أن لا أصحب أحدا منهم إلا خدمته.",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6363,
+   "printed_page": "4/ 1951",
+   "number": "2513"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1951",
+    "number": "2513"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim text; Muslim adds after the matn «زاد ابن المثنى وابن بشار...» which is excluded. Bukhari not looked up."
+ },
+ {
+  "sourceId": "3227",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ؛ قَالَ: إِنِّي لَا آلُو أَنْ أُصَلِّيَ بِكُمْ كَمَا رَأَيْتُ رسول الله ﷺ يصلي بِنَا. قَالَ فَكَانَ أَنَسٌ يَصْنَعُ شَيْئًا لَا أَرَاكُمْ تَصْنَعُونَهُ. كَانَ إِذَا رَفَعَ رَأْسَهُ مِنَ الرُّكُوعِ انْتَصَبَ قَائِمًا. حَتَّى يَقُولَ الْقَائِلُ: قَدْ نَسِيَ. وَإِذَا رَفَعَ رَأْسَهُ مِنَ السَّجْدَةِ مَكَثَ. حَتَّى يَقُولَ الْقَائِلُ: قَدْ نَسِيَ.",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 1007,
+   "printed_page": "1/ 344",
+   "number": "472"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 344",
+    "number": "472"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim wording; the input says «كما كان رسول الله يصلي بنا» and «قال ثابت» while the printed text has «كما رأيت» and «قال فكان أنس». Bukhari (1/ 164) not taken."
+ },
+ {
+  "sourceId": "3305",
+  "status": "found",
+  "text": "عَنْ أُسَيْدِ بْنِ حُضَيْرٍ؛ أَنَّ رَجُلًا مِنْ الْأَنْصَارِ خَلَا بِرَسُولِ اللَّهِ ﷺ. فَقَالَ: أَلَا تَسْتَعْمِلُنِي كَمَا اسْتَعْمَلْتَ فُلَانًا؟ فَقَالَ (إِنَّكُمْ سَتَلْقَوْنَ بَعْدِي أَثَرَةً. فَاصْبِرُوا حَتَّى تَلْقَوْنِي عَلَى الْحَوْضِ).",
+  "narrator": "أسيد بن حضير",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4717,
+   "printed_page": "3/ 1474",
+   "number": "1845"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1474",
+    "number": "1845"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad is Qatada from Anas from Usayd bin Hudayr; the sahabi narrator is Usayd (input lists both). Bukhari not looked up."
+ },
+ {
+  "sourceId": "3466",
+  "status": "found",
+  "text": "أَنَسٌ ﵁ «أَنَّ رَجُلَيْنِ مِنْ أَصْحَابِ النَّبِيِّ ﷺ خَرَجَا مِنْ عِنْدِ النَّبِيِّ ﷺ فِي لَيْلَةٍ مُظْلِمَةٍ وَمَعَهُمَا مِثْلُ الْمِصْبَاحَيْنِ يُضِيئَانِ بَيْنَ أَيْدِيهِمَا فَلَمَّا افْتَرَقَا صَارَ مَعَ كُلِّ وَاحِدٍ مِنْهُمَا وَاحِدٌ حَتَّى أَتَى أَهْلَهُ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5561,
+   "printed_page": "4/ 207",
+   "number": "3639"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 207",
+    "number": "3639"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 100",
+    "number": "465"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text adds «يضيئان بين أيديهما». Same hadith also at 465 (1/ 100)."
+ },
+ {
+  "sourceId": "3502",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، قَالَ: أَتَى عَلَيَّ رَسُولُ اللَّهِ ﷺ وَأَنَا أَلْعَبُ مَعَ الْغِلْمَانِ. قَالَ فَسَلَّمَ عَلَيْنَا. فَبَعَثَنِي إِلَى حَاجَةٍ. فَأَبْطَأْتُ عَلَى أُمِّي. فَلَمَّا جِئْتُ قَالَتْ: مَا حَبَسَكَ؟ قُلْتُ: بَعَثَنِي رَسُولُ اللَّهِ ﷺ لِحَاجَةٍ. قَالَتْ: مَا حَاجَتُهُ؟ قُلْتُ: إِنَّهَا سِرٌّ. قَالَتْ: لَا تُحَدِّثَنَّ بِسِرِّ رَسُولِ اللَّهِ ﷺ أَحَدًا. قَالَ أَنَسٌ: وَاللَّهِ! لَوْ حَدَّثْتُ بِهِ أَحَدًا لَحَدَّثْتُكَ، يَا ثَابِتُ!",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه مسلم وروى البخاري بعضه مختصرا",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6312,
+   "printed_page": "4/ 1929",
+   "number": "2482"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1929",
+    "number": "2482"
+   }
+  ],
+  "verified": true,
+  "note": "Printed «لا تحدثن» (input: «لا تخبرن»). Text starts at «عَنْ أَنَسٍ» after Thabit. Bukhari's abridged version not looked up."
+ },
+ {
+  "sourceId": "3570",
+  "status": "found",
+  "text": "سَمِعْتُ الْبَرَاءَ ﵁ يَقُولُ: «أَتَى النَّبِيَّ ﷺ رَجُلٌ مُقَنَّعٌ بِالْحَدِيدِ فَقَالَ: يَا رَسُولَ اللهِ أُقَاتِلُ وَأُسْلِمُ قَالَ: أَسْلِمْ ثُمَّ قَاتِلْ. فَأَسْلَمَ ثُمَّ قَاتَلَ فَقُتِلَ فَقَالَ رَسُولُ اللهِ ﷺ: عَمِلَ قَلِيلًا وَأُجِرَ كَثِيرًا.»",
+  "narrator": "البراء بن عازب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 4448,
+   "printed_page": "4/ 20",
+   "number": "2808"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 20",
+    "number": "2808"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at «سَمِعْتُ» (Abu Ishaq narrating). Muslim not looked up."
+ },
+ {
+  "sourceId": "4925",
+  "status": "found",
+  "text": "عَنْ أَبِيهِ، وَكَانَ أَبُوهُ مِنْ أَهْلِ بَدْرٍ، قَالَ: «جَاءَ جِبْرِيلُ إِلَى النَّبِيِّ ﷺ فَقَالَ: مَا تَعُدُّونَ أَهْلَ بَدْرٍ فِيكُمْ؟ قَالَ: مِنْ أَفْضَلِ الْمُسْلِمِينَ. أَوْ كَلِمَةً نَحْوَهَا، قَالَ: وَكَذَلِكَ مَنْ شَهِدَ بَدْرًا مِنَ الْمَلَائِكَةِ».",
+  "narrator": "رفاعة بن رافع الزرقي",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 6000,
+   "printed_page": "5/ 80",
+   "number": "3992"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "5/ 80",
+    "number": "3992"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad: Muadh bin Rifaa bin Rafi al-Zuraqi from his father (Rifaa), who was a Badri; text begins at «عن أبيه»."
+ },
+ {
+  "sourceId": "11190",
+  "status": "found",
+  "text": "قَالَ أَنَسٌ: قَالَ رَسُولُ اللَّهِ ﷺ \"إِنَّ لِكُلِّ أُمَّةٍ أَمِينًا. وَإِنَّ أَمِينَنَا، أَيَّتُهَا الْأُمَّةُ، أَبُو عُبَيْدَةَ بْنُ الْجَرَّاحِ\".",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6186,
+   "printed_page": "4/ 1881",
+   "number": "2419"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1881",
+    "number": "2419"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim text (Bukhari 5/ 25 has a page break inside the matn; not used)."
+ }
+]

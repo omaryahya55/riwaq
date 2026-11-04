@@ -1,6 +1,6 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 111,
+ "count": 125,
  "items": [
   {
    "sourceId": "10854",
@@ -21,6 +21,27 @@
     "number": "2016"
    },
    "الملف": "out-11.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "11187",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Tirmidhi 3763 (ط بشار 6/ 111): printed grade is «هذا حديث غريب ... وقد ضعّفه يحيى بن معين وغيره» (about Abdullah bin Jafar); no one in the book grades it صحيح, so the input grade cannot be supported.",
+   "الملف": "out-24.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "11194",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Tirmidhi 3752 (ط بشار 6/ 104): printed grade is «هذا حديث غريب، لا نعرفه إلا من حديث مجالد»; no صحيح grade from any grader in the book or footnotes.",
+   "الملف": "out-24.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "11199",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Tirmidhi 3799 (ط بشار 6/ 133): printed grade is «هذا حديث غريب، لا نعرفه إلا من هذا الوجه» with no صحيح grade; no footnote grading on the page.",
+   "الملف": "out-24.json",
    "مطبّق": false
   },
   {
@@ -206,6 +227,13 @@
    "مطبّق": false
   },
   {
+   "sourceId": "66325",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Muslim 2528 (ت عبد الباقي 4/ 1960, page_id 6397) prints «آخى بين أبي عبيدة بن الجراح وبين طلحة» not «أبي طلحة»; the person differs from the input so the match cannot be asserted.",
+   "الملف": "out-24.json",
+   "مطبّق": false
+  },
+  {
    "sourceId": "8960",
    "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
    "التفصيل": "Found in Abu Dawud 5101, but no clean grade: Arnaut's footnote says «رجاله ثقات رجال الشيخين» and adds that it is disputed whether it is connected or mursal («فصحح أبو حاتم والبزار وأبو نعيم وصله، وقال الدارقطني: المرسل أشبه بالصواب»). Left from HadeethEnc for review.",
@@ -246,6 +274,13 @@
    "مطبّق": true
   },
   {
+   "sourceId": "11164",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن صحيح غريب من هذا الوجه",
+   "قائلها": "الترمذي",
+   "مطبّق": true
+  },
+  {
    "sourceId": "11195",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "verify_quote verbatim. صحيح البخاري. النص يبدأ من «عليًّا» لأن الإسناد المطبوع «سمعت عليًّا ﵁ يقول» (الراوي عبد الله بن شداد). بحثت بهذا اللفظ في صحيح مسلم فلم أجده فلم أثبت «متفق عليه» لأني لم أقرأه في مسلم.",
@@ -270,6 +305,24 @@
    "مطبّق": true
   },
   {
+   "sourceId": "3030",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text from Muslim (ت عبد الباقي) because the input wording (غلام نحوي) matches it; Bukhari's wording not looked up. Printed with partial diacritics, copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3039",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Narrator is Anas bin Malik; the text opens with the reporter Anas bin Sirin. Printed ending is «فعله لم أفعله» (input: «يفعله ما فعلته»); Muslim has a similar wording, 1/ 488. Wording of input differs slightly.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3043",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim text; Muslim adds after the matn «زاد ابن المثنى وابن بشار...» which is excluded. Bukhari not looked up.",
+   "مطبّق": true
+  },
+  {
    "sourceId": "3058",
    "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
    "الدرجة": "حسن صحيح غريب",
@@ -280,6 +333,12 @@
    "sourceId": "3079",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Muslim's printed text names the Companion only as «أبيه» (father of Abdullah ibn Abi Qatada = Abu Qatada), so text starts there. Wording matches Muslim; Bukhari's wording was not found with this phrasing in book 1681.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3227",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim wording; the input says «كما كان رسول الله يصلي بنا» and «قال ثابت» while the printed text has «كما رأيت» and «قال فكان أنس». Bukhari (1/ 164) not taken.",
    "مطبّق": true
   },
   {
@@ -302,9 +361,21 @@
    "مطبّق": true
   },
   {
+   "sourceId": "3466",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed text adds «يضيئان بين أيديهما». Same hadith also at 465 (1/ 100).",
+   "مطبّق": true
+  },
+  {
    "sourceId": "3479",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "Page-break marker ⦗١٠١⦘ removed from the middle (two halves verified separately). Bukhari's printed text ends at «المشرق» without «والمغرب» (the input has it, matching Muslim's wording); Muslim's page was not found by search, so its number is not given.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3576",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed text has «يا نبي الله» and adds «أصابه سهم غرب»; input differs slightly in wording.",
    "مطبّق": true
   },
   {
@@ -656,9 +727,21 @@
    "مطبّق": true
   },
   {
+   "sourceId": "65837",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed wording differs slightly from the input (فقال أبو أسيد ... vs فقال: أبا أسيد). Narrator printed as «أَبِي حُمَيْدٍ» only. Muslim not looked up.",
+   "مطبّق": true
+  },
+  {
    "sourceId": "65842",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "verify_quote verbatim. صحيح البخاري. الرواية لابن عباس يحكي فيها قول علي بن أبي طالب في عمر ﵃، وفي آخرها المرفوع إلى النبي ﷺ «ذهبت أنا وأبو بكر وعمر...». بحثت بهذا اللفظ في صحيح مسلم فلم أجده، فلم أثبت «متفق عليه» لأني لم أقرأه في مسلم.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65848",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed text has «أَنْ تَطْعُنُوا» (typo for إِنْ) and ﵄ after the name, copied as is. Muslim not looked up.",
    "مطبّق": true
   },
   {
@@ -703,6 +786,12 @@
    "sourceId": "66294",
    "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
    "التفصيل": "verify_quote verbatim. Muslim's wording matches the input (incl. «ثم زجر فأسرع حتى خلفها»).",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "66371",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text from Muslim (ت عبد الباقي), printed without diacritics in most words, copied as is. Bukhari wording not looked up.",
    "مطبّق": true
   },
   {
