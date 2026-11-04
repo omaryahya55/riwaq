@@ -1,0 +1,586 @@
+[
+ {
+  "sourceId": "3317",
+  "status": "found",
+  "text": "عن أبي هريرة، قال: كان رسولُ الله ﷺ إذا عَطَس وضَعَ يَدَه - أو ثوبَهُ- على فيهِ، وخَفَضَ -أو غضَّ- بها صوتَهُ.",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أبو داود والترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الأرنؤوط (حديث صحيح، سنن أبي داود ت الأرنؤوط ٥٠٢٩؛ والترمذي: حسن صحيح)",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 4264,
+   "printed_page": "7/ 375",
+   "number": "5029"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 375",
+    "number": "5029"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "2948"
+   }
+  ],
+  "verified": true,
+  "note": "Text ends at «صوتَهُ»; the printed «شَكَّ يحيى» after it is not included. Tirmidhi number 2948 and the Ahmad number come from the editor's footnote only."
+ },
+ {
+  "sourceId": "3356",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «إِذَا لَبِسْتُمْ، وَإِذَا تَوَضَّأْتُمْ، فَابْدَءُوا بِأَيَامِنِكُمْ»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أبو داود واللفظ له، والترمذي وابن ماجه وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الأرنؤوط (إسناده صحيح، سنن أبي داود ت الأرنؤوط ٤١٤١)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 5718,
+   "printed_page": "4/ 70",
+   "number": "4141"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "4/ 70",
+    "number": "4141"
+   }
+  ],
+  "verified": true,
+  "note": "Text copied from the Muhyi al-Din edition (clean printing); the Arnaut edition prints «إذا لَبِسْتُم إذا توضاتُم» (missing waw) so it was not used for the text. The grade is from the Arnaut footnote (isnad sahih, page 6/ 225, page_id 3464 of book 117359); the Muhyi edition footnote only says «صحيح» without naming the grader. Ibn Majah 452 per Arnaut footnote."
+ },
+ {
+  "sourceId": "3415",
+  "status": "found",
+  "text": "عن جندب؛ إن رسول الله ﷺ حدث \"أن رجلا قال: والله! لا يغفر الله لفلان. وإن الله تعالى قال: من ذا الذي يتألى علي أن أغفر لفلان. فإني قد غفرت لفلان. وأحبطت عملك\" أو كما قال.",
+  "narrator": "جندب",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 6617,
+   "printed_page": "4/ 2023",
+   "number": "2621"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2023",
+    "number": "2621"
+   }
+  ],
+  "verified": true,
+  "note": "Only Jundub's narration is copied; the input's second part (Abu Hurayra's «تكلم بكلمة أوبقت دنياه وآخرته») is not on this page and was not looked up. Printed narrator is «جندب» only. Wording «أن أغفر» differs slightly from the input's «أن لا أغفر»."
+ },
+ {
+  "sourceId": "3479",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ : سَمِعَ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «إِنَّ الْعَبْدَ لَيَتَكَلَّمُ بِالْكَلِمَةِ مَا يَتَبَيَّنُ فِيهَا يَزِلُّ بِهَا فِي النَّارِ أَبْعَدَ مِمَّا بَيْنَ الْمَشْرِقِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9712,
+   "printed_page": "8/ 100",
+   "number": "6477"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 100",
+    "number": "6477"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "Page-break marker ⦗١٠١⦘ removed from the middle (two halves verified separately). Bukhari's printed text ends at «المشرق» without «والمغرب» (the input has it, matching Muslim's wording); Muslim's page was not found by search, so its number is not given."
+ },
+ {
+  "sourceId": "3552",
+  "status": "notfound",
+  "reason": "In Sunan Abu Dawud 5200 the printed narration is mawquf on Abu Hurayra (no «قال رسول الله»); Arnaut's footnote says «المرفوع إسناده صحيح، والموقوف رجاله ثقات» (the marfu' is the previous hadith). The input presents it as marfu', so it is not matched."
+ },
+ {
+  "sourceId": "3586",
+  "status": "found",
+  "text": "عَنْ أَبِيهِ قَالَ: قَالَ النَّبِيُّ ﷺ: «الرُّؤْيَا الصَّالِحَةُ مِنَ اللهِ وَالْحُلُمُ مِنَ الشَّيْطَانِ فَإِذَا حَلَمَ أَحَدُكُمْ حُلُمًا يَخَافُهُ فَلْيَبْصُقْ عَنْ يَسَارِهِ وَلْيَتَعَوَّذْ بِاللهِ مِنْ شَرِّهَا فَإِنَّهَا لَا تَضُرُّهُ.»",
+  "narrator": "أبو قتادة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 5141,
+   "printed_page": "4/ 125",
+   "number": "3292"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 125",
+    "number": "3292"
+   },
+   {
+    "book": "صحيح مسلم"
+   }
+  ],
+  "verified": true,
+  "note": "Printed sanad has «عن عبد الله بن أبي قتادة عن أبيه» (father = Abu Qatada), so the text starts at «عن أبيه». Page-break marker ⦗١٢٦⦘ removed (halves verified separately). Muslim not looked up."
+ },
+ {
+  "sourceId": "3602",
+  "status": "found",
+  "text": "عَنْ عُقْبَةَ بْنِ عَامِرٍ قَالَ: «قُلْتُ: يَا رَسُولَ اللهِ مَا النَّجَاةُ؟ قَالَ: امْلِكْ عَلَيْكَ لِسَانَكَ، وَلْيَسَعْكَ بَيْتُكَ، وَابْكِ عَلَى خَطِيئَتِكَ».",
+  "narrator": "عقبة بن عامر",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "حسن",
+  "gradeBy": "الترمذي (هذا حديث حسن)؛ والأرنؤوط في ط الرسالة (حديث حسن، وإسناده ضعيف)",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 4220,
+   "printed_page": "4/ 208",
+   "number": "2406"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "4/ 208",
+    "number": "2406"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "17334"
+   }
+  ],
+  "verified": true,
+  "note": "The input says «صحيح» but the book's own grade is «حسن» (Tirmidhi), and the Risala footnote adds that the isnad is weak (Ali ibn Yazid al-Alhani); no grader in the book says «صحيح», so the grade field follows the book. Ahmad number 17334 is from the Risala footnote."
+ },
+ {
+  "sourceId": "3795",
+  "status": "found",
+  "text": "أَنَّ أَبَا هُرَيْرَةَ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «لَمْ يَبْقَ مِنَ النُّبُوَّةِ إِلَّا الْمُبَشِّرَاتُ، قَالُوا: وَمَا الْمُبَشِّرَاتُ؟ قَالَ: الرُّؤْيَا الصَّالِحَةُ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 10436,
+   "printed_page": "9/ 31",
+   "number": "6990"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 31",
+    "number": "6990"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at «أَنَّ» (Sa'id ibn al-Musayyab narrating that Abu Hurayra said)."
+ },
+ {
+  "sourceId": "4192",
+  "status": "found",
+  "text": "أَنَّ أَبَا هريرة قال: سمعت رسول الله ﷺ يَقُولُ \"مَنْ رَآنِي فِي الْمَنَامِ فَسَيَرَانِي فِي الْيَقَظَةِ. أَوْ لَكَأَنَّمَا رَآنِي فِي الْيَقَظَةِ. لَا يَتَمَثَّلُ الشَّيْطَانُ بِي\".",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5852,
+   "printed_page": "4/ 1775",
+   "number": "2266"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1775",
+    "number": "2266"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 33"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 33"
+   }
+  ],
+  "verified": true,
+  "note": "Wording «أو لكأنما رآني في اليقظة» is Muslim's (Abu Salama narration). Bukhari's page 10444 has a different wording («ولا يتمثل الشيطان بي» without the شك); its number was not read."
+ },
+ {
+  "sourceId": "4243",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ عَنْ رَسُولِ اللهِ ﷺ أَنَّهُ قَالَ: «يُسَلِّمُ الرَّاكِبُ عَلَى الْمَاشِي، وَالْمَاشِي عَلَى الْقَاعِدِ، وَالْقَلِيلُ عَلَى الْكَثِيرِ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9333,
+   "printed_page": "8/ 52",
+   "number": "6233"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 52",
+    "number": "6233"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1703",
+    "number": "2160"
+   }
+  ],
+  "verified": true,
+  "note": "Only the first narration is copied. The input's second part («وللبخاري: يسلم الصغير على الكبير...») is a separate Bukhari hadith on page_id 9329 (printed 8/ 52) and is not in this text. Muslim 2160 is from the chapter title/number seen in search and the Arnaut footnotes, not read from the page."
+ },
+ {
+  "sourceId": "5337",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ عَنِ النَّبِيِّ ﷺ قَالَ: «إِذَا عَطَسَ أَحَدُكُمْ فَلْيَقُلِ الْحَمْدُ لِلهِ، وَلْيَقُلْ لَهُ أَخُوهُ أَوْ صَاحِبُهُ: يَرْحَمُكَ اللهُ، فَإِذَا قَالَ لَهُ: يَرْحَمُكَ اللهُ، فَلْيَقُلْ: يَهْدِيكُمُ اللهُ وَيُصْلِحُ بَالَكُمْ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9316,
+   "printed_page": "8/ 49",
+   "number": "6224"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 49",
+    "number": "6224"
+   }
+  ],
+  "verified": true,
+  "note": "Printed wording has «أخوه أو صاحبه» (the input has «أخوه» only). Page-break marker ⦗٥٠⦘ falls in the sanad before the copied text, so it is not in the text."
+ },
+ {
+  "sourceId": "5347",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ؛ أن رسول الله ﷺ قال \"لا تبدؤوا الْيَهُودَ وَلَا النَّصَارَى بِالسَّلَامِ. فَإِذَا لَقِيتُمْ أَحَدَهُمْ في طريق فاضطروه إلى أضيقه\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5592,
+   "printed_page": "4/ 1707",
+   "number": "2167"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1707",
+    "number": "2167"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5357",
+  "status": "notfound",
+  "reason": "The input attributes it to Ali ibn Abi Talib, but the Bukhari narration with this wording (page_id 8763, printed 7/ 154) is from Abu Hurayra («عَنْ أَبِي هُرَيْرَةَ ﵁ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: إِذَا انْتَعَلَ أَحَدُكُمْ...»). Narrator differs, so not matched."
+ },
+ {
+  "sourceId": "5369",
+  "status": "found",
+  "text": "أبي هريرة؛ إن رسول الله ﷺ قَالَ (لَا يَمْشِ أَحَدُكُمْ فِي نَعْلٍ وَاحِدَةٍ. لِيُنْعِلْهُمَا جَمِيعًا، أَوْ لِيَخْلَعْهُمَا جَمِيعًا).",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5427,
+   "printed_page": "3/ 1660",
+   "number": "2097"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1660",
+    "number": "2097"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 154"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 154"
+   }
+  ],
+  "verified": true,
+  "note": "Wording matches Muslim's. Bukhari's printed text (page_id 8765) differs («ليحفهما أو لينعلهما»); its number was not read."
+ },
+ {
+  "sourceId": "5373",
+  "status": "found",
+  "text": "عَبْدِ اللَّهِ ابن عمرو بن العاص؛ أن رسول الله ﷺ قَالَ: \"مِنَ الْكَبَائِرِ شَتْمُ الرَّجُلِ وَالِدَيْهِ\" قَالُوا: يَا رَسُولَ اللَّهِ! وَهَلْ يَشْتِمُ الرَّجُلُ وَالِدَيْهِ؟ قَالَ \"نَعَمْ. يَسُبُّ أَبَا الرَّجُلِ، فَيَسُبُّ أَبَاهُ. وَيَسُبُّ أُمَّهُ، فَيَسُبُّ أُمَّهُ\".",
+  "narrator": "عبد الله بن عمرو بن العاص",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 224,
+   "printed_page": "1/ 92",
+   "number": "90"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 92",
+    "number": "90"
+   }
+  ],
+  "verified": true,
+  "note": "Printed «ابن» (not «بن»), copied as is."
+ },
+ {
+  "sourceId": "5374",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ، عَنِ النَّبِيِّ ﷺ قَالَ: «مَنْ تَحَلَّمَ بِحُلُْمٍ لَمْ يَرَهُ كُلِّفَ أَنْ يَعْقِدَ بَيْنَ شَعِيرَتَيْنِ، وَلَنْ يَفْعَلَ، وَمَنِ اسْتَمَعَ إِلَى حَدِيثِ قَوْمٍ وَهُمْ لَهُ كَارِهُونَ، أَوْ يَفِرُّونَ مِنْهُ، صُبَّ فِي أُذُنِهِ الْآنُكُ يَوْمَ الْقِيَامَةِ، وَمَنْ صَوَّرَ صُورَةً عُذِّبَ، وَكُلِّفَ أَنْ يَنْفُخَ فِيهَا، وَلَيْسَ بِنَافِخٍ»",
+  "narrator": "ابن عباس",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 10523,
+   "printed_page": "9/ 42",
+   "number": "7042"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 42",
+    "number": "7042"
+   }
+  ],
+  "verified": true,
+  "note": "The matn in Bukhari is longer than the input's excerpt (it also has the dream-lying and picture-making sentences) and has «في أذنه» (the input has «أذنيه»). The text is the whole matn up to «بنافخ»; page-break marker ⦗٤٣⦘ removed and the two halves verified separately. The printed «بِحُلُْمٍ» (extra sukun) is copied as is."
+ },
+ {
+  "sourceId": "5384",
+  "status": "found",
+  "text": "عَنْ قَتَادَةَ قَالَ: «قُلْتُ لِأَنَسٍ: أَكَانَتِ الْمُصَافَحَةُ فِي أَصْحَابِ النَّبِيِّ ﷺ؟ قَالَ: نَعَمْ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 9382,
+   "printed_page": "8/ 59",
+   "number": "6263"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 59",
+    "number": "6263"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text has «أصحاب النبي» (the input has «أصحاب رسول الله»). Qatada is the one asking; the Companion in the printed text is «أنس» only, so the narrator name «أنس بن مالك» is the full form, not printed on the page."
+ },
+ {
+  "sourceId": "5442",
+  "status": "found",
+  "text": "أَبِي مُوسَى، عَنِ النَّبِيِّ ﷺ قال \"إذا مر أحدكم في مسجدنا، أو في سوقنا، ومعه نبل، فليمسك على نصالها بكفه. أن يصيب أحدا من المسلمين منها بشيء\". أو قال \"ليقبض على نصالها\".",
+  "narrator": "أبو موسى",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 6600,
+   "printed_page": "4/ 2019",
+   "number": "2615"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2019",
+    "number": "2615"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 98",
+    "number": "452"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim's printed wording is «في مسجدنا أو في سوقنا» (singular); the input has «من مساجدنا أو أسواقنا... لِيَقْبِضْ على نِصَالِهَا بكفه». Bukhari's page_id 762 has a different wording («فليأخذ على نصالها لا يعقر بكفه مسلما»), its number was not read from the page. Printed narrator is «أبي موسى» (al-Ash'ari per the input)."
+ },
+ {
+  "sourceId": "5501",
+  "status": "found",
+  "text": "أَبِي سَعِيدٍ الْخُدْرِيِّ، عَنِ النَّبِيِّ ﷺ قَالَ \"إِيَّاكُمْ وَالْجُلُوسَ بِالطُّرُقَاتِ\". قَالُوا: يَا رَسُولَ اللَّهِ! مَا لَنَا بُدٌّ مِنْ مَجَالِسِنَا نَتَحَدَّثُ فِيهَا. قَالَ رَسُولُ اللَّهِ ﷺ \"إِذَا أَبَيْتُمْ إِلَّا الْمَجْلِسَ، فَأَعْطُوا الطَّرِيقَ حَقَّهُ\" قَالُوا: وَمَا حَقُّهُ؟ قَالَ \"غَضُّ الْبَصَرِ، وَكَفُّ الْأَذَى، وَرَدُّ السلام، والأمر بالمعروف والنهي عن المنكر\".",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5579,
+   "printed_page": "4/ 1704",
+   "number": "2121"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1704",
+    "number": "2121"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 132"
+   }
+  ],
+  "verified": true,
+  "note": "Wording matches Muslim's («ما لنا بد من مجالسنا»); the input's «فأما إذا أبيتم» is not in Muslim's text («إذا أبيتم إلا المجلس»). Bukhari (page_id 3920) has «ما لنا بد، إنما هي مجالسنا»; its number was not read from the page."
+ },
+ {
+  "sourceId": "5732",
+  "status": "found",
+  "text": "عن أبي هريرة، قال: قال رسول الله ﷺ \"مَنْ عُرِضَ عَلَيْهِ رَيْحَانٌ فَلَا يَرُدُّهُ. فَإِنَّهُ خَفِيفُ الْمَحْمِلِ طَيِّبُ الريح\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5815,
+   "printed_page": "4/ 1766",
+   "number": "2253"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1766",
+    "number": "2253"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "5808",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ عَمْرٍو ﵄: «أَنَّ رَجُلًا سَأَلَ النَّبِيَّ ﷺ: أَيُّ الْإِسْلَامِ خَيْرٌ؟ قَالَ: تُطْعِمُ الطَّعَامَ، وَتَقْرَأُ السَّلَامَ عَلَى مَنْ عَرَفْتَ وَمَنْ لَمْ تَعْرِفْ».",
+  "narrator": "عبد الله بن عمرو",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 27,
+   "printed_page": "1/ 12",
+   "number": "12"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 12",
+    "number": "12"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 15",
+    "number": "28"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 12 has «سأل النبي» as in the input (Bukhari 28 has «سأل رسول الله»). The Muslim narration (printed 1/ 65, no. 39) was not read."
+ },
+ {
+  "sourceId": "5929",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، قَالَ: قَالَ رَسُولُ الله ﷺ \"المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف. وفي كل خير. احرص على ما ينفعك واستعن بالله. ولا تعجز. وإن أصابك شيء فلا تقل: لو أني فعلت كان كذا وكذا. ولكن قل: قدر الله. وما شاء فعل. فإن لو تفتح عمل الشيطان\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 6709,
+   "printed_page": "4/ 2052",
+   "number": "2664"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2052",
+    "number": "2664"
+   }
+  ],
+  "verified": true,
+  "note": "The full matn is copied (it starts «المؤمن القوي خير»); the input starts at «احرص»."
+ },
+ {
+  "sourceId": "5930",
+  "status": "found",
+  "text": "عن أبي هريرة، عن النبي ﷺ قَالَ (إِنَّ أَخْنَعَ اسْمٍ عِنْدَ اللَّهِ رَجُلٌ تَسَمَّى مَلِكَ الْأَمْلَاكِ) زَادَ ابْنُ أَبِي شَيْبَةَ فِي رِوَايَتِهِ (لَا مَالِكَ إِلَّا اللَّهُ ﷿. قَالَ الْأَشْعَثِيُّ: قَالَ سُفْيَانُ: مِثْلُ شَاهَانْ شَاهْ. وقَالَ أَحْمَدُ بْنُ حَنْبَلٍ: سَأَلْتُ أَبَا عَمْرٍو عَنْ أَخْنَعَ؟ فَقَالَ: أوضع.",
+  "narrator": "أبو هريرة",
+  "attribution": "الرواية الأولى: متفق عليها",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 5541,
+   "printed_page": "3/ 1688",
+   "number": "2143"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1688",
+    "number": "2143"
+   }
+  ],
+  "verified": true,
+  "note": "Only the first narration and the Sufyan/Ahmad remarks are in Muslim's page; the input's second narration («أغيظ رجل على الله يوم القيامة...») is not on this page and was not copied. The Bukhari counterpart was not looked up."
+ }
+]

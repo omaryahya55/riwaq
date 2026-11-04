@@ -1,0 +1,804 @@
+[
+ {
+  "sourceId": "58122",
+  "status": "found",
+  "text": "ابْنِ عُمَرَ؛ أَنَّ رسول الله ﷺ قال (إِذَا أَكَلَ أَحَدُكُمْ فَلْيَأْكُلْ بِيَمِينِهِ. وَإِذَا شَرِبَ فَلْيَشْرَبْ بِيَمِينِهِ. فَإِنَّ الشَّيْطَانَ يَأْكُلُ بِشِمَالِهِ وَيَشْرَبُ بشماله).",
+  "narrator": "ابن عمر",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5201,
+   "printed_page": "3/ 1598",
+   "number": "2020"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1598",
+    "number": "2020"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the isnad (عن جده ابن عمر)."
+ },
+ {
+  "sourceId": "3079",
+  "status": "found",
+  "text": "أَبِيهِ؛ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ \"لَا يُمْسِكَنَّ أَحَدُكُمْ ذَكَرَهُ بِيَمِينِهِ وَهُوَ يَبُولُ. وَلَا يَتَمَسَّحْ مِنَ الْخَلَاءِ بِيَمِينِهِ. وَلَا يَتَنَفَّسْ فِي الإِنَاءِ\".",
+  "narrator": "أبو قتادة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 559,
+   "printed_page": "1/ 225",
+   "number": "267"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 225",
+    "number": "267"
+   }
+  ],
+  "verified": true,
+  "note": "Muslim's printed text names the Companion only as «أبيه» (father of Abdullah ibn Abi Qatada = Abu Qatada), so text starts there. Wording matches Muslim; Bukhari's wording was not found with this phrasing in book 1681."
+ },
+ {
+  "sourceId": "6103",
+  "status": "found",
+  "text": "عَنْ أَبِي مُوسَى الْأَشْعَرِيِّ ﵁، عَنِ النَّبِيِّ ﷺ قَالَ: «أَطْعِمُوا الْجَائِعَ وَعُودُوا الْمَرِيضَ وَفُكُّوا الْعَانِيَ»",
+  "narrator": "أبو موسى الأشعري",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8027,
+   "printed_page": "7/ 67",
+   "number": "5373"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 67",
+    "number": "5373"
+   }
+  ],
+  "verified": true,
+  "note": "Sufyan's gloss on العاني after the matn is excluded."
+ },
+ {
+  "sourceId": "6405",
+  "status": "found",
+  "text": "أُسَامَةُ بْنُ زَيْدٍ ﵄ قَالَ: «أَرْسَلَتِ ابْنَةُ النَّبِيِّ ﷺ إِلَيْهِ: إِنَّ ابْنًا لِي قُبِضَ فَأْتِنَا، فَأَرْسَلَ يُقْرِئُ السَّلَامَ، وَيَقُولُ: إِنَّ لِلهِ مَا أَخَذَ وَلَهُ مَا أَعْطَى، وَكُلٌّ عِنْدَهُ بِأَجَلٍ مُسَمًّى، فَلْتَصْبِرْ وَلْتَحْتَسِبْ. فَأَرْسَلَتْ إِلَيْهِ تُقْسِمُ عَلَيْهِ لَيَأْتِيَنَّهَا، فَقَامَ وَمَعَهُ سَعْدُ بْنُ عُبَادَةَ، وَمُعَاذُ بْنُ جَبَلٍ، وَأُبَيُّ بْنُ كَعْبٍ، وَزَيْدُ بْنُ ثَابِتٍ، وَرِجَالٌ، فَرُفِعَ إِلَى رَسُولِ اللهِ ﷺ الصَّبِيُّ وَنَفْسُهُ تَتَقَعْقَعُ، قَالَ: حَسِبْتُهُ أَنَّهُ قَالَ: كَأَنَّهَا شَنٌّ، فَفَاضَتْ عَيْنَاهُ، فَقَالَ سَعْدٌ: يَا رَسُولَ اللهِ، مَا هَذَا؟ فَقَالَ: هَذِهِ رَحْمَةٌ جَعَلَهَا اللهُ فِي قُلُوبِ عِبَادِهِ، وَإِنَّمَا يَرْحَمُ اللهُ مِنْ عِبَادِهِ الرُّحَمَاءَُ.»",
+  "narrator": "أسامة بن زيد",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2073,
+   "printed_page": "2/ 79",
+   "number": "1284"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 79",
+    "number": "1284"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 115",
+    "number": "7377"
+   }
+  ],
+  "verified": true,
+  "note": "Input wording (ابن ابنته وهو في الموت) was not found verbatim in Bukhari or Muslim; this is Bukhari 1284, the same incident with the same narrator Usama and the same closing words. Printed text has a stray damma on الرحماءَُ, copied as is."
+ },
+ {
+  "sourceId": "58192",
+  "status": "found",
+  "text": "أَبَا هُرَيْرَةَ ﵁، عَنِ النَّبِيِّ ﷺ: «إِذَا أَتَى أَحَدَكُمْ خَادِمُهُ بِطَعَامِهِ، فَإِنْ لَمْ يُجْلِسْهُ مَعَهُ، فَلْيُنَاوِلْهُ لُقْمَةً أَوْ لُقْمَتَيْنِ، أَوْ أُكْلَةً أَوْ أُكْلَتَيْنِ، فَإِنَّهُ وَلِيَ عِلَاجَهُ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 4059,
+   "printed_page": "3/ 150",
+   "number": "2557"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 150",
+    "number": "2557"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad (سمعت أبا هريرة)."
+ },
+ {
+  "sourceId": "65112",
+  "status": "found",
+  "text": "أَبَا هُرَيْرَةَ قَالَ: «قَامَ رَسُولُ اللهِ ﷺ فِي صَلَاةٍ وَقُمْنَا مَعَهُ، فَقَالَ أَعْرَابِيٌّ وَهُوَ فِي الصَّلَاةِ اللَّهُمَّ ارْحَمْنِي وَمُحَمَّدًا وَلَا تَرْحَمْ مَعَنَا أَحَدًا، فَلَمَّا سَلَّمَ النَّبِيُّ ﷺ قَالَ لِلْأَعْرَابِيِّ: لَقَدْ حَجَّرْتَ وَاسِعًا» يُرِيدُ رَحْمَةَ اللهِ.",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9005,
+   "printed_page": "8/ 10",
+   "number": "6010"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 10",
+    "number": "6010"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad (أن أبا هريرة قال)."
+ },
+ {
+  "sourceId": "65208",
+  "status": "found",
+  "text": "أبي هريرة؛ أن رسول الله ﷺ قال \"تجدون الناس معادن. فخيارهم فِي الْجَاهِلِيَّةِ خِيَارُهُمْ فِي الْإِسْلَامِ إِذَا فَقُهُوا. وتجدون من خير الناس في هذا الأمر، أكرههم له. قبل أن يقع فيه. وتجدون من شرار الناس ذا الوجهين. الذي يأتي هؤلاء بوجه وهؤلاء بوجه\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6389,
+   "printed_page": "4/ 1958",
+   "number": "2526"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1958",
+    "number": "2526"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad."
+ },
+ {
+  "sourceId": "65669",
+  "status": "found",
+  "text": "ابْنِ عَبَّاسٍ ﵄: «أَنَّ رَسُولَ اللهِ ﷺ جَاءَ إِلَى السِّقَايَةِ فَاسْتَسْقَى، فَقَالَ الْعَبَّاسُ: يَا فَضْلُ، اذْهَبْ إِلَى أُمِّكَ، فَأْتِ رَسُولَ اللهِ ﷺ بِشَرَابٍ مِنْ عِنْدِهَا. فَقَالَ: اسْقِنِي. قَالَ: يَا رَسُولَ اللهِ، إِنَّهُمْ يَجْعَلُونَ أَيْدِيَهُمْ فِيهِ. قَالَ: اسْقِنِي. فَشَرِبَ مِنْهُ، ثُمَّ أَتَى زَمْزَمَ، وَهُمْ يَسْقُونَ وَيَعْمَلُونَ فِيهَا، فَقَالَ: اعْمَلُوا، فَإِنَّكُمْ عَلَى عَمَلٍ صَالِحٍ. ثُمَّ قَالَ: لَوْلَا أَنْ تُغْلَبُوا لَنَزَلْتُ حَتَّى أَضَعَ الْحَبْلَ عَلَى هَذِهِ. يَعْنِي: عَاتِقَهُ وَأَشَارَ إِلَى عَاتِقِهِ».",
+  "narrator": "ابن عباس",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2626,
+   "printed_page": "2/ 156",
+   "number": "1635"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 156",
+    "number": "1635"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad."
+ },
+ {
+  "sourceId": "65693",
+  "status": "found",
+  "text": "جَابِرٍ؛ أَنَّ رَجُلًا أَتَى النَّبِيَّ ﷺ يَسْتَطْعِمُهُ. فَأَطْعَمَهُ شَطْرَ وَسْقِ شَعِيرٍ. فَمَا زَالَ الرَّجُلُ يَأْكُلُ مِنْهُ وَامْرَأَتُهُ وَضَيْفُهُمَا. حَتَّى كَالَهُ. فَأَتَى النَّبِيَّ ﷺ. فقال \"لولم تَكِلْهُ لَأَكَلْتُمْ مِنْهُ، وَلَقَامَ لَكُمْ\".",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 5880,
+   "printed_page": "4/ 1784",
+   "number": "2281"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1784",
+    "number": "2281"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad names him only as جابر."
+ },
+ {
+  "sourceId": "65850",
+  "status": "found",
+  "text": "عائذ بن عمرو؛ أن أبا سفيان أتى على سلمان و صهيب وبلال في نفر. فقالوا: والله! ما أخذت سيوف الله من عنق عدو الله مأخذها. قال فقال أبو بكر: أتقولون هذا لشيخ قريش وسيدهم؟. فأتى النَّبِيَّ ﷺ فَأَخْبَرَهُ. فقَالَ \"يا أبا بكر! لعلك أغضبتهم. لئن كنت أغضبتهم لقد أغضبت ربك\". فأتاهم أبو بكر فقال: يا إخوتاه! أغضبتكم؟ قالوا: لا. يغفر الله لك. يا أخي!",
+  "narrator": "عائذ بن عمرو",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6347,
+   "printed_page": "4/ 1947",
+   "number": "2504"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1947",
+    "number": "2504"
+   }
+  ],
+  "verified": true,
+  "note": ""
+ },
+ {
+  "sourceId": "66068",
+  "status": "found",
+  "text": "أَنَسِ بْنِ مَالِكٍ ﵁ قَالَ: سَمِعْتُ النَّبِيَّ ﷺ يَقُولُ: إِنَّ اللهَ قَالَ: «إِذَا ابْتَلَيْتُ عَبْدِي بِحَبِيبَتَيْهِ فَصَبَرَ عَوَّضْتُهُ مِنْهُمَا الْجَنَّةَ يُرِيدُ عَيْنَيْهِ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8456,
+   "printed_page": "7/ 116",
+   "number": "5653"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 116",
+    "number": "5653"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad. The متابعة note after the matn is excluded."
+ },
+ {
+  "sourceId": "66249",
+  "status": "found",
+  "text": "أَنَسٍ قَالَ: ذُكِرَ لِي أَنَّ رَسُولَ اللهِ ﷺ قَالَ - وَلَمْ أَسْمَعْهُ مِنْهُ -: \" إِنَّ فِيكُمْ قَوْمًا يَعْبُدُونَ وَيَدْأَبُونَ، حَتَّى يُعْجَبَ بِهِمُ النَّاسُ، وَتُعْجِبَهُمْ نُفُوسُهُمْ، يَمْرُقُونَ مِنَ الدِّينِ مُرُوقَ السَّهْمِ مِنَ الرَّمِيَّةِ \"",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه أحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط وفريقه (حاشية مسند أحمد ط الرسالة: إسناده صحيح على شرط الشيخين)",
+  "primary": {
+   "book": "مسند أحمد - ط الرسالة",
+   "book_id": 25794,
+   "page_id": 9964,
+   "printed_page": "20/ 243",
+   "number": "12886"
+  },
+  "takhrij": [
+   {
+    "book": "مسند أحمد - ط الرسالة",
+    "printed_page": "20/ 243",
+    "number": "12886"
+   }
+  ],
+  "verified": false,
+  "note": "The hadith spans two pages (9964 then 9965, printed 20/243-244); the verify tool could only match the first part (partial), so verified=false. The text above was copied from both pages. Grade is on 9965 footnote 1: «إسناده صحيح على شرط الشيخين»; the printed editor's name on the page is not shown, gradeBy is the edition's editors."
+ },
+ {
+  "sourceId": "66254",
+  "status": "found",
+  "text": "أَبِي هُرَيْرَةَ، «أَنَّ رَسُولَ اللهِ ﷺ وَقَفَ عَلَى نَاسٍ جُلُوسٍ فَقَالَ: أَلَا أُخْبِرُكُمْ بِخَيْرِكُمْ مِنْ شَرِّكُمْ» قَالَ: فَسَكَتُوا، فَقَالَ: ذَلِكَ ثَلَاثَ مَرَّاتٍ، فَقَالَ رَجُلٌ: بَلَى، يَا رَسُولَ اللهِ أَخْبِرْنَا بِخَيْرِنَا مِنْ شَرِّنَا، قَالَ: خَيْرُكُمْ مَنْ يُرْجَى خَيْرُهُ وَيُؤْمَنُ شَرُّهُ، وَشَرُّكُمْ مَنْ لَا يُرْجَى خَيْرُهُ وَلَا يُؤْمَنُ شَرُّهُ.",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه الترمذي",
+  "grade": "حسن صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 3987,
+   "printed_page": "4/ 112",
+   "number": "2263"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 112",
+    "number": "2263"
+   }
+  ],
+  "verified": true,
+  "note": "The grade printed in the book is Tirmidhi's «هذا حديث حسن صحيح», not plain «صحيح» as in the input; no editor footnote on that page."
+ },
+ {
+  "sourceId": "66255",
+  "status": "found",
+  "text": "أبي هريرة، عن النبي ﷺ، قال: \"لا يَشْكُرُ الله من لا يَشْكُرُ النَّاس\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أبو داود والترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط: إسناده صحيح)",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 4077,
+   "printed_page": "7/ 188",
+   "number": "4811"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "7/ 188",
+    "number": "4811"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "2069"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "7504"
+   }
+  ],
+  "verified": true,
+  "note": "Tirmidhi and Ahmad numbers are from the Arnaut footnote, not looked up separately. The footnote says «إسناده صحيح» (of the isnad)."
+ },
+ {
+  "sourceId": "66265",
+  "status": "found",
+  "text": "عَبْدَ اللهِ بْنَ عُمَرَ ﵄ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «إِنَّمَا النَّاسُ كَالْإِبِلِ الْمِائَةُِ، لَا تَكَادُ تَجِدُ فِيهَا رَاحِلَةً.»",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9745,
+   "printed_page": "8/ 104",
+   "number": "6498"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 104",
+    "number": "6498"
+   }
+  ],
+  "verified": true,
+  "note": "Printed text has a stray kasra on المائةُِ, copied as is."
+ },
+ {
+  "sourceId": "66397",
+  "status": "found",
+  "text": "أبا الدرداء يقولُ: سمعتُ رسولَ الله ﷺ يقول: \"ابغُوني الضعفاءَ، فإنما تُرزَقُون وتُنْصَرون بضعفائِكم\".",
+  "narrator": "أبو الدرداء",
+  "attribution": "رواه أبو داود والترمذي والنسائي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "شعيب الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط: إسناده صحيح)",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 2125,
+   "printed_page": "4/ 236",
+   "number": "2594"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود - ت الأرنؤوط",
+    "printed_page": "4/ 236",
+    "number": "2594"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "1797"
+   },
+   {
+    "book": "سنن النسائي",
+    "number": "3179"
+   },
+   {
+    "book": "مسند أحمد",
+    "number": "21731"
+   }
+  ],
+  "verified": true,
+  "note": "Other numbers are from the Arnaut footnote, not looked up separately. Footnote says «إسناده صحيح» (of the isnad). Text starts at the Companion's name in the printed isnad."
+ },
+ {
+  "sourceId": "66399",
+  "status": "found",
+  "text": "فَضَالَةَ بْنِ عُبَيْدٍ، أَنَّهُ سَمِعَ رَسُولَ اللهِ ﷺ يَقُولُ: «طُوبَى» لِمَنْ هُدِيَ إِلَى الْإِسْلَامِ، وَكَانَ عَيْشُهُ كَفَافًا وَقَنَعَ.",
+  "narrator": "فضالة بن عبيد",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 4130,
+   "printed_page": "4/ 170",
+   "number": "2349"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "4/ 170",
+    "number": "2349"
+   }
+  ],
+  "verified": true,
+  "note": "Printed grade: «هذا حديث صحيح» (Tirmidhi). Ahmad not looked up."
+ },
+ {
+  "sourceId": "3119",
+  "status": "found",
+  "text": "أَبِي هُرَيْرَةَ ﵁ قَالَ قَالَ النَّبِيُّ ﷺ «اشْتَرَى رَجُلٌ مِنْ رَجُلٍ عَقَارًا لَهُ فَوَجَدَ الرَّجُلُ الَّذِي اشْتَرَى الْعَقَارَ فِي عَقَارِهِ جَرَّةً فِيهَا ذَهَبٌ فَقَالَ لَهُ الَّذِي اشْتَرَى الْعَقَارَ خُذْ ذَهَبَكَ مِنِّي إِنَّمَا اشْتَرَيْتُ مِنْكَ الْأَرْضَ وَلَمْ أَبْتَعْ مِنْكَ الذَّهَبَ وَقَالَ الَّذِي لَهُ الْأَرْضُ إِنَّمَا بِعْتُكَ الْأَرْضَ وَمَا فِيهَا فَتَحَاكَمَا إِلَى رَجُلٍ فَقَالَ الَّذِي تَحَاكَمَا إِلَيْهِ أَلَكُمَا وَلَدٌ قَالَ أَحَدُهُمَا لِي غُلَامٌ وَقَالَ الْآخَرُ لِي جَارِيَةٌ قَالَ أَنْكِحُوا الْغُلَامَ الْجَارِيَةَ وَأَنْفِقُوا عَلَى أَنْفُسِهِمَا مِنْهُ وَتَصَدَّقَا.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 5372,
+   "printed_page": "4/ 174",
+   "number": "3472"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 174",
+    "number": "3472"
+   },
+   {
+    "book": "صحيح مسلم",
+    "book_id": 1727,
+    "page_id": 4436,
+    "printed_page": "3/ 1345",
+    "number": "1721"
+   }
+  ],
+  "verified": false,
+  "note": "Input wording (أنكحا ... وأنفقا) is not the printed wording in either Sahih; this is Bukhari 3472, same story and narrator, closest wording (Muslim 1721 has «وأنفقوا على أنفسكما منه وتصدقا»). verify_quote returned partial only because the printed page has a page-break marker ⦗١٧٥⦘ inside the hadith before «وتصدقا»; the marker is excluded from the text above."
+ },
+ {
+  "sourceId": "6141",
+  "status": "found",
+  "text": "أَبِي هُرَيْرَةَ ﵁: أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «مَطْلُ الْغَنِيِّ ظُلْمٌ، فَإِذَا أُتْبِعَ أَحَدُكُمْ عَلَى مَلِيٍّ فَلْيَتْبَِعْ.»",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 3632,
+   "printed_page": "3/ 94",
+   "number": "2287"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "3/ 94",
+    "number": "2287"
+   },
+   {
+    "book": "صحيح مسلم",
+    "book_id": 1727,
+    "page_id": 3935,
+    "printed_page": "3/ 1197",
+    "number": "1564"
+   }
+  ],
+  "verified": true,
+  "note": "Bukhari 2287 has «فإذا أتبع» and «مليّ»; Muslim 1564 has «وإذا أتبع ... على ملء» as printed, so Bukhari was chosen. Printed stray kasra on فَلْيَتْبَِعْ copied as is."
+ },
+ {
+  "sourceId": "6407",
+  "status": "found",
+  "text": "الْمَعْرُورِ بْنِ سُوَيْدٍ. قَالَ: رَأَيْتُ أَبَا ذَرٍّ وَعَلَيْهِ حُلَّةٌ وَعَلَى غُلَامِهِ مِثْلُهَا. فَسَأَلْتُهُ عَنْ ذَلِكَ؟ قَالَ: فَذَكَرَ أَنَّهُ سَابَّ رَجُلًا عَلَى عَهْدِ رَسُولِ اللَّهِ ﷺ. فَعَيَّرَهُ بِأُمِّهِ. قَالَ: فَأَتَى الرَّجُلُ النَّبِيَّ ﷺ. فَذَكَرَ ذَلِكَ لَهُ. فَقَالَ النَّبِيُّ ﷺ (إِنَّكَ امْرُؤٌ فِيكَ جَاهِلِيَّةٌ. إِخْوَانُكُمْ وَخَوَلُكُمْ. جَعَلَهُمُ اللَّهُ تَحْتَ أَيْدِيكُمْ. فَمَنْ كَانَ أَخُوهُ تَحْتَ يَدَيْهِ فَلْيُطْعِمْهُ مِمَّا يَأْكُلُ. وَلْيُلْبِسْهُ مِمَّا يَلْبَسُ. وَلَا تُكَلِّفُوهُمْ مَا يغلبهم. فإن كلفتموهم فأعينوهم عليه).",
+  "narrator": "أبو ذر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 4254,
+   "printed_page": "3/ 1283",
+   "number": "1661"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1283",
+    "number": "1661"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad ends with al-Ma'rur ibn Suwayd (tabi'i) narrating about Abu Dharr, so text starts at his name as in the input. Bukhari's parallel was not looked up."
+ },
+ {
+  "sourceId": "65184",
+  "status": "found",
+  "text": "أَبِي هُرَيْرَةَ، عَنِ النَّبِيَّ ﷺ، قَالَ \"يَدْخُلُ الجنة أقوام أفئدتهم مثل أفئدة الطير\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 7096,
+   "printed_page": "4/ 2183",
+   "number": "2840"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2183",
+    "number": "2840"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad."
+ },
+ {
+  "sourceId": "5340",
+  "status": "found",
+  "text": "كان سعد بن أبي وقاص في إبله. فجاءه ابنه عمر. فلما رآه سعد قال: أعوذ بالله من شر هذا الراكب. فنزل. فقال له: أنزلت في إبلك وغنمك وتركت الناس يتنازعون الملك بينهم؟ فضرب سعد في صدره فقال: اسكت. سمعت رسول الله ﷺ يقول \"إن الله يحب العبد التقي، الغني، الخفي\".",
+  "narrator": "سعد بن أبي وقاص",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 7364,
+   "printed_page": "4/ 2277",
+   "number": "2965"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2277",
+    "number": "2965"
+   }
+  ],
+  "verified": true,
+  "note": "The book prints the marfu' saying only inside Sa'd's story with his son (narrated by Amir ibn Sa'd), so the verbatim text includes that story; the marfu' words are identical to the input."
+ },
+ {
+  "sourceId": "10974",
+  "status": "found",
+  "text": "عَائِشَةَ، عَنْ خُلُقِ رَسُولِ اللهِ ﷺ فَقَالَتْ: لَمْ يَكُنْ فَاحِشًا وَلَا مُتَفَحِّشًا وَلَا صَخَّابًا فِي الْأَسْوَاقِ، وَلَا يَجْزِي بِالسَّيِّئَةِ السَّيِّئَةَ وَلَكِنْ يَعْفُو وَيَصْفَحُ",
+  "narrator": "عائشة",
+  "attribution": "رواه الترمذي وأحمد",
+  "grade": "حسن صحيح",
+  "gradeBy": "الترمذي",
+  "primary": {
+   "book": "سنن الترمذي - ت بشار",
+   "book_id": 7895,
+   "page_id": 3513,
+   "printed_page": "3/ 543",
+   "number": "2016"
+  },
+  "takhrij": [
+   {
+    "book": "سنن الترمذي - ت بشار",
+    "printed_page": "3/ 543-544",
+    "number": "2016"
+   }
+  ],
+  "verified": false,
+  "note": "Printed grade is Tirmidhi's «هذا حديث حسن صحيح», not plain «صحيح» as in the input. The text sits across a page break (marker ⦗٥٤٤⦘ after متفحشا), which made verify_quote return partial; the marker is excluded. Printed isnad: أبو عبد الله الجدلي says «سألت» عائشة. Ahmad not looked up."
+ },
+ {
+  "sourceId": "3706",
+  "status": "found",
+  "text": "أَبَا هُرَيْرَةَ ﵁ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «حَقُّ الْمُسْلِمِ عَلَى الْمُسْلِمِ خَمْسٌ؛ رَدُّ السَّلَامِ، وَعِيَادَةُ الْمَرِيضِ، وَاتِّبَاعُ الْجَنَائِزِ، وَإِجَابَةُ الدَّعْوَةِ، وَتَشْمِيتُ الْعَاطِسِ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 2002,
+   "printed_page": "2/ 71",
+   "number": "1240"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "2/ 71",
+    "number": "1240"
+   },
+   {
+    "book": "صحيح مسلم",
+    "book_id": 1727,
+    "page_id": 5581,
+    "printed_page": "4/ 1704"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad. Muslim page found, number not read."
+ },
+ {
+  "sourceId": "5326",
+  "status": "found",
+  "text": "أَبِي هُرَيْرَةَ؛ إن رسول الله ﷺ قال \"أتدرون ما الغيبة؟ \" قالوا: الله ورسوله أعلم. قال \"ذكرك أخاك بما يكره\" قيل: أفرأيت إن كان في أخي ما أقول؟ قال \"إن كان فيه ما تقول، فقد اغتبته. وإن لم يكن فيه، فقد بهته\".",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6528,
+   "printed_page": "4/ 2001",
+   "number": "2589"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2001",
+    "number": "2589"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad."
+ },
+ {
+  "sourceId": "5365",
+  "status": "found",
+  "text": "أَبِي أَيُّوبَ الْأَنْصَارِيِّ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «لَا يَحِلُّ لِرَجُلٍ أَنْ يَهْجُرَ أَخَاهُ فَوْقَ ثَلَاثِ لَيَالٍ، يَلْتَقِيَانِ فَيُعْرِضُ هَذَا وَيُعْرِضُ هَذَا، وَخَيْرُهُمَا الَّذِي يَبْدَأُ بِالسَّلَامِ.»",
+  "narrator": "أبو أيوب الأنصاري",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9105,
+   "printed_page": "8/ 21",
+   "number": "6077"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 21",
+    "number": "6077"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad. Muslim's parallel not looked up."
+ },
+ {
+  "sourceId": "5733",
+  "status": "found",
+  "text": "أَنَسٍ ﵁ «أَنَّهُ كَانَ لَا يَرُدُّ الطِّيبَ وَزَعَمَ أَنَّ النَّبِيَّ ﷺ كَانَ لَا يَرُدُّ الطِّيبَ.»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8876,
+   "printed_page": "7/ 164",
+   "number": "5929"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 164",
+    "number": "5929"
+   },
+   {
+    "book": "صحيح البخاري",
+    "book_id": 1681,
+    "page_id": 4098,
+    "printed_page": "3/ 157",
+    "number": "2582"
+   }
+  ],
+  "verified": true,
+  "note": "The printed text also states Anas's own practice before «وزعم أن النبي ﷺ كان لا يرد الطيب»; the Prophet's practice is the same as the input. Bukhari 2582 is a parallel with the same meaning."
+ },
+ {
+  "sourceId": "2986",
+  "status": "found",
+  "text": "عُمَرَ يَقُولُ: قَالَ النَّبِيُّ ﷺ: «مَنْ لَبِسَ الْحَرِيرَ فِي الدُّنْيَا، لَمْ يَلْبَسْهُ فِي الْآخِرَةِ،»",
+  "narrator": "عمر بن الخطاب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 8728,
+   "printed_page": "7/ 150",
+   "number": "5834"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 150",
+    "number": "5834"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad: Ibn al-Zubayr says he heard Umar saying; text starts at «عمر». Trailing comma inside the closing guillemet is as printed. Muslim's Umar hadith not looked up."
+ },
+ {
+  "sourceId": "3014",
+  "status": "found",
+  "text": "أَبِيهِ قَالَ: «كُنْتُ مَعَ النَّبِيِّ ﷺ فِي سَفَرٍ، فَأَهْوَيْتُ لِأَنْزِعَ خُفَّيْهِ فَقَالَ: دَعْهُمَا فَإِنِّي أَدْخَلْتُهُمَا طَاهِرَتَيْنِ. فَمَسَحَ عَلَيْهِمَا».",
+  "narrator": "المغيرة بن شعبة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 360,
+   "printed_page": "1/ 52",
+   "number": "206"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "1/ 52",
+    "number": "206"
+   }
+  ],
+  "verified": true,
+  "note": "Printed isnad: عن عروة بن المغيرة عن أبيه, so the Companion appears only as «أبيه» (al-Mughira). Muslim's parallel not looked up."
+ },
+ {
+  "sourceId": "3285",
+  "status": "found",
+  "text": "أَبِي سَعِيدٍ الْخُدْرِيِّ : أَنَّهُ سَمِعَ رَسُولَ اللهِ ﷺ يَقُولُ: «إِذَا رَأَى أَحَدُكُمُ الرُّؤْيَا يُحِبُّهَا، فَإِنَّهَا مِنَ اللهِ، فَلْيَحْمَدِ اللهَ عَلَيْهَا وَلْيُحَدِّثْ بِهَا، وَإِذَا رَأَى غَيْرَ ذَلِكَ مِمَّا يَكْرَهُ، فَإِنَّمَا هِيَ مِنَ الشَّيْطَانِ، فَلْيَسْتَعِذْ مِنْ شَرِّهَا، وَلَا يَذْكُرْهَا لِأَحَدٍ، فَإِنَّهَا لَنْ تَضُرَّهُ.»",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 10528,
+   "printed_page": "9/ 43",
+   "number": "7045"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "9/ 43",
+    "number": "7045"
+   }
+  ],
+  "verified": true,
+  "note": "Text starts at the Companion's name in the printed isnad."
+ }
+]
