@@ -340,7 +340,8 @@ test("كل المحتوى المعروض يكمل الشرط، والمخفي ق
   const w = load(["js/rules.js"]);
   const items = JSON.parse(readFileSync(new URL("content/approved.json", ROOT), "utf8")).items.filter((x) => x.type === "hadith" || x.type === "sahabi");
   const hidden = items.filter((x) => !w.Rules.displayable(x));
-  assert.ok(hidden.length < 30, "مخفي " + hidden.length);
+  // المخفي: عبارات درجة تحتاج مختص (حسن غريب، صحيح لغيره، على شرط الشيخين...) وما فيه راوٍ. بعد نقل الأحاديث من الشاملة ظهرت عبارات أكثر
+  assert.ok(hidden.length < 60, "مخفي " + hidden.length);
 });
 
 test("openfootball: التوقيت، والترتيب، وما نعرض ترتيب قديم، وكل الأندية لها رقم", () => {
