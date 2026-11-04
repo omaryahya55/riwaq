@@ -582,5 +582,195 @@
   ],
   "verified": true,
   "note": "Only the first narration and the Sufyan/Ahmad remarks are in Muslim's page; the input's second narration («أغيظ رجل على الله يوم القيامة...») is not on this page and was not copied. The Bukhari counterpart was not looked up."
+ },
+ {
+  "sourceId": "6009",
+  "status": "found",
+  "text": "عَنِ ابْنِ عَبَّاسٍ ﵄، «أَنَّ النَّبِيَّ ﷺ دَخَلَ عَلَى أَعْرَابِيٍّ يَعُودُهُ قَالَ: وَكَانَ النَّبِيُّ ﷺ إِذَا دَخَلَ عَلَى مَرِيضٍ يَعُودُهُ، فَقَالَ لَهُ: لَا بَأْسَ، طَهُورٌ إِنْ شَاءَ اللهُ. قَالَ: قُلْتَ: طَهُورٌ، كَلَّا بَلْ هِيَ حُمَّى تَفُورُ أَوْ تَثُورُ عَلَى شَيْخٍ كَبِيرٍ، تُزِيرُهُ الْقُبُورَ، فَقَالَ النَّبِيُّ ﷺ: فَنَعَمْ إِذًا.»",
+  "narrator": "عبد الله بن عباس",
+  "attribution": "رواه البخاري",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 8462,
+   "printed_page": "7/ 117",
+   "number": "5656"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "7/ 117",
+    "number": "5656"
+   },
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "4/ 202",
+    "number": ""
+   }
+  ],
+  "verified": true,
+  "note": "shamela_verify_quote: verbatim (1681/8462)."
+ },
+ {
+  "sourceId": "6268",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ، قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: «مَنْ سُئِلَ عَنْ عِلْمٍ فَكَتَمَهُ أَلْجَمَهُ اللَّهُ بِلِجَامٍ مِنْ نَارٍ يَوْمَ الْقِيَامَةِ»",
+  "narrator": "أبو هريرة",
+  "attribution": "رواه أبو داود والترمذي وابن ماجه وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط ٥/ ٥٠٠: إسناده صحيح)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 5063,
+   "printed_page": "3/ 321",
+   "number": "3658"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "3/ 321",
+    "number": "3658"
+   },
+   {
+    "book": "سنن الترمذي",
+    "number": "2840"
+   },
+   {
+    "book": "سنن ابن ماجه",
+    "number": "261"
+   }
+  ],
+  "verified": true,
+  "note": "Text from ت محيي الدين (verify_quote verbatim 1726/5063); the Arnaut edition prints «عئ أبي هريرة» (typo), so its text was not used. Grade from Arnaut's footnote; Tirmidhi/Ibn Majah numbers from that footnote."
+ },
+ {
+  "sourceId": "6379",
+  "status": "found",
+  "text": "عَنْ أَبِي هُرَيْرَةَ ﵁ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: «مَنْ حَلَفَ فَقَالَ فِي حَلِفِهِ: وَاللَّاتِ وَالْعُزَّى، فَلْيَقُلْ: لَا إِلَهَ إِلَّا اللهُ، وَمَنْ قَالَ لِصَاحِبِهِ: تَعَالَ أُقَامِرْكَ، فَلْيَتَصَدَّقْ».",
+  "narrator": "أبو هريرة",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح البخاري - ط السلطانية",
+   "book_id": 1681,
+   "page_id": 7189,
+   "printed_page": "6/ 141",
+   "number": "4860"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "6/ 141",
+    "number": "4860"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "3/ 1268",
+    "number": "1647"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (1681/7189); number 4860 on the page. Muslim 1647 from input refs."
+ },
+ {
+  "sourceId": "6986",
+  "status": "found",
+  "text": "سَمِعْتُ أَبَا الدَّرْدَاءِ، يَقُولُ: قَالَ رَسُولُ اللَّهِ ﷺ: «إِنَّ الْعَبْدَ إِذَا لَعَنَ شَيْئًا صَعِدَتِ اللَّعْنَةُ إِلَى السَّمَاءِ فَتُغْلَقُ أَبْوَابُ السَّمَاءِ دُونَهَا، ثُمَّ تَهْبِطُ إِلَى الْأَرْضِ فَتُغْلَقُ أَبْوَابُهَا دُونَهَا، ثُمَّ تَأْخُذُ يَمِينًا وَشِمَالًا، فَإِذَا لَمْ تَجِدْ مَسَاغًا رَجَعَتْ إِلَى الَّذِي لُعِنَ، فَإِنْ كَانَ لِذَلِكَ أَهْلًا وَإِلَّا رَجَعَتْ إِلَى قَائِلِهَا»",
+  "narrator": "أبو الدرداء",
+  "attribution": "رواه أبو داود",
+  "grade": "إسناده محتمل للتحسين",
+  "gradeBy": "الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط ٧/ ٢٦٧)",
+  "primary": {
+   "book": "سنن أبي داود - ت محيي الدين عبد الحميد",
+   "book_id": 1726,
+   "page_id": 6709,
+   "printed_page": "4/ 277",
+   "number": "4905"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "4/ 277",
+    "number": "4905"
+   }
+  ],
+  "verified": true,
+  "note": "Text from ت محيي الدين (verify_quote verbatim 1726/6709); the Arnaut edition prints «أنَّ العبد». Input grade was صحيح; Arnaut: إسناده محتمل للتحسين (al-Muhyiddin footnote: حسن, unnamed)."
+ },
+ {
+  "sourceId": "8885",
+  "status": "found",
+  "text": "عن أبي خِرَاشٍ السُّلَمى، أنه سَمعَ رسولَ الله ﷺ يقول: \"مَن هَجَرَ أخاه سنةً، فهو كَسَفْكِ دَمِهِ\"",
+  "narrator": "أبو خراش السلمي (حدرد بن أبي حدرد)",
+  "attribution": "رواه أبو داود وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "الأرنؤوط (حاشية سنن أبي داود ت الأرنؤوط: إسناده صحيح)",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 4163,
+   "printed_page": "7/ 274",
+   "number": "4915"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "7/ 274",
+    "number": "4915"
+   },
+   {
+    "book": "مسند أحمد"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (117359/4163). Footnote: «أبو خراش السلمي -ويقال: الأسلمي- اسمه: حدرد بن أبي حدرد», matching the input."
+ },
+ {
+  "sourceId": "8904",
+  "status": "found",
+  "text": "عن أبيه؛ أن رسول الله ﷺ قال: \"لا يَنْظُرُ الرَّجُلُ إِلَى عَوْرَةِ الرَّجُلِ. وَلَا الْمَرْأَةُ إِلَى عَوْرَةِ الْمَرْأَةِ. وَلَا يُفْضِي الرَّجُلُ إِلَى الرَّجُلِ فِي ثَوْبٍ وَاحِدٍ. وَلَا تُفْضِي الْمَرْأَةُ إِلَى الْمَرْأَةِ فِي الثَّوْبِ الْوَاحِدِ\".",
+  "narrator": "أبو سعيد الخدري",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {
+   "book": "صحيح مسلم - ت عبد الباقي",
+   "book_id": 1727,
+   "page_id": 713,
+   "printed_page": "1/ 266",
+   "number": "338"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "1/ 266",
+    "number": "338"
+   }
+  ],
+  "verified": true,
+  "note": "verify_quote verbatim (1727/713). «عن أبيه» = عبد الرحمن بن أبي سعيد عن أبيه أبي سعيد الخدري."
+ },
+ {
+  "sourceId": "8962",
+  "status": "notfound",
+  "text": "",
+  "narrator": "بريدة بن الحصيب",
+  "attribution": "رواه أبو داود والنسائي في الكبرى وأحمد",
+  "grade": "",
+  "gradeBy": "",
+  "primary": {
+   "book": "سنن أبي داود - ت الأرنؤوط",
+   "book_id": 117359,
+   "page_id": 4221,
+   "printed_page": "7/ 332",
+   "number": "4977"
+  },
+  "takhrij": [],
+  "verified": false,
+  "note": "Found (Abu Dawud 4977) but no clean grade: Arnaut's footnote says «رجاله ثقات رجال الشيخين» and that Qatada is not known to have heard from Abdullah b. Buraida, only reporting that al-Mundhiri, al-Iraqi and al-Nawawi graded the isnad sahih. The ت محيي الدين footnote «صحيح» names no grader. Left from HadeethEnc."
  }
 ]
