@@ -28,7 +28,8 @@ def main():
     found = {}
     for path in sys.argv[1:]:
         for r in json.load(open(path, encoding="utf-8")):
-            if r.get("status") == "found" and r.get("text") and r.get("primary"):
+            # اللي ما تأكدنا من نصه حرفياً (verified=false) ما ينطبق ويبقى من الموسوعة
+            if r.get("status") == "found" and r.get("text") and r.get("primary") and r.get("verified"):
                 found[str(r["sourceId"])] = r
     content = json.load(open(OUT, encoding="utf-8"))
     books = json.load(open(BOOKS, encoding="utf-8"))
