@@ -1,0 +1,82 @@
+[
+ {
+  "sourceId": "11192",
+  "status": "found",
+  "text": "جَابِرٍ ﵁ قَالَ: قَالَ النَّبِيُّ ﷺ: «مَنْ يَأْتِينِي بِخَبَرِ الْقَوْمِ. يَوْمَ الْأَحْزَابِ قَالَ الزُّبَيْرُ: أَنَا ثُمَّ قَالَ: مَنْ يَأْتِينِي بِخَبَرِ الْقَوْمِ. قَالَ الزُّبَيْرُ: أَنَا فَقَالَ النَّبِيُّ ﷺ: إِنَّ لِكُلِّ نَبِيٍّ حَوَارِيًّا وَحَوَارِيَّ الزُّبَيْرُ.»",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {"book": "صحيح البخاري - ط السلطانية", "book_id": 1681, "page_id": 4511, "printed_page": "4/ 27", "number": "2846"},
+  "takhrij": [{"book": "صحيح البخاري - ط السلطانية", "printed_page": "4/ 27", "number": "2846"}],
+  "verified": true,
+  "note": "Text starts at the companion name; printed as «جَابِرٍ». Muslim not looked up."
+ },
+ {
+  "sourceId": "11193",
+  "status": "found",
+  "text": "جَابِرٍ قَالَ: قَالَ رَسُولُ اللهِ ﷺ: \" الزُّبَيْرُ ابْنُ عَمَّتِي، وَحَوَارِيَّ مِنْ أُمَّتِي \"",
+  "narrator": "جابر بن عبد الله",
+  "attribution": "رواه أحمد",
+  "grade": "صحيح",
+  "gradeBy": "محققو مسند أحمد ط الرسالة: إسناده صحيح على شرط الشيخين",
+  "primary": {"book": "مسند أحمد - ط الرسالة", "book_id": 25794, "page_id": 10922, "printed_page": "22/ 272", "number": "14374"},
+  "takhrij": [{"book": "مسند أحمد - ط الرسالة", "printed_page": "22/ 272", "number": "14374"}],
+  "verified": true,
+  "note": "Text and grade both from Musnad Ahmad ed. al-Risalah (editors' footnote 1 on this hadith). Footnote mark (١) excluded."
+ },
+ {
+  "sourceId": "65706",
+  "status": "found",
+  "text": "عَلِيًّا بِالْكُوفَةِ يَقُولُ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ \"خَيْرُ نِسَائِهَا مَرْيَمُ بِنْتُ عِمْرَانَ. وَخَيْرُ نِسَائِهَا خَدِيجَةُ بِنْتُ خُوَيْلِدٍ\". قَالَ أَبُو كُرَيْبٍ: وَأَشَارَ وَكِيعٌ إِلَى السماء والأرض.",
+  "narrator": "علي بن أبي طالب",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {"book": "صحيح مسلم - ت عبد الباقي", "book_id": 1727, "page_id": 6205, "printed_page": "4/ 1886", "number": "2430"},
+  "takhrij": [{"book": "صحيح مسلم - ت عبد الباقي", "printed_page": "4/ 1886", "number": "2430"}],
+  "verified": true,
+  "note": "Wording (Waki' pointing to sky and earth, Abu Kurayb) is Muslim's. Text starts at «عَلِيًّا» (Abdullah b. Ja'far narrating that he heard Ali). Bukhari not looked up."
+ },
+ {
+  "sourceId": "3473",
+  "status": "notfound",
+  "reason": "Bukhari 3866 (book 1681, page 5849) starts with the same clause from Ibn Umar, but the full matn continues with the long story of the Kahin, which the input omits; the input is an excerpt, not the full matn, so not copied."
+ },
+ {
+  "sourceId": "3601",
+  "status": "found",
+  "text": "أَنَسِ بْنِ مَالِكٍ ﵁: «قَالَ النَّبِيُّ ﷺ لِأُبَيٍّ: إِنَّ اللهَ أَمَرَنِي أَنْ أَقْرَأَ عَلَيْكَ: ﴿لَمْ يَكُنِ الَّذِينَ كَفَرُوا﴾ قَالَ: وَسَمَّانِي؟ قَالَ: نَعَمْ فَبَكَى».",
+  "narrator": "أنس بن مالك",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "primary": {"book": "صحيح البخاري - ط السلطانية", "book_id": 1681, "page_id": 5775, "printed_page": "5/ 36", "number": "3809"},
+  "takhrij": [{"book": "صحيح البخاري - ط السلطانية", "printed_page": "5/ 36", "number": "3809"}],
+  "verified": true,
+  "note": "Input is a composite: the main text matches Bukhari 3809; the added line «وفي رواية: فجعل أبي يبكي» is from another narration (Bukhari page 7382 / Muslim) and is not in this text. Muslim not looked up."
+ },
+ {
+  "sourceId": "5654",
+  "status": "notfound",
+  "reason": "Bukhari 3912 (page 5906) has the chain Nafi' from Ibn Umar from Umar, and the wording «هاجر به أبواه»; the input says «عن نافع: أن عمر» and «هاجر به أبوه». The narrator and wording differ and no other Bukhari narration with the input's wording was found."
+ },
+ {
+  "sourceId": "6214",
+  "status": "found",
+  "text": "أنس بنِ مالك، قال: لما جاءَ أهلُ اليمن قال رسولُ الله ﷺ عم: \"قد جاءكم أهلُ اليمنِ وهُمْ أولُ مَن جاءَ بالمُصَافَحَةِ\"",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه أبو داود وأحمد",
+  "grade": "صحيح",
+  "gradeBy": "محققو سنن أبي داود ط الأرنؤوط: إسناده صحيح",
+  "primary": {"book": "سنن أبي داود - ت الأرنؤوط", "book_id": 117359, "page_id": 4392, "printed_page": "7/ 503", "number": "5213"},
+  "takhrij": [{"book": "سنن أبي داود - ت الأرنؤوط", "printed_page": "7/ 503", "number": "5213"}, {"book": "مسند أحمد", "number": "13212"}],
+  "verified": true,
+  "note": "Text and grade both from Sunan Abi Dawud ed. al-Arna'ut (footnote 1). Printed text has «ﷺ عم» as is. Ahmad number 13212 is taken from the editors' footnote, not looked up. Editors note that in Ahmad 13624 the clause «هم أول من جاء بالمصافحة» is Anas's own words. The Shamela copy of Abi Dawud ed. Muhyi al-Din has a footnote «صحيح إلا أن قوله وهم أول مدرج» with no named source; it is not used."
+ },
+ {
+  "sourceId": "6390",
+  "status": "notfound",
+  "reason": "Bukhari 2816 (page 4463), Bukhari page 2006 and 6100, and Muslim page 6289 all include the weeping woman (a daughter or sister of Amr / Fatima) before «ما زالت الملائكة تظله بأجنحتها»; the input omits it and has «فوضع بين يديه» and «فقال النبي ﷺ» directly. No narration with the input's wording was found."
+ }
+]

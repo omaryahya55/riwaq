@@ -1,6 +1,6 @@
 {
  "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
- "count": 125,
+ "count": 129,
  "items": [
   {
    "sourceId": "10854",
@@ -73,6 +73,13 @@
    "مطبّق": false
   },
   {
+   "sourceId": "3473",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Bukhari 3866 (book 1681, page 5849) starts with the same clause from Ibn Umar, but the full matn continues with the long story of the Kahin, which the input omits; the input is an excerpt, not the full matn, so not copied.",
+   "الملف": "out-25.json",
+   "مطبّق": false
+  },
+  {
    "sourceId": "3552",
    "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
    "التفصيل": "In Sunan Abu Dawud 5200 the printed narration is mawquf on Abu Hurayra (no «قال رسول الله»); Arnaut's footnote says «المرفوع إسناده صحيح، والموقوف رجاله ثقات» (the marfu' is the previous hadith). The input presents it as marfu', so it is not matched.",
@@ -136,10 +143,24 @@
    "مطبّق": false
   },
   {
+   "sourceId": "5654",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Bukhari 3912 (page 5906) has the chain Nafi' from Ibn Umar from Umar, and the wording «هاجر به أبواه»; the input says «عن نافع: أن عمر» and «هاجر به أبوه». The narrator and wording differ and no other Bukhari narration with the input's wording was found.",
+   "الملف": "out-25.json",
+   "مطبّق": false
+  },
+  {
    "sourceId": "6276",
    "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
    "التفصيل": "لفظ «ليس منا من لم يتغنَّ بالقرآن» من رواية أبي لبابة موجود في أبي داود (1471، ت محيي الدين 2/ 74، وت الأرنؤوط 2/ 597) لكن حاشية الأرنؤوط تقول: «حديث صحيح لكن من رواية ابن أبي مليكة، عن ابن أبي نهيك، عن سعد بن أبي وقاص» وأن في رواية أبي لبابة (عبيد الله بن أبي يزيد) «وقفة» في السماع وأن الصواب «ابن أبي نهيك»؛ فالراوي الصحيح للحديث غير أبي لبابة المذكور في المدخل، ولفظ المدخل مختلف الترتيب («من لم يتغن… فليس منا»). الراوي يختلف عن المدخل فلا يُسجَّل؛ يبقى من الموسوعة للمراجعة (وبدل ذلك يصلح حديث سعد بن أبي وقاص: أبو داود 1469-1470).",
    "الملف": "out-19.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "6390",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Bukhari 2816 (page 4463), Bukhari page 2006 and 6100, and Muslim page 6289 all include the weeping woman (a daughter or sister of Amr / Fatima) before «ما زالت الملائكة تظله بأجنحتها»; the input omits it and has «فوضع بين يديه» and «فقال النبي ﷺ» directly. No narration with the input's wording was found.",
+   "الملف": "out-25.json",
    "مطبّق": false
   },
   {
@@ -694,6 +715,12 @@
    "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
    "الدرجة": "صحيح لغيره",
    "قائلها": "محققو الطبعة (سنن النسائي، ط الرسالة)",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65706",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording (Waki' pointing to sky and earth, Abu Kurayb) is Muslim's. Text starts at «عَلِيًّا» (Abdullah b. Ja'far narrating that he heard Ali). Bukhari not looked up.",
    "مطبّق": true
   },
   {
