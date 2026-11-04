@@ -1,0 +1,266 @@
+{
+ "_readme": "قائمة المراجعة: كل نص فيه شبهة. ما انعرض شي منها على صاحب المشروع، تنتظر نهاية النقل. مطبّق=true يعني انكتب في المحتوى (والدرجة غير الواضحة مخفية من العرض)، وfalse يعني بقي من الموسوعة.",
+ "count": 38,
+ "items": [
+  {
+   "sourceId": "10974",
+   "السبب": "غير موثّق حرفياً بالأداة (يمتد على صفحتين أو فيه علامة صفحة)",
+   "التفصيل": "Printed grade is Tirmidhi's «هذا حديث حسن صحيح», not plain «صحيح» as in the input. The text sits across a page break (marker ⦗٥٤٤⦘ after متفحشا), which made verify_quote return partial; the marker is excluded. Printed isnad: أبو عبد الله الجدلي says «سألت» عائشة. Ahmad not looked up.",
+   "الصفحة": {
+    "book": "سنن الترمذي - ت بشار",
+    "book_id": 7895,
+    "page_id": 3513,
+    "printed_page": "3/ 543",
+    "number": "2016"
+   },
+   "الملف": "out-11.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "3119",
+   "السبب": "غير موثّق حرفياً بالأداة (يمتد على صفحتين أو فيه علامة صفحة)",
+   "التفصيل": "Input wording (أنكحا ... وأنفقا) is not the printed wording in either Sahih; this is Bukhari 3472, same story and narrator, closest wording (Muslim 1721 has «وأنفقوا على أنفسكما منه وتصدقا»). verify_quote returned partial only because the printed page has a page-break marker ⦗١٧٥⦘ inside the hadith before «وتصدقا»; the marker is excluded from the text above.",
+   "الصفحة": {
+    "book": "صحيح البخاري",
+    "book_id": 1681,
+    "page_id": 5372,
+    "printed_page": "4/ 174",
+    "number": "3472"
+   },
+   "الملف": "out-11.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "3167",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "narrator mismatch: the input is Anas's narration, but the printed Anas route (Tirmidhi 3525, 5/ 498, via Mu'ammal from Hammad from Humayd) is called by Tirmidhi «غريب وليس بمحفوظ» and he says Mu'ammal erred and the Hasan route is أصح; the input's own note says the hadith in Nasai and Ahmad is from Rabi'a ibn Amir, a different Companion. No sound grade for the Anas text found in the book.",
+   "الملف": "out-10.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "3552",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "In Sunan Abu Dawud 5200 the printed narration is mawquf on Abu Hurayra (no «قال رسول الله»); Arnaut's footnote says «المرفوع إسناده صحيح، والموقوف رجاله ثقات» (the marfu' is the previous hadith). The input presents it as marfu', so it is not matched.",
+   "الملف": "out-12.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "5357",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "The input attributes it to Ali ibn Abi Talib, but the Bukhari narration with this wording (page_id 8763, printed 7/ 154) is from Abu Hurayra («عَنْ أَبِي هُرَيْرَةَ ﵁ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: إِذَا انْتَعَلَ أَحَدُكُمْ...»). Narrator differs, so not matched.",
+   "الملف": "out-12.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "65563",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "Found Muslim 947 (page_id 2130, printed 2/ 654) with matn «مَا مِنْ مَيِّتٍ تُصَلِّي عَلَيْهِ أُمَّةٌ مِنَ الْمُسْلِمِينَ يَبْلُغُونَ مِائَةً…», but this edition prints the isnad as «عَنْ عَبْدِ اللَّهِ بن يزيد رضيع عائشة، عن النبي ﷺ قَالَ» (Aisha is not named as the narrator; the page then adds a second route via أنس بن مالك). The input says narrator = Aisha, so the narrator cannot be confirmed from Shamela; decide manually.",
+   "الملف": "out-03.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "66249",
+   "السبب": "غير موثّق حرفياً بالأداة (يمتد على صفحتين أو فيه علامة صفحة)",
+   "التفصيل": "The hadith spans two pages (9964 then 9965, printed 20/243-244); the verify tool could only match the first part (partial), so verified=false. The text above was copied from both pages. Grade is on 9965 footnote 1: «إسناده صحيح على شرط الشيخين»; the printed editor's name on the page is not shown, gradeBy is the edition's editors.",
+   "الصفحة": {
+    "book": "مسند أحمد - ط الرسالة",
+    "book_id": 25794,
+    "page_id": 9964,
+    "printed_page": "20/ 243",
+    "number": "12886"
+   },
+   "الملف": "out-11.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "8962",
+   "السبب": "ما انلقى أو الراوي أو الدرجة ما طابقت",
+   "التفصيل": "",
+   "الملف": "out-12.json",
+   "مطبّق": false
+  },
+  {
+   "sourceId": "10410",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording of Abu Dawud matches the input. Tirmidhi 3551 (opened, page_id 6027) differs («شَكَّارًا ... ذَكَّارًا ... رَهَّابًا», «إِلَيْكَ أَوَّاهًا مُنِيبًا», «وَاسْلُلْ سَخِيمَةَ صَدْرِي») and prints «هَذَا حَدِيثٌ حَسَنٌ صَحِيحٌ». Ibn Majah 3830 and Ahmad 1997 are from the Arnaut footnote, not opened. Printed «علىَّ» and «حوْبتي» as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "10626",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "صحيح م دون الاتخاذ",
+   "قائلها": "الألباني",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "11206",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Bukhari 6366. The page break marker ⦗٧٩⦘ falls between «أَنْ» and «أُصَدِّقَهُمَا» and is not part of the text; verify_quote returned verbatim on each half separately (the joined text returned partial only because of that marker). Muslim 1/ 411 has the same hadith but with different wording («فَقَالَتَا» without «لِي»); its number not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3014",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed isnad: عن عروة بن المغيرة عن أبيه, so the Companion appears only as «أبيه» (al-Mughira). Muslim's parallel not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3079",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim's printed text names the Companion only as «أبيه» (father of Abdullah ibn Abi Qatada = Abu Qatada), so text starts there. Wording matches Muslim; Bukhari's wording was not found with this phrasing in book 1681.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3415",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Only Jundub's narration is copied; the input's second part (Abu Hurayra's «تكلم بكلمة أوبقت دنياه وآخرته») is not on this page and was not looked up. Printed narrator is «جندب» only. Wording «أن أغفر» differs slightly from the input's «أن لا أغفر».",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3479",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Page-break marker ⦗١٠١⦘ removed from the middle (two halves verified separately). Bukhari's printed text ends at «المشرق» without «والمغرب» (the input has it, matching Muslim's wording); Muslim's page was not found by search, so its number is not given.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3598",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim 2717 (67). The full wording (including the last two sentences) is Muslim's; Bukhari's abridged versions were not located by search in the downloaded text, so no Bukhari number is given. Duplicate of sourceId 3056 (same hadith, same text here).",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "3602",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "The input says «صحيح» but the book's own grade is «حسن» (Tirmidhi), and the Risala footnote adds that the isnad is weak (Ali ibn Yazid al-Alhani); no grader in the book says «صحيح», so the grade field follows the book. Ahmad number 17334 is from the Risala footnote.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "4192",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording «أو لكأنما رآني في اليقظة» is Muslim's (Abu Salama narration). Bukhari's page 10444 has a different wording («ولا يتمثل الشيطان بي» without the شك); its number was not read.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5329",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "حسن غريب",
+   "قائلها": "الترمذي",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5337",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed wording has «أخوه أو صاحبه» (the input has «أخوه» only). Page-break marker ⦗٥٠⦘ falls in the sanad before the copied text, so it is not in the text.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5340",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "The book prints the marfu' saying only inside Sa'd's story with his son (narrated by Amir ibn Sa'd), so the verbatim text includes that story; the marfu' words are identical to the input.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5365",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text starts at the Companion's name in the printed isnad. Muslim's parallel not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5369",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording matches Muslim's. Bukhari's printed text (page_id 8765) differs («ليحفهما أو لينعلهما»); its number was not read.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5442",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim's printed wording is «في مسجدنا أو في سوقنا» (singular); the input has «من مساجدنا أو أسواقنا... لِيَقْبِضْ على نِصَالِهَا بكفه». Bukhari's page_id 762 has a different wording («فليأخذ على نصالها لا يعقر بكفه مسلما»), its number was not read from the page. Printed narrator is «أبي موسى» (al-Ash'ari per the input).",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5469",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim 1628 (8): chain is three of Sa'd's sons narrating from their father (printed «عَنْ أَبِيهِ»); the text starts at «أَنّ النَّبِيَّ ﷺ دَخَلَ عَلَى سَعْدٍ يَعُودُهُ». Prayer «اللهم اشف سعدا» three times matches the input, but the input's first-person «عادني» is a paraphrase; the printed wording is third-person. Bukhari/Muslim 'عادني' versions (e.g. Muslim 3/ 1250, Bukhari 8/ 80) carry «اللهم اشف سعدا وأتمم له هجرته» once, not three times. Printed text has «اشْفِ سعد» (no diacritics) and «وإن تَأْكُلُ», copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5491",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording differs from the input: Ahmad prints «اللهم أحسنتَ خلقي فأحسن خلقي» (كان يقول), not «كما حسنت خلقي فحسن خلقي» (قال). The input's form appears in other books (Ibn Sa'd, Hannad). Grade is the editor's footnote «إسناده حسن», not صحيح.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5501",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Wording matches Muslim's («ما لنا بد من مجالسنا»); the input's «فأما إذا أبيتم» is not in Muslim's text («إذا أبيتم إلا المجلس»). Bukhari (page_id 3920) has «ما لنا بد، إنما هي مجالسنا»; its number was not read from the page.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5733",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "The printed text also states Anas's own practice before «وزعم أن النبي ﷺ كان لا يرد الطيب»; the Prophet's practice is the same as the input. Bukhari 2582 is a parallel with the same meaning.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "5914",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Muslim 2706 (50) has the main text exactly as in the input, including «والبخل». The extra riwaya in the input («وضلع الدين وغلبة الرجال») is not on this page and is not included. Bukhari wording (e.g. 4/ 23, 8/ 79) differs («والجبن والهرم» without «والبخل»); its number not looked up. Printed «حَدَّثَنَا أَنَسِ بْنِ مَالِكٍ» (with the odd case) as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6040",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Bukhari 6616 has the matn without Sufyan's remark. The input's «وفي رواية قال سفيان: أشك أني زدت واحدة منها» is a different Bukhari route (8/ 75, in Kitab al-Da'awat, wording differs: «الحديث ثلاث زدت أنا واحدة») and is not included in the text. Muslim page/number not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6268",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text: ت محيي الدين (primary). Grade: Arnaut's footnote in ت الأرنؤوط (ط الرسالة). Text from ت محيي الدين (verify_quote verbatim 1726/5063); the Arnaut edition prints «عئ أبي هريرة» (typo), so its text was not used. Grade from Arnaut's footnote; Tirmidhi/Ibn Majah numbers from that footnote.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6405",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Input wording (ابن ابنته وهو في الموت) was not found verbatim in Bukhari or Muslim; this is Bukhari 1284, the same incident with the same narrator Usama and the same closing words. Printed text has a stray damma on الرحماءَُ, copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6407",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Printed isnad ends with al-Ma'rur ibn Suwayd (tabi'i) narrating about Abu Dharr, so text starts at his name as in the input. Bukhari's parallel was not looked up.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65304",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Bukhari 4628 (Tafsir, Surat al-An'am). A parallel route at Bukhari 9/ 101 (7313) says «هَاتَانِ أَهْوَنُ أَوْ أَيْسَرُ», so 4628 is the one matching the input. Printed «﵁» after Jabir copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65461",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Bukhari 834 (also 8/ 72 and 9/ 118). Muslim 4/ 2078 has the same hadith with «كبيرا/كثيرا» wording; its number not looked up. Printed «﵁» copied as is.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65873",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "The page of this edition carries a footnote «صحيح» with no named grader; the named grading is Albani's «وهذا إسناد صحيح» in صحيح سنن أبي داود ط غراس (4/ 333, book_id 25881, page_id 1662), who also notes the established wording is «أتت النبي ﷺ بواكي». I did not open the Arnaut edition page for this hadith (its text search did not match).",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "65915",
+   "السبب": "الوكيل دوّن ملاحظة: اللفظ أو الراوي أو الطبعة تختلف عن الموسوعة",
+   "التفصيل": "Text and grade are from Nasai (Risala). Tirmidhi 2572 (book_id 7895, page_id 4495) has the same matn (with «،» after «الجنة») but prints no grade and only notes a mawquf variant. Ibn Majah 4340 is the number named in Arnaut's footnote, not opened.",
+   "مطبّق": true
+  },
+  {
+   "sourceId": "6986",
+   "السبب": "عبارة الدرجة غير واضحة: مطبّق لكن مخفي من العرض حتى يراجعه مختص",
+   "الدرجة": "إسناده محتمل للتحسين",
+   "قائلها": "شعيب الأرنؤوط (ط الرسالة)",
+   "مطبّق": true
+  }
+ ]
+}
