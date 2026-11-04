@@ -1,0 +1,147 @@
+[
+ {
+  "sourceId": "66244",
+  "status": "found",
+  "text": "أَنَّهُ سَمِعَ النَّبِيَّ ﷺ، وعطس رجل عنده فقال له \"يرحمك الله\" ثم عطس أخرى فَقَالَ لَهُ رَسُولُ اللَّهِ ﷺ \"الرجل مزكوم\".",
+  "narrator": "سلمة بن الأكوع",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "bab": "باب تشميت العاطس، وكراهة التثاؤب",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 7421,
+   "printed_page": "4/ 2292",
+   "number": "2993"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2292",
+    "number": "2993"
+   }
+  ],
+  "verified": true,
+  "note": "«أنه» = Salama b. al-Akwa (isnad: إياس بن سلمة أن أباه حدثه). Page marker removed."
+ },
+ {
+  "sourceId": "66245",
+  "status": "found",
+  "text": "حدثني أبو برزة. قال: قلت: يا نبي الله! علمني شيئا أنتفع به. قال \"اعزل الأذى عن طريق المسلمين\".",
+  "narrator": "أبو برزة الأسلمي",
+  "attribution": "رواه مسلم",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "bab": "",
+  "primary": {
+   "book": "صحيح مسلم",
+   "book_id": 1727,
+   "page_id": 6609,
+   "printed_page": "4/ 2021",
+   "number": "2618"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 2021",
+    "number": "2618"
+   }
+  ],
+  "verified": true,
+  "note": "From search snippet (Abu al-Wazi' says حدثني أبو برزة). Number from input ref, page matches."
+ },
+ {
+  "sourceId": "66260",
+  "status": "found",
+  "text": "عَنْ أَنَسٍ، أَنَّ رَجُلًا أَتَى النَّبِيَّ ﷺ، فَقَالَ: يَا رَسُولَ اللَّهِ، احْمِلْنِي، قَالَ النَّبِيُّ ﷺ: «إِنَّا حَامِلُوكَ عَلَى وَلَدِ نَاقَةٍ» قَالَ: وَمَا أَصْنَعُ بِوَلَدِ النَّاقَةِ؟ فَقَالَ النَّبِيُّ ﷺ: «وَهَلْ تَلِدُ الْإِبِلَ إِلَّا النُّوقُ»",
+  "narrator": "أنس بن مالك",
+  "attribution": "رواه أبو داود والترمذي",
+  "grade": "صحيح",
+  "gradeBy": "الألباني",
+  "bab": "باب ما جاء في المزاح",
+  "primary": {
+   "book": "سنن أبي داود",
+   "book_id": 1726,
+   "page_id": 6840,
+   "printed_page": "4/ 300",
+   "number": "4998"
+  },
+  "takhrij": [
+   {
+    "book": "سنن أبي داود",
+    "printed_page": "4/ 300",
+    "number": "4998"
+   },
+   {
+    "book": "سنن الترمذي",
+    "printed_page": "",
+    "number": "1991"
+   }
+  ],
+  "verified": true,
+  "note": "Footnote grade «صحيح». Tirmidhi number from input ref."
+ },
+ {
+  "sourceId": "66276",
+  "status": "found",
+  "text": "عَنْ عَبْدِ اللهِ بْنِ عُمَرَ ﵄، أَنَّ رَسُولَ اللهِ ﷺ قَالَ: «إِذَا سَلَّمَ عَلَيْكُمُ الْيَهُودُ فَإِنَّمَا يَقُولُ أَحَدُهُمُ: السَّامُ عَلَيْكَ، فَقُلْ: وَعَلَيْكَ.»",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "bab": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9372,
+   "printed_page": "8/ 57",
+   "number": "6257"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 57",
+    "number": "6257"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1706",
+    "number": "2164"
+   }
+  ],
+  "verified": true,
+  "note": "From search snippet (complete matn); numbers from input refs, page matches."
+ },
+ {
+  "sourceId": "66278",
+  "status": "found",
+  "text": "عَنِ ابْنِ عُمَرَ ﵄، عَنِ النَّبِيِّ ﷺ قَالَ: «لَأَنْ يَمْتَلِئَ جَوْفُ أَحَدِكُمْ قَيْحًا خَيْرٌ لَهُ مِنْ أَنْ يَمْتَلِئَ شِعْرًا.»",
+  "narrator": "عبد الله بن عمر",
+  "attribution": "متفق عليه",
+  "grade": "صحيح",
+  "gradeBy": "",
+  "bab": "",
+  "primary": {
+   "book": "صحيح البخاري",
+   "book_id": 1681,
+   "page_id": 9212,
+   "printed_page": "8/ 36",
+   "number": "6154"
+  },
+  "takhrij": [
+   {
+    "book": "صحيح البخاري",
+    "printed_page": "8/ 36",
+    "number": "6154"
+   },
+   {
+    "book": "صحيح مسلم",
+    "printed_page": "4/ 1769",
+    "number": "2257"
+   }
+  ],
+  "verified": true,
+  "note": "From search snippet; page marker removed. Numbers from input refs, page matches."
+ }
+]
