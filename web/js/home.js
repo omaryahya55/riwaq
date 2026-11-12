@@ -566,7 +566,7 @@
     }
     root.classList.toggle("mini-resume", !!info.resume);
     setHTML($("mmName"), esc(info.resume ? "أكمل " + info.name : info.name));
-    setHTML($("mmSub"), info.resume ? esc(info.reciter) + (info.ayah ? " · وقفت عند " + esc(info.ayah) : "") : info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : ""));
+    setHTML($("mmSub"), info.resume ? esc(info.reciter) + (info.ayah ? " · وقفت عند " + esc(info.ayah) : "") : info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : "") + (info.sleep ? " · " + esc(info.sleep) : ""));
     setHTML($("mmToggle"), icon(info.paused ? "tplay" : "tpause"));
     $("mmBar").style.width = info.pct + "%";
     root.querySelectorAll("[data-m]").forEach((e) => e.classList.toggle("on", mode === "mini" && +e.dataset.m === miniIdx));

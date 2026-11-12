@@ -12,7 +12,10 @@
 
   let box, onClose = null, view = "r"; // r الشيوخ، s السور، p التشغيل
   let rIdx = 0, sIdx = 0, ctl = 2, timer = null, lastKey = 0;
-  let demo = { on: false, paused: false, edition: "", surah: 0, verse: false, pos: 0, dur: 0, ayah: 0, ayahs: 0, loading: false };
+  let demo = { on: false, paused: false, edition: "", surah: 0, verse: false, pos: 0, dur: 0, ayah: 0, ayahs: 0, loading: false, sleep: 0, sleepEnd: false };
+  // مؤقت النوم: كل ضغطة تنقل للي بعده (مطفي، ١٥، ٣٠، ٤٥، ٦٠ دقيقة، آخر السورة)
+  const SLEEP = [0, 15, 30, 45, 60, -1];
+  let sleepSel = 0, demoSleepAt = 0;
 
   const data = () => window.TILAWA || { reciters: [], surahs: [] };
   const reciter = (id) => data().reciters.find((r) => r.id === id);
@@ -22,7 +25,7 @@
   // الخدمة تبدأ بعد لحظة من الضغط: نعرض "نجهز" من أول ما يضغط، ولو ما بدأت خلال ثواني نرجع للقائمة
   let pending = null;
   const state = () => {
-    if (!native()) return demo;
+    if (!native()) { if (demoSleepAt) demo.sleep = Math.max(0, Math.ceil((demoSleepAt - Date.now()) / 1000)); return demo; }
     let st;
     try { st = JSON.parse(Riwaq.tilawaState()); } catch (e) { st = { on: false }; }
     if (st.on) { pending = null; return st; }
@@ -63,6 +66,16 @@
     return { l, rc, s, ayah: l.verse ? "" : ayahText({ edition: l.edition, surah: l.surah, pos: l.at }) };
   }
 
+  // الباقي على مؤقت النوم بكلام قصير
+  const sleepText = (st) => {
+    if (!st || !st.on) return "";
+    if (st.sleepEnd) return "يوقف بآخر السورة";
+    if (!(st.sleep > 0)) return "";
+    const m = Math.ceil(st.sleep / 60);
+    return st.sleep < 60 ? "يوقف خلال دقيقة" : `يوقف بعد ${F.digits(m)} د`;
+  };
+  const sleepOn = (st) => !!(st && st.on && (st.sleepEnd || st.sleep > 0));
+
   const clock = (ms) => {
     const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), z = (n) => String(n).padStart(2, "0");
     return F.digits(h ? `${h}:${z(m)}:${z(s % 60)}` : `${m}:${z(s % 60)}`);
@@ -71,7 +84,7 @@
   // زر الاستكمال: أول سطر في القائمة، لو فيه تلاوة وقفت في نصها
   const resumeItem = () => {
     const st = state(), l = st.last;
-    if (st.on || !l || !reciter(l.edition) || !surah(l.surah) || !(l.at > 0)) return null;
+    if (st.on || !l || !reciter(l.edition) || !surah(l.surah) || !(l.at > 0 || l.verse)) return null;
     return l;
   };
   const rows = () => (resumeItem() ? [{ resume: true }] : []).concat(data().reciters);
@@ -143,6 +156,7 @@
       { id: "toggle", ic: st.paused ? "tplay" : "tpause", name: st.paused ? "تشغيل" : "إيقاف مؤقت" },
       { id: "fwd", ic: "tfwd10", name: st.verse ? "آية بعد" : "١٠ ثواني بعد" },
       { id: "next", ic: "tnext", name: "السورة التالية" },
+      { id: "sleep", ic: "moon", name: sleepOn(st) ? sleepText(st) : "مؤقت النوم", lit: sleepOn(st) },
       { id: "stop", ic: "tstop", name: "إنهاء" }
     ];
   };
@@ -166,6 +180,7 @@
       const e = pc.children[i], h = icon(c.ic) + `<span>${c.name}</span>`;
       if (e.__h !== h) { e.innerHTML = h; e.__h = h; }
       e.classList.toggle("on", i === ctl);
+      e.classList.toggle("lit", !!c.lit);
     });
     Dock.apply(pc.children, ctl, { dir: 1, size: 150, scale: [1.2, 1.08] });
   }
@@ -183,7 +198,8 @@
   }
   function stop() {
     pending = null;
-    if (native()) Riwaq.tilawaStop(); else demo = Object.assign({}, demo, { on: false, last: { edition: demo.edition, surah: demo.surah, verse: false, rate: 128, at: demo.pos } });
+    sleepSel = 0; demoSleepAt = 0;
+    if (native()) Riwaq.tilawaStop(); else demo = Object.assign({}, demo, { on: false, sleep: 0, sleepEnd: false, last: { edition: demo.edition, surah: demo.surah, verse: false, rate: 128, at: demo.pos } });
   }
   function act(id) {
     const st = state(), rc = reciter(st.edition);
@@ -192,6 +208,16 @@
       const dir = id === "fwd" ? 1 : -1;
       if (native()) Riwaq.tilawaSeek(dir); else demo.pos = Math.max(0, demo.pos + dir * 10000);
       setTimeout(renderPlayer, 120);
+      return;
+    }
+    if (id === "sleep") {
+      // المؤقت انتهى أو انطفى من مكان ثاني: نبدأ من أول خيار
+      if (!sleepOn(st)) sleepSel = 0;
+      sleepSel = (sleepSel + 1) % SLEEP.length;
+      const min = SLEEP[sleepSel];
+      if (native()) Riwaq.tilawaSleep(min);
+      else { demo.sleepEnd = min === -1; demoSleepAt = min > 0 ? Date.now() + min * 60000 : 0; demo.sleep = min > 0 ? min * 60 : 0; }
+      setTimeout(renderPlayer, 150);
       return;
     }
     if (id === "stop") { stop(); view = "r"; rIdx = 0; setTimeout(renderAll, 300); return; }
@@ -306,7 +332,7 @@
       }
       const s = surah(st.surah), rc = reciter(st.edition);
       const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
-      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
+      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), sleep: sleepText(st), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
     },
     stop
   };

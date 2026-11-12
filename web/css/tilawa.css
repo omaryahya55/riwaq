@@ -70,3 +70,7 @@
 .tl-b { transform-origin: 50% 38px; transition: transform .24s var(--dock-ease); }
 .tl-b.near .ic { background: rgba(255,255,255,.18); }
 @media (prefers-reduced-motion: reduce) { .tl-rs .tl-r, .tl-ss .tl-s, .tl-b { transition: none; } }
+
+/* مؤقت النوم شغّال: القمر ينوّر شوي حتى لو التحديد على زر ثاني */
+.tl-b.lit .ic { color: var(--gold); }
+.tl-b.lit:not(.on) span { opacity: .9; }

@@ -61,6 +61,7 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     @JavascriptInterface fun tilawaToggle() { main.post { Tilawa.command(ctx, TilawaService.ACTION_TOGGLE) } }
     @JavascriptInterface fun tilawaStop() { main.post { Tilawa.command(ctx, TilawaService.ACTION_STOP) } }
     @JavascriptInterface fun tilawaSeek(dir: Int) { main.post { Tilawa.seek(ctx, dir) } }
+    @JavascriptInterface fun tilawaSleep(min: Int) { main.post { Tilawa.sleep(ctx, min) } }
     @JavascriptInterface fun tilawaState(): String = Tilawa.stateJson(ctx)
     /** البحث الصوتي حق النظام. كل جهاز يدعم واحد منها */
     @JavascriptInterface fun openSearch() {

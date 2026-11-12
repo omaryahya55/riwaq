@@ -22,6 +22,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
@@ -117,6 +118,9 @@ object Tilawa {
     @Volatile var pos = 0
     @Volatile var dur = 0
     @Volatile var ayah = 0
+    // مؤقت النوم: وقت الإيقاف (من تشغيل الجهاز، ما يتأثر لو تغيّرت الساعة). صفر = مطفي
+    @Volatile var sleepAt = 0L
+    @Volatile var sleepEnd = false // أو يوقف لما تخلص السورة اللي شغالة
 
     fun ayahs(n: Int) = if (n in 1..114) AYAHS[n - 1] else 0
     fun surahUrl(ed: String, r: Int, n: Int) =
@@ -135,6 +139,11 @@ object Tilawa {
         if (on) try { ctx.startService(Intent(ctx, TilawaService::class.java).setAction(action)) } catch (e: Exception) { }
     }
 
+    /** مؤقت النوم بالدقايق: صفر يطفيه، و-١ يعني لآخر السورة */
+    fun sleep(ctx: Context, min: Int) {
+        if (on && min in -1..180) try { ctx.startService(Intent(ctx, TilawaService::class.java).setAction(TilawaService.ACTION_SLEEP).putExtra("min", min)) } catch (e: Exception) { }
+    }
+
     fun seek(ctx: Context, dir: Int) {
         if (on) try { ctx.startService(Intent(ctx, TilawaService::class.java).setAction(TilawaService.ACTION_SEEK).putExtra("dir", dir)) } catch (e: Exception) { }
     }
@@ -150,6 +159,7 @@ object Tilawa {
     fun stateJson(ctx: Context): String {
         val o = JSONObject().put("on", on).put("paused", paused).put("loading", loading).put("edition", edition).put("surah", surah)
             .put("verse", verse).put("pos", pos).put("dur", dur).put("ayah", ayah).put("ayahs", ayahs(surah))
+            .put("sleep", if (sleepAt > 0) ((sleepAt - SystemClock.elapsedRealtime()).coerceAtLeast(0) + 999) / 1000 else 0).put("sleepEnd", sleepEnd)
         val p = prefs(ctx)
         if (!on && p.contains("edition")) {
             o.put("last", JSONObject().put("edition", p.getString("edition", "")).put("surah", p.getInt("surah", 0))
@@ -179,6 +189,13 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
             } catch (e: Exception) { }
             // نحفظ كل ١٥ ثانية: لو انقطعت الكهربا يبقى مكان نكمل منه
             if (++ticks % 15 == 0) Tilawa.remember(this@TilawaService, currentAt())
+            // مؤقت النوم: الصوت يخفت شوي شوي آخر ٢٠ ثانية، ثم يوقف ويحفظ المكان
+            val at = Tilawa.sleepAt
+            if (at > 0) {
+                val left = at - SystemClock.elapsedRealtime()
+                if (left <= 0) { sleepNow(); return }
+                if (left < FADE_MS) volume(left.toFloat() / FADE_MS)
+            }
             main.postDelayed(this, 1000)
         }
     }
@@ -194,6 +211,7 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
             ACTION_STOP -> { finishTilawa(); return START_NOT_STICKY }
             ACTION_TOGGLE -> { toggle(); return START_NOT_STICKY }
             ACTION_SEEK -> { seek(intent.getIntExtra("dir", 0)); return START_NOT_STICKY }
+            ACTION_SLEEP -> { setSleep(intent.getIntExtra("min", 0)); return START_NOT_STICKY }
         }
         startAsForeground()
         val ed = intent?.getStringExtra("edition")
@@ -246,6 +264,20 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
         session?.setPlaybackState(PlaybackState.Builder()
             .setActions(PlaybackState.ACTION_FAST_FORWARD or PlaybackState.ACTION_REWIND or PlaybackState.ACTION_PLAY or PlaybackState.ACTION_PAUSE or PlaybackState.ACTION_PLAY_PAUSE or PlaybackState.ACTION_STOP or PlaybackState.ACTION_SKIP_TO_NEXT or PlaybackState.ACTION_SKIP_TO_PREVIOUS)
             .setState(state, PlaybackState.PLAYBACK_POSITION_UNKNOWN, 1f).build())
+    }
+
+    private fun volume(v: Float) { try { player?.setVolume(v, v) } catch (e: Exception) { } }
+
+    private fun setSleep(min: Int) {
+        Tilawa.sleepEnd = min == -1
+        Tilawa.sleepAt = if (min > 0) SystemClock.elapsedRealtime() + min * 60_000L else 0L
+        volume(1f)
+    }
+
+    /** خلص المؤقت: نحفظ المكان قبل ما يبدأ الصوت يخفت، عشان «أكمل» يرجعك لآخر شي سمعته واضح */
+    private fun sleepNow() {
+        if (!Tilawa.verse) Tilawa.pos = (Tilawa.pos - FADE_MS).coerceAtLeast(1)
+        finishTilawa()
     }
 
     /** يبدأ سورة: كاملة من موضع (ملي ثانية)، أو آية آية من رقم آية */
@@ -317,6 +349,12 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
         }
         // آية آية والجاية فشلت قبل: نكمل منها بدل ما نقفز للسورة اللي بعدها
         if (Tilawa.verse && Tilawa.ayah + 1 < Tilawa.ayahs(Tilawa.surah)) { begin(Tilawa.surah, Tilawa.ayah + 1); return }
+        // مؤقت «آخر السورة»: نوقف، و«أكمل» يبدأ السورة اللي بعدها
+        if (Tilawa.sleepEnd) {
+            if (Tilawa.surah < 114) { Tilawa.surah++; Tilawa.ayah = 0; Tilawa.remember(this, if (Tilawa.verse) 0 else 1) } else Tilawa.forget(this)
+            finishTilawa(remember = false)
+            return
+        }
         // خلصت السورة: اللي بعدها، وبعد آخر سورة نوقف
         if (Tilawa.surah < 114) begin(Tilawa.surah + 1, 0)
         else { Tilawa.forget(this); finishTilawa(remember = false) }
@@ -398,6 +436,8 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
     private fun finishTilawa(remember: Boolean = true) {
         if (remember && Tilawa.on && Tilawa.surah > 0) Tilawa.remember(this, currentAt())
         main.removeCallbacks(tick)
+        Tilawa.sleepAt = 0L
+        Tilawa.sleepEnd = false
         Tilawa.on = false
         Tilawa.paused = false
         Tilawa.loading = false
@@ -423,6 +463,8 @@ class TilawaService : Service(), AudioManager.OnAudioFocusChangeListener {
         const val ACTION_STOP = "app.riwaq.tv.TILAWA_STOP"
         const val ACTION_TOGGLE = "app.riwaq.tv.TILAWA_TOGGLE"
         const val ACTION_SEEK = "app.riwaq.tv.TILAWA_SEEK"
+        const val ACTION_SLEEP = "app.riwaq.tv.TILAWA_SLEEP"
+        private const val FADE_MS = 20000
         private const val CHANNEL = "tilawa"
         private const val NOTIFY_ID = 22
     }
