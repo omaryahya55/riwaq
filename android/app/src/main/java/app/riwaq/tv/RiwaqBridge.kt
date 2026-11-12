@@ -62,6 +62,15 @@ class RiwaqBridge(private val ctx: Context, private val web: WebView, private va
     @JavascriptInterface fun tilawaStop() { main.post { Tilawa.command(ctx, TilawaService.ACTION_STOP) } }
     @JavascriptInterface fun tilawaSeek(dir: Int) { main.post { Tilawa.seek(ctx, dir) } }
     @JavascriptInterface fun tilawaSleep(min: Int) { main.post { Tilawa.sleep(ctx, min) } }
+    /** إطفاء الشاشة: slot ٠ يومي، ١ مؤقت. at بالملي ثانية (صفر يلغي) */
+    @JavascriptInterface fun screenOffAt(slot: Int, at: Long, daily: Boolean) { main.post { ScreenOff.set(ctx.applicationContext, slot, at, daily) } }
+    /** شاشة الانتظار تبقى لين تطفيها بنفسك: نمنع النظام من تشغيل شاشة التوقف حقته فوقها */
+    @JavascriptInterface fun keepAwake(on: Boolean) {
+        main.post {
+            val w = (ctx as? android.app.Activity)?.window ?: return@post
+            if (on) w.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) else w.clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
     @JavascriptInterface fun tilawaState(): String = Tilawa.stateJson(ctx)
     /** البحث الصوتي حق النظام. كل جهاز يدعم واحد منها */
     @JavascriptInterface fun openSearch() {

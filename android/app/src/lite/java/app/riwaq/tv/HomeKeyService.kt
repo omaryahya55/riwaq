@@ -7,6 +7,7 @@ package app.riwaq.tv
  */
 class HomeKeyService {
     fun disableSelf() {}
+    fun lockScreen(): Boolean = false
 
     companion object {
         @Volatile var instance: HomeKeyService? = null

@@ -38,7 +38,7 @@ class MainActivity : Activity() {
     }
 
     /** ينفذ أمر في الصفحة، أو يخليه ينتظر لين تجهز */
-    private fun runJs(js: String) {
+    internal fun runJs(js: String) {
         val w = web
         if (w != null && pageReady) w.evaluateJavascript(js, null) else pending += js
     }
@@ -73,6 +73,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        live = this
         // WebView قديم: الصفحة تطلع سوداء، فنفتح شاشة أصلية فيها التحديث والرجوع للواجهة الأصلية
         if (WebHost.tooOld()) {
             startActivity(Intent(this, WebViewOutdatedActivity::class.java))
@@ -127,6 +128,7 @@ class MainActivity : Activity() {
         web?.onResume()
         Update.checkDaily(this)
         AdhanService.recoverVolume(this)
+        DreamGuard.ensure(this)
         // بعد ما يخلص المعالج، عشان السؤال ما يطلع فوقه
         if (SetupActivity.isDone(this)) askWatchNextOnce()
     }
@@ -167,7 +169,11 @@ class MainActivity : Activity() {
         return super.dispatchKeyEvent(event)
     }
 
+    /** إطفاء الشاشة بدون صلاحية النظام: نعتّم الصفحة ونترك النظام ينام بوقته */
+    fun dark() { runOnUiThread { window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); runJs("window.App&&App.dark()") } }
+
     override fun onDestroy() {
+        if (live === this) live = null
         try { unregisterReceiver(pkgReceiver) } catch (e: Exception) { }
         bridge?.close()
         web?.destroy()
@@ -176,6 +182,7 @@ class MainActivity : Activity() {
     }
 
     companion object {
+        @Volatile var live: MainActivity? = null
         /** ضغطة البيت المطوّلة (HomeKeyService) */
         const val ACTION_QUICK = "app.riwaq.tv.QUICK"
         /** "شاشة الانتظار الحين" من اللوحة السريعة (لو الجهاز ما فيه شاشة توقف النظام) */

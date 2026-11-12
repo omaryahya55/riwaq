@@ -25,6 +25,8 @@
     prayerAdjust: {},        // تعديل وقت كل صلاة لمسجد الحي (±١٠ دقايق)
     iqama: {},               // دقايق الإقامة بعد الأذان لكل صلاة (فاضي = التقريبي)
     inputNames: {},          // أسماء المداخل: { رقم المدخل: "الرسيفر" }
+    saverStay: true,         // شاشة الانتظار تبقى لين تطفيها (نمنع شاشة توقف التلفزيون الأصلية من فوقها)
+    screenOffTime: "",       // إطفاء الشاشة كل يوم بهالساعة (ساعة:دقيقة)، فاضي = مطفي
     adhanVolume: 40,         // مستوى صوت الأذان %: ٠ = بدون تغيير، وغير كذا ينزل أو يرتفع لين هذا المستوى ثم يرجع
     albumMode: "off",        // ألبوم البيت في شاشة الانتظار: off، mix مع صورنا، only صورك بس
     clockFont: "amiri",      // خط الساعة: amiri، alyamama، readex، fustat
@@ -89,6 +91,8 @@
     o.iqama = mins(c.iqama, 1, 60);
     o.inputNames = {};
     if (c.inputNames && typeof c.inputNames === "object") Object.keys(c.inputNames).slice(0, 12).forEach((k) => { const n = str(c.inputNames[k], 20).trim(); if (k.length <= 200 && n) o.inputNames[k] = n; });
+    o.saverStay = bool(c.saverStay, d.saverStay);
+    o.screenOffTime = /^([01]\d|2[0-3]):[0-5]\d$/.test(c.screenOffTime || "") ? c.screenOffTime : "";
     o.adhanVolume = c.adhanVolume === undefined ? 40 : Math.max(0, Math.min(100, Math.round(+c.adhanVolume) || 0));
     o.albumMode = ["mix", "only"].includes(c.albumMode) ? c.albumMode : "off";
     o.clockFont = ["alyamama", "readex", "fustat"].includes(c.clockFont) ? c.clockFont : "amiri";

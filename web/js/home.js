@@ -15,7 +15,7 @@
   let row = 1, col = 0;      // الصف ٠ = شريط التنقل، ١ = التطبيقات، ٢ = المداخل
   let mode = "nav";          // nav | menu | move | picker | reader | quick | pin | day
   let watch = [], quickList = [];
-  let menuIdx = 0, pickIdx = 0, readIdx = 0, readList = [], quickIdx = 0;
+  let menuIdx = 0, pickIdx = 0, readIdx = 0, readList = [], quickIdx = 0, railCol = 0, appCol = 0;
   let pinDigits = [0, 0, 0, 0], pinPos = 0, pinThen = null, pinTries = 0;
   let root, focusEl = null;
 
@@ -49,6 +49,7 @@
     { id: "sound", name: "الصوت", ic: "sound" },
     { id: "adhanVol", name: "صوت الأذان", ic: "bell" },
     { id: "adhanTest", name: "جرّب صوت الأذان", ic: "bell" },
+    { id: "screenOff", name: "مؤقت إطفاء الشاشة", ic: "moon" },
     { id: "display", name: "الشاشة والصورة", ic: "tv" },
     { id: "riwaq", name: "إعدادات رواق (بالجوال)", ic: "grid" },
     { id: "saver", name: "شاشة الانتظار الحين", ic: "moon" },
@@ -62,6 +63,7 @@
   function controlItems() {
     const out = QUICK.filter((q) => !(q.kidsHide && kids())).map((q) => {
       if (q.id === "adhanVol") return Object.assign({}, q, { name: adhanVolName() });
+      if (q.id === "screenOff") return Object.assign({}, q, { name: offName() });
       const v = q.id === "update" && native() && Riwaq.updateAvailable ? Riwaq.updateAvailable() : "";
       return v ? Object.assign({}, q, { name: "تحديث رواق · نسخة جديدة " + F.digits(v) }) : q;
     });
@@ -159,14 +161,22 @@
       </div>
       <div class="m-text soft-shadow" data-k="mText"></div>
       <div class="m-mini" data-k="mMini">
-        <div class="mm-info" data-m="0"><b data-k="mmName"></b><small data-k="mmSub"></small></div>
-        <div class="mm-ctl">
-          <div class="mm-btn" data-m="4">${icon("tclose")}</div>
-          <div class="mm-btn" data-m="3">${icon("tback10")}</div>
-          <div class="mm-btn" data-m="2" data-k="mmToggle"></div>
-          <div class="mm-btn" data-m="1">${icon("tfwd10")}</div>
+        <div class="mm-top">
+          <div class="mm-art" data-k="mmArt"></div>
+          <div class="mm-info" data-m="0"><b data-k="mmName"></b><small data-k="mmSub"></small></div>
+          <div class="mm-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
         </div>
         <div class="mm-bar"><i data-k="mmBar"></i></div>
+        <div class="mm-row">
+          <span class="mm-t" data-k="mmA"></span>
+          <div class="mm-ctl">
+            <div class="mm-btn" data-m="4">${icon("tclose")}</div>
+            <div class="mm-btn" data-m="3">${icon("tback10")}</div>
+            <div class="mm-btn" data-m="2" data-k="mmToggle"></div>
+            <div class="mm-btn" data-m="1">${icon("tfwd10")}</div>
+          </div>
+          <span class="mm-t" data-k="mmD"></span>
+        </div>
       </div>
       <div class="m-rows">
         <div class="m-caprow">
@@ -277,14 +287,14 @@
 
   // مثل Dock الماك: كل صف يبرز ويتحرك مع المحدد (dock.js). الصف اللي مو عليه التركيز يرتاح في مكانه
   const DOCK = {
-    0: { size: 170, scale: [1.1, 1.03] },
+    0: { size: 88, scale: [1.12, 1.04] },
     1: { size: 320, scale: [1.16, 1.06, 1.02] },
     2: { size: 400, scale: [1.06, 1.02] }
   };
   function dockRow(shown) {
     [$("mNav"), $("m1"), $("m2")].forEach((el, r) => {
       if (!el) return;
-      if (shown && row === r) Dock.apply(el.children, col, Object.assign({ dir: -1, lift: r === 1 && mode === "move" ? 14 : 0 }, DOCK[r]));
+      if (shown && row === r) Dock.apply(el.children, col, Object.assign({ dir: -1, lift: r === 1 && mode === "move" ? 14 : 0 }, DOCK[r], r === 0 ? { axis: "y", dir: 1 } : {}));
       else Dock.clear(el.children);
     });
   }
@@ -373,7 +383,7 @@
       if (row > 0) {
         const strip = rowEl(row), pitch = row === 1 ? 360 : 440;
         if (strip) {
-          const room = (R0, i) => R0.length * pitch - 40 - 1760 - (row === 1 && R0[R0.length - 1] && R0[R0.length - 1].type === "all" ? 140 : 0);
+          const room = (R0, i) => R0.length * pitch - 40 - 1640 - (row === 1 && R0[R0.length - 1] && R0[R0.length - 1].type === "all" ? 140 : 0);
           const list = rows()[row] || [];
           strip.style.transform = `translateX(${Math.max(0, Math.min((col - 1) * pitch, room(list)))}px)`;
         }
@@ -393,14 +403,16 @@
     }
   }
 
+  // اختيار التطبيقات: شبكة مثل واجهة tvOS: الأيقونة وتحتها الاسم، والمختار عليه علامة
+  const PK_COLS = 7, PK_ROW = 214;
   function renderPicker() {
     $("count").textContent = `مختار ${F.digits(pinned.length)} من ${F.digits(apps.length)}.`;
     const box = $("plist");
-    if (box.children.length !== apps.length) box.innerHTML = apps.map((a) => `<div class="pk" style="--tint:${a.tint}">${a.icon ? `<img class="sw-img" src="${a.icon}" alt="">` : `<span class="sw"></span>`}<span class="nm"><bdi>${esc(a.name)}</bdi></span><span class="ck">${icon("check")}</span></div>`).join("");
+    if (box.children.length !== apps.length) box.innerHTML = apps.map((a) => `<div class="pk" style="--tint:${a.tint}"><div class="pk-ic">${a.icon ? `<img class="pk-img" src="${a.icon}" alt="">` : `<span class="pk-ph">${esc([...String(a.name)][0] || "")}</span>`}<span class="ck">${icon("check")}</span></div><span class="nm"><bdi>${esc(a.name)}</bdi></span></div>`).join("");
     apps.forEach((a, i) => { const e = box.children[i]; e.classList.toggle("on", pinned.includes(a.id)); e.classList.toggle("focus", i === pickIdx); });
-    Dock.apply(box.children, pickIdx, { axis: "y", dir: 1, size: 74, scale: [1.05, 1.015] });
-    const shift = Math.max(0, pickIdx * 74 - 760 + 74 * 2);
-    box.style.transform = `translateY(${-Math.min(shift, Math.max(0, apps.length * 74 - 760))}px)`;
+    // الصف المحدد يبقى في الثاني، والشبكة تمشي تحته
+    const r = Math.floor(pickIdx / PK_COLS), total = Math.ceil(apps.length / PK_COLS);
+    box.style.transform = `translateY(${-Math.min(Math.max(0, r - 1) * PK_ROW, Math.max(0, total * PK_ROW - 780))}px)`;
   }
 
   // ===== البطاقات =====
@@ -565,6 +577,9 @@
       return;
     }
     root.classList.toggle("mini-resume", !!info.resume);
+    root.classList.toggle("mini-paused", !!info.paused || !!info.resume);
+    setHTML($("mmArt"), `<b>${F.digits(info.no || "")}</b><small>سورة</small>`);
+    setHTML($("mmA"), esc(info.a || "")); setHTML($("mmD"), esc(info.d || ""));
     setHTML($("mmName"), esc(info.resume ? "أكمل " + info.name : info.name));
     setHTML($("mmSub"), info.resume ? esc(info.reciter) + (info.ayah ? " · وقفت عند " + esc(info.ayah) : "") : info.loading ? "نجهز التلاوة…" : esc(info.reciter) + (info.ayah ? " · " + esc(info.ayah) : "") + (info.paused ? " · متوقفة" : "") + (info.sleep ? " · " + esc(info.sleep) : ""));
     setHTML($("mmToggle"), icon(info.paused ? "tplay" : "tpause"));
@@ -576,7 +591,6 @@
     // بطاقة «أكمل»: بس الاسم والتشغيل والإغلاق (٠ و٢ و٤)
     if (k === "left") { miniIdx = Math.min(4, miniIdx + 1); if (resume && (miniIdx === 1 || miniIdx === 3)) miniIdx++; } // من اليمين لليسار: اليسار = اللي بعده (الاسم، تقديم، تشغيل، تأخير، إغلاق)
     if (k === "right") { miniIdx = Math.max(0, miniIdx - 1); if (resume && (miniIdx === 1 || miniIdx === 3)) miniIdx--; }
-    if (k === "up") { mode = "nav"; row = 0; col = 0; }
     if (k === "down" || k === "back") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; }
     if (k === "ok") {
       if (miniIdx === 0) { mode = "tilawa"; paintFocus(); Tilawa.open(() => { mode = "nav"; row = 1; col = 0; paintFocus(); renderStatus(); }); return true; }
@@ -715,6 +729,20 @@
   function openInputs() { openList("المداخل", "hdmi", inputs.map((i) => ({ input: i, name: inputName(i), ic: i.icon || "hdmi" }))); }
   function closeQuick() { mode = "nav"; $("quick").classList.remove("on"); paintFocus(); }
   // صوت الأذان من التلفزيون نفسه: كل ضغطة تنقل للمستوى اللي بعده
+  // مؤقت إطفاء الشاشة (مرة وحدة): كل ضغطة تنقل للي بعده. الأندرويد ينفّذه بمنبّه، حتى لو طلعت من رواق
+  const OFF_STEPS = [30, 60, 90, 120, 180], OFF_KEY = "riwaq.screenOffAt";
+  const offAt = () => { try { const v = +localStorage.getItem(OFF_KEY) || 0; return v > Date.now() ? v : 0; } catch (e) { return 0; } };
+  const offName = () => { const at = offAt(); return at ? "مؤقت إطفاء الشاشة: بعد " + F.digits(Math.ceil((at - Date.now()) / 60000)) + " د" : "مؤقت إطفاء الشاشة: مطفي"; };
+  function stepScreenOff() {
+    const left = offAt() ? Math.ceil((offAt() - Date.now()) / 60000) : 0;
+    const next = OFF_STEPS.find((m) => m > left) || 0;
+    const at = next ? Date.now() + next * 60000 : 0;
+    try { localStorage.setItem(OFF_KEY, String(at)); } catch (e) { /* بدون تخزين: المنبّه يشتغل والاسم ما يتحدث */ }
+    if (native() && Riwaq.screenOffAt) Riwaq.screenOffAt(1, at, false); else App.toast(next ? "المؤقت يشتغل على التلفزيون بس" : "انطفى المؤقت");
+    openQuick();
+    quickIdx = quickList.findIndex((x) => x.id === "screenOff");
+    renderQuick();
+  }
   const ADHAN_LEVELS = [0, 15, 30, 40, 50, 60, 75, 100];
   const adhanVolName = () => (CONFIG.adhanVolume ? "صوت الأذان: " + F.digits(CONFIG.adhanVolume) + "٪" : "صوت الأذان: بدون تغيير");
   function stepAdhanVolume() {
@@ -739,6 +767,7 @@
     if (q.input) return launchItem({ type: "input", id: q.input.id, name: q.name });
     if (q.section) return openSection(q.section);
     if (q.id === "adhanVol") return stepAdhanVolume();
+    if (q.id === "screenOff") return stepScreenOff();
     if (q.id === "adhanTest") return native() && Riwaq.testAdhan ? Riwaq.testAdhan() : App.toast("التجربة على التلفزيون بس");
     if (q.id === "saver") return App.show("saver");
     if (q.id === "picker") { mode = "picker"; pickIdx = 0; $("picker").classList.add("on"); renderPicker(); paintFocus(); return; }
@@ -913,7 +942,22 @@
       if (mode === "tilawa") return Tilawa.key(k);
       if (mode === "mini") return miniKey(k);
       // المشغّل بين الأزرار فوق وصف التطبيقات
-      if (mode === "nav" && tlOn && moment() && ((k === "up" && row === 1) || (k === "down" && row === 0))) { mode = "mini"; miniIdx = 2; paintFocus(); renderMini(); return true; }
+      // القائمة الجانبية: فوق وتحت بين الأزرار، واليسار يرجّع للتطبيقات، وفوق من أول زر يطلع للمشغّل
+      if (mode === "nav" && moment() && row === 0) {
+        const n = R[0].length;
+        if (k === "up") {
+          if (col === 0 && tlOn) { railCol = 0; mode = "mini"; miniIdx = 2; paintFocus(); renderMini(); return true; }
+          col = Math.max(0, col - 1);
+        } else if (k === "down") col = Math.min(n - 1, col + 1);
+        else if (k === "left" || k === "back") {
+          if (!R[1].length) return k === "left";
+          railCol = col; row = 1; col = Math.min(appCol, R[1].length - 1);
+        } else if (k === "ok" && R[0][col]) { railCol = col; open(R[0][col]); return true; }
+        railCol = row === 0 ? col : railCol;
+        paintFocus(); return true;
+      }
+      // المشغّل فوق في النص: من صف التطبيقات السهم فوق
+      if (mode === "nav" && tlOn && moment() && k === "up" && row === 1) { appCol = col; mode = "mini"; miniIdx = 2; paintFocus(); renderMini(); return true; }
       if (mode === "pin") {
         if (/^d[0-9]$/.test(k)) {
           pinDigits[pinPos] = +k[1];
@@ -956,8 +1000,11 @@
         renderReader(); return true;
       }
       if (mode === "picker") {
-        if (k === "up") pickIdx = Math.max(0, pickIdx - 1);
-        if (k === "down") pickIdx = Math.min(apps.length - 1, pickIdx + 1);
+        // الشبكة من اليمين لليسار: السهم اليسار = اللي بعده
+        if (k === "left") pickIdx = Math.min(apps.length - 1, pickIdx + 1);
+        if (k === "right") pickIdx = Math.max(0, pickIdx - 1);
+        if (k === "up") pickIdx = Math.max(0, pickIdx - PK_COLS);
+        if (k === "down") pickIdx = Math.min(apps.length - 1, pickIdx + PK_COLS);
         if (k === "ok" && apps[pickIdx]) {
           const id = apps[pickIdx].id;
           pinned = pinned.includes(id) ? pinned.filter((x) => x !== id) : pinned.concat(id);
@@ -994,11 +1041,14 @@
         if (row !== 1 && R[1].length) { row = 1; col = 0; paintFocus(); return true; }
         return false;
       }
+      // أول تطبيق: السهم يمين يدخل القائمة الجانبية (هي على الطرف اليمين)
+      if (k === "right" && moment() && row >= 1 && col === 0 && R[0].length) { appCol = 0; row = 0; col = Math.min(railCol, R[0].length - 1); paintFocus(); return true; }
       if (k === "left") col = Math.min(R[row].length - 1, col + 1);
       if (k === "right") col = Math.max(0, col - 1);
       if (k === "up" && row > 0) {
+        if (row === 1) appCol = col;
         row--; if (row === 1 && !R[1].length) row = 0;
-        col = Math.min(col, R[row].length - 1);
+        col = row === 0 && moment() ? Math.min(railCol, R[0].length - 1) : Math.min(col, R[row].length - 1);
       }
       else if (k === "down" && moment() && row === R.length - 1) { openDay(); return true; }
       else if (k === "down" && row < R.length - 1) {

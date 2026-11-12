@@ -88,6 +88,8 @@ object HomeLock {
                 }
                 // شاشة الانتظار، وصلاحية الأذان، وخدمة الأزرار في النسخة الكاملة: نفس سكربت التركيب
                 adb.shell("settings put secure screensaver_components $pkg/.RiwaqDream; settings put secure screensaver_enabled 1")
+                // بعدها رواق يرجّع نفسه كشاشة توقف لو النظام غيّرها (DreamGuard)، بدون ما نحتاج تصحيح الأخطاء
+                adb.shell("pm grant $pkg android.permission.WRITE_SECURE_SETTINGS")
                 if (Build.VERSION.SDK_INT >= 31) adb.shell("appops set $pkg SCHEDULE_EXACT_ALARM allow")
                 if (BuildConfig.HAS_KEYS && !SetupActivity.a11yOn(ctx)) {
                     val mine = "$pkg/$pkg.HomeKeyService"

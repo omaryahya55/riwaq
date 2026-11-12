@@ -328,11 +328,11 @@
       const st = state();
       if (!st.on) {
         const r = resumeInfo();
-        return r && r.s && r.rc ? { resume: true, name: r.s.name, reciter: fullName(r.rc), ayah: r.ayah, paused: true, loading: false, pct: 0 } : null;
+        return r && r.s && r.rc ? { resume: true, name: r.s.name, reciter: fullName(r.rc), ayah: r.ayah, paused: true, loading: false, pct: 0, no: r.l.surah, a: r.l.verse ? "" : clock(r.l.at), d: "" } : null;
       }
       const s = surah(st.surah), rc = reciter(st.edition);
       const pct = st.verse ? (st.ayahs ? ((st.ayah + 1) / st.ayahs) * 100 : 0) : st.dur ? (st.pos / st.dur) * 100 : 0;
-      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), sleep: sleepText(st), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
+      return { name: s ? s.name : "", reciter: fullName(rc), paused: !!st.paused, loading: !!st.loading, pct: Math.min(100, pct), no: st.surah, a: st.verse || !st.dur ? "" : clock(st.pos), d: st.verse || !st.dur ? "" : clock(st.dur), sleep: sleepText(st), ayah: st.verse ? `الآية ${F.digits(st.ayah + 1)} من ${F.digits(st.ayahs)}` : ayahText(st) };
     },
     stop
   };

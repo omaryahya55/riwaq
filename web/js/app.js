@@ -73,8 +73,25 @@
     stage.classList.toggle("nightclock", night && App.current === "saver" && CONFIG.nightClock !== false);
   }
 
+  // شاشة الانتظار تبقى لين تطفيها: نمنع النظام من تشغيل شاشة التوقف الأصلية فوقها (أندرويد ينفذها)
+  function syncAwake() {
+    try { if (window.Riwaq && Riwaq.keepAwake) Riwaq.keepAwake(App.current === "saver" && CONFIG.saverStay !== false && !stage.classList.contains("off")); } catch (e) { /* خارج التلفزيون */ }
+  }
+  // إطفاء الشاشة بدون صلاحية النظام: شاشة سوداء، وأي زر يرجّعها
+  function dark() { show("saver"); stage.classList.add("off"); syncAwake(); }
+  // إطفاء الشاشة اليومي (من الإعدادات): ينحسب الوقت هنا ويتسلّمه أندرويد كمنبّه
+  function syncScreenOff() {
+    if (!(window.Riwaq && Riwaq.screenOffAt)) return;
+    const m = /^(\d\d):(\d\d)$/.exec(CONFIG.screenOffTime || "");
+    if (!m) { Riwaq.screenOffAt(0, 0, false); return; }
+    const d = new Date(); d.setHours(+m[1], +m[2], 0, 0);
+    if (d.getTime() <= Date.now() + 5000) d.setDate(d.getDate() + 1);
+    Riwaq.screenOffAt(0, d.getTime(), true);
+  }
+
   function show(name) {
     App.current = name;
+    syncAwake();
     document.getElementById("home").classList.toggle("on", name === "home");
     document.getElementById("saver").classList.toggle("on", name === "saver");
     if (name === "saver") { albumIds = null; Saver.tick(true); } else { stage.classList.remove("alert"); Home.tick(); }
@@ -97,6 +114,7 @@
   for (let n = 0; n <= 9; n++) MAP[String(n)] = "d" + n;
 
   function dispatch(k) {
+    if (stage.classList.contains("off")) { stage.classList.remove("off"); syncAwake(); resetIdle(); return true; }
     resetIdle();
     if (window.PhoneMsg && PhoneMsg.key(k)) return true; // رسالة الجوال ظاهرة: الزر يقفلها
     if (App.current === "saver") { if (!MODE_SAVER_ONLY) show("home"); return; } // أي زر يرجّع للواجهة
@@ -160,7 +178,7 @@
   // الشريط مخفي من البداية (عشان ما يطلع على التلفزيون وقت التحميل)، ويطلع في المتصفح بس
   if (!params.has("kiosk") && !window.Riwaq) bar.classList.remove("hidden");
 
-  window.App = { current: "home", toast, show };
+  window.App = { current: "home", toast, show, dark };
   // آخر خطأ في الصفحة: يطلع في تقرير المشكلة بس، وما يروح لأي مكان لحاله
   window.addEventListener("error", (e) => { try { if (window.Riwaq && Riwaq.jsError) Riwaq.jsError(String(e.message).slice(0, 200) + " @" + String(e.filename).split("/").pop() + ":" + e.lineno); } catch (x) { /* لا شي */ } });
 
@@ -178,7 +196,7 @@
   if (window.ResizeObserver) new ResizeObserver(fit).observe(viewport);
   const start = params.get("screen") || (location.hash.match(/screen=(\w+)/) || [])[1];
   show(start === "saver" ? "saver" : "home");
-  if (!MODE_SAVER_ONLY) resetIdle();
+  if (!MODE_SAVER_ONLY) { resetIdle(); syncScreenOff(); }
   // الصفحة ورا تطبيق ثاني: ما نحسب ولا نرسم شي
   setInterval(() => { if (document.hidden) return; Saver.tick(); Home.tick(); updateScene(); }, 1000 * 15);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) { Saver.tick(true); Home.tick(); updateScene(); } });

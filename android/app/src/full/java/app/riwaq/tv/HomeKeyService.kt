@@ -234,6 +234,9 @@ class HomeKeyService : AccessibilityService() {
         if (HomeLock.riwaqIsHome(this) && SystemClock.uptimeMillis() - lastBounce > 800) goRiwaq()
     }
 
+    /** إطفاء الشاشة (مؤقت الإطفاء): قفل النظام ينيّم الجهاز */
+    fun lockScreen(): Boolean = Build.VERSION.SDK_INT >= 28 && performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
+
     override fun onInterrupt() {
         handler.removeCallbacks(longPress)
         handler.removeCallbacks(appLong)
@@ -256,7 +259,7 @@ class HomeKeyService : AccessibilityService() {
         private const val LONG_PRESS_MS = 600L
         private const val APP_LONG_MS = 800L
         private const val VOLUME_REPEAT_MS = 120L
-        private const val VOLUME_WINDOW_MS = 6000L
+        private const val VOLUME_WINDOW_MS = 2000L
         private val DPAD_KEYS = setOf(KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_DPAD_RIGHT)
         private val VOLUME_KEYS = setOf(KeyEvent.KEYCODE_VOLUME_UP, KeyEvent.KEYCODE_VOLUME_DOWN)
         /** الخدمة الشغالة (لو فيه): صفحة "الرجوع للواجهة الأصلية" تطفيها بـ disableSelf */

@@ -456,6 +456,8 @@
     $("bgStyle").value = cfg.bgStyle === "drawn" ? "drawn" : "photo";
     $("density").value = ["full", "frame"].includes(cfg.density) ? cfg.density : "calm";
     $("nightClock").checked = cfg.nightClock !== false;
+    $("saverStay").checked = cfg.saverStay !== false;
+    $("screenOffTime").value = cfg.screenOffTime || "";
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
     paintSecrets();
     loadLockApps();
@@ -480,6 +482,8 @@
     $("inputNames").querySelectorAll("input").forEach((x) => { const v = x.value.trim(); if (v) names[x.dataset.id] = v; });
     if ($("inputNames").children.length) cfg.inputNames = names;
     cfg.nightClock = $("nightClock").checked;
+    cfg.saverStay = $("saverStay").checked;
+    cfg.screenOffTime = $("screenOffTime").value || "";
     const ical = $("icalUrl").value.trim();
     if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
     cfg.icalUrl = ical;
