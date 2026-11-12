@@ -106,6 +106,7 @@
           <div class="pr-at" data-k="prAt"></div>
         </div>
         <div class="prx-adhan"><b data-k="prAdhan"></b><span data-k="prAdClock"></span></div>
+        <div class="pr-hadith" data-k="prHadith"><p data-k="prHText"></p><small data-k="prHSrc"></small></div>
       </div>
       <div class="s-after" data-k="afterCard">${icon("crescent")}<div><b>أذكار بعد الصلاة</b><small>اضغط OK تفتحها بعدّادها</small></div></div>
       <div class="adhan-alert">${icon("bell")}<span data-k="alertText"></span></div>
@@ -457,6 +458,8 @@
     if (since >= PR_ADHAN && since < PR_AFTER) return { s: "after", name: prev.name, at: prev.at };
     return null;
   }
+  // حديث العدّاد: ما يطلع إلا لو موثّق حرفياً (verified) وله راوٍ ودرجة
+  const momentHadith = () => (window.PRAYER_MOMENT || []).find((h) => h.verified === true && h.narrator && h.grade && h.text);
   const clockText = (d) => { const c = F.clock(d); return `${c.h}:${c.m} ${c.ampm}`; };
   function renderPrayerLayer(root, now) {
     const stage = document.getElementById("stage");
@@ -472,6 +475,9 @@
     if (!st) return;
     const c = (k, v) => { const e = $(root, k); if (e.textContent !== v) e.textContent = v; };
     c("prClock", clockText(now));
+    const h = momentHadith();
+    $(root, "prHadith").style.display = h && (s === "count" || s === "adhan") ? "" : "none";
+    if (h) { c("prHText", h.text); c("prHSrc", `الراوي: ${h.narrator} · ${h.source}`); }
     if (s === "count") {
       const mm = Math.floor(st.secs / 60), ss = st.secs % 60;
       c("prLab", `باقي على أذان ${st.name}`);

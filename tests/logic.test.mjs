@@ -405,3 +405,13 @@ test("الأذكار: أبواب بدون سور منفردة، والعدد م�
   for (const x of list("maathur")) assert.ok(x.source && x.attribution && x.grade, "كل دعاء بمصدره ودرجته");
   for (let i = 0; i < 30; i++) assert.notEqual(w.Content.current(new Date(Date.UTC(2026, 10, 3, 8, 0, i * 40)), 0).item.type, "quran");
 });
+
+test("حديث العدّاد: موثّق، وله راوٍ ودرجة وقائلها ومصدرها", () => {
+  const w = load(["js/prayer-moment.js"]);
+  assert.ok(w.PRAYER_MOMENT.length >= 1);
+  for (const h of w.PRAYER_MOMENT) {
+    assert.equal(h.verified, true);
+    assert.ok(h.narrator && h.grade && h.gradeBy && h.source && h.shamela && h.shamela.book_id && h.shamela.page_id, "راوٍ ودرجة وقائلها ومصدر");
+    assert.ok(!/قالوا/.test(h.text), "بدون الزيادة المختلف فيها");
+  }
+});
