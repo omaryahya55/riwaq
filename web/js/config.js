@@ -25,6 +25,7 @@
     prayerAdjust: {},        // تعديل وقت كل صلاة لمسجد الحي (±١٠ دقايق)
     iqama: {},               // دقايق الإقامة بعد الأذان لكل صلاة (فاضي = التقريبي)
     inputNames: {},          // أسماء المداخل: { رقم المدخل: "الرسيفر" }
+    prayerSaver: true,       // شاشة الانتظار تتبع الصلاة: عدّاد قبل الأذان، تعتيم وقته، وبطاقة أذكار بعده (على شاشة رواق بس)
     saverStay: true,         // شاشة الانتظار تبقى لين تطفيها (نمنع شاشة توقف التلفزيون الأصلية من فوقها)
     screenOffTime: "",       // إطفاء الشاشة كل يوم بهالساعة (ساعة:دقيقة)، فاضي = مطفي
     adhanVolume: 40,         // مستوى صوت الأذان %: ٠ = بدون تغيير، وغير كذا ينزل أو يرتفع لين هذا المستوى ثم يرجع
@@ -91,6 +92,7 @@
     o.iqama = mins(c.iqama, 1, 60);
     o.inputNames = {};
     if (c.inputNames && typeof c.inputNames === "object") Object.keys(c.inputNames).slice(0, 12).forEach((k) => { const n = str(c.inputNames[k], 20).trim(); if (k.length <= 200 && n) o.inputNames[k] = n; });
+    o.prayerSaver = bool(c.prayerSaver, d.prayerSaver);
     o.saverStay = bool(c.saverStay, d.saverStay);
     o.screenOffTime = /^([01]\d|2[0-3]):[0-5]\d$/.test(c.screenOffTime || "") ? c.screenOffTime : "";
     o.adhanVolume = c.adhanVolume === undefined ? 40 : Math.max(0, Math.min(100, Math.round(+c.adhanVolume) || 0));

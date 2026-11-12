@@ -95,6 +95,19 @@
         </div>
         <div class="s-bottom" data-k="bottom"></div>
       </div>
+      <div class="s-pr-layer" data-k="prLayer">
+        <div class="prx-count">
+          <div class="pr-clock" data-k="prClock"></div>
+          <div class="pr-lab" data-k="prLab"></div>
+          <div class="pr-ring">
+            <svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle class="fg" data-k="prArc" cx="50" cy="50" r="44"></circle></svg>
+            <div class="pr-cd" data-k="prCd"></div>
+          </div>
+          <div class="pr-at" data-k="prAt"></div>
+        </div>
+        <div class="prx-adhan"><b data-k="prAdhan"></b><span data-k="prAdClock"></span></div>
+      </div>
+      <div class="s-after" data-k="afterCard">${icon("crescent")}<div><b>أذكار بعد الصلاة</b><small>اضغط OK تفتحها بعدّادها</small></div></div>
       <div class="adhan-alert">${icon("bell")}<span data-k="alertText"></span></div>
       <div class="credit" data-k="credit"></div>`;
     return root;
@@ -420,7 +433,56 @@
   const SHIFTS = [[0, 0], [6, -4], [-5, 5], [4, 6], [-6, -3], [3, -6], [-3, 4]];
   let shiftIdx = 0;
 
-  let root, lastMinute = -1, forceAlert = false;
+  let root, lastMinute = -1, forceAlert = false, prForce = null, prState = "";
+  // شاشة الانتظار تتبع الصلاة (على شاشة رواق بس): قبل الأذان بنص ساعة عدّاد، من الأذان ١٠ دقايق تعتيم، وبعدها ٢٠ دقيقة بطاقة الأذكار
+  const PR_BEFORE = 30, PR_ADHAN = 10, PR_AFTER = 30;
+  function prayerLayerState(now) {
+    if (CONFIG.prayerSaver === false || !window.Prayer) return null;
+    if (prForce !== null) {
+      const m = prForce, nm = "العصر", at = new Date(+now + m * 60000);
+      if (m > 0 && m <= PR_BEFORE) return { s: "count", name: nm, at, secs: Math.round(m * 60) };
+      if (m <= 0 && m > -PR_ADHAN) return { s: "adhan", name: nm, at };
+      if (m <= -PR_ADHAN && m > -PR_AFTER) return { s: "after", name: nm, at };
+      return null;
+    }
+    const t0 = Prayer.timesFor(now, 0);
+    if (!t0 || !t0.length) return null;
+    const real = t0.filter((p) => !p.notPrayer);
+    const prev = real.filter((p) => p.at <= now).pop();
+    let nxt = real.find((p) => p.at > now);
+    if (!nxt) { const t1 = Prayer.timesFor(now, 1); nxt = t1 && t1.find((p) => !p.notPrayer); }
+    const until = nxt ? (nxt.at - now) / 60000 : Infinity, since = prev ? (now - prev.at) / 60000 : Infinity;
+    if (until > 0 && until <= PR_BEFORE) return { s: "count", name: nxt.name, at: nxt.at, secs: Math.max(0, Math.floor((nxt.at - now) / 1000)) };
+    if (since >= 0 && since < PR_ADHAN) return { s: "adhan", name: prev.name, at: prev.at };
+    if (since >= PR_ADHAN && since < PR_AFTER) return { s: "after", name: prev.name, at: prev.at };
+    return null;
+  }
+  const clockText = (d) => { const c = F.clock(d); return `${c.h}:${c.m} ${c.ampm}`; };
+  function renderPrayerLayer(root, now) {
+    const stage = document.getElementById("stage");
+    const on = App.current === "saver" && CONFIG.density !== "frame";
+    const st = on ? prayerLayerState(now) : null;
+    const s = st ? st.s : "";
+    if (s !== prState) {
+      prState = s;
+      stage.classList.toggle("pr-count", s === "count");
+      stage.classList.toggle("pr-adhan", s === "adhan");
+      stage.classList.toggle("pr-after", s === "after");
+    }
+    if (!st) return;
+    const c = (k, v) => { const e = $(root, k); if (e.textContent !== v) e.textContent = v; };
+    c("prClock", clockText(now));
+    if (s === "count") {
+      const mm = Math.floor(st.secs / 60), ss = st.secs % 60;
+      c("prLab", `باقي على أذان ${st.name}`);
+      c("prCd", F.digits(`${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`));
+      c("prAt", `${st.name} ${clockText(st.at)}`);
+      $(root, "prArc").style.strokeDashoffset = String(276.46 * (st.secs / (PR_BEFORE * 60)));
+    } else if (s === "adhan") {
+      c("prAdhan", `حان وقت أذان ${st.name}`);
+      c("prAdClock", clockText(now));
+    }
+  }
   window.Saver = {
     init(el) {
       root = build(el);
@@ -437,6 +499,8 @@
       this.tick(true);
       // خانة المحتوى تتبدل كل ٤٠ ثانية تقريباً (أذكار، حديث، صحابة)، فنحدّثها بدون انتظار الدقيقة
       setInterval(() => { if (visible()) renderHadith(root, new Date()); }, 20000);
+      // العدّاد بالثواني (بس لما يكون ظاهر)
+      setInterval(() => { if (visible()) renderPrayerLayer(root, new Date()); }, 1000);
     },
     tick(force) {
       if (window.App && App.current && App.current !== "saver") return; // مخفية: ترسم أول ما تطلع (App.show)
@@ -470,8 +534,13 @@
       else if (limit > 0 && ph && ph.before) note = `حان الآن وقت صلاة ${ph.name}`;
       document.getElementById("stage").classList.toggle("alert", !!note && App.current === "saver");
       $(root, "alertText").textContent = note;
+      renderPrayerLayer(root, now);
     },
     setForceAlert(v) { forceAlert = v; this.tick(true); },
+    // للتجربة: دقايق للأذان (موجب = قبل، سالب = بعد، null = الحقيقي)
+    forcePrayer(m) { prForce = m; this.tick(true); },
+    // بطاقة الأذكار ظاهرة: OK يفتحها بدل ما ترجع للواجهة بس
+    afterPrayer() { return prState === "after"; },
     // للاختبارات الآلية (tests/)
     _test: { nextMonthly, daysToHijri, readable },
     // للواجهة الرئيسية (نفس الحسابات بدون تكرار)

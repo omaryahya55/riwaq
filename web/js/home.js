@@ -931,6 +931,8 @@
     },
     // أندرويد يناديها لضغطة البيت المطوّلة (لو الجهاز يرسلها)
     openRestore() { closeLayers(); openRestore(); },
+    // من بطاقة شاشة الانتظار بعد الصلاة
+    openAfterPrayer() { closeLayers(); const sec = window.Content && Content.sections(new Date()).find((x) => x.id === "afterPrayer"); if (sec) openSection(sec); },
     openSettings() { closeLayers(); openSettings(); },
     openQuick() { closeLayers(); if (kids()) askPin(openQuick, "التحكم"); else openQuick(); },
     // أندرويد يناديها لما ينركّب أو ينحذف تطبيق

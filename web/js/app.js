@@ -94,7 +94,7 @@
     syncAwake();
     document.getElementById("home").classList.toggle("on", name === "home");
     document.getElementById("saver").classList.toggle("on", name === "saver");
-    if (name === "saver") { albumIds = null; Saver.tick(true); } else { stage.classList.remove("alert"); Home.tick(); }
+    if (name === "saver") { albumIds = null; Saver.tick(true); } else { stage.classList.remove("alert", "pr-count", "pr-adhan", "pr-after"); Home.tick(); }
     updateScene();
     syncDevbar();
   }
@@ -117,7 +117,11 @@
     if (stage.classList.contains("off")) { stage.classList.remove("off"); syncAwake(); resetIdle(); return true; }
     resetIdle();
     if (window.PhoneMsg && PhoneMsg.key(k)) return true; // رسالة الجوال ظاهرة: الزر يقفلها
-    if (App.current === "saver") { if (!MODE_SAVER_ONLY) show("home"); return; } // أي زر يرجّع للواجهة
+    if (App.current === "saver") {
+      // أي زر يرجّع للواجهة. وOK والبطاقة ظاهرة تفتح أذكار بعد الصلاة
+      if (!MODE_SAVER_ONLY) { const go = k === "ok" && window.Saver && Saver.afterPrayer && Saver.afterPrayer(); show("home"); if (go && Home.openAfterPrayer) Home.openAfterPrayer(); }
+      return;
+    }
     return Home.key(k);
   }
   // أندرويد يرسل زر الرجوع هنا: true = الصفحة استخدمته

@@ -457,6 +457,7 @@
     $("density").value = ["full", "frame"].includes(cfg.density) ? cfg.density : "calm";
     $("nightClock").checked = cfg.nightClock !== false;
     $("saverStay").checked = cfg.saverStay !== false;
+    $("prayerSaver").checked = cfg.prayerSaver !== false;
     $("screenOffTime").value = cfg.screenOffTime || "";
     $("lockPin").value = (cfg.lock && cfg.lock.pin) || "";
     paintSecrets();
@@ -483,6 +484,7 @@
     if ($("inputNames").children.length) cfg.inputNames = names;
     cfg.nightClock = $("nightClock").checked;
     cfg.saverStay = $("saverStay").checked;
+    cfg.prayerSaver = $("prayerSaver").checked;
     cfg.screenOffTime = $("screenOffTime").value || "";
     const ical = $("icalUrl").value.trim();
     if (ical && !/^https:\/\/[^\s]+$/i.test(ical)) { status("رابط التقويم لازم يبدأ بـ https://", true); return; }
