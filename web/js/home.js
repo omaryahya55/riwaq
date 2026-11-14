@@ -430,8 +430,13 @@
       if (!c) break;
       const text = String(c.item.text).replace(/<[^>]+>/g, "").trim();
       el.innerHTML = `<b>${esc(c.title)}</b><p class="${Content.fontClass(c.item)}">${esc(text)}</p><small>${esc(Content.credit(c.item, false).source)}</small>`;
-      if (el.scrollHeight <= el.clientHeight + 1) return;
+      // ممنوع نقص النص: نصغّر الخط درجتين قبل ما نتخطى للي بعده
+      for (const size of ["", "long", "xlong"]) {
+        el.classList.remove("long", "xlong"); if (size) el.classList.add(size);
+        if (el.scrollHeight <= el.clientHeight + 1) return;
+      }
     }
+    el.classList.remove("long", "xlong");
     el.innerHTML = "";
   }
 
