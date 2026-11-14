@@ -571,7 +571,8 @@
     if (!moment() || !root) return;
     const info = window.Tilawa ? Tilawa.info() : null;
     tlOn = !!info;
-    root.classList.toggle("has-mini", tlOn);
+    // ظهور البطاقة يصغّر مكان الحديث: نعيد قياسه وإلا ينقص منه
+    if (root.classList.contains("has-mini") !== tlOn) { root.classList.toggle("has-mini", tlOn); momentSig = ""; renderMomentText(new Date()); }
     if (!tlOn) {
       if (mode === "mini") { mode = "nav"; row = rows()[1].length ? 1 : 0; col = 0; paintFocus(); }
       return;
