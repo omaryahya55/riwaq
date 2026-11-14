@@ -944,15 +944,15 @@
       if (mode === "tilawa") return Tilawa.key(k);
       if (mode === "mini") return miniKey(k);
       // المشغّل بين الأزرار فوق وصف التطبيقات
-      // القائمة الجانبية: فوق وتحت بين الأزرار، واليسار يرجّع للتطبيقات، وفوق من أول زر يطلع للمشغّل
+      // القائمة الجانبية (يسار): فوق وتحت بين الأزرار، واليمين يرجّع للتطبيقات، وفوق من أول زر يطلع للمشغّل
       if (mode === "nav" && moment() && row === 0) {
         const n = R[0].length;
         if (k === "up") {
           if (col === 0 && tlOn) { railCol = 0; mode = "mini"; miniIdx = 2; paintFocus(); renderMini(); return true; }
           col = Math.max(0, col - 1);
         } else if (k === "down") col = Math.min(n - 1, col + 1);
-        else if (k === "left" || k === "back") {
-          if (!R[1].length) return k === "left";
+        else if (k === "right" || k === "back") {
+          if (!R[1].length) return k === "right";
           railCol = col; row = 1; col = Math.min(appCol, R[1].length - 1);
         } else if (k === "ok" && R[0][col]) { railCol = col; open(R[0][col]); return true; }
         railCol = row === 0 ? col : railCol;
@@ -1043,8 +1043,8 @@
         if (row !== 1 && R[1].length) { row = 1; col = 0; paintFocus(); return true; }
         return false;
       }
-      // أول تطبيق: السهم يمين يدخل القائمة الجانبية (هي على الطرف اليمين)
-      if (k === "right" && moment() && row >= 1 && col === 0 && R[0].length) { appCol = 0; row = 0; col = Math.min(railCol, R[0].length - 1); paintFocus(); return true; }
+      // آخر تطبيق: السهم يسار يدخل القائمة الجانبية (هي على الطرف اليسار)
+      if (k === "left" && moment() && row >= 1 && col === R[row].length - 1 && R[0].length) { appCol = col; row = 0; col = Math.min(railCol, R[0].length - 1); paintFocus(); return true; }
       if (k === "left") col = Math.min(R[row].length - 1, col + 1);
       if (k === "right") col = Math.max(0, col - 1);
       if (k === "up" && row > 0) {
